@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -25,15 +27,19 @@ class _SignUpState extends State<SignUp> {
             children: [
               CarouselSlider(
                 items: [
-                  Image.asset('assets/images/ad 1.jpg'),
-                  Image.asset('assets/images/ad 2.jpg'),
-                  Image.asset('assets/images/ad 3.jpg'),
-                  Image.asset('assets/images/ad 4.jpg'),
+                  Image.asset(SvgImages
+                      .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
+                  Image.asset(SvgImages
+                      .banner_2), // SvgPicture.asset(SvgImages.banner_2),
+                  Image.asset(SvgImages
+                      .banner_3), // SvgPicture.asset(SvgImages.banner_3),
+                  Image.asset(SvgImages
+                      .banner_4), // SvgPicture.asset(SvgImages.banner_4),
                 ],
                 options: CarouselOptions(
                   height: 250,
-                  //aspectRatio: 16 / 9,
-                  //viewportFraction: 0.8,
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 0.8,
                   initialPage: 0,
                   enableInfiniteScroll: true,
                   reverse: false,
@@ -165,24 +171,28 @@ class _SignUpState extends State<SignUp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          height: 60,
+                          height: 50,
+                          width: 50,
+                          padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: Image.asset(
-                              'assets/images/flat-color-icons_google.jpg'),
+                          child: SvgPicture.asset(SvgImages.google),
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         Container(
-                            height: 60,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Image.asset('assets/images/bi_apple.jpg'))
+                          height: 50,
+                          width: 50,
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: SvgPicture.asset(SvgImages.apple),
+                        )
                       ],
                     ),
                     SizedBox(

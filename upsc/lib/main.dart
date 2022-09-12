@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:upsc/screens/SignUp.dart';
 import 'package:upsc/screens/SignIn.dart';
+import 'package:upsc/screens/home.dart';
 import 'package:upsc/screens/languagescreen.dart';
+import 'package:upsc/screens/notifications.dart';
 import 'package:upsc/screens/otpverification.dart';
 
 void main() {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         'SignUp': (context) => const SignUp(),
         'otpverification': (context) => const Otpverification(),
         'languagescreen': (context) => const LanguageScreen(),
+        'home':(context) => const HomeScreen(),
+        'notifications':(context) => const NotificationScreen(),
       },
     );
   }
