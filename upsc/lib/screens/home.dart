@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         'Resources',
                         style: TextStyle(fontSize: 20),
-                      )
+                      ),
                     ],
                   ),
                 ),
