@@ -47,7 +47,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     customRadio('Hindi', SvgImages.HindA, 2, true),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 200,
                 ),
                 selected != 0
@@ -71,7 +71,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           ),
                         ),
                       )
-                    : Text(''),
+                    : const Text(''),
               ],
             )
           ],

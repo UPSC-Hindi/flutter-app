@@ -52,7 +52,7 @@ class _loginscreenState extends State<loginscreen> {
                 widthFactor: 0.80,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
@@ -141,20 +141,20 @@ class _loginscreenState extends State<loginscreen> {
                         Container(
                           height: 50,
                           width: 50,
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: SvgPicture.asset(SvgImages.google),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Container(
                           height: 50,
                           width: 50,
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(100),
@@ -163,13 +163,13 @@ class _loginscreenState extends State<loginscreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Create an account?'),
+                        const Text('Create an account?'),
                         TextButton(
                             onPressed: () {
                               Navigator.of(context).pushNamed('SignUp');

@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         'languagescreen': (context) => const LanguageScreen(),
         'home':(context) => const HomeScreen(),
         'notifications':(context) => const NotificationScreen(),
+        
       },
     );
   }
