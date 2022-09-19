@@ -38,10 +38,17 @@ dependencies:
   carousel_slider: ^4.1.1
   pinput: ^2.2.12
   flutter_svg: ^0.22.0
-
+  google_fonts: ^3.0.1
+  dio: ^4.0.6
+  fluttertoast: ^8.0.9
+  retrofit: ^3.0.1+1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  retrofit_generator: ^4.0.3+2
+  build_runner: ^2.2.1
+  json_serializable: ^6.3.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
