@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 
@@ -14,6 +15,12 @@ class loginscreen extends StatefulWidget {
 class _loginscreenState extends State<loginscreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +31,20 @@ class _loginscreenState extends State<loginscreen> {
             children: [
               CarouselSlider(
                 items: [
-                  Image.asset(SvgImages
-                      .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
+                  Image.asset(
+                    SvgImages.banner_1,
+                  ), // SvgPicture.asset(SvgImages.banner_1,),
                   Image.asset(SvgImages
                       .banner_2), // SvgPicture.asset(SvgImages.banner_2),
                   Image.asset(SvgImages
                       .banner_3), // SvgPicture.asset(SvgImages.banner_3),
-                  Image.asset(SvgImages
-                      .banner_4), // SvgPicture.asset(SvgImages.banner_4),
+                  Image.asset(SvgImages.banner_4),
+                  // SvgPicture.asset(SvgImages.banner_4),
                 ],
                 options: CarouselOptions(
                   height: 250,
                   aspectRatio: 16 / 9,
-                  viewportFraction: 0.8,
+                  viewportFraction: 1,
                   initialPage: 0,
                   enableInfiniteScroll: true,
                   reverse: false,
@@ -57,7 +65,7 @@ class _loginscreenState extends State<loginscreen> {
                     ),
                     Text(
                       'Login',
-                      style: TextStyle(
+                      style: GoogleFonts.poppins(
                           color: ColorResources.textblack,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
@@ -66,7 +74,10 @@ class _loginscreenState extends State<loginscreen> {
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                         controller: nameController,
+                        style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.blueAccent, width: 32.0),
@@ -80,7 +91,10 @@ class _loginscreenState extends State<loginscreen> {
                       child: TextField(
                         obscureText: true,
                         controller: passwordController,
+                        style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.blueAccent, width: 32.0),
@@ -95,7 +109,8 @@ class _loginscreenState extends State<loginscreen> {
                       child: TextButton(
                         child: Text(
                           "Forgot password?",
-                          style: TextStyle(color: ColorResources.buttoncolor),
+                          style: GoogleFonts.poppins(
+                              color: ColorResources.buttoncolor),
                         ),
                         onPressed: () {},
                       ),
@@ -106,10 +121,12 @@ class _loginscreenState extends State<loginscreen> {
                           color: ColorResources.buttoncolor,
                           borderRadius: BorderRadius.circular(14)),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed('home');
+                        },
                         child: Text(
                           'Login',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                               color: ColorResources.textWhite,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -120,13 +137,16 @@ class _loginscreenState extends State<loginscreen> {
                       height: 40,
                     ),
                     Row(
-                      children: const [
-                        Expanded(
+                      children: [
+                        const Expanded(
                             child: Divider(
                           thickness: 2,
                         )),
-                        Text("Or Sign in with"),
-                        Expanded(
+                        Text(
+                          "Or Sign in with",
+                          style: GoogleFonts.lato(),
+                        ),
+                        const Expanded(
                             child: Divider(
                           thickness: 2,
                         )),
@@ -169,15 +189,19 @@ class _loginscreenState extends State<loginscreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Create an account?'),
+                        Text(
+                          'Create an account?',
+                          style: GoogleFonts.poppins(),
+                        ),
                         TextButton(
                             onPressed: () {
                               Navigator.of(context).pushNamed('SignUp');
                             },
                             child: Text(
                               ' Register',
-                              style:
-                                  TextStyle(color: ColorResources.buttoncolor),
+                              style: GoogleFonts.poppins(
+                                  color: ColorResources.buttoncolor,
+                                  fontWeight: FontWeight.w900),
                             ))
                       ],
                     ),

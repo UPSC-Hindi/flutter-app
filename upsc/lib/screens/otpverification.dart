@@ -44,119 +44,121 @@ class _OtpverificationState extends State<Otpverification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          CarouselSlider(
-            items: [
-              Image.asset('assets/images/ad 1.jpg'),
-              Image.asset('assets/images/ad 2.jpg'),
-              Image.asset('assets/images/ad 3.jpg'),
-              Image.asset('assets/images/ad 4.jpg'),
-            ],
-            options: CarouselOptions(
-              height: 250,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 3),
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal,
+      body: SafeArea(
+        child: Column(
+          children: [
+            CarouselSlider(
+              items: [
+                Image.asset('assets/images/ad 1.jpg'),
+                Image.asset('assets/images/ad 2.jpg'),
+                Image.asset('assets/images/ad 3.jpg'),
+                Image.asset('assets/images/ad 4.jpg'),
+              ],
+              options: CarouselOptions(
+                height: 250,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.80,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'OTP sent on',
-                  style: TextStyle(
-                      color: ColorResources.textblack,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: const Text(
-                    '+91 9999999999' + ' Change',
-                    style: TextStyle(fontSize: 20),
+            FractionallySizedBox(
+              widthFactor: 0.80,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Pinput(
-                  length: length,
-                  controller: controller,
-                  focusNode: focusNode,
-                  defaultPinTheme: defaultPinTheme,
-                  onCompleted: (pin) {
-                    setState(() => showError = pin != '5555');
-                  },
-                  focusedPinTheme: defaultPinTheme.copyWith(
-                    height: 68,
-                    width: 64,
-                    decoration: defaultPinTheme.decoration!.copyWith(
-                      border: Border.all(color: borderColor),
+                  Text(
+                    'OTP sent on',
+                    style: TextStyle(
+                        color: ColorResources.textblack,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Text(
+                      '+91 9999999999' + ' Change',
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  errorPinTheme: defaultPinTheme.copyWith(
-                    decoration: BoxDecoration(
-                      color: errorColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.60,
-                  decoration: BoxDecoration(
-                      color: ColorResources.buttoncolor,
-                      borderRadius: BorderRadius.circular(14)),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('languagescreen');
+                  Pinput(
+                    length: length,
+                    controller: controller,
+                    focusNode: focusNode,
+                    defaultPinTheme: defaultPinTheme,
+                    onCompleted: (pin) {
+                      setState(() => showError = pin != '5555');
                     },
-                    child: Text(
-                      'Verify',
-                      style: TextStyle(
-                          color: ColorResources.textWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Did not recieve the code?'),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed('SignIn');
-                      },
-                      child: Text(
-                        ' Try again',
-                        style: TextStyle(color: ColorResources.buttoncolor),
+                    focusedPinTheme: defaultPinTheme.copyWith(
+                      height: 68,
+                      width: 64,
+                      decoration: defaultPinTheme.decoration!.copyWith(
+                        border: Border.all(color: borderColor),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
+                    errorPinTheme: defaultPinTheme.copyWith(
+                      decoration: BoxDecoration(
+                        color: errorColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.60,
+                    decoration: BoxDecoration(
+                        color: ColorResources.buttoncolor,
+                        borderRadius: BorderRadius.circular(14)),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('languagescreen');
+                      },
+                      child: Text(
+                        'Verify',
+                        style: TextStyle(
+                            color: ColorResources.textWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Did not recieve the code?'),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).popAndPushNamed('SignIn');
+                        },
+                        child: Text(
+                          ' Try again',
+                          style: TextStyle(color: ColorResources.buttoncolor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
