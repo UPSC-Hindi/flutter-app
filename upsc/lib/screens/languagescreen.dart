@@ -12,6 +12,8 @@ class LanguageScreen extends StatefulWidget {
 
 class _LanguageScreenState extends State<LanguageScreen> {
   int selected = 0;
+  int selected_course = 0;
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +45,40 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    customRadio('English', SvgImages.EnglishA, 1, true),
-                    customRadio('Hindi', SvgImages.HindA, 2, true),
+                    customRadio('English', 'A', 1, true),
+                    customRadio('Hindi', 'अ', 2, true),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.80,
+                    child: const Text(
+                      'Select your stream',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    customRadio_course('', 'IAS', 3, true),
+                    customRadio_course('', 'PCS', 4, true),
                   ],
                 ),
                 const SizedBox(
                   height: 200,
                 ),
-                selected != 0
+                count > 1
                     ? Container(
                         width: MediaQuery.of(context).size.width * 0.60,
                         decoration: BoxDecoration(
@@ -97,6 +125,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       onPressed: () {
         setState(() {
           selected = index;
+          count = count + 1;
         });
       },
       child: Container(
@@ -107,20 +136,85 @@ class _LanguageScreenState extends State<LanguageScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 60, child: SvgPicture.asset(src)),
-                    Text(
-                      text,
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  ]),
+              child: Column(children: [
+                Text(
+                  src,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 50,
+                      fontWeight: FontWeight.w800),
+                ),
+                //SizedBox(height: 60, child: SvgPicture.asset(src)),
+                Text(
+                  text,
+                  style: const TextStyle(color: Colors.black),
+                ),
+              ]),
             ),
             selected == index
                 ? const Positioned(
                     top: 3,
                     left: -1,
+                    child: Icon(
+                      Icons.check_circle,
+                      color: Color(0xFFF05266),
+                    ))
+                : const Text('')
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget customRadio_course(String text, String src, int index, bool tick) {
+    return OutlinedButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              width: 2,
+              style: BorderStyle.solid,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+      onPressed: () {
+        setState(() {
+          selected_course = index;
+          count = count + 1;
+        });
+      },
+      child: Container(
+        width: 100,
+        height: 130,
+        padding: const EdgeInsets.all(0),
+        alignment: Alignment.center,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    src,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w800),
+                  ),
+                  //SizedBox(height: 60, child: SvgPicture.asset(src)),
+                  Text(
+                    text,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                ]),
+            selected_course == index
+                ? const Positioned(
+                    top: 3,
+                    left: 0,
                     child: Icon(
                       Icons.check_circle,
                       color: Color(0xFFF05266),

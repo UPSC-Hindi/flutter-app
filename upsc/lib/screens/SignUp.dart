@@ -15,10 +15,10 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController numberController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController numberController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       body: SafeArea(
@@ -71,6 +71,8 @@ class _SignUpState extends State<SignUp> {
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.blueAccent, width: 32.0),
@@ -88,6 +90,8 @@ class _SignUpState extends State<SignUp> {
                         controller: numberController,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Color.fromARGB(255, 61, 72, 91),
@@ -103,6 +107,8 @@ class _SignUpState extends State<SignUp> {
                         controller: nameController,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.blueAccent, width: 32.0),
@@ -118,6 +124,8 @@ class _SignUpState extends State<SignUp> {
                         controller: passwordController,
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.blueAccent, width: 32.0),
