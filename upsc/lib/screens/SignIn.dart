@@ -1,9 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/login_model.dart';
+import 'package:upsc/models/register.dart';
+import 'package:upsc/screens/home.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
 class loginscreen extends StatefulWidget {
   const loginscreen({Key? key}) : super(key: key);
@@ -13,11 +23,11 @@ class loginscreen extends StatefulWidget {
 }
 
 class _loginscreenState extends State<loginscreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
   void dispose() {
-    nameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -73,7 +83,7 @@ class _loginscreenState extends State<loginscreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
-                        controller: nameController,
+                        controller: emailController,
                         style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -112,7 +122,10 @@ class _loginscreenState extends State<loginscreen> {
                           style: GoogleFonts.poppins(
                               color: ColorResources.buttoncolor),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed('forgotpasswordscreen');
+                        },
                       ),
                     ),
                     Container(
@@ -122,6 +135,7 @@ class _loginscreenState extends State<loginscreen> {
                           borderRadius: BorderRadius.circular(14)),
                       child: TextButton(
                         onPressed: () {
+                          //callApilogin();
                           Navigator.of(context).pushReplacementNamed('home');
                         },
                         child: Text(
@@ -213,5 +227,54 @@ class _loginscreenState extends State<loginscreen> {
         ),
       ),
     );
+  }
+
+  Future<BaseModel<Login>> callApilogin() async {
+    Login response;
+    Map<String, dynamic> body = {
+      "email_phoneNumber": emailController.text,
+      "password": passwordController.text,
+    };
+
+    setState(() {
+      Preferences.onLoading(context);
+    });
+
+    try {
+      response = await RestClient(RetroApi2().dioData2()).loginRequest(body);
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      if (response.status!) {
+        await SharedPreferenceHelper.write(
+            Preferences.access_token, response.data!.accessToken);
+        await SharedPreferenceHelper.write(Preferences.is_logged_in, 'true');
+        print(response.status!);
+        //Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushNamed('home');
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }
