@@ -6,13 +6,20 @@ import 'package:upsc/screens/cartscreeen.dart';
 import 'package:upsc/screens/coursescreen.dart';
 import 'package:upsc/screens/download.dart';
 import 'package:upsc/screens/editprofile.dart';
+import 'package:upsc/screens/forgotpassword.dart';
 import 'package:upsc/screens/helpandsupport.dart';
 import 'package:upsc/screens/home.dart';
 import 'package:upsc/screens/languagescreen.dart';
 import 'package:upsc/screens/mocktestscreen.dart';
 import 'package:upsc/screens/myorders.dart';
+import 'package:upsc/screens/myschedule.dart';
+import 'package:upsc/screens/myscheduleadd.dart';
+import 'package:upsc/screens/ncert.dart';
 import 'package:upsc/screens/notifications.dart';
 import 'package:upsc/screens/otpverification.dart';
+import 'package:upsc/screens/passwordVerified.dart';
+import 'package:upsc/screens/passwordchange.dart';
+import 'package:upsc/screens/passwordotp.dart';
 import 'package:upsc/screens/profile.dart';
 import 'package:upsc/screens/resources.dart';
 
@@ -38,11 +45,13 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Splash(),
+        'home': (context) => const HomeScreen(),
         'SignIn': (context) => const loginscreen(), //SignIn(),
         'SignUp': (context) => const SignUp(),
-        'otpverification': (context) => const Otpverification(),
+        'otpverification': (context) => Otpverification(
+              number: '',
+            ),
         'languagescreen': (context) => const LanguageScreen(),
-        'home': (context) => const HomeScreen(),
         'notifications': (context) => const NotificationScreen(),
         'homescreen': (context) => const HomeScreen(),
         'Coursescreen': (context) => const coursescreen(),
@@ -55,18 +64,31 @@ class MyApp extends StatelessWidget {
         'mycoursesscreen': (context) => const MyCoursesScreen(),
         'myordersscreen': (context) => const MyOrdersScreen(),
         'helpandsupport': (context) => const HelpAndSupport(),
+        'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
+        'passwordotp': (context) =>  PasswordOtp(Otpfor: '',),
+        'passwordverified': (context) => passwordVerified(type: '',),
+        'passwordchange': (context) => const PasswordChange(),
+        'ncertscreen': (context) => const NcertScreen(),
+        'MySchedule': (context) => const MySchedule(),
+        'MyScheduleAdd': (context) => const MyScheduleAdd()
       },
     );
   }
 }
 
-class Splash extends StatelessWidget {
+class Splash extends StatefulWidget {
   const Splash({super.key});
+
+  @override
+  State<Splash> createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
     return SplashScreenView(
-      navigateRoute: const loginscreen(),
+      navigateRoute: loginscreen(),
       duration: 3000,
       //imageSize: 130,
       imageSrc: "assets/images/logo_Splash.jpg",
