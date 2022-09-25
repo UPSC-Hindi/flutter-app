@@ -10,5 +10,8 @@ class ColorResources {
   static Color telegarm = const Color(0xFFBBE3FF);
 
   static Color greenshad = const Color(0xFF718744);
-  static Color blue = const Color(0xFF3787D1);
+  static Color edit = const Color(0xFF30A2E2);
+  static Color delete = const Color(0xFFFA7676);
+
+  
 }
