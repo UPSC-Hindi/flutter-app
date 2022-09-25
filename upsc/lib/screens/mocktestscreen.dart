@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 
@@ -48,9 +49,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 textDirection: TextDirection.ltr,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Daily Editorial Based Quiz',
-                    style: TextStyle(fontSize: 25),
+                    style: GoogleFonts.poppins(
+                        fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.70,
@@ -95,11 +97,12 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Subscribed Tests (1)',
-                style: TextStyle(fontSize: 24),
+                style: GoogleFonts.poppins(
+                    fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
             Center(
@@ -126,9 +129,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               'IAS Test Series',
-                              style: TextStyle(fontSize: 24),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '6/15 Tests Passed',
@@ -178,11 +182,12 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Free Mock Tests',
-                style: TextStyle(fontSize: 24),
+                style: GoogleFonts.poppins(
+                    fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
             GridView.count(
@@ -208,9 +213,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text(
+                      Text(
                         'RAS Prelims Test Series',
-                        style: const TextStyle(fontSize: 20),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
@@ -273,9 +279,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text(
+                      Text(
                         'CSAT Test Series',
-                        style: const TextStyle(fontSize: 20),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
@@ -338,9 +345,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text(
+                      Text(
                         'General Studies Test Series',
-                        style: const TextStyle(fontSize: 20),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
@@ -403,9 +411,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text(
+                      Text(
                         'Optional Test Test Series',
-                        style: TextStyle(fontSize: 20),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
@@ -468,9 +477,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text(
+                      Text(
                         'RAS Prelims Test Series',
-                        style: const TextStyle(fontSize: 20),
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
