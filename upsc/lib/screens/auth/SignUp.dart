@@ -276,7 +276,6 @@ class _SignUpState extends State<SignUp> {
         print(response.data!.token);
 
         Fluttertoast.showToast(
-          
           msg: '${response.data!.mobileNumberVerificationOTP}',
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
