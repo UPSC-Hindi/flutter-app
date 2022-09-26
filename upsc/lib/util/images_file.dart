@@ -22,4 +22,6 @@ class SvgImages {
   static String telegram = 'assets/images/telegram.png';
   static String youtube = 'assets/images/YouTube logo.png';
   static String backgroung = 'assets/images/Rectangle 61.png';
+
+  static String pdfimage = 'assets/images/pdf.png';
 }

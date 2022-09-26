@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Divider(),
                   GestureDetector(
                     onTap: () =>
-                        Navigator.of(context).pushNamed('downloadScreen'),
+                        Navigator.of(context).popAndPushNamed('downloadScreen'),
                     child: Padding(
                       padding:
                           const EdgeInsets.only(left: 30, top: 10, bottom: 10),
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Divider(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('MySchedule');
+                      Navigator.of(context).popAndPushNamed('MySchedule');
                     },
                     child: Padding(
                       padding:
@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Divider(),
                   GestureDetector(
                     onTap: () =>
-                        Navigator.of(context).pushNamed('resourcesscreen'),
+                        Navigator.of(context).popAndPushNamed('resourcesscreen'),
                     child: Padding(
                       padding:
                           const EdgeInsets.only(left: 30, top: 10, bottom: 10),
