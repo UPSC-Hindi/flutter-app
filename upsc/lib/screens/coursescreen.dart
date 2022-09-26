@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class coursescreen extends StatelessWidget {
   const coursescreen({Key? key}) : super(key: key);
@@ -34,11 +34,11 @@ class coursescreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Text(
                               'Courses',
-                              style: TextStyle(fontSize: 24),
+                              style: GoogleFonts.poppins(fontSize: 24),
                             ),
                           ),
                           GridView.count(
@@ -63,10 +63,10 @@ class coursescreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Course 1',
-                                      style: TextStyle(
-                                          fontSize: 30,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
@@ -174,10 +174,10 @@ class coursescreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Course 1',
-                                      style: TextStyle(
-                                          fontSize: 30,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
@@ -285,10 +285,10 @@ class coursescreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Course 1',
-                                      style: TextStyle(
-                                          fontSize: 30,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
@@ -396,10 +396,10 @@ class coursescreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Course 1',
-                                      style: TextStyle(
-                                          fontSize: 30,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
@@ -495,11 +495,12 @@ class coursescreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Text(
                               'Test Series',
-                              style: TextStyle(fontSize: 24),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                           ),
                           GridView.count(
@@ -526,9 +527,11 @@ class coursescreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Test Series 1',
-                                      style: TextStyle(fontSize: 20),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Row(
                                       children: [
@@ -596,9 +599,11 @@ class coursescreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Test Series 1',
-                                      style: TextStyle(fontSize: 20),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Row(
                                       children: [
@@ -666,9 +671,11 @@ class coursescreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Test Series 1',
-                                      style: TextStyle(fontSize: 20),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Row(
                                       children: [
@@ -736,9 +743,11 @@ class coursescreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Test Series 1',
-                                      style: TextStyle(fontSize: 20),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Row(
                                       children: [
@@ -806,9 +815,11 @@ class coursescreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Text(
-                                      'RAS Prelims Test Series',
-                                      style: TextStyle(fontSize: 20),
+                                    Text(
+                                      'Test Series',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Row(
                                       children: [

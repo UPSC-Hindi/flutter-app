@@ -3,7 +3,9 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:upsc/screens/SignUp.dart';
 import 'package:upsc/screens/SignIn.dart';
 import 'package:upsc/screens/cartscreeen.dart';
+import 'package:upsc/screens/contactus.dart';
 import 'package:upsc/screens/coursescreen.dart';
+import 'package:upsc/screens/dailynews.dart';
 import 'package:upsc/screens/download.dart';
 import 'package:upsc/screens/editprofile.dart';
 import 'package:upsc/screens/forgotpassword.dart';
@@ -22,6 +24,9 @@ import 'package:upsc/screens/passwordchange.dart';
 import 'package:upsc/screens/passwordotp.dart';
 import 'package:upsc/screens/profile.dart';
 import 'package:upsc/screens/resources.dart';
+import 'package:upsc/screens/samplenotes.dart';
+import 'package:upsc/screens/shortnotes.dart';
+import 'package:upsc/screens/youtubenotes.dart';
 
 import 'screens/mycourses.dart';
 
@@ -70,7 +75,12 @@ class MyApp extends StatelessWidget {
         'passwordchange': (context) => const PasswordChange(),
         'ncertscreen': (context) => const NcertScreen(),
         'MySchedule': (context) => const MySchedule(),
-        'MyScheduleAdd': (context) => const MyScheduleAdd()
+        'MyScheduleAdd': (context) => const MyScheduleAdd(),
+        'dailynews': (context) => const DailyNewsScreen(),
+        'shortnotes': (context) => const ShortNotesScreen(),
+        'youtubenotes': (context) => const YoutubeNotesScreen(),
+        'samplenotes': (context) => const SampleNotesScreen(),
+        'contactus': (context) => const ContactUsScreen(),
       },
     );
   }
