@@ -1,15 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/register.dart';
-import 'package:upsc/screens/otpverification.dart';
+import 'package:upsc/models/auth/register.dart';
+import 'package:upsc/screens/auth/otpverification.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
