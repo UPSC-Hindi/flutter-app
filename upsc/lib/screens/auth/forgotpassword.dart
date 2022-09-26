@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/forgotpassword.dart';
-import 'package:upsc/models/register.dart';
-import 'package:upsc/screens/passwordotp.dart';
+import 'package:upsc/models/auth/forgotpassword.dart';
+import 'package:upsc/screens/auth/passwordotp.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
-import 'package:upsc/util/preference.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);

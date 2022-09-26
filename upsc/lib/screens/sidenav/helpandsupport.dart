@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../util/color_resources.dart';
+import '../../util/color_resources.dart';
 
 class HelpAndSupport extends StatelessWidget {
   const HelpAndSupport({Key? key}) : super(key: key);

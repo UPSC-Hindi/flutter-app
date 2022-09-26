@@ -1,16 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:upsc/api/api.dart';
-import 'package:upsc/models/VerifyMobileNumber.dart';
-import 'package:upsc/models/VerifyMobileNumber.dart';
-import 'package:upsc/models/forgotpassword.dart';
-import 'package:upsc/models/login_model.dart';
-import 'package:upsc/models/passwordotpresend.dart';
-import 'package:upsc/models/passwordverifyotp.dart';
-import 'package:upsc/models/register.dart';
-import 'package:upsc/models/resendotp.dart';
-import 'package:upsc/models/resetpassword.dart';
-import 'package:upsc/screens/passwordVerified.dart';
+import 'package:upsc/models/auth/VerifyMobileNumber.dart';
+import 'package:upsc/models/auth/forgotpassword.dart';
+import 'package:upsc/models/auth/login_model.dart';
+import 'package:upsc/models/auth/passwordotpresend.dart';
+import 'package:upsc/models/auth/passwordverifyotp.dart';
+import 'package:upsc/models/auth/register.dart';
+import 'package:upsc/models/auth/resendotp.dart';
+import 'package:upsc/models/auth/resetpassword.dart';
+
 
 part 'network_api.g.dart';
 

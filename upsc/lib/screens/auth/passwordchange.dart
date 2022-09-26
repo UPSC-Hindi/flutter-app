@@ -5,8 +5,9 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/resetpassword.dart';
-import 'package:upsc/screens/passwordVerified.dart';
+import 'package:upsc/models/auth/resetpassword.dart';
+import 'package:upsc/screens/auth/passwordVerified.dart';
+
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
