@@ -382,7 +382,7 @@ class HomeScreens extends StatelessWidget {
                                 color: ColorResources.textWhite),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushNamed("helpandsupport");
+                            Navigator.of(context).pushNamed("contactus");
                           },
                         ),
                       )
