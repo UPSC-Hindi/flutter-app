@@ -7,8 +7,9 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/VerifyMobileNumber.dart';
-import 'package:upsc/models/resendotp.dart';
+import 'package:upsc/models/auth/VerifyMobileNumber.dart';
+import 'package:upsc/models/auth/resendotp.dart';
+
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/screens/coursescreen.dart';
-import 'package:upsc/screens/homescreen.dart';
-import 'package:upsc/screens/mocktestscreen.dart';
-import 'package:upsc/screens/profile.dart';
+import 'package:upsc/screens/bottomnav/coursescreen.dart';
+import 'package:upsc/screens/bottomnav/homescreen.dart';
+import 'package:upsc/screens/bottomnav/mocktestscreen.dart';
+import 'package:upsc/screens/bottomnav/profile.dart';
 import 'package:upsc/util/color_resources.dart';
 
 class HomeScreen extends StatefulWidget {
