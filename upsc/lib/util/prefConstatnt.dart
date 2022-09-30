@@ -10,6 +10,8 @@ class Preferences {
   static const String auth_token = "authToken";
   static const String access_token = "accessToken";
   static const String password_change_data = "Passwordchangedata";
+  static const String language = 'language';
+  static const String course = 'course';
 
    static hideDialog(BuildContext context) {
     Navigator.pop(context);
