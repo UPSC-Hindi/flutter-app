@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/models/course_model.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/coursesdetails.dart';
 
@@ -77,8 +77,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
   initState() {
     context.read<CoursesBloc>().add(
-      GetCourses(filter: widget.type, type: 'Category'),
-    );
+          GetCourses(filter: widget.type, type: 'Category'),
+        );
     super.initState();
   }
 
@@ -88,7 +88,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
       builder: (context, state) {
         if (state is CoursesLoading) {
           return Center(
-             child: const CircularProgressIndicator(),);
+            child: const CircularProgressIndicator(),
+          );
         }
         if (state is CoursesSuccess) {
           return _bodyWidget(state.courseList);
@@ -106,11 +107,11 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Courses',
-                style: TextStyle(fontSize: 24),
+                style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
             GridView.builder(
@@ -150,7 +151,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         children: [
           Text(
             data.batchName,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            style:
+                GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 10,
@@ -159,29 +161,29 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: const [
-                  Icon(Icons.sensors_outlined),
+                children: [
+                  Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
                   Text(
                     'Live lectures',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.poppins(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: const [
+                children: [
                   Icon(Icons.signal_cellular_alt),
                   Text(
                     '100% Online',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.poppins(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: const [
+                children: [
                   Icon(Icons.download),
                   Text(
                     'Downloadable',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.poppins(fontSize: 8),
                   )
                 ],
               )
@@ -195,15 +197,16 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             children: [
               Text(
                 data.charges,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Container(
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: ColorResources.greenshad),
                 child: Text(
                   'Aid Available',
-                  style:
-                  TextStyle(fontSize: 8, color: ColorResources.textWhite),
+                  style: GoogleFonts.poppins(
+                      fontSize: 8, color: ColorResources.textWhite),
                 ),
               )
             ],
@@ -216,15 +219,14 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) =>
-                      BlocProvider(
-                        create: (context) => CoursesBloc(),
-                        child: CoursesDetailsScreens(
-                          id: data.id,
-                          buycourses: true,
-                          coursename: "Saurabh",
-                        ),
-                      ),
+                  builder: (context) => BlocProvider(
+                    create: (context) => CoursesBloc(),
+                    child: CoursesDetailsScreens(
+                      id: data.id,
+                      buycourses: true,
+                      coursename: "Saurabh",
+                    ),
+                  ),
                 ),
               );
             },
