@@ -225,7 +225,7 @@ class CourseViewScreen extends StatelessWidget {
           },
           child: Center(
             child: Column(
-              children: [Icon(Icons.sensors_outlined), Text('live')],
+              children: [Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,), Text('live')],
             ),
           ),
         ));

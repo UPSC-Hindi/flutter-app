@@ -60,8 +60,8 @@ class CartScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Column(
-                                      children: const [
-                                        Icon(Icons.sensors_outlined),
+                                      children: [
+                                        Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
                                         Text(
                                           'Live lectures',
                                           style: TextStyle(fontSize: 8),
@@ -162,8 +162,8 @@ class CartScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Column(
-                                      children: const [
-                                        Icon(Icons.sensors_outlined),
+                                      children:  [
+                                        Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
                                         Text(
                                           'Live lectures',
                                           style: TextStyle(fontSize: 8),

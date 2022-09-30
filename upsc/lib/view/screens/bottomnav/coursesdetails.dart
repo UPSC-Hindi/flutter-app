@@ -117,7 +117,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             ]),
                             Row(children: [
                               Icon(
-                                Icons.sensors_outlined,
+                                Icons.sensors_outlined,color: ColorResources.buttoncolor,
                               ),
                               Text(' Live Access')
                             ]),
