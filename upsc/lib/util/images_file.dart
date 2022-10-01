@@ -5,11 +5,7 @@ class SvgImages {
   static String banner_3 = 'assets/images/ad 3.jpg';
   static String banner_4 = 'assets/images/ad 4.jpg';
 
-  //language images
-  static String EnglishA = 'assets/images/A.svg';
-  static String HindA = 'assets/images/अ.svg';
-  static String pcs = 'assets/images/PCS.svg';
-  static String ias = 'assets/images/IAS.svg';
+  static String logo = 'assets/images/logo_Splash.jpg';
 
 //support auth images
   static String google = 'assets/images/flat-color-icons_google.svg';

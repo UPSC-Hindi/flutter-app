@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
-import 'package:upsc/screens/auth/SignIn.dart';
-import 'package:upsc/screens/auth/SignUp.dart';
-import 'package:upsc/screens/auth/passwordVerified.dart';
-import 'package:upsc/screens/auth/passwordchange.dart';
-import 'package:upsc/screens/auth/passwordotp.dart';
-import 'package:upsc/screens/bottomnav/coursescreen.dart';
-import 'package:upsc/screens/bottomnav/editprofile.dart';
-import 'package:upsc/screens/bottomnav/mocktestscreen.dart';
-import 'package:upsc/screens/bottomnav/ncert.dart';
-import 'package:upsc/screens/bottomnav/profile.dart';
-import 'package:upsc/screens/sidenav/cartscreeen.dart';
-import 'package:upsc/screens/contactus.dart';
-import 'package:upsc/screens/sidenav/myschedule.dart';
-import 'package:upsc/screens/sidenav/myscheduleadd.dart';
-import 'package:upsc/screens/sidenav/resources/dailynews.dart';
-import 'package:upsc/screens/sidenav/download.dart';
-import 'package:upsc/screens/auth/forgotpassword.dart';
-import 'package:upsc/screens/sidenav/helpandsupport.dart';
-import 'package:upsc/screens/home.dart';
-import 'package:upsc/screens/languagescreen.dart';
-import 'package:upsc/screens/sidenav/myorders.dart';
-import 'package:upsc/screens/notifications.dart';
-import 'package:upsc/screens/auth/otpverification.dart';
-import 'package:upsc/screens/sidenav/resources.dart';
-import 'package:upsc/screens/sidenav/resources/samplenotes.dart';
-import 'package:upsc/screens/sidenav/resources/shortnotes.dart';
-import 'package:upsc/screens/sidenav/resources/youtubenotes.dart';
-
-
-import 'screens/sidenav/mycourses.dart';
+import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/auth/SignIn.dart';
+import 'package:upsc/view/screens/auth/SignUp.dart';
+import 'package:upsc/view/screens/auth/forgotpassword.dart';
+import 'package:upsc/view/screens/auth/otpverification.dart';
+import 'package:upsc/view/screens/auth/passwordVerified.dart';
+import 'package:upsc/view/screens/auth/passwordchange.dart';
+import 'package:upsc/view/screens/auth/passwordotp.dart';
+import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
+import 'package:upsc/view/screens/bottomnav/editprofile.dart';
+import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
+import 'package:upsc/view/screens/bottomnav/ncert.dart';
+import 'package:upsc/view/screens/bottomnav/profile.dart';
+import 'package:upsc/view/screens/contactus.dart';
+import 'package:upsc/view/screens/course/courseview.dart';
+import 'package:upsc/view/screens/home.dart';
+import 'package:upsc/view/screens/joinStreaming.dart';
+import 'package:upsc/view/screens/languagescreen.dart';
+import 'package:upsc/view/screens/notifications.dart';
+import 'package:upsc/view/screens/sidenav/cartscreeen.dart';
+import 'package:upsc/view/screens/sidenav/download.dart';
+import 'package:upsc/view/screens/sidenav/helpandsupport.dart';
+import 'package:upsc/view/screens/sidenav/mycourses.dart';
+import 'package:upsc/view/screens/sidenav/myorders.dart';
+import 'package:upsc/view/screens/sidenav/myschedule.dart';
+import 'package:upsc/view/screens/sidenav/myscheduleadd.dart';
+import 'package:upsc/view/screens/sidenav/resources.dart';
+import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
+import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
+import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
+import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SharedPreferenceHelper.init();
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -60,7 +62,7 @@ class MyApp extends StatelessWidget {
         'languagescreen': (context) => const LanguageScreen(),
         'notifications': (context) => const NotificationScreen(),
         'homescreen': (context) => const HomeScreen(),
-        'Coursescreen': (context) => const coursescreen(),
+        'Coursescreen': (context) => const CourseScreen(),
         'mocktestscreen': (context) => const mocktestscreen(),
         'ProfilScreen': (context) => const ProfilScreen(),
         'editprofilescreen': (context) => const EditProfileScreen(),
@@ -68,6 +70,7 @@ class MyApp extends StatelessWidget {
         'resourcesscreen': (context) => const ResourcesScreen(),
         'cartscreen': (context) => const CartScreen(),
         'mycoursesscreen': (context) => const MyCoursesScreen(),
+        'courseviewscreen': (context) => const CourseViewScreen(),
         'myordersscreen': (context) => const MyOrdersScreen(),
         'helpandsupport': (context) => const HelpAndSupport(),
         'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
@@ -82,6 +85,7 @@ class MyApp extends StatelessWidget {
         'youtubenotes': (context) => const YoutubeNotesScreen(),
         'samplenotes': (context) => const SampleNotesScreen(),
         'contactus': (context) => const ContactUsScreen(),
+        'joinstreaming': (context) => const JoinStreamingScreen(),
       },
     );
   }

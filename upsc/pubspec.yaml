@@ -47,6 +47,12 @@ dependencies:
   flutter_secure_storage: ^6.0.0
   connectivity_plus: ^2.3.7
   table_calendar: ^3.0.7
+  #agora_rtc_engine: ^5.3.1
+  permission_handler: ^10.0.1
+  agora_uikit: ^1.0.4
+  flutter_bloc: ^8.1.1
+  equatable: ^2.0.5
+  youtube_player_flutter: ^8.1.0
   
 dev_dependencies:
   flutter_test:
