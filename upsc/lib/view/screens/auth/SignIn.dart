@@ -26,7 +26,7 @@ class _loginscreenState extends State<loginscreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  bool _passwordVisible = false;
+  bool _passwordVisible = true;
   @override
   void dispose() {
     emailController.dispose();
