@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc/util/langauge.dart';
 
 class MyScheduleAdd extends StatefulWidget {
   const MyScheduleAdd({Key? key}) : super(key: key);
@@ -111,14 +112,14 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
       appBar: AppBar(
           backgroundColor: ColorResources.textWhite,
           iconTheme: IconThemeData(color: ColorResources.textblack),
-          title: Text('My Schedule',
+          title: Text(Languages.mySchedule,
               style: GoogleFonts.poppins(color: ColorResources.textblack))),
       body: SingleChildScrollView(
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Select Date',
+              Languages.selectDate,
               style: GoogleFonts.poppins(
                 fontSize: 24,
               ),
@@ -177,7 +178,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                   child: Column(
                     children: [
                       Text(
-                        'Schdeule details',
+                        Languages.scheduleDetails,
                         style: GoogleFonts.poppins(),
                       ),
                       TextField(
@@ -191,7 +192,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                             borderSide: BorderSide(
                                 color: ColorResources.gray, width: 1.0),
                           ),
-                          hintText: 'Task',
+                          hintText: Languages.task,
                         ),
                       ),
                       const SizedBox(
@@ -208,7 +209,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Notify at',
+                              Languages.notifyAt,
                               style: GoogleFonts.poppins(),
                             ),
                             Row(
@@ -280,7 +281,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                                 print(value);
                               });
                             }),
-                        const Text('Schedule for everyday')
+                        Text(Languages.scheduleForEveryday)
                       ]),
                       Align(
                         alignment: Alignment.centerRight,
@@ -291,7 +292,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                               });
                             },
                             child: Text(
-                              '+Add Task',
+                              Languages.addTask,
                               style: GoogleFonts.poppins(
                                 color: ColorResources.buttoncolor,
                                 fontWeight: FontWeight.bold,
@@ -313,7 +314,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Create for ' +
+              child: Text('${Languages.createdFor} ' +
                   DateFormat('MMMM dd').format(selectDate).toString()),
             ),
           ),

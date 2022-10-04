@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  String name = '';
+  String email = '';
+  String phoneNumber = '';
+
+  @override
+  void initState(){
+    name = SharedPreferenceHelper.getString(Preferences.name)!;
+    email = SharedPreferenceHelper.getString(Preferences.email)!;
+    phoneNumber = SharedPreferenceHelper.getString(Preferences.phoneNUmber)!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +35,7 @@ class EditProfileScreen extends StatelessWidget {
             color: ColorResources.textblack,
           ),
           title: Text(
-            'Personal Information',
+            Languages.personalInformation,
             style: TextStyle(color: ColorResources.textblack),
           ),
         ),
@@ -53,7 +74,7 @@ class EditProfileScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Pratik Gaur',
+                    name,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   Text(
@@ -81,10 +102,10 @@ class EditProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('   Mobile'),
+                    Text(Languages.phoneText),
                     TextField(
                       controller: TextEditingController()
-                        ..text = '+91 99999 99999',
+                        ..text = '+91 $phoneNumber',
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -95,16 +116,16 @@ class EditProfileScreen extends StatelessWidget {
                             borderSide: BorderSide(
                                 color: ColorResources.gray, width: 1.0),
                           ),
-                          hintText: 'Mobile',
+                          hintText: Languages.phoneText,
                           suffixText: 'Edit'),
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    Text('   Email ID'),
+                    Text(Languages.emailText),
                     TextField(
                       controller: TextEditingController()
-                        ..text = 'pratik@xyz.com',
+                        ..text = email,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -115,7 +136,7 @@ class EditProfileScreen extends StatelessWidget {
                             borderSide: BorderSide(
                                 color: ColorResources.gray, width: 1.0),
                           ),
-                          hintText: 'Email ID',
+                          hintText: Languages.emailText,
                           suffixText: 'Edit'),
                     ),
                     SizedBox(
@@ -154,7 +175,7 @@ class EditProfileScreen extends StatelessWidget {
                           Navigator.of(context).pushNamed('home');
                         },
                         child: Text(
-                          'Save Changes',
+                          Languages.saveChanges,
                           style: TextStyle(
                               color: ColorResources.textWhite,
                               fontWeight: FontWeight.bold,

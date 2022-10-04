@@ -80,14 +80,17 @@ class MyCoursesScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => CoursesDetailsScreens(
-                                    buycourses: false,
-                                    coursename: 'courses 1', id: '',
-                                  ),
-                                ),
-                              );
+                              //  remove when this page dynamic*******************************
+                              Navigator.of(context).pushNamed('courseviewscreen');
+                              // pls un comment this page dynamic************************************
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => CoursesDetailsScreens(
+                              //       buycourses: false,
+                              //       coursename: 'courses 1', id: '',
+                              //     ),
+                              //   ),
+                              // );
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.min,

@@ -7,12 +7,12 @@ class Login {
 
   Login.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
@@ -24,6 +24,7 @@ class Login {
 
 class Data {
   String? accessToken;
+  String? language;
   String? username;
   String? email;
   String? phoneNumber;
@@ -42,6 +43,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];
+    language = json['language'];
     username = json['username'];
     email = json['email'];
     phoneNumber = json['phoneNumber'];

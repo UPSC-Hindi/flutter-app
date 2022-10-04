@@ -23,7 +23,7 @@ class SharedPreferenceHelper {
   static Future setBoolean(String key, bool value) async =>
       await _preferences!.setBool(key, value);
 
-  static bool getBoolean(String key) => _preferences!.getBool(key) ?? false;
+  static bool getBoolean(String key) => _preferences?.getBool(key) ?? false;
 
   static int getInt(dynamic key) {
     return _preferences!.getInt("$key") ?? 0;

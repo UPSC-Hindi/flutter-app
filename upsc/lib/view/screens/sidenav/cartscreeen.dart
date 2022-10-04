@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class CartScreen extends StatelessWidget {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'My Cart',
+          Languages.cart,
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
@@ -60,8 +61,8 @@ class CartScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Column(
-                                      children: [
-                                        Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
+                                      children: const [
+                                        Icon(Icons.sensors_outlined),
                                         Text(
                                           'Live lectures',
                                           style: TextStyle(fontSize: 8),
@@ -106,7 +107,7 @@ class CartScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 5.0),
-                                child: Text('Remove'),
+                                child: Text(Languages.remove),
                               ),
                             ),
                             Text(
@@ -162,8 +163,8 @@ class CartScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Column(
-                                      children:  [
-                                        Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
+                                      children: const [
+                                        Icon(Icons.sensors_outlined),
                                         Text(
                                           'Live lectures',
                                           style: TextStyle(fontSize: 8),
@@ -208,7 +209,7 @@ class CartScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 5.0),
-                                child: Text('Remove'),
+                                child: Text(Languages.remove),
                               ),
                             ),
                             Text(
@@ -243,7 +244,7 @@ class CartScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Total'),
+                      Text(Languages.total),
                       Text(
                         '₹30,000',
                         style: TextStyle(
@@ -262,7 +263,7 @@ class CartScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 15.0, horizontal: 20.0),
-                      child: Text('Make Payment'),
+                      child: Text(Languages.makePayment),
                     ),
                   ),
                 ]),

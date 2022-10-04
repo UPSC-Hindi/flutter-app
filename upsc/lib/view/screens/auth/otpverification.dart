@@ -13,6 +13,7 @@ import 'package:upsc/models/auth/resendotp.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/languagescreen.dart';
 
 class Otpverification extends StatefulWidget {
   String? number;
@@ -217,7 +218,11 @@ class _OtpverificationState extends State<Otpverification> {
         );
       });
       if (response.status!) {
-        Navigator.of(context).pushNamed('languagescreen');
+         SharedPreferenceHelper.setString(Preferences.access_token,response.data!.accessToken);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => LanguageScreen(isLogin: false),
+          ),
+        );
       } else {
         Fluttertoast.showToast(
           msg: '${response.msg}',

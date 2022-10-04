@@ -1,38 +1,41 @@
 class VerifyMobileNumber {
   bool? status;
-  String? msg;
   Data? data;
+  String? msg;
 
-  VerifyMobileNumber({this.status, this.msg, this.data});
+  VerifyMobileNumber({this.status, this.data, this.msg});
 
   VerifyMobileNumber.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    msg = json['msg'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
-    data['msg'] = msg;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
+    data['msg'] = msg;
     return data;
   }
 }
 
 class Data {
+  String? accessToken;
   String? username;
 
-  Data({this.username});
+  Data({this.accessToken, this.username});
 
   Data.fromJson(Map<String, dynamic> json) {
+    accessToken = json['access_token'];
     username = json['username'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
+    data['access_token'] = accessToken;
     data['username'] = username;
     return data;
   }

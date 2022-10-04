@@ -5,13 +5,16 @@ import 'package:upsc/features/data/const_data.dart';
 
 
 class CoursesService{
-  Future<Response> getCourses(String token,String filter,String type) async {
+  Future<Response> getCourses(String filter,String type) async {
     try {
-      var _courseUrl = '${Apis.getCoursesFilter}?$type=$filter';
-      var response = await dioAuthorizationData(token
-      ).get('${Apis.baseUrl}$_courseUrl');
+      var courseUrl = '${Apis.getCoursesFilter}?$type=$filter';
+      var response = await dioAuthorizationData(
+      ).get('${Apis.baseUrl}$courseUrl');
+
+      print('${Apis.baseUrl}$courseUrl');
       return response;
     } catch (e) {
+      print(e);
       rethrow;
     }
   }
