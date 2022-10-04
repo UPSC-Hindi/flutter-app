@@ -28,6 +28,8 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
+  bool _passwordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +69,7 @@ class _SignUpState extends State<SignUp> {
                   key: _formkey,
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -77,13 +79,13 @@ class _SignUpState extends State<SignUp> {
                             fontSize: 30,
                             fontWeight: FontWeight.bold),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             border: OutlineInputBorder(
                                 borderSide: const BorderSide(
@@ -93,8 +95,8 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextField(
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
@@ -102,7 +104,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _numberController,
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             border: OutlineInputBorder(
                                 borderSide: const BorderSide(
@@ -113,13 +115,13 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextField(
                           controller: _nameController,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             border: OutlineInputBorder(
                                 borderSide: const BorderSide(
@@ -129,27 +131,40 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: TextField(
-                          obscureText: true,
+                          obscureText: _passwordVisible,
                           controller: _passwordController,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             border: OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Colors.blueAccent, width: 32.0),
                                 borderRadius: BorderRadius.circular(10.0)),
-                            suffixIcon:
-                                const Icon(Icons.remove_red_eye_outlined),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: ColorResources.gray,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
                             labelText: 'Password',
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.60,
@@ -175,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
                       Row(
                         children: const [
@@ -199,20 +214,20 @@ class _SignUpState extends State<SignUp> {
                           Container(
                             height: 50,
                             width: 50,
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: SvgPicture.asset(SvgImages.google),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Container(
                             height: 50,
                             width: 50,
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
@@ -221,13 +236,13 @@ class _SignUpState extends State<SignUp> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 30,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Create an account?'),
+                          const Text('Create an account?'),
                           TextButton(
                               onPressed: () {
                                 Navigator.of(context).popAndPushNamed('SignIn');

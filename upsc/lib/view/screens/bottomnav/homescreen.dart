@@ -1,14 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/view/bloc/video/video_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 
-import '../../bloc/video/video_bloc.dart';
+
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({Key? key}) : super(key: key);
@@ -75,7 +75,7 @@ class HomeScreens extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Text(
-                'Learn About',
+                Languages.learnAbout,
                 style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
@@ -242,9 +242,9 @@ class HomeScreens extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
+              padding:  EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
-                'NCERT Batches',
+                Languages.ncertBatches,
                 style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
@@ -275,7 +275,7 @@ class HomeScreens extends StatelessWidget {
                           children: [
                             Image.asset(SvgImages.youtube),
                             Text(
-                              'On YouTube',
+                              Languages.youTube,
                               style: GoogleFonts.poppins(),
                             )
                           ],
@@ -292,7 +292,7 @@ class HomeScreens extends StatelessWidget {
                       children: [
                         Image.asset(SvgImages.telegram),
                         Text(
-                          'On Telegram',
+                          Languages.telegram,
                           style: GoogleFonts.poppins(),
                         )
                       ],
@@ -304,7 +304,7 @@ class HomeScreens extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
-                'Latest News',
+                Languages.latestNews,
                 style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),

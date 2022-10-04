@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 
 class DownloadScreen extends StatelessWidget {
   const DownloadScreen({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class DownloadScreen extends StatelessWidget {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Downloads',
+          Languages.download,
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
@@ -24,10 +25,10 @@ class DownloadScreen extends StatelessWidget {
                   indicatorColor: ColorResources.buttoncolor,
                   unselectedLabelColor: ColorResources.gray,
                   labelColor: ColorResources.buttoncolor,
-                  tabs: const [
-                    Tab(text: "Videos"),
-                    Tab(text: "Test Series"),
-                    Tab(text: "Resources"),
+                  tabs: [
+                    Tab(text: Languages.video),
+                    Tab(text: Languages.testSeries),
+                    Tab(text: Languages.resources),
                   ]),
             ),
             Expanded(

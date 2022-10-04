@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 
 class ProfilScreen extends StatelessWidget {
   const ProfilScreen({Key? key}) : super(key: key);
@@ -72,13 +73,13 @@ class ProfilScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Personal Information',
-                            style: TextStyle(
+                            Languages.personalInformation,
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text('Edit Phone, Email, Profile Name')
+                          Text(Languages.editProfile)
                         ],
                       ),
                       Icon(Icons.arrow_forward_ios)
@@ -112,13 +113,13 @@ class ProfilScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Test Series',
+                          Languages.yourTestSeries,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text('See your enrolled tests')
+                        Text(Languages.seeYourEnrollCourses)
                       ],
                     ),
                     Icon(Icons.arrow_forward_ios)
@@ -151,13 +152,13 @@ class ProfilScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Courses',
+                          Languages.courses,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text('See your enrolled courses')
+                        Text(Languages.seeYourEnrollCourses)
                       ],
                     ),
                     Icon(Icons.arrow_forward_ios)
@@ -183,7 +184,7 @@ class ProfilScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children: const [
                     Icon(Icons.logout),
                     Text(
                       'Logout',

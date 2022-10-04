@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/models/course_model.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/coursesdetails.dart';
 
@@ -28,20 +28,20 @@ class _CourseScreenState extends State<CourseScreen> {
                   indicatorColor: ColorResources.buttoncolor,
                   labelColor: ColorResources.buttoncolor,
                   unselectedLabelColor: Colors.black,
-                  tabs: const [
-                    Tab(text: "Prelims"),
-                    Tab(text: "Mains"),
-                    Tab(text: "Interview"),
-                    Tab(text: "RO"),
+                  tabs: [
+                    Tab(text: Languages.prelims),
+                    Tab(text: Languages.mains),
+                    Tab(text: Languages.interview),
+                    Tab(text: Languages.ro),
                   ]),
             ),
             Expanded(
               child: TabBarView(children: [
-                const TabCoursesWidget(
-                  type: 'Prelims',
+                TabCoursesWidget(
+                  filter: 'Prelims',
                 ),
-                const TabCoursesWidget(
-                  type: 'Mains',
+                TabCoursesWidget(
+                  filter: 'Mains',
                 ),
                 SingleChildScrollView(
                   child: Column(children: const [
@@ -65,9 +65,9 @@ class _CourseScreenState extends State<CourseScreen> {
 class TabCoursesWidget extends StatefulWidget {
   const TabCoursesWidget({
     Key? key,
-    required this.type,
+    required this.filter,
   }) : super(key: key);
-  final String type;
+  final String filter;
 
   @override
   State<TabCoursesWidget> createState() => _TabCoursesWidgetState();
@@ -77,8 +77,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
   initState() {
     context.read<CoursesBloc>().add(
-          GetCourses(filter: widget.type, type: 'Category'),
-        );
+       GetCourses(filter: widget.filter, type: 'Category'),
+    );
     super.initState();
   }
 
@@ -87,9 +87,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
     return BlocBuilder<CoursesBloc, CoursesState>(
       builder: (context, state) {
         if (state is CoursesLoading) {
-          return Center(
-            child: const CircularProgressIndicator(),
-          );
+          return const Center(
+             child: CircularProgressIndicator(),);
         }
         if (state is CoursesSuccess) {
           return _bodyWidget(state.courseList);
@@ -107,11 +106,11 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Courses',
-                style: GoogleFonts.poppins(fontSize: 24),
+                style: TextStyle(fontSize: 24),
               ),
             ),
             GridView.builder(
@@ -151,8 +150,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         children: [
           Text(
             data.batchName,
-            style:
-                GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 10,
@@ -161,29 +159,29 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: [
-                  Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
+                children: const [
+                  Icon(Icons.sensors_outlined),
                   Text(
                     'Live lectures',
-                    style: GoogleFonts.poppins(fontSize: 8),
+                    style: TextStyle(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: [
+                children: const [
                   Icon(Icons.signal_cellular_alt),
                   Text(
                     '100% Online',
-                    style: GoogleFonts.poppins(fontSize: 8),
+                    style: TextStyle(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: [
+                children: const [
                   Icon(Icons.download),
                   Text(
                     'Downloadable',
-                    style: GoogleFonts.poppins(fontSize: 8),
+                    style: TextStyle(fontSize: 8),
                   )
                 ],
               )
@@ -197,16 +195,15 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             children: [
               Text(
                 data.charges,
-                style: GoogleFonts.poppins(
-                    fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Container(
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: ColorResources.greenshad),
                 child: Text(
                   'Aid Available',
-                  style: GoogleFonts.poppins(
-                      fontSize: 8, color: ColorResources.textWhite),
+                  style:
+                  TextStyle(fontSize: 8, color: ColorResources.textWhite),
                 ),
               )
             ],
@@ -219,14 +216,15 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => BlocProvider(
-                    create: (context) => CoursesBloc(),
-                    child: CoursesDetailsScreens(
-                      id: data.id,
-                      buycourses: true,
-                      coursename: "Saurabh",
-                    ),
-                  ),
+                  builder: (context) =>
+                      BlocProvider(
+                        create: (context) => CoursesBloc(),
+                        child: CoursesDetailsScreens(
+                          id: data.id,
+                          buycourses: true,
+                          coursename: "Saurabh",
+                        ),
+                      ),
                 ),
               );
             },

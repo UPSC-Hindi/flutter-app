@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
 import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
+import 'package:upsc/view/screens/languagescreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,19 +25,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
+      print(index);
       _selectedIndex = index;
     });
   }
 
   static final List _widgetOptions = [
-    HomeScreens(),
+    const HomeScreens(),
     BlocProvider(
       create: (context) => CoursesBloc(),
       child: const CourseScreen(),
     ),
-    mocktestscreen(),
-    ProfilScreen()
+    const mocktestscreen(),
+    const ProfilScreen()
   ];
+
+  String name = "temp";
+  @override
+  void initState() {
+    print('Is english');
+    print(isEnglish);
+    name = SharedPreferenceHelper.getString(Preferences.name)!;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 20, left: 30),
+              padding: const EdgeInsets.only(top: 10, left: 10),
               height: 100,
               width: double.infinity,
               decoration: BoxDecoration(
@@ -74,13 +87,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const Icon(
                     Icons.account_circle,
-                    size: 40,
+                    size: 60,
                     color: Colors.white,
                   ),
-                  Text(
-                    'Pratik Gaur',
-                    style: GoogleFonts.poppins(
-                        color: ColorResources.textWhite, fontSize: 30),
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.clip,
+                      maxLines: 2,
+                      style: GoogleFonts.poppins(
+                          height: 1,
+                          color: ColorResources.textWhite,
+                          fontSize: 25),
+                    ),
                   ),
                 ],
               ),
@@ -91,18 +111,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pop();
+                      // setState(() {
+                      //   _selectedIndex = 3;
+                      // });
                     },
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.info),
-                          SizedBox(
+                          const Icon(Icons.info),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'About Us',
+                            Languages.aboutUs,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -115,15 +138,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.of(context).popAndPushNamed('downloadScreen'),
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.download_rounded),
-                          SizedBox(
+                          const Icon(Icons.download_rounded),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Your Downloads',
+                            Languages.yourDownloads,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -137,15 +160,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.shopping_cart),
-                          SizedBox(
+                          const Icon(Icons.shopping_cart),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Cart',
+                            Languages.myCart,
                             style: GoogleFonts.poppins(fontSize: 20),
                           ),
                         ],
@@ -159,15 +182,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.list),
-                          SizedBox(
+                          const Icon(Icons.list),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Orders',
+                            Languages.myOrders,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -181,15 +204,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.menu_book),
-                          SizedBox(
+                          const Icon(Icons.menu_book),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Courses',
+                            Languages.myCourses,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -203,15 +226,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.event_available_rounded),
-                          SizedBox(
+                          const Icon(Icons.event_available_rounded),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Schedule',
+                            Languages.mySchedule,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -220,20 +243,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const Divider(),
                   GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).popAndPushNamed(
-                            'resourcesscreen'),
+                    onTap: () => Navigator.of(context)
+                        .popAndPushNamed('resourcesscreen'),
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(CupertinoIcons.layers),
-                          SizedBox(
+                          const Icon(CupertinoIcons.layers),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Resources',
+                            Languages.resources,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -247,15 +269,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Icon(Icons.help_outlined),
-                          SizedBox(
+                          const Icon(Icons.help_outlined),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Help & Support',
+                            Languages.helpAndSupport,
                             style: GoogleFonts.poppins(fontSize: 20),
                           )
                         ],
@@ -265,35 +287,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Divider(),
                   Padding(
                     padding:
-                    const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                        const EdgeInsets.only(left: 30, top: 10, bottom: 10),
                     child: Row(
                       children: [
-                        Icon(CupertinoIcons.reply),
-                        SizedBox(
+                        const Icon(CupertinoIcons.reply),
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          'Share App',
+                          Languages.shareApp,
                           style: GoogleFonts.poppins(fontSize: 20),
                         )
                       ],
                     ),
                   ),
                   const Divider(),
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                    child: Row(
-                      children: [
-                        Icon(CupertinoIcons.settings),
-                        SizedBox(
-                          width: 10,
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LanguageScreen(
+                            isLogin: true,
+                          ),
                         ),
-                        Text(
-                          'Settings',
-                          style: GoogleFonts.poppins(fontSize: 20),
-                        )
-                      ],
+                      );
+                    },
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                      child: Row(
+                        children: [
+                          const Icon(CupertinoIcons.settings),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            Languages.setting,
+                            style: GoogleFonts.poppins(fontSize: 20),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Divider(),
@@ -315,11 +350,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10)),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.logout,
                         color: Colors.redAccent,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
@@ -341,13 +376,15 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.book), label: 'Courses'),
+              icon: const Icon(Icons.home), label: Languages.home),
           BottomNavigationBarItem(
-              icon: Icon(Icons.book_rounded), label: 'Mock Tests'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+              icon: const Icon(CupertinoIcons.book), label: Languages.courses),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.book_rounded), label: Languages.mockTest),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.person), label: Languages.profile),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: ColorResources.buttoncolor,

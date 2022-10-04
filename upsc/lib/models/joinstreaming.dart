@@ -1,42 +1,24 @@
 class JoinStreaming {
   bool? status;
-  Data? data;
+  String? rtcToken;
+  String? rtmToke;
   String? msg;
 
-  JoinStreaming({this.status, this.data, this.msg});
+  JoinStreaming({this.status, this.rtcToken, this.rtmToke, this.msg});
 
   JoinStreaming.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    rtcToken = json['RtcToken'];
+    rtmToke = json['RtmToke'];
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['msg'] = msg;
-    return data;
-  }
-}
-
-class Data {
-  String? rtcToken;
-  String? rtmToke;
-
-  Data({this.rtcToken, this.rtmToke});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    rtcToken = json['RtcToken'];
-    rtmToke = json['RtmToke'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['RtcToken'] = rtcToken;
-    data['RtmToke'] = rtmToke;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['RtcToken'] = this.rtcToken;
+    data['RtmToke'] = this.rtmToke;
+    data['msg'] = this.msg;
     return data;
   }
 }

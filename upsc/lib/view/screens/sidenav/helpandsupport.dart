@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
+
 
 class HelpAndSupport extends StatelessWidget {
   const HelpAndSupport({Key? key}) : super(key: key);
@@ -11,7 +13,7 @@ class HelpAndSupport extends StatelessWidget {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         backgroundColor: Colors.white,
         title: Text(
-          'Help & Support',
+          Languages.helpAndSupport,
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
       ),
@@ -21,7 +23,7 @@ class HelpAndSupport extends StatelessWidget {
             height: 50,
           ),
           Text(
-            'Feel free to message us at',
+            Languages.freeMessage,
             style: GoogleFonts.poppins(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -47,7 +49,7 @@ class HelpAndSupport extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Mail us at',
+                    Languages.emailText,
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                     ),
@@ -60,7 +62,7 @@ class HelpAndSupport extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Phone',
+                    Languages.phoneText,
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                     ),
@@ -76,7 +78,7 @@ class HelpAndSupport extends StatelessWidget {
                     Icons.whatsapp,
                     size: 60,
                   ),
-                  Text('Whatsapp Us!'),
+                  Text(Languages.whatsApp),
                   SizedBox(height: 20),
                   Container(
                     width: double.infinity * 0.40,

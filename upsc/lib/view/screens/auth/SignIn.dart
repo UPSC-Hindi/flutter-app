@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +25,8 @@ class loginscreen extends StatefulWidget {
 class _loginscreenState extends State<loginscreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool _passwordVisible = false;
   @override
   void dispose() {
     emailController.dispose();
@@ -78,8 +82,8 @@ class _loginscreenState extends State<loginscreen> {
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
                         controller: emailController,
                         style: const TextStyle(fontSize: 20),
@@ -94,10 +98,10 @@ class _loginscreenState extends State<loginscreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
-                        obscureText: true,
+                        obscureText: _passwordVisible,
                         controller: passwordController,
                         style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
@@ -107,7 +111,21 @@ class _loginscreenState extends State<loginscreen> {
                               borderSide: const BorderSide(
                                   color: Colors.blueAccent, width: 32.0),
                               borderRadius: BorderRadius.circular(10.0)),
-                          suffixIcon: const Icon(Icons.remove_red_eye_outlined),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: ColorResources.gray,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
                           labelText: 'Password',
                         ),
                       ),
@@ -146,7 +164,7 @@ class _loginscreenState extends State<loginscreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
                     Row(
                       children: [
@@ -165,7 +183,7 @@ class _loginscreenState extends State<loginscreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +214,7 @@ class _loginscreenState extends State<loginscreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -212,8 +230,8 @@ class _loginscreenState extends State<loginscreen> {
                             child: Text(
                               ' Register',
                               style: GoogleFonts.poppins(
-                                  color: ColorResources.buttoncolor,
-                                  fontWeight: FontWeight.w900),
+                                color: ColorResources.buttoncolor,
+                              ),
                             ))
                       ],
                     ),
@@ -245,9 +263,17 @@ class _loginscreenState extends State<loginscreen> {
       });
       if (response.status!) {
         await SharedPreferenceHelper.setString(
-            Preferences.access_token, response.data!.accessToken!);
+            Preferences.access_token, response.data!.accessToken);
         await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
-        
+        await SharedPreferenceHelper.setString(
+            Preferences.language, response.data!.language);
+        await SharedPreferenceHelper.setString(
+            Preferences.name, response.data!.fullName);
+        await SharedPreferenceHelper.setString(
+            Preferences.phoneNUmber, response.data!.phoneNumber);
+        await SharedPreferenceHelper.setString(
+            Preferences.email, response.data!.email);
+
         print(await SharedPreferenceHelper.getString(Preferences.access_token)
                 .toString() +
             '*' * 200);

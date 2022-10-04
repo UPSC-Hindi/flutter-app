@@ -11,7 +11,10 @@ class Apis {
   static const String passwordverifyotp = "authentication/reset";
   static const String passwordotpresend = "authentication/resendotp";
   static const String resetpassword = "authentication/resetpassword";
-    static const String getCoursesFilter = "adminPanel/getBatchesDetails";
+  static const String getCoursesFilter = "adminPanel/getBatchesDetails";
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
-  static const String  joinmeeting = "Streaming/JoinMeetingRTCAndRTMToken";
+  static const String joinmeeting = "Streaming/JoinMeetingRTCAndRTMToken";
+  static const String getResources = "adminPanel/ResourceDetails";
+  static const String putUserStream = 'authentication/updateUserStream';
+  static const String putUserLanguage = 'authentication/updateUserLanguage';
 }

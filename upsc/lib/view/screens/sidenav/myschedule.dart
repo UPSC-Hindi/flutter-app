@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 
 class MySchedule extends StatefulWidget {
   const MySchedule({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _MyScheduleState extends State<MySchedule> {
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
-        title: Text('My Schedule',
+        title: Text(Languages.mySchedule,
             style: GoogleFonts.poppins(color: ColorResources.textblack)),
       ),
       body: Container(
@@ -36,7 +37,7 @@ class _MyScheduleState extends State<MySchedule> {
           ),
           Text(
             datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
-                ? 'Schedule for Today'
+                ? Languages.scheduleForToday
                 : "Schedule for",
             style: GoogleFonts.poppins(fontSize: 20),
           ),

@@ -1,10 +1,27 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/joinStreaming.dart';
 
-class CourseViewScreen extends StatelessWidget {
+class CourseViewScreen extends StatefulWidget {
   const CourseViewScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CourseViewScreen> createState() => _CourseViewScreenState();
+}
+
+class _CourseViewScreenState extends State<CourseViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -219,15 +236,85 @@ class CourseViewScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: ColorResources.buttoncolor,
-          onPressed: () async{
+          onPressed: () async {
             await [Permission.camera, Permission.microphone].request();
-            Navigator.of(context).pushNamed('joinstreaming');
+            callApiJoinStreamingScreen();
+            //Navigator.of(context).pushNamed('joinstreaming');
           },
           child: Center(
             child: Column(
-              children: [Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,), Text('live')],
+              children: [Icon(Icons.sensors_outlined), Text('live')],
             ),
           ),
         ));
+  }
+
+  Future<BaseModel<JoinStreaming>> callApiJoinStreamingScreen() async {
+    JoinStreaming response;
+    var random = Random();
+    String channelName = "Lecture 1";
+    int uid = random.nextInt(999); //= 123;
+    Map<String, dynamic> body = {
+      "channelName": channelName,
+      "expireTime": "3600",
+      "tokentype": "uid",
+      "Stream_title": "Mahadeva@12546987",
+      "account": "askd",
+      "Description": "A new Meeting",
+      "uid": uid.toString()
+    };
+    setState(() {
+      Preferences.onLoading(context);
+    });
+    try {
+      print(uid);
+      String acess_token =
+          SharedPreferenceHelper.getString(Preferences.access_token).toString();
+      response = await RestClient(RetroApi().dioData(acess_token))
+          .joinmeetingRequest(body);
+
+      if (response.status!) {
+        print(response.rtmToke);
+        print(response.rtcToken);
+        setState(() {
+          Preferences.hideDialog(context);
+        });
+        print(channelName);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => JoinStreamingScreen(
+                rtctoken: response.rtcToken!,
+                rtmtoken: response.rtmToke!,
+                uid: uid,
+                channelName: channelName),
+          ),
+        );
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+        setState(() {
+          Preferences.hideDialog(context);
+        });
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }

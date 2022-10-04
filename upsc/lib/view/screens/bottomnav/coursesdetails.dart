@@ -8,11 +8,11 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 
 class CoursesDetailsScreens extends StatefulWidget {
-  final bool? buycourses;
-  final String? coursename;
+  bool? buycourses;
+  String? coursename;
   final String id;
 
-  const CoursesDetailsScreens(
+  CoursesDetailsScreens(
       {Key? key, this.buycourses, this.coursename, required this.id})
       : super(key: key);
 
@@ -117,7 +117,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             ]),
                             Row(children: [
                               Icon(
-                                Icons.sensors_outlined,color: ColorResources.buttoncolor,
+                                Icons.sensors_outlined,
                               ),
                               Text(' Live Access')
                             ]),
