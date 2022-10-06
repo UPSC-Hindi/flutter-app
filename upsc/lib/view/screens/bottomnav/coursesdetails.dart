@@ -365,4 +365,5 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       ),
     );
   }
+  
 }
