@@ -12,9 +12,8 @@ class ResourcesScreen extends StatefulWidget {
 }
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
-
   @override
-  initState(){
+  initState() {
     context.read<ResourcesBloc>().add(const GetResources(filter: ''));
     super.initState();
   }
@@ -36,9 +35,11 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             return const Text('Something went wrong');
           }
           if (state is ResourcesSuccess) {
-            List<ResourcesDataModel> resourcesList = state.resources.data;
-            if(resourcesList.isEmpty){
-              return const Center(child: Text('There Is no Resources'),);
+            List<Data> resourcesList = state.resources.data!;
+            if (resourcesList.isEmpty) {
+              return const Center(
+                child: Text('There Is no Resources'),
+              );
             }
             return GridView.count(
               mainAxisSpacing: 10.0,

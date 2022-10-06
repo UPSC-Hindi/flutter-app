@@ -16,7 +16,7 @@ class VideoLoadingState extends VideoState{
 class YoutubeVideoSuccess extends VideoState{
   final List<VideoModel> videoData;
 
-  YoutubeVideoSuccess({required this.videoData});
+  const YoutubeVideoSuccess({required this.videoData});
   @override
   List<Object?> get props => [videoData];
 

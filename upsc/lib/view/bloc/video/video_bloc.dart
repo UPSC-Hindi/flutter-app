@@ -6,8 +6,6 @@ import 'package:upsc/services/video_services.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
-
-
 part 'video_event.dart';
 
 part 'video_state.dart';

@@ -1,108 +1,117 @@
-
 class ResourcesModel {
-  ResourcesModel({
-    required this.status,
-    required this.data,
-    required this.msg,
-  });
+  bool? status;
+  List<Data>? data;
+  String? msg;
 
-  final bool status;
-  final List<ResourcesDataModel> data;
-  final String msg;
+  ResourcesModel({this.status, this.data, this.msg});
 
-  factory ResourcesModel.fromJson(Map<String, dynamic> json) => ResourcesModel(
-    status: json["status"],
-    data: List<ResourcesDataModel>.from(json["data"].map((x) => ResourcesDataModel.fromJson(x))),
-    msg: json["msg"],
-  );
+  ResourcesModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
+    msg = json['msg'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "msg": msg,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data['msg'] = msg;
+    return data;
+  }
 }
 
-class ResourcesDataModel {
-  ResourcesDataModel({
-    required this.id,
-    required this.user,
-    required this.category,
-    required this.subject,
-    required this.title,
-    required this.fileUrl,
-    required this.language,
-    required this.isActive,
-    required this.v,
-  });
+class Data {
+  String? sId;
+  String? user;
+  Category? category;
+  String? subject;
+  String? title;
+  String? fileUrl;
+  String? language;
+  int? iV;
+  bool? isActive;
 
-  final String id;
-  final String user;
-  final Category category;
-  final String subject;
-  final String title;
-  final String fileUrl;
-  final String language;
-  final String isActive;
-  final int v;
+  Data(
+      {this.sId,
+      this.user,
+      this.category,
+      this.subject,
+      this.title,
+      this.fileUrl,
+      this.language,
+      this.iV,
+      this.isActive});
 
-  factory ResourcesDataModel.fromJson(Map<String, dynamic> json) => ResourcesDataModel(
-    id: json["_id"],
-    user: json["user"],
-    category: Category.fromJson(json["category"]),
-    subject: json["subject"],
-    title: json["title"],
-    fileUrl: json["file_url"],
-    language: json["language"],
-    isActive: json["is_active"],
-    v: json["__v"],
-  );
+  Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    user = json['user'];
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
+    subject = json['subject'];
+    title = json['title'];
+    fileUrl = json['file_url'];
+    language = json['language'];
+    iV = json['__v'];
+    isActive = json['is_active'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user": user,
-    "category": category.toJson(),
-    "subject": subject,
-    "title": title,
-    "file_url": fileUrl,
-    "language": language,
-    "is_active": isActive,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['user'] = user;
+    if (category != null) {
+      data['category'] = category!.toJson();
+    }
+    data['subject'] = subject;
+    data['title'] = title;
+    data['file_url'] = fileUrl;
+    data['language'] = language;
+    data['__v'] = iV;
+    data['is_active'] = isActive;
+    return data;
+  }
 }
 
 class Category {
-  Category({
-    required this.id,
-    required this.title,
-    required this.isActive,
-    required this.createdAt,
-    required this.user,
-    required this.v,
-  });
+  String? sId;
+  String? title;
+  bool? isActive;
+  String? createdAt;
+  String? user;
+  int? iV;
 
-  final String id;
-  final String title;
-  final bool isActive;
-  final String createdAt;
-  final String user;
-  final int v;
+  Category(
+      {this.sId,
+      this.title,
+      this.isActive,
+      this.createdAt,
+      this.user,
+      this.iV});
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["_id"],
-    title: json["title"],
-    isActive: json["is_active"],
-    createdAt: json["created_at"],
-    user: json["user"],
-    v: json["__v"],
-  );
+  Category.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    title = json['title'];
+    isActive = json['is_active'];
+    createdAt = json['created_at'];
+    user = json['user'];
+    iV = json['__v'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "title": title,
-    "is_active": isActive,
-    "created_at": createdAt,
-    "user": user,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['title'] = title;
+    data['is_active'] = isActive;
+    data['created_at'] = createdAt;
+    data['user'] = user;
+    data['__v'] = iV;
+    return data;
+  }
 }
