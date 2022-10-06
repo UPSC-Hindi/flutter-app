@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpAndSupport extends StatelessWidget {
   const HelpAndSupport({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class HelpAndSupport extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Text(
@@ -29,12 +29,12 @@ class HelpAndSupport extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 30),
+              padding: const EdgeInsets.symmetric(vertical: 30),
               width: MediaQuery.of(context).size.width * 0.80,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
@@ -43,11 +43,11 @@ class HelpAndSupport extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.email,
                     size: 30,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     Languages.emailText,
                     style: GoogleFonts.poppins(
@@ -55,12 +55,12 @@ class HelpAndSupport extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'upschindi@xyzmail.com',
+                    'upschindi4cse@gmail.com',
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     Languages.phoneText,
                     style: GoogleFonts.poppins(
@@ -68,27 +68,42 @@ class HelpAndSupport extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '+91 9999 999 999',
+                    '+91  951 978 0078',
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Icon(
+                  const SizedBox(height: 10),
+                  const Icon(
                     Icons.whatsapp,
                     size: 60,
                   ),
                   Text(Languages.whatsApp),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     width: double.infinity * 0.40,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.facebook),
-                        Icon(Icons.tab_sharp),
-                        Icon(Icons.linked_camera_outlined)
+                        GestureDetector(
+                            onTap: () {
+                              launchUrl(Uri.parse(
+                                  "https://www.facebook.com/UPSCHINDI4CSE"));
+                            },
+                            child: Icon(Icons.facebook)),
+                        GestureDetector(
+                            onTap: () {
+                              launchUrl(Uri.parse(
+                                  "https://twitter.com/upschindi4cse"));
+                            },
+                            child: Icon(Icons.tab_sharp)),
+                        GestureDetector(
+                            onTap: () {
+                              launchUrl(Uri.parse(
+                                  "https://www.instagram.com/upschindi4cse"));
+                            },
+                            child: Icon(Icons.linked_camera_outlined))
                       ],
                     ),
                   ),

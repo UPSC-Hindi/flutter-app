@@ -12,7 +12,7 @@ class CoursesInitial extends CoursesState {
 class CoursesSuccess extends CoursesState {
   final List<CourseModel> courseList;
 
-  CoursesSuccess({required this.courseList});
+   CoursesSuccess({required this.courseList});
   @override
   List<Object> get props => [courseList];
 }

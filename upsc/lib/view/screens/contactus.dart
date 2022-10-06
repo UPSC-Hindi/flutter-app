@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({Key? key}) : super(key: key);
@@ -94,7 +95,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       ),
                     ),
                     Text(
-                      'upschindi@xyzmail.com',
+                      'upschindi4cse@gmail.com',
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                       ),
@@ -106,10 +107,13 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         fontSize: 20,
                       ),
                     ),
-                    Text(
-                      '+91 9999 999 999',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        '+91 951 978 0078',
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -125,9 +129,24 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.facebook),
-                          Icon(Icons.tab_sharp),
-                          Icon(Icons.linked_camera_outlined)
+                          GestureDetector(
+                              onTap: () {
+                                launchUrl(Uri.parse(
+                                    "https://www.facebook.com/UPSCHINDI4CSE"));
+                              },
+                              child: Icon(Icons.facebook)),
+                          GestureDetector(
+                              onTap: () {
+                                launchUrl(Uri.parse(
+                                    "https://twitter.com/upschindi4cse"));
+                              },
+                              child: Icon(Icons.tab_sharp)),
+                          GestureDetector(
+                              onTap: () {
+                                launchUrl(Uri.parse(
+                                    "https://www.instagram.com/upschindi4cse"));
+                              },
+                              child: Icon(Icons.linked_camera_outlined))
                         ],
                       ),
                     ),

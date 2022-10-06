@@ -35,7 +35,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     Tab(text: Languages.ro),
                   ]),
             ),
-            Expanded(
+            const Expanded(
               child: TabBarView(children: [
                 TabCoursesWidget(
                   filter: 'Prelims',
@@ -43,15 +43,11 @@ class _CourseScreenState extends State<CourseScreen> {
                 TabCoursesWidget(
                   filter: 'Mains',
                 ),
-                SingleChildScrollView(
-                  child: Column(children: const [
-                    Text('Mock Interview     '),
-                    SizedBox(height: 300),
-                    Text('Script')
-                  ]),
+                Center(
+                  child: Text("Update will come soon......"),
                 ),
-                const Center(
-                  child: Text("ro"),
+                Center(
+                  child: Text("Update will come soon......"),
                 ),
               ]),
             )
@@ -77,8 +73,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
   initState() {
     context.read<CoursesBloc>().add(
-       GetCourses(filter: widget.filter, type: 'Category'),
-    );
+          GetCourses(filter: widget.filter, type: 'Category'),
+        );
     super.initState();
   }
 
@@ -88,7 +84,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
       builder: (context, state) {
         if (state is CoursesLoading) {
           return const Center(
-             child: CircularProgressIndicator(),);
+            child: CircularProgressIndicator(),
+          );
         }
         if (state is CoursesSuccess) {
           return _bodyWidget(state.courseList);
@@ -150,7 +147,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         children: [
           Text(
             data.batchName,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 10,
@@ -195,7 +192,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             children: [
               Text(
                 data.charges,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Container(
                 padding: const EdgeInsets.all(5.0),
@@ -203,7 +201,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 child: Text(
                   'Aid Available',
                   style:
-                  TextStyle(fontSize: 8, color: ColorResources.textWhite),
+                      TextStyle(fontSize: 8, color: ColorResources.textWhite),
                 ),
               )
             ],
@@ -216,15 +214,14 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) =>
-                      BlocProvider(
-                        create: (context) => CoursesBloc(),
-                        child: CoursesDetailsScreens(
-                          id: data.id,
-                          buycourses: true,
-                          coursename: "Saurabh",
-                        ),
-                      ),
+                  builder: (context) => BlocProvider(
+                    create: (context) => CoursesBloc(),
+                    child: CoursesDetailsScreens(
+                      id: data.id,
+                      buycourses: true,
+                      coursename: data.batchName,
+                    ),
+                  ),
                 ),
               );
             },

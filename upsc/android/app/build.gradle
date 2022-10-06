@@ -33,6 +33,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        //Video
+        exclude 'lib/arm64-v8a/libagora_segmentation_extension.so'
+        exclude 'lib/arm64-v8a/libagora_fd_extension.so'
+        exclude 'lib/arm64-v8a/libagora_jnd_extension.so'
+        //Voice
+        exclude 'lib/arm64-v8a/libagora_ai_denoise_extension.so'
+        exclude 'lib/arm64-v8a/libagora_full_audio_format_extension.so'
+        exclude 'lib/arm64-v8a/libagora_spatial_audio_extension.so'
+        
+        //Video
+        exclude 'lib/armeabi-v7a/libagora_segmentation_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_fd_extension.so'
+        //Voice
+        exclude 'lib/armeabi-v7a/libagora_ai_denoise_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_full_audio_format_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_spatial_audio_extension.so'
+    }
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -55,6 +73,9 @@ android {
 
     buildTypes {
         release {
+            ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+        }
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug

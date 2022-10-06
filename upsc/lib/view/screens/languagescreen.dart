@@ -111,7 +111,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                 selected_course == 3 ? 'IAS' : 'PCS', token);
 
                             if (widget.isLogin) {
-                              isEnglish = selected == 2 ? false : true;
+                              Languages.isEnglish = selected == 2 ? false : true;
                               Languages.initState();
                               Navigator.popUntil(context, (route) => false);
                               Navigator.pushNamed(context, 'home');

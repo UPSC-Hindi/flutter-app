@@ -1,13 +1,12 @@
-import 'dart:async';
-import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:upsc/models/vidoe_model.dart';
 import 'package:upsc/services/video_services.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
-import '../../../models/vidoe_model.dart';
-import '../../../util/prefConstatnt.dart';
-import '../../../util/preference.dart';
+
 
 part 'video_event.dart';
 

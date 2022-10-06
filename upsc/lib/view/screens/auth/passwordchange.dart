@@ -89,7 +89,7 @@ class _PasswordChangeState extends State<PasswordChange> {
   Future<BaseModel<ResetPassword>> callApipasswordverifyotp() async {
     ResetPassword response;
     var userdata =
-        await SharedPreferenceHelper.read(Preferences.password_change_data);
+         SharedPreferenceHelper.getString(Preferences.password_change_data);
     print(userdata);
     Map<String, dynamic> body = {
       "email_phoneNumber": userdata,

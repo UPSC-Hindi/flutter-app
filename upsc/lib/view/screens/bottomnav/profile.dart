@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
 class ProfilScreen extends StatelessWidget {
   const ProfilScreen({Key? key}) : super(key: key);
@@ -33,12 +35,13 @@ class ProfilScreen extends StatelessWidget {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'Pratik Gaur',
-                          style: TextStyle(fontSize: 30),
+                          SharedPreferenceHelper.getString(Preferences.name)
+                              .toString(),
+                          style: const TextStyle(fontSize: 30),
                         ),
-                        Text('UPSC Aspirant')
+                        const Text('UPSC Aspirant')
                       ],
                     )
                   ],
@@ -67,7 +70,7 @@ class ProfilScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Icon(Icons.account_circle_outlined),
+                      const Icon(Icons.account_circle_outlined),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,12 +85,12 @@ class ProfilScreen extends StatelessWidget {
                           Text(Languages.editProfile)
                         ],
                       ),
-                      Icon(Icons.arrow_forward_ios)
+                      const Icon(Icons.arrow_forward_ios)
                     ],
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -107,14 +110,14 @@ class ProfilScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Icon(Icons.bookmark),
+                    const Icon(Icons.bookmark),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           Languages.yourTestSeries,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -122,50 +125,55 @@ class ProfilScreen extends StatelessWidget {
                         Text(Languages.seeYourEnrollCourses)
                       ],
                     ),
-                    Icon(Icons.arrow_forward_ios)
+                    const Icon(Icons.arrow_forward_ios)
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 80,
-                width: MediaQuery.of(context).size.width * 0.90,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorResources.textWhite,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5.0,
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Icon(Icons.auto_stories),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          Languages.courses,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('mycoursesscreen');
+                },
+                child: Container(
+                  height: 80,
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorResources.textWhite,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Icon(Icons.auto_stories),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Languages.courses,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Text(Languages.seeYourEnrollCourses)
-                      ],
-                    ),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
+                          Text(Languages.seeYourEnrollCourses)
+                        ],
+                      ),
+                      const Icon(Icons.arrow_forward_ios)
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(

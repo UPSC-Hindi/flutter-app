@@ -1,5 +1,5 @@
 class Apis {
-  static const String baseUrl = 'http://3.83.90.66:3000/api/v1/';
+  static const String baseUrl = 'https://upsc.trando.in/api/v1/';
   // Please don't remove "/api/v1".
 
   //user

@@ -1,6 +1,11 @@
-bool isEnglish = false;
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
 class Languages {
+  static bool isEnglish =
+      SharedPreferenceHelper.getString(Preferences.language)! == "English"
+          ? false
+          : true;
   static String learnAbout = '';
   static String ncertBatches = '';
   static String youTube = '';
@@ -62,7 +67,7 @@ class Languages {
   static String task = '';
   static String notifyAt = '';
   static String scheduleForEveryday = '';
-  static String scheduleFor='';
+  static String scheduleFor = '';
   static String addTask = '';
 
   //Help And Support
@@ -70,7 +75,6 @@ class Languages {
   static String emailText = '';
   static String phoneText = '';
   static String whatsApp = '';
-  
 
   static initState() {
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
