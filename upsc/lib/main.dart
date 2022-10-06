@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -37,10 +38,13 @@ import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
 void main() {
-  //Orientations 
+  //Orientations
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
-    (_) {
+    (_) async{
+      await SharedPreferenceHelper.init();
+      await Languages.initState();
       runApp(const MyApp());
     },
   );
@@ -52,7 +56,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SharedPreferenceHelper.init();
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -69,7 +72,9 @@ class MyApp extends StatelessWidget {
         'otpverification': (context) => Otpverification(
               number: '',
             ),
-        'languagescreen': (context) => const LanguageScreen(isLogin: false,),
+        'languagescreen': (context) => const LanguageScreen(
+              isLogin: false,
+            ),
         'notifications': (context) => const NotificationScreen(),
         'homescreen': (context) => const HomeScreen(),
         'Coursescreen': (context) => const CourseScreen(),
@@ -123,8 +128,12 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+        SharedPreferenceHelper.getBoolean(Preferences.is_logged_in).toString());
     return SplashScreenView(
-      navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)?const HomeScreen() : const loginscreen(),
+      navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)
+          ? const HomeScreen()
+          : const loginscreen(),
       duration: 30,
       //imageSize: 130,
       imageSrc: "assets/images/logo_Splash.jpg",

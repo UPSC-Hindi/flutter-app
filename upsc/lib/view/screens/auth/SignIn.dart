@@ -12,6 +12,7 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/login_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
@@ -267,6 +268,8 @@ class _loginscreenState extends State<loginscreen> {
         await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
         await SharedPreferenceHelper.setString(
             Preferences.language, response.data!.language);
+                  await Languages.initState();
+
         await SharedPreferenceHelper.setString(
             Preferences.name, response.data!.fullName);
         await SharedPreferenceHelper.setString(

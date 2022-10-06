@@ -183,8 +183,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
           //   ),
           // );
           Navigator.of(context).popAndPushNamed('passwordverified');
-          SharedPreferenceHelper.write(
-              Preferences.password_change_data, otpdatafor);
+          SharedPreferenceHelper.setString(
+              Preferences.password_change_data, otpdatafor!);
         } else {
           print('check');
         }

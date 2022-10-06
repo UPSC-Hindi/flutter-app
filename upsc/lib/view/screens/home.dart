@@ -44,8 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     print('Is english');
-    print(isEnglish);
+    print(Languages.isEnglish);
     name = SharedPreferenceHelper.getString(Preferences.name)!;
+    Languages.initState();
     super.initState();
   }
 
@@ -108,16 +109,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(children: [
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).pop();
-                      // setState(() {
-                      //   _selectedIndex = 3;
-                      // });
                     },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.info),
@@ -133,12 +134,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).popAndPushNamed('downloadScreen'),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).popAndPushNamed('downloadScreen');
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.download_rounded),
@@ -154,13 +159,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('cartscreen');
                     },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.shopping_cart),
@@ -176,13 +184,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('myordersscreen');
                     },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.list),
@@ -198,13 +209,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('mycoursesscreen');
                     },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.menu_book),
@@ -220,13 +234,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('MySchedule');
                     },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.event_available_rounded),
@@ -242,12 +259,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context)
-                        .popAndPushNamed('resourcesscreen'),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).popAndPushNamed('resourcesscreen');
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(CupertinoIcons.layers),
@@ -263,13 +284,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('helpandsupport');
                     },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(Icons.help_outlined),
@@ -285,25 +309,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Divider(),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                    child: Row(
-                      children: [
-                        const Icon(CupertinoIcons.reply),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          Languages.shareApp,
-                          style: GoogleFonts.poppins(fontSize: 20),
-                        )
-                      ],
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
+                      child: Row(
+                        children: [
+                          const Icon(CupertinoIcons.reply),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            Languages.shareApp,
+                            style: GoogleFonts.poppins(fontSize: 20),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Divider(),
-                  InkWell(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.pop(context);
                       Navigator.push(
                         context,
@@ -314,9 +344,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
                           const Icon(CupertinoIcons.settings),
@@ -342,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: 30, top: 10, bottom: 10, right: 30),
+                    left: 30, top: 0, bottom: 10, right: 30),
                 child: Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
