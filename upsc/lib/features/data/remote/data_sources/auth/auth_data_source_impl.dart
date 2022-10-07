@@ -21,7 +21,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<void> updateStream(String stream,String token) async {
     try {
-      Response response = await dioAuthorizationRefreshData(token).put(
+      Response response = await dioAuthorizationData().put(
         Apis.baseUrl + Apis.putUserLanguage,
         data: {'Stream': stream},
       );
@@ -29,6 +29,16 @@ class AuthDataSourceImpl implements AuthDataSource {
       // print(response);
     } catch (error) {
       print(error);
+    }
+  }
+
+  @override
+  Future<Response> logout() async{
+    try{
+      Response response = await dioAuthorizationData().post('${Apis.baseUrl}${Apis.logout}');
+      return response;
+    }catch(error){
+      rethrow;
     }
   }
 }

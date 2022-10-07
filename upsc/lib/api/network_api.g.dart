@@ -152,6 +152,21 @@ class _RestClient implements RestClient {
     final value = JoinStreaming.fromJson(_result.data!);
     return value;
   }
+  @override
+  addtocartRequest(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AddToCart>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.addtocart,
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = AddToCart.fromJson(_result.data!);
+    return value;
+  }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&

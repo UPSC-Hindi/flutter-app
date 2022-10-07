@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:upsc/api/api.dart';
+import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/models/auth/VerifyMobileNumber.dart';
 import 'package:upsc/models/auth/forgotpassword.dart';
@@ -44,4 +45,7 @@ abstract class RestClient {
   
   @POST(Apis.joinmeeting)
   Future<JoinStreaming> joinmeetingRequest(@Body() body);
+  
+  @POST(Apis.joinmeeting)
+  Future<AddToCart> addtocartRequest(@Body() body);
 }

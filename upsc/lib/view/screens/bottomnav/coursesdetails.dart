@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/models/AddToCart.dart';
+import 'package:upsc/models/auth/VerifyMobileNumber.dart';
 import 'package:upsc/models/course_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
-import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
 class CoursesDetailsScreens extends StatefulWidget {
   bool? buycourses;
@@ -32,29 +41,29 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       buycourse = widget.buycourses;
       coursename = widget.coursename;
     });
-    context.read<CoursesBloc>().add(GetCourses(filter: widget.id, type: 'id'));
+    context.read<ApiBloc>().add(GetCourses(filter: widget.id, type: 'id'));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoursesBloc, CoursesState>(
+    return BlocBuilder<ApiBloc, ApiState>(
       builder: (context, state) {
-        if (state is CoursesSuccess) {
+        if (state is ApiCoursesSuccess) {
           return _bodyWidget(context, state.courseList[0]);
         }
-        if (state is CoursesLoading) {
+        if (state is ApiError) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: Center(child: Text('Something Went Wrong')),
           );
         }
         return const Scaffold(
-          body: Center(child: Text('Something Went Wrong')),
+          body: Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Scaffold _bodyWidget(BuildContext context, CourseModel course) {
+  Scaffold _bodyWidget(BuildContext context, CourseDataModel course) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
@@ -332,7 +341,9 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                                 primary: ColorResources.buttoncolor,
                                 shape: const StadiumBorder()),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('cartscreen');
+                              callApiaddtocart(course);
+                              Navigator.of(context)
+                                  .popAndPushNamed('cartscreen');
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -365,5 +376,57 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       ),
     );
   }
-  
+
+  Future<BaseModel<AddToCart>> callApiaddtocart(
+      CourseDataModel course) async {
+    AddToCart response;
+    Map<String, dynamic> body = {
+      "batch_id": course.id,
+    };
+    setState(() {
+      Preferences.onLoading(context);
+    });
+    try {
+      var token =
+          SharedPreferenceHelper.getString(Preferences.auth_token).toString();
+      response = await RestClient(RetroApi().dioData(token))
+          .addtocartRequest(body);
+      setState(() {
+        Preferences.hideDialog(context);
+        print(response.msg);
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      });
+      if (response.status!) {
+        Navigator.of(context).popAndPushNamed('cartscreen');
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
 }

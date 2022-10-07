@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubePlayerWidget extends StatefulWidget {
-  const YoutubePlayerWidget({Key? key}) : super(key: key);
+  const YoutubePlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
 
+  final String videoUrl;
   @override
   State<YoutubePlayerWidget> createState() => _YoutubePlayerWidgetState();
 }
@@ -13,9 +13,9 @@ class _YoutubePlayerWidgetState extends State<YoutubePlayerWidget> {
   final videoUrl = 'https://youtu.be/YMx8Bbev6T4';
 
   late YoutubePlayerController _controller;
-
+  var fileName;
   @override
-  void initState() {
+  void initState(){
     // final videoId = YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=BBAyRBTfsOU");
     _controller = YoutubePlayerController(
       initialVideoId: 'iLnmTe5Q2Qw',
@@ -35,8 +35,10 @@ class _YoutubePlayerWidgetState extends State<YoutubePlayerWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(controller: _controller,
-        showVideoProgressIndicator: true,
+    return Container(
+      child: YoutubePlayer(controller: _controller,
+          showVideoProgressIndicator: true,
+      ),
     );
   }
 }
