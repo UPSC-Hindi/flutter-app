@@ -20,4 +20,11 @@ class SvgImages {
   static String backgroung = 'assets/images/Rectangle 61.png';
 
   static String pdfimage = 'assets/images/pdf.png';
+  static String emptyCard ="assets/images/emptyCard.png";
+
+  static String dailyNews="assets/images/resources/dailyNews.png";
+  static String courseIndex="assets/images/resources/courseIndex.png";
+  static String shortNotes="assets/images/resources/shortNotes.png";
+  static String youtubeNotes="assets/images/resources/youtubeNotes.png";
+  static String sampleNotes="assets/images/resources/sampleNotes.png";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -42,7 +43,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
-    (_) async{
+    (_) async {
       await SharedPreferenceHelper.init();
       await Languages.initState();
       runApp(const MyApp());
@@ -56,64 +57,67 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => ApiBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: const Splash(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Splash(),
+          'home': (context) => const HomeScreen(),
+          'SignIn': (context) => const loginscreen(), //SignIn(),
+          'SignUp': (context) => const SignUp(),
+          'otpverification': (context) => Otpverification(
+                number: '',
+              ),
+          'languagescreen': (context) => const LanguageScreen(
+                isLogin: false,
+              ),
+          'notifications': (context) => const NotificationScreen(),
+          'homescreen': (context) => const HomeScreen(),
+          'Coursescreen': (context) => const CourseScreen(),
+          'mocktestscreen': (context) => const mocktestscreen(),
+          'ProfilScreen': (context) => const ProfilScreen(),
+          'editprofilescreen': (context) => const EditProfileScreen(),
+          'downloadScreen': (context) => const DownloadScreen(),
+          'resourcesscreen': (context) => BlocProvider(
+                create: (context) => ResourcesBloc(),
+                child: const ResourcesScreen(),
+              ),
+          'cartscreen': (context) => const CartScreen(),
+          'mycoursesscreen': (context) => const MyCoursesScreen(),
+          'courseviewscreen': (context) => const CourseViewScreen(),
+          'myordersscreen': (context) => const MyOrdersScreen(),
+          'helpandsupport': (context) => const HelpAndSupport(),
+          'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
+          'passwordotp': (context) => PasswordOtp(
+                Otpfor: '',
+              ),
+          'passwordverified': (context) => passwordVerified(
+                type: '',
+              ),
+          'passwordchange': (context) => const PasswordChange(),
+          'ncertscreen': (context) => const NcertScreen(),
+          'MySchedule': (context) => const MySchedule(),
+          'MyScheduleAdd': (context) => const MyScheduleAdd(),
+          'dailynews': (context) => const DailyNewsScreen(),
+          'shortnotes': (context) => const ShortNotesScreen(),
+          'youtubenotes': (context) => const YoutubeNotesScreen(),
+          'samplenotes': (context) => const SampleNotesScreen(),
+          'contactus': (context) => const ContactUsScreen(),
+          'joinstreaming': (context) => const JoinStreamingScreen(
+                channelName: '',
+                rtctoken: '',
+                rtmtoken: '',
+                uid: 0,
+              ),
+        },
       ),
-      //home: const Splash(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const Splash(),
-        'home': (context) => const HomeScreen(),
-        'SignIn': (context) => const loginscreen(), //SignIn(),
-        'SignUp': (context) => const SignUp(),
-        'otpverification': (context) => Otpverification(
-              number: '',
-            ),
-        'languagescreen': (context) => const LanguageScreen(
-              isLogin: false,
-            ),
-        'notifications': (context) => const NotificationScreen(),
-        'homescreen': (context) => const HomeScreen(),
-        'Coursescreen': (context) => const CourseScreen(),
-        'mocktestscreen': (context) => const mocktestscreen(),
-        'ProfilScreen': (context) => const ProfilScreen(),
-        'editprofilescreen': (context) => const EditProfileScreen(),
-        'downloadScreen': (context) => const DownloadScreen(),
-        'resourcesscreen': (context) => BlocProvider(
-              create: (context) => ResourcesBloc(),
-              child: const ResourcesScreen(),
-            ),
-        'cartscreen': (context) => const CartScreen(),
-        'mycoursesscreen': (context) => const MyCoursesScreen(),
-        'courseviewscreen': (context) => const CourseViewScreen(),
-        'myordersscreen': (context) => const MyOrdersScreen(),
-        'helpandsupport': (context) => const HelpAndSupport(),
-        'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
-        'passwordotp': (context) => PasswordOtp(
-              Otpfor: '',
-            ),
-        'passwordverified': (context) => passwordVerified(
-              type: '',
-            ),
-        'passwordchange': (context) => const PasswordChange(),
-        'ncertscreen': (context) => const NcertScreen(),
-        'MySchedule': (context) => const MySchedule(),
-        'MyScheduleAdd': (context) => const MyScheduleAdd(),
-        'dailynews': (context) => const DailyNewsScreen(),
-        'shortnotes': (context) => const ShortNotesScreen(),
-        'youtubenotes': (context) => const YoutubeNotesScreen(),
-        'samplenotes': (context) => const SampleNotesScreen(),
-        'contactus': (context) => const ContactUsScreen(),
-        'joinstreaming': (context) => const JoinStreamingScreen(
-              channelName: '',
-              rtctoken: '',
-              rtmtoken: '',
-              uid: 0,
-            ),
-      },
     );
   }
 }
