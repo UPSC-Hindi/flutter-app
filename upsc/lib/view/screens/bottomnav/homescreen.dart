@@ -273,17 +273,12 @@ class HomeScreens extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Image.asset(SvgImages.youtube),
-                            Text(
-                              Languages.youTube,
-                              style: GoogleFonts.poppins(),
-                            )
                           ],
                         )),
                   ),
                   GestureDetector(
                     onTap: () {
-                      launchUrl(
-                          Uri.parse("https://t.me/upschindi4cs"));
+                      launchUrl(Uri.parse("https://t.me/upschindi4cs"));
                     },
                     child: Container(
                       height: 100,
@@ -295,10 +290,6 @@ class HomeScreens extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Image.asset(SvgImages.telegram),
-                          Text(
-                            Languages.telegram,
-                            style: GoogleFonts.poppins(),
-                          )
                         ],
                       ),
                     ),

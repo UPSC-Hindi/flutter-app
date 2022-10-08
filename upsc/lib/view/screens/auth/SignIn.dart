@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
@@ -15,6 +16,7 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class loginscreen extends StatefulWidget {
   const loginscreen({Key? key}) : super(key: key);
@@ -28,11 +30,37 @@ class _loginscreenState extends State<loginscreen> {
   TextEditingController passwordController = TextEditingController();
 
   bool _passwordVisible = true;
+  static String? deviceConfig;
+  static String? deviceName;
+
+  @override
+  void initState() {
+    getdevices();
+    super.initState();
+  }
+
+  Future getdevices() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    setState(() {
+      deviceName = androidInfo.brand;
+      deviceConfig = androidInfo.androidId;
+      print('Running on ${androidInfo.type}');
+    });
+  }
+
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  googleLogin() async {
+    print("googleLogin method Called");
+    final _googleSignIn = GoogleSignIn();
+    var result = await _googleSignIn.signIn();
+    print("Result $result");
   }
 
   @override
@@ -189,15 +217,20 @@ class _loginscreenState extends State<loginscreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(100),
+                        GestureDetector(
+                          onTap: () {
+                            googleLogin();
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: SvgPicture.asset(SvgImages.google),
                           ),
-                          child: SvgPicture.asset(SvgImages.google),
                         ),
                         const SizedBox(
                           width: 10,
@@ -251,6 +284,8 @@ class _loginscreenState extends State<loginscreen> {
     Map<String, dynamic> body = {
       "email_phoneNumber": emailController.text,
       "password": passwordController.text,
+      "deviceConfig": deviceConfig,
+      "deviceName": deviceName
     };
 
     setState(() {
@@ -268,7 +303,7 @@ class _loginscreenState extends State<loginscreen> {
         await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
         await SharedPreferenceHelper.setString(
             Preferences.language, response.data!.language);
-                  await Languages.initState();
+        await Languages.initState();
 
         await SharedPreferenceHelper.setString(
             Preferences.name, response.data!.fullName);
