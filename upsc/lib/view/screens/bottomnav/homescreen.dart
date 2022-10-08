@@ -7,8 +7,7 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/bloc/video/video_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
-
-
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({Key? key}) : super(key: key);
@@ -242,7 +241,7 @@ class HomeScreens extends StatelessWidget {
               ),
             ),
             Padding(
-              padding:  EdgeInsets.only(left: 20, top: 20, bottom: 5),
+              padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
                 Languages.ncertBatches,
                 style: GoogleFonts.poppins(fontSize: 24),
@@ -281,21 +280,27 @@ class HomeScreens extends StatelessWidget {
                           ],
                         )),
                   ),
-                  Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    decoration: BoxDecoration(
-                        color: ColorResources.telegarm,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image.asset(SvgImages.telegram),
-                        Text(
-                          Languages.telegram,
-                          style: GoogleFonts.poppins(),
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      launchUrl(
+                          Uri.parse("https://t.me/upschindi4cs"));
+                    },
+                    child: Container(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      decoration: BoxDecoration(
+                          color: ColorResources.telegarm,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.asset(SvgImages.telegram),
+                          Text(
+                            Languages.telegram,
+                            style: GoogleFonts.poppins(),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

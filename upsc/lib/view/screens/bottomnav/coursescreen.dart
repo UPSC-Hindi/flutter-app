@@ -101,7 +101,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
     );
   }
 
-  SingleChildScrollView _bodyWidget(List<CourseDataModel> courseData) {
+  SingleChildScrollView _bodyWidget(List<Data> courseData) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -125,7 +125,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
     );
   }
 
-  Container _cardWidget(CourseDataModel data) {
+  Container _cardWidget(Data data) {
     return Container(
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -142,7 +142,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
       child: Column(
         children: [
           Text(
-            data.batchName,
+            data.batchName!,
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -217,7 +217,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 context,
                 CupertinoPageRoute(
                   builder: (context) => CoursesDetailsScreens(
-                    id: data.id,
+                    id: data.sId!,
                     buycourses: true,
                     coursename: data.batchName,
                   ),

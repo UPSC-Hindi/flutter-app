@@ -35,7 +35,7 @@ class ApiMyCoursesSuccess extends ApiState{
 }
 
 class ApiCoursesSuccess extends ApiState{
-  final List<CourseDataModel> courseList;
+  final List<Data> courseList;
   const ApiCoursesSuccess({required this.courseList});
   @override
   List<Object?> get props => [courseList];
