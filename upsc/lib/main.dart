@@ -7,7 +7,6 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/bloc/resources/resources_bloc.dart';
-
 import 'package:upsc/view/screens/auth/SignIn.dart';
 import 'package:upsc/view/screens/auth/SignUp.dart';
 import 'package:upsc/view/screens/auth/forgotpassword.dart';
