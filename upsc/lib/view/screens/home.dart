@@ -56,6 +56,23 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         backgroundColor: Colors.white,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.menu,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              ),
+            );
+          },
+        ),
         actions: [
           IconButton(
               onPressed: (() {

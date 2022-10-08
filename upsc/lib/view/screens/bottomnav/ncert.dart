@@ -96,18 +96,15 @@ class YouTubeContainerWidget extends StatefulWidget {
 }
 
 class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
-  var fileName;
+
+  String videoId = '';
+
   @override
   void initState() {
-    getThumbnail();
+    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
     super.initState();
   }
 
-  void getThumbnail() async {
-    // setState((){
-    //   fileName;
-    // });
-  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -116,7 +113,7 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
           context,
           MaterialPageRoute(
             builder: (context) => YoutubePlayerWidget(
-              videoUrl: widget.videoUrl,
+              videoId: videoId,
             ),
           ),
         );
@@ -133,7 +130,7 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
                 image: DecorationImage(
                   image: NetworkImage(
                     YoutubePlayer.getThumbnail(
-                        videoId: widget.videoUrl.split('/')[3], webp: false),
+                        videoId: videoId, webp: false),
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -144,10 +141,6 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
                 size: 50,
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(data.title),
-            // )
           ],
         ),
       ),

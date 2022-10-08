@@ -17,7 +17,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String phoneNumber = '';
 
   @override
-  void initState(){
+  void initState() {
     name = SharedPreferenceHelper.getString(Preferences.name)!;
     email = SharedPreferenceHelper.getString(Preferences.email)!;
     phoneNumber = SharedPreferenceHelper.getString(Preferences.phoneNUmber)!;
@@ -70,30 +70,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    name,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Edit',
-                    style: TextStyle(
-                      color: Colors.transparent,
-                      decorationColor: ColorResources.edit,
-                      decorationThickness: 5,
-                      decoration: TextDecoration.underline,
-                      decorationStyle: TextDecorationStyle.solid,
-                      shadows: [
-                        Shadow(
-                          color: ColorResources.edit,
-                          offset: Offset(0, -5),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+              Text(
+                name,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               Text('UPSC Aspirant'),
               Container(
@@ -120,12 +99,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           suffixText: 'Edit'),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Text(Languages.emailText),
                     TextField(
-                      controller: TextEditingController()
-                        ..text = email,
+                      controller: TextEditingController()..text = email,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -140,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           suffixText: 'Edit'),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Text('   Address'),
                     TextField(
@@ -161,7 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           suffixText: 'Edit'),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.80,
