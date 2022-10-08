@@ -13,6 +13,7 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/auth/otpverification.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -29,6 +30,24 @@ class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   bool _passwordVisible = true;
+  static String? deviceConfig;
+  static String? deviceName;
+
+  @override
+  void initState() {
+    getdevices();
+    super.initState();
+  }
+
+  Future getdevices() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    setState(() {
+      deviceName = androidInfo.brand;
+      deviceConfig = androidInfo.androidId;
+      print('Running on ${androidInfo.type}');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +291,8 @@ class _SignUpState extends State<SignUp> {
       "email": _emailController.text,
       "mobileNumber": _numberController.text,
       "password": _passwordController.text,
+       "deviceConfig": deviceConfig,
+      "deviceName": deviceName
     };
     setState(() {
       Preferences.onLoading(context);
