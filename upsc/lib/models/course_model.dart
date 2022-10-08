@@ -10,19 +10,19 @@ class CourseModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['msg'] = this.msg;
+    data['msg'] = msg;
     return data;
   }
 }
@@ -47,6 +47,7 @@ class Data {
   String? banner;
   String? remark;
   String? validity;
+  bool? isActive;
   String? courseReview;
   String? createdAt;
   int? iV;
@@ -71,6 +72,7 @@ class Data {
       this.banner,
       this.remark,
       this.validity,
+      this.isActive,
       this.courseReview,
       this.createdAt,
       this.iV});
@@ -80,20 +82,20 @@ class Data {
     user = json['user'];
     batchName = json['batch_name'];
     category = json['category'] != null
-        ? new Category.fromJson(json['category'])
+        ? Category.fromJson(json['category'])
         : null;
     examType = json['exam_type'];
     if (json['student'] != null) {
       student = <Student>[];
       json['student'].forEach((v) {
-        student!.add(new Student.fromJson(v));
+        student!.add(Student.fromJson(v));
       });
     }
     subject = json['subject'];
     if (json['teacher'] != null) {
       teacher = <Teacher>[];
       json['teacher'].forEach((v) {
-        teacher!.add(new Teacher.fromJson(v));
+        teacher!.add(Teacher.fromJson(v));
       });
     }
     startingDate = json['starting_date'];
@@ -107,41 +109,43 @@ class Data {
     banner = json['banner'];
     remark = json['remark'];
     validity = json['validity'];
+    isActive = json['is_active'];
     courseReview = json['course_review'];
     createdAt = json['created_at'];
     iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['user'] = this.user;
-    data['batch_name'] = this.batchName;
-    if (this.category != null) {
-      data['category'] = this.category!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['user'] = user;
+    data['batch_name'] = batchName;
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
-    data['exam_type'] = this.examType;
-    if (this.student != null) {
-      data['student'] = this.student!.map((v) => v.toJson()).toList();
+    data['exam_type'] = examType;
+    if (student != null) {
+      data['student'] = student!.map((v) => v.toJson()).toList();
     }
-    data['subject'] = this.subject;
-    if (this.teacher != null) {
-      data['teacher'] = this.teacher!.map((v) => v.toJson()).toList();
+    data['subject'] = subject;
+    if (teacher != null) {
+      data['teacher'] = teacher!.map((v) => v.toJson()).toList();
     }
-    data['starting_date'] = this.startingDate;
-    data['ending_date'] = this.endingDate;
-    data['mode'] = this.mode;
-    data['materials'] = this.materials;
-    data['language'] = this.language;
-    data['charges'] = this.charges;
-    data['discount'] = this.discount;
-    data['description'] = this.description;
-    data['banner'] = this.banner;
-    data['remark'] = this.remark;
-    data['validity'] = this.validity;
-    data['course_review'] = this.courseReview;
-    data['created_at'] = this.createdAt;
-    data['__v'] = this.iV;
+    data['starting_date'] = startingDate;
+    data['ending_date'] = endingDate;
+    data['mode'] = mode;
+    data['materials'] = materials;
+    data['language'] = language;
+    data['charges'] = charges;
+    data['discount'] = discount;
+    data['description'] = description;
+    data['banner'] = banner;
+    data['remark'] = remark;
+    data['validity'] = validity;
+    data['is_active'] = isActive;
+    data['course_review'] = courseReview;
+    data['created_at'] = createdAt;
+    data['__v'] = iV;
     return data;
   }
 }
@@ -175,14 +179,14 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    data['is_active'] = this.isActive;
-    data['created_at'] = this.createdAt;
-    data['type'] = this.type;
-    data['user'] = this.user;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['title'] = title;
+    data['is_active'] = isActive;
+    data['created_at'] = createdAt;
+    data['type'] = type;
+    data['user'] = user;
+    data['__v'] = iV;
     return data;
   }
 }
@@ -243,29 +247,28 @@ class Student {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['username'] = this.username;
-    data['userId'] = this.userId;
-    data['FullName'] = this.fullName;
-    data['password'] = this.password;
-    data['email'] = this.email;
-    data['created_at'] = this.createdAt;
-    data['RefreshToken'] = this.refreshToken;
-    data['mobileNumber'] = this.mobileNumber;
-    data['emailVerificationOTP'] = this.emailVerificationOTP;
-    data['mobileNumberVerificationOTP'] = this.mobileNumberVerificationOTP;
-    data['otpcreatedDate'] = this.otpcreatedDate;
-    data['LoginTrack'] = this.loginTrack;
-    data['__v'] = this.iV;
-    data['mobileNumberVerified'] = this.mobileNumberVerified;
-    data['language'] = this.language;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['username'] = username;
+    data['userId'] = userId;
+    data['FullName'] = fullName;
+    data['password'] = password;
+    data['email'] = email;
+    data['created_at'] = createdAt;
+    data['RefreshToken'] = refreshToken;
+    data['mobileNumber'] = mobileNumber;
+    data['emailVerificationOTP'] = emailVerificationOTP;
+    data['mobileNumberVerificationOTP'] = mobileNumberVerificationOTP;
+    data['otpcreatedDate'] = otpcreatedDate;
+    data['LoginTrack'] = loginTrack;
+    data['__v'] = iV;
+    data['mobileNumberVerified'] = mobileNumberVerified;
+    data['language'] = language;
     return data;
   }
 }
 
 class Teacher {
-  List<String>? subject;
   String? sId;
   String? fullName;
   String? role;
@@ -274,13 +277,13 @@ class Teacher {
   String? email;
   String? password;
   String? createdAt;
-  int? iV;
+  List<String>? subject;
   String? qualification;
   bool? isSpecial;
+  int? iV;
 
   Teacher(
-      {this.subject,
-      this.sId,
+      {this.sId,
       this.fullName,
       this.role,
       this.userId,
@@ -288,12 +291,12 @@ class Teacher {
       this.email,
       this.password,
       this.createdAt,
-      this.iV,
+      this.subject,
       this.qualification,
-      this.isSpecial});
+      this.isSpecial,
+      this.iV});
 
   Teacher.fromJson(Map<String, dynamic> json) {
-    subject = json['subject'].cast<String>();
     sId = json['_id'];
     fullName = json['FullName'];
     role = json['Role'];
@@ -302,25 +305,26 @@ class Teacher {
     email = json['email'];
     password = json['password'];
     createdAt = json['created_at'];
-    iV = json['__v'];
+    subject = json['subject'].cast<String>();
     qualification = json['qualification'];
     isSpecial = json['is_Special'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['subject'] = this.subject;
-    data['_id'] = this.sId;
-    data['FullName'] = this.fullName;
-    data['Role'] = this.role;
-    data['userId'] = this.userId;
-    data['mobileNumber'] = this.mobileNumber;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['created_at'] = this.createdAt;
-    data['__v'] = this.iV;
-    data['qualification'] = this.qualification;
-    data['is_Special'] = this.isSpecial;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['FullName'] = fullName;
+    data['Role'] = role;
+    data['userId'] = userId;
+    data['mobileNumber'] = mobileNumber;
+    data['email'] = email;
+    data['password'] = password;
+    data['created_at'] = createdAt;
+    data['subject'] = subject;
+    data['qualification'] = qualification;
+    data['is_Special'] = isSpecial;
+    data['__v'] = iV;
     return data;
   }
 }
