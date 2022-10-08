@@ -25,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      print(index);
       _selectedIndex = index;
     });
   }

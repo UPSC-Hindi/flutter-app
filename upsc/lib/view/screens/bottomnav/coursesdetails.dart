@@ -9,8 +9,7 @@ import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/models/AddToCart.dart';
-import 'package:upsc/models/auth/VerifyMobileNumber.dart';
-import 'package:upsc/models/course_model.dart';
+import 'package:upsc/models/course_model.dart' as courseModel; 
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:intl/intl.dart';
@@ -63,7 +62,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
     );
   }
 
-  Scaffold _bodyWidget(BuildContext context, CourseDataModel course) {
+  Scaffold _bodyWidget(BuildContext context, courseModel.Data course) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
@@ -98,7 +97,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
-                        course.description,
+                        course.description!,
                         style: GoogleFonts.lato(fontSize: 16),
                         textAlign: TextAlign.justify,
                       ),
@@ -167,14 +166,14 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                               Icons.access_time_rounded,
                             ),
                             Text(
-                                '  ${course.endingDate.difference(course.startingDate).inDays} Days')
+                                '  ${course.endingDate!.difference(course.startingDate!).inDays} Days')
                           ]),
                           Row(children: [
                             Icon(
                               Icons.calendar_month_rounded,
                             ),
                             Text(
-                                ' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate)}')
+                                ' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate!)}')
                           ]),
                         ]),
                     Align(
@@ -378,17 +377,17 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
   }
 
   Future<BaseModel<AddToCart>> callApiaddtocart(
-      CourseDataModel course) async {
+      courseModel.Data course) async {
     AddToCart response;
     Map<String, dynamic> body = {
-      "batch_id": course.id,
+      "batch_id": course.sId,
     };
     setState(() {
       Preferences.onLoading(context);
     });
     try {
       var token =
-          SharedPreferenceHelper.getString(Preferences.auth_token).toString();
+          SharedPreferenceHelper.getString(Preferences.access_token).toString();
       response = await RestClient(RetroApi().dioData(token))
           .addtocartRequest(body);
       setState(() {

@@ -1,258 +1,326 @@
-// To parse this JSON data, do
-//
-//     final courseModel = courseModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
-import 'dart:convert';
-
-CourseModel courseModelFromJson(String str) => CourseModel.fromJson(json.decode(str));
-
-String courseModelToJson(CourseModel data) => json.encode(data.toJson());
-
 class CourseModel {
-  CourseModel({
-    required this.status,
-    required this.data,
-    required this.msg,
-  });
+  bool? status;
+  List<Data>? data;
+  String? msg;
 
-  final bool status;
-  final List<CourseDataModel> data;
-  final String msg;
+  CourseModel({this.status, this.data, this.msg});
 
-  factory CourseModel.fromJson(Map<String, dynamic> json) => CourseModel(
-    status: json["status"],
-    data: List<CourseDataModel>.from(json["data"].map((x) => CourseDataModel.fromJson(x))),
-    msg: json["msg"],
-  );
+  CourseModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+    msg = json['msg'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "msg": msg,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data['msg'] = this.msg;
+    return data;
+  }
 }
 
-class CourseDataModel {
-  CourseDataModel({
-    required this.id,
-    required this.user,
-    required this.batchName,
-    required this.category,
-    required this.examType,
-    required this.student,
-    required this.subject,
-    required this.teacher,
-    required this.startingDate,
-    required this.endingDate,
-    required this.mode,
-    required this.materials,
-    required this.language,
-    required this.charges,
-    required this.discount,
-    required this.description,
-    required this.remark,
-    required this.validity,
-    required this.isActive,
-    required this.courseReview,
-    required this.createdAt,
-    required this.v,
-  });
+class Data {
+  String? sId;
+  String? user;
+  String? batchName;
+  Category? category;
+  String? examType;
+  List<Student>? student;
+  String? subject;
+  List<Teacher>? teacher;
+  DateTime? startingDate;
+  DateTime? endingDate;
+  String? mode;
+  String? materials;
+  String? language;
+  String? charges;
+  String? discount;
+  String? description;
+  String? banner;
+  String? remark;
+  String? validity;
+  String? courseReview;
+  String? createdAt;
+  int? iV;
 
-  final String id;
-  final String user;
-  final String batchName;
-  final String category;
-  final String examType;
-  final List<Student> student;
-  final String subject;
-  final List<Teacher> teacher;
-  final DateTime startingDate;
-  final DateTime endingDate;
-  final String mode;
-  final String materials;
-  final String language;
-  final String charges;
-  final String discount;
-  final String description;
-  final String remark;
-  final String validity;
-  final bool isActive;
-  final String courseReview;
-  final String createdAt;
-  final int v;
+  Data(
+      {this.sId,
+      this.user,
+      this.batchName,
+      this.category,
+      this.examType,
+      this.student,
+      this.subject,
+      this.teacher,
+      this.startingDate,
+      this.endingDate,
+      this.mode,
+      this.materials,
+      this.language,
+      this.charges,
+      this.discount,
+      this.description,
+      this.banner,
+      this.remark,
+      this.validity,
+      this.courseReview,
+      this.createdAt,
+      this.iV});
 
-  factory CourseDataModel.fromJson(Map<String, dynamic> json) => CourseDataModel(
-    id: json["_id"],
-    user: json["user"],
-    batchName: json["batch_name"],
-    category: json["category"],
-    examType: json["exam_type"],
-    student: List<Student>.from(json["student"].map((x) => Student.fromJson(x))),
-    subject: json["subject"],
-    teacher: List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
-    startingDate: DateTime.parse(json["starting_date"]),
-    endingDate: DateTime.parse(json["ending_date"]),
-    mode: json["mode"],
-    materials: json["materials"],
-    language: json["language"],
-    charges: json["charges"],
-    discount: json["discount"],
-    description: json["description"],
-    remark: json["remark"],
-    validity: json["validity"],
-    isActive: json["is_active"],
-    courseReview: json["course_review"],
-    createdAt: json["created_at"],
-    v: json["__v"],
-  );
+  Data.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    user = json['user'];
+    batchName = json['batch_name'];
+    category = json['category'] != null
+        ? new Category.fromJson(json['category'])
+        : null;
+    examType = json['exam_type'];
+    if (json['student'] != null) {
+      student = <Student>[];
+      json['student'].forEach((v) {
+        student!.add(new Student.fromJson(v));
+      });
+    }
+    subject = json['subject'];
+    if (json['teacher'] != null) {
+      teacher = <Teacher>[];
+      json['teacher'].forEach((v) {
+        teacher!.add(new Teacher.fromJson(v));
+      });
+    }
+    startingDate = json['starting_date'];
+    endingDate = json['ending_date'];
+    mode = json['mode'];
+    materials = json['materials'];
+    language = json['language'];
+    charges = json['charges'];
+    discount = json['discount'];
+    description = json['description'];
+    banner = json['banner'];
+    remark = json['remark'];
+    validity = json['validity'];
+    courseReview = json['course_review'];
+    createdAt = json['created_at'];
+    iV = json['__v'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user": user,
-    "batch_name": batchName,
-    "category": category,
-    "exam_type": examType,
-    "student": List<dynamic>.from(student.map((x) => x.toJson())),
-    "subject": subject,
-    "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
-    "starting_date": "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
-    "ending_date": "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
-    "mode": mode,
-    "materials": materials,
-    "language": language,
-    "charges": charges,
-    "discount": discount,
-    "description": description,
-    "remark": remark,
-    "validity": validity,
-    "is_active": isActive,
-    "course_review": courseReview,
-    "created_at": createdAt,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['user'] = this.user;
+    data['batch_name'] = this.batchName;
+    if (this.category != null) {
+      data['category'] = this.category!.toJson();
+    }
+    data['exam_type'] = this.examType;
+    if (this.student != null) {
+      data['student'] = this.student!.map((v) => v.toJson()).toList();
+    }
+    data['subject'] = this.subject;
+    if (this.teacher != null) {
+      data['teacher'] = this.teacher!.map((v) => v.toJson()).toList();
+    }
+    data['starting_date'] = this.startingDate;
+    data['ending_date'] = this.endingDate;
+    data['mode'] = this.mode;
+    data['materials'] = this.materials;
+    data['language'] = this.language;
+    data['charges'] = this.charges;
+    data['discount'] = this.discount;
+    data['description'] = this.description;
+    data['banner'] = this.banner;
+    data['remark'] = this.remark;
+    data['validity'] = this.validity;
+    data['course_review'] = this.courseReview;
+    data['created_at'] = this.createdAt;
+    data['__v'] = this.iV;
+    return data;
+  }
+}
+
+class Category {
+  String? sId;
+  String? title;
+  bool? isActive;
+  String? createdAt;
+  String? type;
+  String? user;
+  int? iV;
+
+  Category(
+      {this.sId,
+      this.title,
+      this.isActive,
+      this.createdAt,
+      this.type,
+      this.user,
+      this.iV});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    title = json['title'];
+    isActive = json['is_active'];
+    createdAt = json['created_at'];
+    type = json['type'];
+    user = json['user'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['title'] = this.title;
+    data['is_active'] = this.isActive;
+    data['created_at'] = this.createdAt;
+    data['type'] = this.type;
+    data['user'] = this.user;
+    data['__v'] = this.iV;
+    return data;
+  }
 }
 
 class Student {
-  Student({
-    required this.id,
-    required this.username,
-    required this.userId,
-    required this.fullName,
-    required this.password,
-    required this.email,
-    required this.createdAt,
-    required this.refreshToken,
-    required this.mobileNumber,
-    required this.emailVerificationOtp,
-    required this.mobileNumberVerificationOtp,
-    required this.otpcreatedDate,
-    required this.loginTrack,
-    required this.v,
-    required this.mobileNumberVerified,
-    required this.language,
-  });
+  String? sId;
+  String? username;
+  String? userId;
+  String? fullName;
+  String? password;
+  String? email;
+  String? createdAt;
+  String? refreshToken;
+  String? mobileNumber;
+  int? emailVerificationOTP;
+  int? mobileNumberVerificationOTP;
+  String? otpcreatedDate;
+  String? loginTrack;
+  int? iV;
+  bool? mobileNumberVerified;
+  String? language;
 
-  final String id;
-  final String username;
-  final String userId;
-  final String fullName;
-  final String password;
-  final String email;
-  final DateTime createdAt;
-  final String refreshToken;
-  final String mobileNumber;
-  final int emailVerificationOtp;
-  final int mobileNumberVerificationOtp;
-  final String otpcreatedDate;
-  final String loginTrack;
-  final int v;
-  final bool mobileNumberVerified;
-  final String language;
+  Student(
+      {this.sId,
+      this.username,
+      this.userId,
+      this.fullName,
+      this.password,
+      this.email,
+      this.createdAt,
+      this.refreshToken,
+      this.mobileNumber,
+      this.emailVerificationOTP,
+      this.mobileNumberVerificationOTP,
+      this.otpcreatedDate,
+      this.loginTrack,
+      this.iV,
+      this.mobileNumberVerified,
+      this.language});
 
-  factory Student.fromJson(Map<String, dynamic> json) => Student(
-    id: json["_id"],
-    username: json["username"],
-    userId: json["userId"],
-    fullName: json["FullName"],
-    password: json["password"],
-    email: json["email"],
-    createdAt: DateTime.parse(json["created_at"]),
-    refreshToken: json["RefreshToken"],
-    mobileNumber: json["mobileNumber"],
-    emailVerificationOtp: json["emailVerificationOTP"],
-    mobileNumberVerificationOtp: json["mobileNumberVerificationOTP"],
-    otpcreatedDate: json["otpcreatedDate"],
-    loginTrack: json["LoginTrack"],
-    v: json["__v"],
-    mobileNumberVerified: json["mobileNumberVerified"],
-    language: json["language"],
-  );
+  Student.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    username = json['username'];
+    userId = json['userId'];
+    fullName = json['FullName'];
+    password = json['password'];
+    email = json['email'];
+    createdAt = json['created_at'];
+    refreshToken = json['RefreshToken'];
+    mobileNumber = json['mobileNumber'];
+    emailVerificationOTP = json['emailVerificationOTP'];
+    mobileNumberVerificationOTP = json['mobileNumberVerificationOTP'];
+    otpcreatedDate = json['otpcreatedDate'];
+    loginTrack = json['LoginTrack'];
+    iV = json['__v'];
+    mobileNumberVerified = json['mobileNumberVerified'];
+    language = json['language'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "username": username,
-    "userId": userId,
-    "FullName": fullName,
-    "password": password,
-    "email": email,
-    "created_at": createdAt.toIso8601String(),
-    "RefreshToken": refreshToken,
-    "mobileNumber": mobileNumber,
-    "emailVerificationOTP": emailVerificationOtp,
-    "mobileNumberVerificationOTP": mobileNumberVerificationOtp,
-    "otpcreatedDate": otpcreatedDate,
-    "LoginTrack": loginTrack,
-    "__v": v,
-    "mobileNumberVerified": mobileNumberVerified,
-    "language": language,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['username'] = this.username;
+    data['userId'] = this.userId;
+    data['FullName'] = this.fullName;
+    data['password'] = this.password;
+    data['email'] = this.email;
+    data['created_at'] = this.createdAt;
+    data['RefreshToken'] = this.refreshToken;
+    data['mobileNumber'] = this.mobileNumber;
+    data['emailVerificationOTP'] = this.emailVerificationOTP;
+    data['mobileNumberVerificationOTP'] = this.mobileNumberVerificationOTP;
+    data['otpcreatedDate'] = this.otpcreatedDate;
+    data['LoginTrack'] = this.loginTrack;
+    data['__v'] = this.iV;
+    data['mobileNumberVerified'] = this.mobileNumberVerified;
+    data['language'] = this.language;
+    return data;
+  }
 }
 
 class Teacher {
-  Teacher({
-    required this.id,
-    required this.fullName,
-    required this.role,
-    required this.userId,
-    required this.mobileNumber,
-    required this.email,
-    required this.password,
-    required this.createdAt,
-    required this.v,
-  });
+  List<String>? subject;
+  String? sId;
+  String? fullName;
+  String? role;
+  String? userId;
+  int? mobileNumber;
+  String? email;
+  String? password;
+  String? createdAt;
+  int? iV;
+  String? qualification;
+  bool? isSpecial;
 
-  final String id;
-  final String fullName;
-  final String role;
-  final String userId;
-  final int mobileNumber;
-  final String email;
-  final String password;
-  final DateTime createdAt;
-  final int v;
+  Teacher(
+      {this.subject,
+      this.sId,
+      this.fullName,
+      this.role,
+      this.userId,
+      this.mobileNumber,
+      this.email,
+      this.password,
+      this.createdAt,
+      this.iV,
+      this.qualification,
+      this.isSpecial});
 
-  factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
-    id: json["_id"],
-    fullName: json["FullName"],
-    role: json["Role"],
-    userId: json["userId"],
-    mobileNumber: json["mobileNumber"],
-    email: json["email"],
-    password: json["password"],
-    createdAt: DateTime.parse(json["created_at"]),
-    v: json["__v"],
-  );
+  Teacher.fromJson(Map<String, dynamic> json) {
+    subject = json['subject'].cast<String>();
+    sId = json['_id'];
+    fullName = json['FullName'];
+    role = json['Role'];
+    userId = json['userId'];
+    mobileNumber = json['mobileNumber'];
+    email = json['email'];
+    password = json['password'];
+    createdAt = json['created_at'];
+    iV = json['__v'];
+    qualification = json['qualification'];
+    isSpecial = json['is_Special'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "FullName": fullName,
-    "Role": role,
-    "userId": userId,
-    "mobileNumber": mobileNumber,
-    "email": email,
-    "password": password,
-    "created_at": createdAt.toIso8601String(),
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['subject'] = this.subject;
+    data['_id'] = this.sId;
+    data['FullName'] = this.fullName;
+    data['Role'] = this.role;
+    data['userId'] = this.userId;
+    data['mobileNumber'] = this.mobileNumber;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['created_at'] = this.createdAt;
+    data['__v'] = this.iV;
+    data['qualification'] = this.qualification;
+    data['is_Special'] = this.isSpecial;
+    return data;
+  }
 }

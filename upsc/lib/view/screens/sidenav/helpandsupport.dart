@@ -54,10 +54,19 @@ class HelpAndSupport extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  Text(
-                    'upschindi4cse@gmail.com',
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
+                  GestureDetector(
+                    onTap: () {
+                      launchUrl(Uri(
+                        scheme: 'mailto',
+                        path: 'upschindi4cse@gmail.com',
+                        query: 'subject=helpandsupport&body=msg',
+                      ));
+                    },
+                    child: Text(
+                      'upschindi4cse@gmail.com',
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -67,10 +76,15 @@ class HelpAndSupport extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  Text(
-                    '+91  951 978 0078',
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
+                  GestureDetector(
+                    onTap: () {
+                      launchUrl(Uri.parse("tel:+919519780078"));
+                    },
+                    child: Text(
+                      '+91  951 978 0078',
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
