@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
-import 'package:upsc/models/course_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/bottomnav/coursesdetails.dart';
@@ -82,6 +82,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<ApiBloc, ApiState>(
       builder: (context, state) {
+        print(state);
         if (state is ApiError) {
           return const Center(
             child: Text('Something went wrong'),
@@ -101,7 +102,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
     );
   }
 
-  SingleChildScrollView _bodyWidget(List<Data> courseData) {
+  SingleChildScrollView _bodyWidget(List<CoursesDataModel> courseData) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -125,7 +126,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
     );
   }
 
-  Container _cardWidget(Data data) {
+  Container _cardWidget(CoursesDataModel data) {
     return Container(
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -142,7 +143,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
       child: Column(
         children: [
           Text(
-            data.batchName!,
+            data.batchName,
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
@@ -216,12 +217,11 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => CoursesDetailsScreens(
-                    id: data.sId!,
-                    buycourses: true,
-                    coursename: data.batchName,
-                  ),
-                ),
+                    builder: (context) => CoursesDetailsScreens(
+                          id: data.id,
+                          buycourses: true,
+                          coursename: data.batchName,
+                        )),
               );
             },
             child: Container(
