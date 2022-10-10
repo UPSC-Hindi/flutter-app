@@ -27,4 +27,6 @@ class Apis {
   static const String getcartdata = 'adminPanel/getCartDetails';
   static const String mycourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';
+
+  static const String agora = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
 }
