@@ -39,14 +39,14 @@ import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
-void main(){
+void main() {
   //Orientations
   WidgetsFlutterBinding.ensureInitialized();
-  FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
-      Languages.isEnglish = (SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true) ?? true;
+      //Languages.isEnglish = (SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true) ?? true;
       await Languages.initState();
       runApp(const MyApp());
     },

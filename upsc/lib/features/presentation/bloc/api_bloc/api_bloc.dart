@@ -46,8 +46,8 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       try {
         CoursesModel response =
             await remoteDataSourceImpl.getCourses(event.filter, event.type);
-        if (response.status!) {
-          emit(ApiCoursesSuccess(courseList: response.data!));
+        if (response.status) {
+          emit(ApiCoursesSuccess(courseList: response.data));
         } else {
           emit(ApiError());
         }

@@ -137,6 +137,7 @@ class _RestClient implements RestClient {
     final value = ResetPassword.fromJson(_result.data!);
     return value;
   }
+
   @override
   joinmeetingRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -152,6 +153,7 @@ class _RestClient implements RestClient {
     final value = JoinStreaming.fromJson(_result.data!);
     return value;
   }
+
   @override
   addtocartRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -165,6 +167,25 @@ class _RestClient implements RestClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AddToCart.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  removefromcartRequest(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RemovefromCart>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(
+                  _dio.options,
+                  '${Apis.removefromCart}:$body',
+                  queryParameters: queryParameters,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = RemovefromCart.fromJson(_result.data!);
     return value;
   }
 
