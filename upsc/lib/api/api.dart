@@ -14,7 +14,8 @@ class Apis {
   static const String logout = "Logout";
 
   static const String googleSignIn = "authentication/googleSignIn";
-  static const String postUserMobileNumber = "authentication/postUserMobileNumber";
+  static const String postUserMobileNumber =
+      "authentication/postUserMobileNumber";
   //static const String googleSignIn = "authentication/googleSignIn";
 
   static const String getCoursesFilter = "adminPanel/getBatchesDetails";
@@ -27,6 +28,8 @@ class Apis {
   static const String getcartdata = 'adminPanel/getCartDetails';
   static const String mycourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';
+  static const String removefromCart = "adminPanel/deleteCartDetails/";
 
-  static const String agora = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
+  static const String agora =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
 }
