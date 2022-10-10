@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
-import 'package:upsc/models/course_model.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -36,6 +36,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
           emit(ApiError());
         }
       } catch (error) {
+        print(error);
         emit(ApiError());
       }
     });
@@ -43,9 +44,8 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
     on<GetCourses>((event, emit) async {
       emit(ApiLoading());
       try {
-        var response =
+        CoursesModel response =
             await remoteDataSourceImpl.getCourses(event.filter, event.type);
-        print(response.data);
         if (response.status!) {
           emit(ApiCoursesSuccess(courseList: response.data!));
         } else {

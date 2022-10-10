@@ -10,6 +10,7 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/register.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/auth/otpverification.dart';
@@ -291,7 +292,7 @@ class _SignUpState extends State<SignUp> {
       "email": _emailController.text,
       "mobileNumber": _numberController.text,
       "password": _passwordController.text,
-       "deviceConfig": deviceConfig,
+      "deviceConfig": deviceConfig,
       "deviceName": deviceName
     };
     setState(() {
@@ -301,31 +302,40 @@ class _SignUpState extends State<SignUp> {
       response = await RestClient(RetroApi2().dioData2()).registerRequest(body);
       await SharedPreferenceHelper.setString(
           Preferences.auth_token, response.data!.token.toString());
-      setState(() {
-        Preferences.hideDialog(context);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: ((context) =>
-                Otpverification(number: _numberController.text)),
-          ),
-        );
-        print(response.data!.token);
+      await Languages.initState();
+      await SharedPreferenceHelper.setString(
+          Preferences.name, _nameController.text);
+      await SharedPreferenceHelper.setString(
+          Preferences.phoneNUmber, _numberController.text);
+      await SharedPreferenceHelper.setString(
+          Preferences.email, _emailController.text);
+      if (response.status!) {
+        setState(() {
+          Preferences.hideDialog(context);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) =>
+                  Otpverification(number: _numberController.text)),
+            ),
+          );
+          print(response.data!.token);
 
-        Fluttertoast.showToast(
-          msg: '${response.data!.mobileNumberVerificationOTP}',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      });
+          Fluttertoast.showToast(
+            msg: '${response.data!.mobileNumberVerificationOTP}',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            backgroundColor: ColorResources.gray,
+            textColor: ColorResources.textWhite,
+          );
+          Fluttertoast.showToast(
+            msg: '${response.msg}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: ColorResources.gray,
+            textColor: ColorResources.textWhite,
+          );
+        });
+      }
     } catch (error, stacktrace) {
       setState(() {
         Preferences.hideDialog(context);

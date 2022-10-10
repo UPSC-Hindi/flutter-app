@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -20,46 +21,56 @@ class MyCoursesScreen extends StatelessWidget {
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(
-              'In Progress',
-              style: TextStyle(fontSize: 24),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
+                'In Progress',
+                style: TextStyle(fontSize: 24),
+              ),
             ),
-          ),
-          BlocBuilder<ApiBloc, ApiState>(
-            builder: (context, state) {
-              print(state);
-              if (state is ApiError) {
-                return const Center(
-                  child: Text('Something Went Wrong'),
-                );
-              }
-              if (state is ApiMyCoursesSuccess) {
-                if (state.myCourses.isEmpty) {
-                  return EmptyWidget(text: 'Your Cart is Empty!', image: SvgImages.emptyCard,);
-                } else {
-                  return ListView.builder(
-                    itemCount: state.myCourses.length,
-                    itemBuilder: (context, index) =>
-                        _myCoursesCardWidget(context),
+            BlocBuilder<ApiBloc, ApiState>(
+              builder: (context, state) {
+                print(state);
+                if (state is ApiError) {
+                  return const Center(
+                    child: Text('Something Went Wrong'),
                   );
                 }
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-        ],
+                if (state is ApiMyCoursesSuccess) {
+                  if (state.myCourses.isEmpty) {
+                    return EmptyWidget(
+                      text: 'Your Cart is Empty!',
+                      image: SvgImages.emptyCard,
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.myCourses.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            _myCoursesCardWidget(context, state.myCourses[index]),
+                      ),
+                    );
+                  }
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Center _myCoursesCardWidget(BuildContext context) {
+  Center _myCoursesCardWidget(
+      BuildContext context, MyCoursesDataModel courseData) {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(10.0),
@@ -83,8 +94,8 @@ class MyCoursesScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Course 1',
+                  Text(
+                    courseData.batchDetails.batchName,
                     style: TextStyle(fontSize: 24),
                   ),
                   Text(
@@ -115,16 +126,17 @@ class MyCoursesScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       //  remove when this page dynamic*******************************
-                      Navigator.of(context).pushNamed('courseviewscreen');
+                      // Navigator.of(context).pushNamed('courseviewscreen');
                       // pls un comment this page dynamic************************************
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => CoursesDetailsScreens(
-                      //       buycourses: false,
-                      //       coursename: 'courses 1', id: '',
-                      //     ),
-                      //   ),
-                      // );
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => CoursesDetailsScreens(
+                            buycourses: false,
+                            coursename: courseData.batchDetails.batchName,
+                            id: courseData.batchDetails.id,
+                          ),
+                        ),
+                      );
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

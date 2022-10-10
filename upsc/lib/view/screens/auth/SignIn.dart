@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -301,10 +299,10 @@ class _loginscreenState extends State<loginscreen> {
         await SharedPreferenceHelper.setString(
             Preferences.access_token, response.data!.accessToken);
         await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
-        await SharedPreferenceHelper.setString(
-            Preferences.language, response.data!.language);
+        await SharedPreferenceHelper.setString(Preferences.language,
+            response.data!.language == "hi" ? "Hindi" : 'English');
+        Languages.isEnglish = response.data!.language == "hi" ? false : true;
         await Languages.initState();
-
         await SharedPreferenceHelper.setString(
             Preferences.name, response.data!.fullName);
         await SharedPreferenceHelper.setString(

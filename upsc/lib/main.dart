@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,13 +39,14 @@ import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
-void main() {
+void main(){
   //Orientations
   WidgetsFlutterBinding.ensureInitialized();
-
+  FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
+      Languages.isEnglish = (SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true) ?? true;
       await Languages.initState();
       runApp(const MyApp());
     },
@@ -132,8 +134,6 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        SharedPreferenceHelper.getBoolean(Preferences.is_logged_in).toString());
     return SplashScreenView(
       navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)
           ? const HomeScreen()

@@ -1,18 +1,18 @@
 
-class MyCoursesModel {
-  MyCoursesModel({
+class CoursesModel {
+  CoursesModel({
     required this.status,
     required this.data,
     required this.msg,
   });
 
   final bool status;
-  final List<MyCoursesDataModel> data;
+  final List<CoursesDataModel> data;
   final String msg;
 
-  factory MyCoursesModel.fromJson(Map<String, dynamic> json) => MyCoursesModel(
+  factory CoursesModel.fromJson(Map<String, dynamic> json) => CoursesModel(
     status: json["status"],
-    data: List<MyCoursesDataModel>.from(json["data"].map((x) => MyCoursesDataModel.fromJson(x))),
+    data: List<CoursesDataModel>.from(json["data"].map((x) => CoursesDataModel.fromJson(x))),
     msg: json["msg"],
   );
 
@@ -23,44 +23,8 @@ class MyCoursesModel {
   };
 }
 
-class MyCoursesDataModel {
-  MyCoursesDataModel({
-    required this.myBatchId,
-    required this.createdAt,
-    required this.amount,
-    required this.isPaid,
-    required this.isActive,
-    required this.batchDetails,
-  });
-
-  final String myBatchId;
-  final DateTime createdAt;
-  final int amount;
-  final bool isPaid;
-  final bool isActive;
-  final BatchDetails batchDetails;
-
-  factory MyCoursesDataModel.fromJson(Map<String, dynamic> json) => MyCoursesDataModel(
-    myBatchId: json["MyBatch_id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    amount: json["Amount"],
-    isPaid: json["is_paid"],
-    isActive: json["is_active"],
-    batchDetails: BatchDetails.fromJson(json["batchDetails"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "MyBatch_id": myBatchId,
-    "created_at": createdAt.toIso8601String(),
-    "Amount": amount,
-    "is_paid": isPaid,
-    "is_active": isActive,
-    "batchDetails": batchDetails.toJson(),
-  };
-}
-
-class BatchDetails {
-  BatchDetails({
+class CoursesDataModel {
+  CoursesDataModel({
     required this.id,
     required this.user,
     required this.batchName,
@@ -108,7 +72,7 @@ class BatchDetails {
   final String createdAt;
   final int v;
 
-  factory BatchDetails.fromJson(Map<String, dynamic> json) => BatchDetails(
+  factory CoursesDataModel.fromJson(Map<String, dynamic> json) => CoursesDataModel(
     id: json["_id"],
     user: json["user"],
     batchName: json["batch_name"],
