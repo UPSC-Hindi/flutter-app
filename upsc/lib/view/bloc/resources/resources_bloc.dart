@@ -11,7 +11,7 @@ class ResourcesBloc extends Bloc<ResourcesEvent, ResourcesState> {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     on<GetResources>((event, emit) async{
       try{
-        var response = await remoteDataSourceImpl.getResources(event.filter!);
+        var response = await remoteDataSourceImpl.getResources(event.key,event.value);
         print(response);
         if(response.status == true){
           emit(ResourcesSuccess(resources: response));

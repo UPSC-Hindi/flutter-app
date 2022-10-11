@@ -139,6 +139,56 @@ class _RestClient implements RestClient {
   }
 
   @override
+  logoutRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Logout>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(
+                  _dio.options,
+                  Apis.logout,
+                  queryParameters: queryParameters,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Logout.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  googleSigninRequest(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GoogleSignIn>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.googleSignIn,
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GoogleSignIn.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  postUserMobileNumberRequest(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<postUserMobileNumber>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.postUserMobileNumber,
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = postUserMobileNumber.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   joinmeetingRequest(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -173,18 +223,12 @@ class _RestClient implements RestClient {
   @override
   removefromcartRequest(body) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{"id": body};
     final _headers = <String, dynamic>{};
-
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<RemovefromCart>(
-            Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(
-                  _dio.options,
-                  '${Apis.removefromCart}:$body',
-                  queryParameters: queryParameters,
-                )
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.delete(
+      Apis.baseUrl + Apis.removefromCart,
+      queryParameters: queryParameters,
+    );
     final value = RemovefromCart.fromJson(_result.data!);
     return value;
   }

@@ -40,7 +40,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       buycourse = widget.buycourses;
       coursename = widget.coursename;
     });
-    context.read<ApiBloc>().add(GetCourses(filter: widget.id, type: 'id'));
+    context.read<ApiBloc>().add(GetCourses(value: widget.id, key: 'id'));
   }
 
   @override

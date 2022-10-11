@@ -218,6 +218,10 @@ class _OtpverificationState extends State<Otpverification> {
         );
       });
       if (response.status!) {
+         await SharedPreferenceHelper.setBoolean(
+              Preferences.is_logged_in, true);
+        await SharedPreferenceHelper.setString(
+              Preferences.phoneNUmber, widget.number);
          SharedPreferenceHelper.setString(Preferences.access_token,response.data!.accessToken!);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const LanguageScreen(isLogin: false),

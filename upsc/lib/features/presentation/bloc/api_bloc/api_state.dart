@@ -40,3 +40,10 @@ class ApiCoursesSuccess extends ApiState{
   @override
   List<Object?> get props => [courseList];
 }
+
+class ApiResourcesSuccess extends ApiState{
+  final ResourcesModel resources;
+  const ApiResourcesSuccess({required this.resources});
+  @override
+  List<Object?> get props => [resources];
+}

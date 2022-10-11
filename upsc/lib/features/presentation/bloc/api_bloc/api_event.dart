@@ -15,9 +15,18 @@ class GetMyCourses extends ApiEvent {
 }
 
 class GetCourses extends ApiEvent {
-  final String filter;
-  final String type;
-  const GetCourses({required this.type,required this.filter});
+  final String value;
+  final String key;
+  const GetCourses({required this.key,required this.value});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [value,key];
+}
+
+class GetResources extends ApiEvent {
+  final String key;
+  final String value;
+  const GetResources({required this.key,required this.value});
+
+  @override
+  List<Object?> get props => [key,value];
 }

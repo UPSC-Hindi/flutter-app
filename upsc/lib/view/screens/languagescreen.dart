@@ -16,7 +16,8 @@ class LanguageScreen extends StatefulWidget {
 class _LanguageScreenState extends State<LanguageScreen> {
   int selected = 0;
   int selected_course = 0;
-  int count = 0;
+  int Lcount = 0;
+  int Ccount = 0;
 
   @override
   void initState() {
@@ -84,9 +85,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 200,
+                  height: 100,
                 ),
-                count > 1
+                Lcount > 0 && Ccount > 0
                     ? Container(
                         width: MediaQuery.of(context).size.width * 0.60,
                         decoration: BoxDecoration(
@@ -163,7 +164,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       onPressed: () {
         setState(() {
           selected = index;
-          count = count + 1;
+          Lcount = Lcount + 1;
         });
       },
       child: Container(
@@ -221,7 +222,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       onPressed: () {
         setState(() {
           selected_course = index;
-          count = count + 1;
+          Ccount = Ccount + 1;
         });
       },
       child: Container(

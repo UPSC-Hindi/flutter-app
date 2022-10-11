@@ -56,11 +56,13 @@ class HelpAndSupport extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      launchUrl(Uri(
-                        scheme: 'mailto',
-                        path: 'upschindi4cse@gmail.com',
-                        query: 'subject=helpandsupport&body=msg',
-                      ));
+                      launchUrl(
+                          Uri(
+                            scheme: 'mailto',
+                            path: 'upschindi4cse@gmail.com',
+                            query: 'subject=helpandsupport&body=msg',
+                          ),
+                          mode: LaunchMode.externalApplication);
                     },
                     child: Text(
                       'upschindi4cse@gmail.com',
@@ -88,9 +90,14 @@ class HelpAndSupport extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Icon(
-                    Icons.whatsapp,
-                    size: 60,
+                  GestureDetector(
+                    onTap: () => launchUrl(
+                        Uri.parse('https://wa.me/+91951%209780078'),
+                        mode: LaunchMode.externalApplication),
+                    child: const Icon(
+                      Icons.whatsapp,
+                      size: 60,
+                    ),
                   ),
                   Text(Languages.whatsApp),
                   const SizedBox(height: 20),
@@ -102,20 +109,26 @@ class HelpAndSupport extends StatelessWidget {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              launchUrl(Uri.parse(
-                                  "https://www.facebook.com/UPSCHINDI4CSE"));
+                              launchUrl(
+                                  Uri.parse(
+                                      "https://www.facebook.com/UPSCHINDI4CSE"),
+                                  mode: LaunchMode.externalApplication);
                             },
                             child: Icon(Icons.facebook)),
                         GestureDetector(
                             onTap: () {
-                              launchUrl(Uri.parse(
-                                  "https://twitter.com/upschindi4cse"));
+                              launchUrl(
+                                  Uri.parse(
+                                      "https://twitter.com/upschindi4cse"),
+                                  mode: LaunchMode.externalApplication);
                             },
                             child: Icon(Icons.tab_sharp)),
                         GestureDetector(
                             onTap: () {
-                              launchUrl(Uri.parse(
-                                  "https://www.instagram.com/upschindi4cse"));
+                              launchUrl(
+                                  Uri.parse(
+                                      "https://www.instagram.com/upschindi4cse"),
+                                  mode: LaunchMode.externalApplication);
                             },
                             child: Icon(Icons.linked_camera_outlined))
                       ],

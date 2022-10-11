@@ -6,9 +6,11 @@ import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/screens/bottomnav/coursesdetails.dart';
+import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyCoursesScreen extends StatelessWidget {
   const MyCoursesScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     context.read<ApiBloc>().add(GetMyCourses());
@@ -43,7 +45,7 @@ class MyCoursesScreen extends StatelessWidget {
                 if (state is ApiMyCoursesSuccess) {
                   if (state.myCourses.isEmpty) {
                     return EmptyWidget(
-                      text: 'Your Cart is Empty!',
+                      text: 'There are no courses',
                       image: SvgImages.emptyCard,
                     );
                   } else {
@@ -52,8 +54,10 @@ class MyCoursesScreen extends StatelessWidget {
                       itemCount: state.myCourses.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child:
-                            _myCoursesCardWidget(context, state.myCourses[index]),
+                        child: _myCoursesCardWidget(
+                          context,
+                          state.myCourses[index],
+                        ),
                       ),
                     );
                   }
@@ -91,24 +95,9 @@ class MyCoursesScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    courseData.batchDetails.batchName,
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  Text(
-                    '45% Complete',
-                    style: TextStyle(color: ColorResources.gray),
-                  )
-                ],
-              ),
-              LinearProgressIndicator(
-                value: 0.45,
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(ColorResources.buttoncolor),
-                backgroundColor: ColorResources.gray.withOpacity(0.5),
+              Text(
+                courseData.batchDetails.batchName,
+                style: TextStyle(fontSize: 24),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,15 +114,16 @@ class MyCoursesScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      //  remove when this page dynamic*******************************
-                      // Navigator.of(context).pushNamed('courseviewscreen');
-                      // pls un comment this page dynamic************************************
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => CoursesDetailsScreens(
-                            buycourses: false,
-                            coursename: courseData.batchDetails.batchName,
-                            id: courseData.batchDetails.id,
+                          // builder: (context) => CoursesDetailsScreens(
+                          //   buycourses: false,
+                          //   coursename: courseData.batchDetails.batchName,
+                          //   id: courseData.batchDetails.id,
+                          // ),
+                          builder: (context) => CourseViewScreen(
+                            chanelName: courseData.batchDetails.batchName,
+                            description: courseData.batchDetails.description,
                           ),
                         ),
                       );

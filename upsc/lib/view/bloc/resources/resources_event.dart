@@ -5,8 +5,9 @@ abstract class ResourcesEvent extends Equatable {
 }
 
 class GetResources extends ResourcesEvent {
-  final String? filter;
-  const GetResources({this.filter});
+  final String key;
+  final String value;
+  const GetResources({required this.key,required this.value});
   @override
   List<Object?> get props => [];
 }

@@ -1,6 +1,6 @@
 class ResourcesModel {
   bool? status;
-  List<Data>? data;
+  List<ResourcesDataModel>? data;
   String? msg;
 
   ResourcesModel({this.status, this.data, this.msg});
@@ -8,9 +8,9 @@ class ResourcesModel {
   ResourcesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <ResourcesDataModel>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(ResourcesDataModel.fromJson(v));
       });
     }
     msg = json['msg'];
@@ -27,7 +27,7 @@ class ResourcesModel {
   }
 }
 
-class Data {
+class ResourcesDataModel {
   String? sId;
   String? user;
   Category? category;
@@ -38,7 +38,7 @@ class Data {
   int? iV;
   bool? isActive;
 
-  Data(
+  ResourcesDataModel(
       {this.sId,
       this.user,
       this.category,
@@ -49,7 +49,7 @@ class Data {
       this.iV,
       this.isActive});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ResourcesDataModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     user = json['user'];
     category =
