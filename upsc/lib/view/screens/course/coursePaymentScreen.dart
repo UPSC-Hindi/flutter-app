@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/screens/course/paymentScreen.dart';
@@ -74,7 +75,7 @@ class CoursePaymentScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '15,000',
+                  course.amount,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
@@ -120,7 +121,7 @@ class CoursePaymentScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '1510.40',
+                  course.amount,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
@@ -138,21 +139,8 @@ class CoursePaymentScreen extends StatelessWidget {
                     color: ColorResources.buttoncolor,
                     borderRadius: BorderRadius.circular(14)),
                 child: TextButton(
-                  onPressed: () async {
-                    RemoteDataSourceImpl remoteDataSourceImpl =
-                        RemoteDataSourceImpl();
-                    var response = await remoteDataSourceImpl.addMyCourses(
-                        course.cartId, true);
-                    print(course.cartId);
-                    if (response.statusCode == 200) {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentScreen(),
-                        ),
-                      );
-                    }
+                  onPressed: (){
+                    checkOutButton(context);
                   },
                   child: Text(
                     'Checkout',
@@ -169,4 +157,22 @@ class CoursePaymentScreen extends StatelessWidget {
       ),
     );
   }
+
+  void checkOutButton(BuildContext context)async{
+    RemoteDataSourceImpl remoteDataSourceImpl =
+    RemoteDataSourceImpl();
+    var response = await remoteDataSourceImpl.addMyCourses(
+        course.batchDetails['_id'], true);
+    if (response.statusCode == 200) {
+      flutterToast(response.data['msg']);
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PaymentScreen(),
+        ),
+      );
+    }
+  }
 }
+

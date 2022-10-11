@@ -60,7 +60,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
     on<GetResources>((event, emit) async{
       emit(ApiLoading());
       try{
-        ResourcesModel response = await remoteDataSourceImpl.getResources(event.key,event.value);
+        ResourcesModel response = await remoteDataSourceImpl.getResources(event.key!,event.value!);
         print(response);
         if(response.status == true){
           emit(ApiResourcesSuccess(resources: response));

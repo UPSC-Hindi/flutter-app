@@ -22,13 +22,11 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  CartDataModel cartSelectedItem = CartDataModel(
-    cartId: '',
-    createdAt: DateTime.now(),
-    amount: '0.00',
-    isActive: false,
-    batchDetails: [],
-  );
+  CartDataModel cartSelectedItem = CartDataModel(cartId: '',
+      createdAt: DateTime.now(),
+      amount: '0.00',
+      isActive: false,
+      batchDetails: [],);
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +59,15 @@ class _CartScreenState extends State<CartScreen> {
                 ListView.builder(
                   itemCount: state.cartData.length,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => CartContainerWidget(
-                    cartData: state.cartData[index],
-                    selectedCartCourse: (CartDataModel selectedCart) {
-                      setState(() {
-                        cartSelectedItem = selectedCart;
-                      });
-                    },
-                  ),
+                  itemBuilder: (context, index) =>
+                      CartContainerWidget(
+                        cartData: state.cartData[index],
+                        selectedCartCourse: (CartDataModel selectedCart) {
+                          setState(() {
+                            cartSelectedItem = selectedCart;
+                          });
+                        },
+                      ),
                 ),
                 _bottomButtonWidget(state.cartData.first, context)
               ],
@@ -110,12 +109,14 @@ class _CartScreenState extends State<CartScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CoursePaymentScreen(
-                              course: cartSelectedItem,
-                            ),
+                            builder: (context) =>
+                                CoursePaymentScreen(
+                                  course: cartSelectedItem,
+                                ),
                           ),
                         );
-                      } else {
+                      }
+                      else{
                         flutterToast('Select At least on item');
                       }
                     },
@@ -161,7 +162,10 @@ class _CartContainerWidgetState extends State<CartContainerWidget> {
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
           height: 100,
-          width: MediaQuery.of(context).size.width * 0.90,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 0.90,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: isSelected ? Colors.red.shade50 : ColorResources.textWhite,
@@ -174,7 +178,7 @@ class _CartContainerWidgetState extends State<CartContainerWidget> {
           ),
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -191,7 +195,10 @@ class _CartContainerWidgetState extends State<CartContainerWidget> {
                           height: 10,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.40,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.40,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -244,7 +251,7 @@ class _CartContainerWidgetState extends State<CartContainerWidget> {
                       ),
                       onPressed: () async {
                         RemoteDataSourceImpl remoteDataSourceImpl =
-                            RemoteDataSourceImpl();
+                        RemoteDataSourceImpl();
                         Preferences.onLoading(context);
                         try {
                           Response response = await remoteDataSourceImpl
