@@ -51,7 +51,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     try {
       final queryParameters = <String, dynamic>{key: value};
       var response = await dioAuthorizationData().get(
-        '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
+        '${Apis.baseUrl}${Apis.getCoursesFilter}',
         queryParameters: {key: value},
       );
       print(response);
@@ -66,6 +66,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     try {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.mycourses}');
+      print(response);
       return MyCoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -85,6 +86,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       Response response = await dioAuthorizationData().post(
           '${Apis.baseUrl}${Apis.addToMyCourses}',
           data: {'batch_id': batchId, 'is_paid': isPaid});
+      print(batchId);
+      print(isPaid);
+      print(response);
       return response;
     } catch (error) {
       rethrow;
