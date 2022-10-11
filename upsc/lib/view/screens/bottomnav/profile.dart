@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
-class ProfilScreen extends StatelessWidget {
+class ProfilScreen extends StatefulWidget {
   const ProfilScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilScreen> createState() => _ProfilScreenState();
+}
+
+class _ProfilScreenState extends State<ProfilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,33 +188,36 @@ class ProfilScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 80,
-                width: MediaQuery.of(context).size.width * 0.90,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorResources.textWhite,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5.0,
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    Icon(Icons.logout),
-                    Text(
-                      'Logout',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () => callApilogout(),
+                child: Container(
+                  height: 80,
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorResources.textWhite,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5.0,
                       ),
-                    ),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      Icon(Icons.logout),
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios)
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -210,5 +225,28 @@ class ProfilScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<BaseModel<Logout>> callApilogout() async {
+    Logout response;
+
+    try {
+      response = await RestClient(RetroApi2().dioData2()).logoutRequest();
+      if (response.status!) {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+        SharedPreferenceHelper.clearPref();
+        Navigator.of(context).popAndPushNamed('/');
+      }
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }

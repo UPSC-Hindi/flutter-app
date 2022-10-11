@@ -23,23 +23,78 @@ class GoogleSignIn {
 }
 
 class Data {
-  String? token;
-  String? email;
+  String? accessToken;
+  String? verificationToken;
+  String? id;
   String? username;
+  String? fullName;
+  String? email;
+  String? createdAt;
+  String? profilePhoto;
+  bool? userEmailVerified;
+  String? address;
+  String? signinType;
+  String? phoneNumber;
+  bool? userMobileNumberVerified;
+  String? language;
+  String? stream;
+  bool? verified;
 
-  Data({this.token, this.email, this.username});
+  Data(
+      {this.accessToken,
+      this.verificationToken,
+      this.id,
+      this.username,
+      this.fullName,
+      this.email,
+      this.createdAt,
+      this.profilePhoto,
+      this.userEmailVerified,
+      this.address,
+      this.signinType,
+      this.phoneNumber,
+      this.userMobileNumberVerified,
+      this.language,
+      this.stream,
+      this.verified});
 
   Data.fromJson(Map<String, dynamic> json) {
-    token = json['token'];
-    email = json['email'];
+    accessToken = json['accessToken'];
+    verificationToken = json['verification_token'];
+    id = json['id'];
     username = json['username'];
+    fullName = json['FullName'];
+    email = json['email'];
+    createdAt = json['created_at'];
+    profilePhoto = json['profilePhoto'];
+    userEmailVerified = json['userEmailVerified'];
+    address = json['Address'];
+    signinType = json['signinType'];
+    phoneNumber = json['phoneNumber'];
+    userMobileNumberVerified = json['userMobileNumberVerified'];
+    language = json['language'];
+    stream = json['stream'];
+    verified = json['verified'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['token'] = token;
-    data['email'] = email;
+    data['accessToken'] = accessToken;
+    data['verification_token'] = verificationToken;
+    data['id'] = id;
     data['username'] = username;
+    data['FullName'] = fullName;
+    data['email'] = email;
+    data['created_at'] = createdAt;
+    data['profilePhoto'] = profilePhoto;
+    data['userEmailVerified'] = userEmailVerified;
+    data['Address'] = address;
+    data['signinType'] = signinType;
+    data['phoneNumber'] = phoneNumber;
+    data['userMobileNumberVerified'] = userMobileNumberVerified;
+    data['language'] = language;
+    data['stream'] = stream;
+    data['verified'] = verified;
     return data;
   }
 }

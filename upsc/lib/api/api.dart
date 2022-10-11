@@ -14,9 +14,7 @@ class Apis {
   static const String logout = "Logout";
 
   static const String googleSignIn = "authentication/googleSignIn";
-  static const String postUserMobileNumber =
-      "authentication/postUserMobileNumber";
-  //static const String googleSignIn = "authentication/googleSignIn";
+  static const String postUserMobileNumber =  "authentication/postUserMobileNumber";
 
   static const String getCoursesFilter = "adminPanel/getBatchesDetails";
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';

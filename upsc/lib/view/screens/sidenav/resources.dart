@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
-import 'package:upsc/view/bloc/resources/resources_bloc.dart';
 
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({Key? key}) : super(key: key);
@@ -13,12 +13,6 @@ class ResourcesScreen extends StatefulWidget {
 }
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
-  @override
-  initState() {
-    context.read<ResourcesBloc>().add(const GetResources(filter: ''));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,19 +24,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             style: TextStyle(color: ColorResources.textblack),
           ),
         ),
-        body: BlocBuilder<ResourcesBloc, ResourcesState>(
-            builder: (context, state) {
-          if (state is ResourcesError) {
-            return const Text('Something went wrong');
-          }
-          if (state is ResourcesSuccess) {
-            List<Data> resourcesList = state.resources.data!;
-            if (resourcesList.isEmpty) {
-              return const Center(
-                child: Text('There Is no Resources'),
-              );
-            }
-            return GridView.count(
+        body: GridView.count(
               mainAxisSpacing: 20.0,
               crossAxisSpacing: 20.0,
               padding: const EdgeInsets.all(10),
@@ -74,13 +56,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                       SvgImages.sampleNotes, 'Sample Notes'),
                 ),
               ],
-            );
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }));
+            ),
+        );
   }
 
   Container _resourceCardWidget(String image, String text) {

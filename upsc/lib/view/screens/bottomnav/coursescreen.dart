@@ -73,7 +73,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
   initState() {
     context.read<ApiBloc>().add(
-          GetCourses(filter: widget.filter, type: 'Category'),
+          GetCourses(value: widget.filter, key: 'Category'),
         );
     super.initState();
   }

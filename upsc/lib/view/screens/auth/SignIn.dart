@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/auth/login_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:google_sign_in/google_sign_in.dart' as googleauth;
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:upsc/view/screens/auth/mobile_verification.dart';
 
 class loginscreen extends StatefulWidget {
   const loginscreen({Key? key}) : super(key: key);
@@ -30,6 +32,8 @@ class _loginscreenState extends State<loginscreen> {
   bool _passwordVisible = true;
   static String? deviceConfig;
   static String? deviceName;
+
+  googleauth.GoogleSignInAccount? result;
 
   @override
   void initState() {
@@ -55,10 +59,24 @@ class _loginscreenState extends State<loginscreen> {
   }
 
   googleLogin() async {
-    print("googleLogin method Called");
-    final _googleSignIn = GoogleSignIn();
-    var result = await _googleSignIn.signIn();
-    print("Result $result");
+    try {
+      print("googleLogin method Called");
+      final _googleSignIn = googleauth.GoogleSignIn();
+      result = await _googleSignIn.signIn();
+      print("Result $result");
+      print("Result ${result!.authHeaders}");
+      print("Result ${result!.displayName}");
+      print("Result ${result!.email}");
+      print("Result ${result!.photoUrl}");
+      print("Result ${result!.authentication}");
+      if (result!.email != null) {
+        callApigooglelogin();
+        await _googleSignIn.signOut();
+        await _googleSignIn.disconnect();
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
@@ -336,6 +354,79 @@ class _loginscreenState extends State<loginscreen> {
       setState(() {
         Preferences.hideDialog(context);
       });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
+
+  Future<BaseModel<GoogleSignIn>> callApigooglelogin() async {
+    GoogleSignIn response;
+    print("*123" * 200);
+    Map<String, dynamic> body = {
+      "email": result!.email,
+      "profilePhoto": result!.photoUrl,
+      "FullName": result!.displayName,
+      "deviceConfig": deviceConfig,
+      "deviceName": deviceName,
+    };
+
+    try {
+      response =
+          await RestClient(RetroApi2().dioData2()).googleSigninRequest(body);
+      if (response.status!) {
+        if (response.data!.verified!) {
+          await SharedPreferenceHelper.setString(
+              Preferences.access_token, response.data!.accessToken);
+          await SharedPreferenceHelper.setBoolean(
+              Preferences.is_logged_in, true);
+          await SharedPreferenceHelper.setString(
+              Preferences.name, response.data!.fullName);
+          await SharedPreferenceHelper.setString(
+              Preferences.email, response.data!.email);
+          await SharedPreferenceHelper.setString(
+              Preferences.phoneNUmber, response.data!.phoneNumber);
+          await SharedPreferenceHelper.setString(Preferences.language,
+              response.data!.language == "hi" ? "Hindi" : 'English');
+          Languages.isEnglish = response.data!.language == "hi" ? false : true;
+
+          Navigator.of(context).pushNamed('home');
+        } else {
+          await SharedPreferenceHelper.setString(
+              Preferences.name, response.data!.fullName);
+          await SharedPreferenceHelper.setString(
+              Preferences.email, response.data!.email);
+          await SharedPreferenceHelper.setString(
+              Preferences.auth_token, response.data!.verificationToken);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MobileVerification(),
+            ),
+          );
+        }
+        // await SharedPreferenceHelper.setString(Preferences.language,
+        //     response.data!.language == "hi" ? "Hindi" : 'English');
+        // Languages.isEnglish = response.data!.language == "hi" ? false : true;
+        //await Languages.initState();
+        //Navigator.of(context).popUntil((route) => route.isFirst);
+        print(SharedPreferenceHelper.getString(Preferences.access_token));
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }

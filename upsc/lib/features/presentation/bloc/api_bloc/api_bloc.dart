@@ -4,6 +4,7 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.d
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -45,13 +46,29 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       emit(ApiLoading());
       try {
         CoursesModel response =
-            await remoteDataSourceImpl.getCourses(event.filter, event.type);
+            await remoteDataSourceImpl.getCourses(event.value, event.key);
         if (response.status) {
           emit(ApiCoursesSuccess(courseList: response.data));
         } else {
           emit(ApiError());
         }
       } catch (error) {
+        emit(ApiError());
+      }
+    });
+
+    on<GetResources>((event, emit) async{
+      emit(ApiLoading());
+      try{
+        ResourcesModel response = await remoteDataSourceImpl.getResources(event.key,event.value);
+        print(response);
+        if(response.status == true){
+          emit(ApiResourcesSuccess(resources: response));
+        }
+        else{
+          emit(ApiError());
+        }
+      }catch(error){
         emit(ApiError());
       }
     });

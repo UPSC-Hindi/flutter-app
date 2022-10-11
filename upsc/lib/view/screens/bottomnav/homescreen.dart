@@ -278,7 +278,8 @@ class HomeScreens extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      launchUrl(Uri.parse("https://t.me/upschindi4cs"));
+                      launchUrl(Uri.parse("https://t.me/upschindi4cs"),
+                          mode: LaunchMode.externalApplication);
                     },
                     child: Container(
                       height: 100,

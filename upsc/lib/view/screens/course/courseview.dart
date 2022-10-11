@@ -15,7 +15,9 @@ import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/joinStreaming.dart';
 
 class CourseViewScreen extends StatefulWidget {
-  const CourseViewScreen({Key? key}) : super(key: key);
+  final String chanelName;
+  final String description;
+  const CourseViewScreen({Key? key,required this.chanelName,required this.description}) : super(key: key);
 
   @override
   State<CourseViewScreen> createState() => _CourseViewScreenState();
@@ -258,9 +260,9 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
       "channelName": channelName,
       "expireTime": "3600",
       "tokentype": "uid",
-      "Stream_title": "Mahadeva@12546987",
-      "account": "askd",
-      "Description": "A new Meeting",
+      //"Stream_title": "Mahadeva@12546987",
+      //"account": "askd",
+      //"Description": "A new Meeting",
       "uid": uid.toString()
     };
     setState(() {

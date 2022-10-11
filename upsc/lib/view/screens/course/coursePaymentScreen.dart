@@ -143,6 +143,7 @@ class CoursePaymentScreen extends StatelessWidget {
                         RemoteDataSourceImpl();
                     var response = await remoteDataSourceImpl.addMyCourses(
                         course.cartId, true);
+                    print(course.cartId);
                     if (response.statusCode == 200) {
                       Navigator.pop(context);
                       Navigator.push(

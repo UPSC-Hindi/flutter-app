@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:upsc/api/api.dart';
 import 'package:upsc/features/data/const_data.dart';
@@ -18,20 +17,17 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       print("--- Video Response ---");
       print(response);
       return VideoModel(status: false, data: null, msg: 'testing');
-
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<ResourcesModel> getResources(String filter) async {
+  Future<ResourcesModel> getResources(String key, String value) async {
     try {
-      var filterUrl = filter.isNotEmpty ? filter : '';
-
-      Response response = await dioAuthorizationData()
-          .get('${Apis.baseUrl}${Apis.getResources}$filterUrl');
-
+      Response response = await dioAuthorizationData().get(
+          '${Apis.baseUrl}${Apis.getResources}',
+          queryParameters: {key: value});
       return ResourcesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -51,13 +47,14 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<CoursesModel> getCourses(String filter, String type) async {
+  Future<CoursesModel> getCourses(String key, String value) async {
     try {
-      final queryParameters = <String, dynamic>{type: filter};
-      print('${Apis.baseUrl}${Apis.getCoursesFilter}');
-      var response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true');
-      // Response response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getCoursesFilter}',queryParameters: queryParameters);
-
+      final queryParameters = <String, dynamic>{key: value};
+      var response = await dioAuthorizationData().get(
+        '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
+        queryParameters: {key: value},
+      );
+      print(response);
       return CoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -83,17 +80,25 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<Response> addMyCourses(String batchId, bool isPaid) async{
-    try{
-      Response response =
-          await dioAuthorizationData().post('${Apis.baseUrl}${Apis.addToMyCourses}',data: {
-        'batch_id' : batchId,
-        'is_paid' : isPaid
-      });
+  Future<Response> addMyCourses(String batchId, bool isPaid) async {
+    try {
+      Response response = await dioAuthorizationData().post(
+          '${Apis.baseUrl}${Apis.addToMyCourses}',
+          data: {'batch_id': batchId, 'is_paid': isPaid});
       return response;
-    }catch(error){
+    } catch (error) {
       rethrow;
     }
   }
 
+  @override
+  Future<Response> deleteCartCourse(String id) async {
+    try {
+      var response = await dioAuthorizationData()
+          .delete('${Apis.baseUrl}${Apis.removefromCart}' + id);
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

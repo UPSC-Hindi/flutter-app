@@ -1,12 +1,29 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/auth/login_model.dart';
+import 'package:upsc/models/auth/postUserMobileNumber.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/auth/otpverification.dart';
 
-import '../../../util/images_file.dart';
-
-class MobileVerification extends StatelessWidget {
+class MobileVerification extends StatefulWidget {
   const MobileVerification({Key? key}) : super(key: key);
+
+  @override
+  State<MobileVerification> createState() => _MobileVerificationState();
+}
+
+class _MobileVerificationState extends State<MobileVerification> {
+  TextEditingController _numberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +68,9 @@ class MobileVerification extends StatelessWidget {
             height: 40,
           ),
           Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 30.0,
-              vertical: 10
-            ),
+            margin: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: TextField(
+              controller: _numberController,
               style: const TextStyle(fontSize: 20),
               decoration: InputDecoration(
                 contentPadding:
@@ -75,7 +90,9 @@ class MobileVerification extends StatelessWidget {
                 color: ColorResources.buttoncolor,
                 borderRadius: BorderRadius.circular(14)),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                callApinumberverif();
+              },
               child: Text(
                 'Send OTP',
                 style: GoogleFonts.poppins(
@@ -88,5 +105,62 @@ class MobileVerification extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<BaseModel<postUserMobileNumber>> callApinumberverif() async {
+    postUserMobileNumber response;
+    Map<String, dynamic> body = {
+      "userMobileNumber": _numberController.text,
+    };
+
+    setState(() {
+      Preferences.onLoading(context);
+    });
+
+    try {
+      String? token = SharedPreferenceHelper.getString(Preferences.auth_token);
+      response = await RestClient(RetroApi().dioData(token!))
+          .postUserMobileNumberRequest(body);
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      if (response.status!) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: ((context) =>
+                Otpverification(number: _numberController.text)),
+          ),
+        );
+        Fluttertoast.showToast(
+          msg: '${response.data![0].mobileNumberVerificationOTP}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }

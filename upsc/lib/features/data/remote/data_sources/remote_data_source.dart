@@ -9,9 +9,10 @@ import 'package:upsc/features/data/remote/models/video_model.dart';
 abstract class RemoteDataSource{
   Future<VideoModel> getVideo();
   Future<CoursesModel> getCourses(String filter,String type);
-  Future<ResourcesModel> getResources(String filter);
+  Future<ResourcesModel> getResources(String key,String value);
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();
   Future<void>addMyCart();
   Future<Response>addMyCourses(String batchId,bool isPaid);
+  Future<Response>deleteCartCourse(String id);
 }

@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -61,9 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: IconButton(
-                icon: const Icon(
-                  Icons.menu,
-                  size: 35,
+                icon: const ImageIcon(
+                  AssetImage('assets/images/menuIcon.png'),
                 ),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
@@ -386,8 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             GestureDetector(
               onTap: () {
-                SharedPreferenceHelper.clearPref();
-                Navigator.of(context).popAndPushNamed('/');
+                callApilogout();
               },
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -440,5 +444,28 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  Future<BaseModel<Logout>> callApilogout() async {
+    Logout response;
+
+    try {
+      response = await RestClient(RetroApi2().dioData2()).logoutRequest();
+      if (response.status!) {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+        SharedPreferenceHelper.clearPref();
+        Navigator.of(context).popAndPushNamed('/');
+      }
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }
