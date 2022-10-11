@@ -19,7 +19,7 @@ class GetCourses extends ApiEvent {
   final String key;
   const GetCourses({required this.key,required this.value});
   @override
-  List<Object?> get props => [value,key];
+  List<Object?> get props => [];
 }
 
 class GetResources extends ApiEvent {
