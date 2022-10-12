@@ -42,21 +42,21 @@ class Data {
 
   Data(
       {this.accessToken,
-      this.verificationToken,
-      this.id,
-      this.username,
-      this.fullName,
-      this.email,
-      this.createdAt,
-      this.profilePhoto,
-      this.userEmailVerified,
-      this.address,
-      this.signinType,
-      this.phoneNumber,
-      this.userMobileNumberVerified,
-      this.language,
-      this.stream,
-      this.verified});
+        this.verificationToken,
+        this.id,
+        this.username,
+        this.fullName,
+        this.email,
+        this.createdAt,
+        this.profilePhoto,
+        this.userEmailVerified,
+        this.address,
+        this.signinType,
+        this.phoneNumber,
+        this.userMobileNumberVerified,
+        this.language,
+        this.stream,
+        this.verified});
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];

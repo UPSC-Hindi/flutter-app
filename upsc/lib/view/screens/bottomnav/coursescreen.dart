@@ -38,10 +38,10 @@ class _CourseScreenState extends State<CourseScreen> {
             const Expanded(
               child: TabBarView(children: [
                 TabCoursesWidget(
-                  filter: 'Prelims',
+                  value: 'Prelims',
                 ),
                 TabCoursesWidget(
-                  filter: 'Mains',
+                  value: 'Mains',
                 ),
                 Center(
                   child: Text("Update will come soon......"),
@@ -61,9 +61,9 @@ class _CourseScreenState extends State<CourseScreen> {
 class TabCoursesWidget extends StatefulWidget {
   const TabCoursesWidget({
     Key? key,
-    required this.filter,
+    required this.value,
   }) : super(key: key);
-  final String filter;
+  final String value;
 
   @override
   State<TabCoursesWidget> createState() => _TabCoursesWidgetState();
@@ -71,18 +71,19 @@ class TabCoursesWidget extends StatefulWidget {
 
 class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
-  initState() {
-    context.read<ApiBloc>().add(
-          GetCourses(value: widget.filter, key: 'Category'),
-        );
-    super.initState();
+  void initState() {
+      context.read<ApiBloc>().add(
+        GetCourses(key: 'Category',value: widget.value),
+      );
+      super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ApiBloc, ApiState>(
+    return BlocConsumer<ApiBloc, ApiState>(
+      listener: (context,state){
+
+      },
       builder: (context, state) {
-        print(state);
         if (state is ApiError) {
           return const Center(
             child: Text('Something went wrong'),
@@ -95,6 +96,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 )
               : _bodyWidget(state.courseList);
         }
+
         return const Center(
           child: CircularProgressIndicator(),
         );
@@ -217,11 +219,12 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                    builder: (context) => CoursesDetailsScreens(
-                          id: data.id,
-                          buycourses: true,
-                          coursename: data.batchName,
-                        )),
+                  builder: (context) => CoursesDetailsScreens(
+                    id: data.id,
+                    buycourses: true,
+                    coursename: data.batchName,
+                  ),
+                ),
               );
             },
             child: Container(

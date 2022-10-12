@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -56,13 +57,11 @@ class HelpAndSupport extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      launchUrl(
-                          Uri(
-                            scheme: 'mailto',
-                            path: 'upschindi4cse@gmail.com',
-                            query: 'subject=helpandsupport&body=msg',
-                          ),
-                          mode: LaunchMode.externalApplication);
+                      launchUrl(Uri(
+                        scheme: 'mailto',
+                        path: 'upschindi4cse@gmail.com',
+                        query: 'subject=helpandsupport&body=msg',
+                      ));
                     },
                     child: Text(
                       'upschindi4cse@gmail.com',
@@ -91,14 +90,11 @@ class HelpAndSupport extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
-                    onTap: () => launchUrl(
-                        Uri.parse('https://wa.me/+91951%209780078'),
-                        mode: LaunchMode.externalApplication),
-                    child: const Icon(
-                      Icons.whatsapp,
-                      size: 60,
-                    ),
-                  ),
+                      onTap: () {
+                        launchUrl(Uri.parse("https://www.wa.me/+919519780078"),
+                            mode: LaunchMode.externalApplication);
+                      },
+                      child: Image.network(SvgImages.whatsapp)),
                   Text(Languages.whatsApp),
                   const SizedBox(height: 20),
                   Container(
@@ -114,7 +110,7 @@ class HelpAndSupport extends StatelessWidget {
                                       "https://www.facebook.com/UPSCHINDI4CSE"),
                                   mode: LaunchMode.externalApplication);
                             },
-                            child: Icon(Icons.facebook)),
+                            child: Image.network(SvgImages.facebook)),
                         GestureDetector(
                             onTap: () {
                               launchUrl(
@@ -122,7 +118,7 @@ class HelpAndSupport extends StatelessWidget {
                                       "https://twitter.com/upschindi4cse"),
                                   mode: LaunchMode.externalApplication);
                             },
-                            child: Icon(Icons.tab_sharp)),
+                            child: Image.network(SvgImages.twitter)),
                         GestureDetector(
                             onTap: () {
                               launchUrl(
@@ -130,7 +126,7 @@ class HelpAndSupport extends StatelessWidget {
                                       "https://www.instagram.com/upschindi4cse"),
                                   mode: LaunchMode.externalApplication);
                             },
-                            child: Icon(Icons.linked_camera_outlined))
+                            child: Image.network(SvgImages.linkedin))
                       ],
                     ),
                   ),

@@ -72,10 +72,10 @@ class _OtpverificationState extends State<Otpverification> {
             children: [
               CarouselSlider(
                 items: [
-                  Image.asset('assets/images/ad 1.jpg'),
-                  Image.asset('assets/images/ad 2.jpg'),
-                  Image.asset('assets/images/ad 3.jpg'),
-                  Image.asset('assets/images/ad 4.jpg'),
+                  Image.network('assets/images/ad 1.jpg'),
+                  Image.network('assets/images/ad 2.jpg'),
+                  Image.network('assets/images/ad 3.jpg'),
+                  Image.network('assets/images/ad 4.jpg'),
                 ],
                 options: CarouselOptions(
                   height: 250,

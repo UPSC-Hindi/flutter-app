@@ -101,7 +101,7 @@ class HomeScreens extends StatelessWidget {
                         children: [
                           Container(
                               height: 100,
-                              child: SvgPicture.asset(SvgImages.notepaper)),
+                              child: SvgPicture.network(SvgImages.notepaper)),
                           Container(
                             height: 60,
                             width: 159,
@@ -151,7 +151,7 @@ class HomeScreens extends StatelessWidget {
                         children: [
                           Container(
                               height: 100,
-                              child: Image.asset(SvgImages.intrview)),
+                              child: Image.network(SvgImages.intrview)),
                           Container(
                             height: 60,
                             width: 160,
@@ -203,7 +203,7 @@ class HomeScreens extends StatelessWidget {
                         children: [
                           Container(
                               height: 100,
-                              child: Image.asset(SvgImages.intrview)),
+                              child: Image.network(SvgImages.intrview)),
                           Container(
                             height: 60,
                             width: 160,
@@ -272,7 +272,7 @@ class HomeScreens extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Image.asset(SvgImages.youtube),
+                            Image.network(SvgImages.youtube),
                           ],
                         )),
                   ),
@@ -290,7 +290,7 @@ class HomeScreens extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Image.asset(SvgImages.telegram),
+                          Image.network(SvgImages.telegram),
                         ],
                       ),
                     ),
@@ -323,7 +323,7 @@ class HomeScreens extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(SvgImages.youtube),
+                      child: Image.network(SvgImages.youtube),
                     ),
                     const SizedBox(
                       width: 10,

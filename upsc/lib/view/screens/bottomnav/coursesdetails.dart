@@ -190,92 +190,27 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                         ),
                       ),
                     ),
-                    SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.account_circle_rounded,
-                                  size: 80,
-                                ),
-                                Text('Lorem Ipsum',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
+                    Container(
+                      height: 110,
+                      child: ListView.builder(
+                        itemCount: course.student.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Column(
+                            children: [
+                              Image.network(
+                                'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png',
+                                height: 80,
+                              ),
+                              Text(
+                                'Saurabh',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.account_circle_rounded,
-                                  size: 80,
-                                ),
-                                Text('Lorem Ipsum',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.account_circle_rounded,
-                                  size: 80,
-                                ),
-                                Text('Lorem Ipsum',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.account_circle_rounded,
-                                  size: 80,
-                                ),
-                                Text('Lorem Ipsum',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.account_circle_rounded,
-                                  size: 80,
-                                ),
-                                Text('Lorem Ipsum',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                     Align(

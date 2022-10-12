@@ -314,8 +314,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('${Languages.createdFor} ' +
-                  DateFormat('MMMM dd').format(selectDate).toString()),
+              child: Text('${Languages.createdFor} ${DateFormat('MMMM dd').format(selectDate)}'),
             ),
           ),
         ]),

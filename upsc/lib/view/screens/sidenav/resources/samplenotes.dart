@@ -11,7 +11,7 @@ class SampleNotesScreen extends StatefulWidget {
 }
 
 class _SampleNotesScreenState extends State<SampleNotesScreen> {
-  TextEditingController _searchtest = TextEditingController();
+  final TextEditingController _searchtest = TextEditingController();
 
   @override
   void dispose() {
@@ -31,7 +31,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             Padding(
@@ -59,8 +59,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(SvgImages.pdfimage),
-                            SizedBox(
+                            Image.network(SvgImages.pdfimage),
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
@@ -89,7 +89,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Container(
                     width: double.infinity,
                     child: Row(
@@ -97,8 +97,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(SvgImages.pdfimage),
-                            SizedBox(
+                            Image.network(SvgImages.pdfimage),
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
@@ -127,7 +127,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Container(
                     width: double.infinity,
                     child: Row(
@@ -135,8 +135,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(SvgImages.pdfimage),
-                            SizedBox(
+                            Image.network(SvgImages.pdfimage),
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
