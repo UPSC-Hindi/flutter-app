@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +20,9 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Daily News'));
+    context
+        .read<ApiBloc>()
+        .add(const GetResources(key: 'Category', value: 'Daily News'));
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
 
@@ -40,27 +39,33 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
         builder: (context, state) {
-          if(state is ApiError){
-            return const Center(child: Text("Unable to get data"),);
+          if (state is ApiError) {
+            return const Center(
+              child: Text("Unable to get data"),
+            );
           }
-          if(state is ApiResourcesSuccess){
-            if(state.resources.data!.isEmpty){
-              return const Center(child: Text('There is no resources'),);
+          if (state is ApiResourcesSuccess) {
+            if (state.resources.data!.isEmpty) {
+              return const Center(
+                child: Text('There is no resources'),
+              );
             }
-            return _bodyWidget(context,state.resources.data!);
+            return _bodyWidget(context, state.resources.data!);
           }
-          return Center(child: CircularProgressIndicator(),);
-
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
   }
 
-  Container _bodyWidget(BuildContext context,List<ResourcesDataModel> resources) {
+  Container _bodyWidget(
+      BuildContext context, List<ResourcesDataModel> resources) {
     return Container(
       width: double.infinity,
       child: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
@@ -69,7 +74,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
               : "News for",
           style: GoogleFonts.poppins(fontSize: 20),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         ElevatedButton(
@@ -87,7 +92,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
               print(
                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
               String formattedDate =
-              DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                  DateFormat('dd-MMMM-yyyy').format(pickedDate);
               print(
                   formattedDate); //formatted date output using intl package =>  2021-03-16
               setState(() {
@@ -110,7 +115,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         FractionallySizedBox(
@@ -120,8 +125,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return _dailyNewsResourceWidget(resources[index]);
-                })
-        )
+                }))
       ]),
     );
   }
@@ -136,7 +140,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             children: [
               Row(
                 children: [
-                  Image.asset(SvgImages.pdfimage),
+                  Image.network(SvgImages.pdfimage),
                   const SizedBox(
                     width: 20,
                   ),

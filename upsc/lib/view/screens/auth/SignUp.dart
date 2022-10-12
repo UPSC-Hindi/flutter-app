@@ -59,13 +59,13 @@ class _SignUpState extends State<SignUp> {
             children: [
               CarouselSlider(
                 items: [
-                  Image.asset(SvgImages
+                  Image.network(SvgImages
                       .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
-                  Image.asset(SvgImages
+                  Image.network(SvgImages
                       .banner_2), // SvgPicture.asset(SvgImages.banner_2),
-                  Image.asset(SvgImages
+                  Image.network(SvgImages
                       .banner_3), // SvgPicture.asset(SvgImages.banner_3),
-                  Image.asset(SvgImages
+                  Image.network(SvgImages
                       .banner_4), // SvgPicture.asset(SvgImages.banner_4),
                 ],
                 options: CarouselOptions(
@@ -239,7 +239,7 @@ class _SignUpState extends State<SignUp> {
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: SvgPicture.asset(SvgImages.google),
+                            child: SvgPicture.network(SvgImages.google),
                           ),
                           const SizedBox(
                             width: 10,
@@ -252,7 +252,7 @@ class _SignUpState extends State<SignUp> {
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: SvgPicture.asset(SvgImages.apple),
+                            child: SvgPicture.network(SvgImages.apple),
                           )
                         ],
                       ),

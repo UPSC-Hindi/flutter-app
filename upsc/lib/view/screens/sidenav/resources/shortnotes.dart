@@ -14,7 +14,7 @@ class ShortNotesScreen extends StatefulWidget {
 }
 
 class _ShortNotesScreenState extends State<ShortNotesScreen> {
-  TextEditingController _searchtest = TextEditingController();
+  final TextEditingController _searchtest = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
 
   Container _bodyWidget(List<ResourcesDataModel> resources) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           Padding(
@@ -96,8 +96,8 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
             children: [
               Row(
                 children: [
-                  Image.asset(SvgImages.pdfimage),
-                  SizedBox(
+                  Image.network(SvgImages.pdfimage),
+                  const SizedBox(
                     width: 20,
                   ),
                   Column(
@@ -125,7 +125,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

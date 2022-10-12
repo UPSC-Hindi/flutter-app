@@ -23,15 +23,15 @@ class CoursePaymentScreen extends StatelessWidget {
           children: [
             CarouselSlider(
               items: [
-                Image.asset(
+                Image.network(
                   SvgImages.banner_1,
                 ),
                 // SvgPicture.asset(SvgImages.banner_1,),
-                Image.asset(SvgImages.banner_2),
+                Image.network(SvgImages.banner_2),
                 // SvgPicture.asset(SvgImages.banner_2),
-                Image.asset(SvgImages.banner_3),
+                Image.network(SvgImages.banner_3),
                 // SvgPicture.asset(SvgImages.banner_3),
-                Image.asset(SvgImages.banner_4),
+                Image.network(SvgImages.banner_4),
                 // SvgPicture.asset(SvgImages.banner_4),
               ],
               options: CarouselOptions(

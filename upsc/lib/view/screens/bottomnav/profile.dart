@@ -27,7 +27,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(SvgImages.backgroung),
+              image: NetworkImage(SvgImages.backgroung),
               fit: BoxFit.values[0],
               repeat: ImageRepeat.noRepeat,
             ),

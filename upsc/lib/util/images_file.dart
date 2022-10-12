@@ -1,30 +1,69 @@
 class SvgImages {
   // slider
-  static String banner_1 = 'assets/images/ad 1.jpg';
-  static String banner_2 = 'assets/images/ad 2.jpg';
-  static String banner_3 = 'assets/images/ad 3.jpg';
-  static String banner_4 = 'assets/images/ad 4.jpg';
+  static String banner_1 =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/ad+1.jpg';
+  static String banner_2 =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/ad+2.jpg';
+  static String banner_3 =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/ad+3.jpg';
+  static String banner_4 =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/ad+4.jpg';
+
+  static String avatar =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png';
 
   static String logo = 'assets/images/logo_Splash.jpg';
 
 //support auth images
-  static String google = 'assets/images/flat-color-icons_google.svg';
-  static String apple = 'assets/images/bi_apple.svg';
+  static String google =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/flat-color-icons_google.svg';
+  static String apple =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/bi_apple.svg';
 
-  static String notepaper = 'assets/images/note-paper 1.svg';
-  static String intrview = 'assets/images/Group.jpg';
-  static String exampen = 'assets/images/icon _Exam Multiple-Choice_.svg';
-  static String blurimageexam = 'assets/images/pen-on-blank-brown-notepad.jpg';
-  static String telegram = 'assets/images/telegram.png';
-  static String youtube = 'assets/images/YouTube logo.png';
-  static String backgroung = 'assets/images/Rectangle 61.png';
+  static String notepaper =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/note-paper+1.svg';
+  static String intrview =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/Group.jpg';
+  static String blurimageexam =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/pen-on-blank-brown-notepad-.jpg';
 
-  static String pdfimage = 'assets/images/pdf.png';
-  static String emptyCard = "assets/images/emptyCard.png";
+  //icons
+  static String exampen =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/icon+_Exam+Multiple-Choice_.svg';
+  static String pdfimage =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/pdf.png';
+  static String courses =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/cources.svg";
 
-  static String dailyNews = "assets/images/resources/dailyNews.png";
-  static String courseIndex = "assets/images/resources/courseIndex.png";
-  static String shortNotes = "assets/images/resources/shortNotes.png";
-  static String youtubeNotes = "assets/images/resources/youtubeNotes.png";
-  static String sampleNotes = "assets/images/resources/sampleNotes.png";
+  //social media
+  static String telegram =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/telegram.png';
+  static String youtube =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/YouTube+logo.png';
+  static String facebook =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/fb.png';
+  static String twitter =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/twiter.png';
+  static String whatsapp =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/whatsapp.png';
+  static String linkedin =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/linkedin.png';
+
+  static String backgroung =
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/Rectangle+61.png';
+
+  static String emptyCard =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/emptyCard.png";
+
+  //resources
+  static String dailyNews =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/dailyNews.png";
+  static String courseIndex =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/courseIndex.png";
+  static String shortNotes =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/shortNotes.png";
+  static String youtubeNotes =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/youtubeNotes.png";
+  static String sampleNotes =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/sampleNotes.png";
 }

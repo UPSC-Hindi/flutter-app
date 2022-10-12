@@ -11,7 +11,7 @@ class YoutubeNotesScreen extends StatefulWidget {
 }
 
 class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
-  TextEditingController _searchtest = TextEditingController();
+  final TextEditingController _searchtest = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                           children: [
                             Row(
                               children: [
-                                Image.asset(SvgImages.pdfimage),
+                                Image.network(SvgImages.pdfimage),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -135,7 +135,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                           children: [
                             Row(
                               children: [
-                                Image.asset(SvgImages.pdfimage),
+                                Image.network(SvgImages.pdfimage),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -209,7 +209,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                           children: [
                             Row(
                               children: [
-                                Image.asset(SvgImages.pdfimage),
+                                Image.network(SvgImages.pdfimage),
                                 SizedBox(
                                   width: 20,
                                 ),

@@ -30,6 +30,7 @@ class MyCoursesDataModel {
     required this.amount,
     required this.isPaid,
     required this.isActive,
+    required this.lectureDetails,
     required this.batchDetails,
   });
 
@@ -38,6 +39,7 @@ class MyCoursesDataModel {
   final int amount;
   final bool isPaid;
   final bool isActive;
+  final List<LectureDetail> lectureDetails;
   final BatchDetails batchDetails;
 
   factory MyCoursesDataModel.fromJson(Map<String, dynamic> json) => MyCoursesDataModel(
@@ -46,6 +48,7 @@ class MyCoursesDataModel {
     amount: json["Amount"],
     isPaid: json["is_paid"],
     isActive: json["is_active"],
+      lectureDetails: List<LectureDetail>.from(json["lectureDetails"].map((x) => LectureDetail.fromJson(x))),
     batchDetails: BatchDetails.fromJson(json["batchDetails"]),
   );
 
@@ -55,6 +58,7 @@ class MyCoursesDataModel {
     "Amount": amount,
     "is_paid": isPaid,
     "is_active": isActive,
+    "lectureDetails": List<dynamic>.from(lectureDetails.map((x) => x.toJson())),
     "batchDetails": batchDetails.toJson(),
   };
 }
@@ -155,6 +159,74 @@ class BatchDetails {
     "is_active": isActive,
     "course_review": courseReview,
     "created_at": createdAt,
+    "__v": v,
+  };
+}
+
+class LectureDetail {
+  LectureDetail({
+    required this.id,
+    required this.userAdmin,
+    required this.batch,
+    required this.lectureTitle,
+    required this.description,
+    required this.teacher,
+    required this.subject,
+    required this.link,
+    required this.liveOrRecorded,
+    required this.startingDate,
+    required this.endingDate,
+    required this.student,
+    required this.createdAt,
+    required this.v,
+  });
+
+  final String id;
+  final String userAdmin;
+  final String batch;
+  final String lectureTitle;
+  final String description;
+  final List<String> teacher;
+  final String subject;
+  final String link;
+  final String liveOrRecorded;
+  final String startingDate;
+  final String endingDate;
+  final List<dynamic> student;
+  final DateTime createdAt;
+  final int v;
+
+  factory LectureDetail.fromJson(Map<String, dynamic> json) => LectureDetail(
+    id: json["_id"],
+    userAdmin: json["user_admin"],
+    batch: json["batch"],
+    lectureTitle: json["lecture_title"],
+    description: json["description"],
+    teacher: List<String>.from(json["teacher"].map((x) => x)),
+    subject: json["subject"],
+    link: json["link"],
+    liveOrRecorded: json["LiveOrRecorded"],
+    startingDate: json["starting_date"],
+    endingDate: json["ending_date"],
+    student: List<dynamic>.from(json["student"].map((x) => x)),
+    createdAt: DateTime.parse(json["created_at"]),
+    v: json["__v"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "user_admin": userAdmin,
+    "batch": batch,
+    "lecture_title": lectureTitle,
+    "description": description,
+    "teacher": List<dynamic>.from(teacher.map((x) => x)),
+    "subject": subject,
+    "link": link,
+    "LiveOrRecorded": liveOrRecorded,
+    "starting_date": startingDate,
+    "ending_date": endingDate,
+    "student": List<dynamic>.from(student.map((x) => x)),
+    "created_at": createdAt.toIso8601String(),
     "__v": v,
   };
 }

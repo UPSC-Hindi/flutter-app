@@ -12,7 +12,6 @@ import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
-import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
 import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
@@ -37,20 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List _widgetOptions = [
     const HomeScreens(),
-    BlocProvider(
-      create: (context) => CoursesBloc(),
-      child: const CourseScreen(),
-    ),
+    const CourseScreen(),
     const mocktestscreen(),
     const ProfilScreen()
   ];
 
   String name = "temp";
+
   @override
   void initState() {
     print('Is english');
     print(Languages.isEnglish);
     name = SharedPreferenceHelper.getString(Preferences.name)!;
+    // Languages.isEnglish = SharedPreferenceHelper.getBoolean(Preferences.language)
     Languages.initState();
     super.initState();
   }
