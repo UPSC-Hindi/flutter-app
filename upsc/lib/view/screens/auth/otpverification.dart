@@ -9,7 +9,7 @@ import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/VerifyMobileNumber.dart';
 import 'package:upsc/models/auth/resendotp.dart';
-
+import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
@@ -72,10 +72,10 @@ class _OtpverificationState extends State<Otpverification> {
             children: [
               CarouselSlider(
                 items: [
-                  Image.network('assets/images/ad 1.jpg'),
-                  Image.network('assets/images/ad 2.jpg'),
-                  Image.network('assets/images/ad 3.jpg'),
-                  Image.network('assets/images/ad 4.jpg'),
+                  Image.network(SvgImages.banner_1,),
+                  Image.network(SvgImages.banner_2,),
+                  Image.network(SvgImages.banner_3,),
+                  Image.network(SvgImages.banner_4,),
                 ],
                 options: CarouselOptions(
                   height: 250,

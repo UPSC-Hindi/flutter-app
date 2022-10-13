@@ -172,8 +172,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             Icon(
                               Icons.calendar_month_rounded,
                             ),
-                            Text(
-                                ' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate)}')
+                            Text(' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate)}')
                           ]),
                         ]),
                     Align(
@@ -243,7 +242,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                                     Icons.account_circle_rounded,
                                     size: 80,
                                   ),
-                                  Text('Lorem Ipsum',
+                                  Text('Raman Deep',
                                       style: GoogleFonts.poppins(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold))
@@ -275,8 +274,6 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                                 primary: ColorResources.buttoncolor,
                                 shape: const StadiumBorder()),
                             onPressed: () {
-                              print(course.id);
-                              print(course.batchName);
                               callApiaddtocart(course);
                               Navigator.of(context)
                                   .popAndPushNamed('cartscreen');

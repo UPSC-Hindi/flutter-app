@@ -24,7 +24,7 @@ class JoinStreamingScreen extends StatefulWidget {
 
 class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   static String? channel;
-  static String appId = "1541a573c5d84ce6ae3996f02626f462";
+  static String appId = "5d035487d2bb4859a5faa4677c039873";//"1541a573c5d84ce6ae3996f02626f462";//9675807e93584b4c9fec19451a1186fa
   static String? rtctoken;
   //static int uid; //random.nextInt(999); //= 123456;
   static String? rtmtoken;
