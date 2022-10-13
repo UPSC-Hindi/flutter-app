@@ -366,7 +366,7 @@ class _loginscreenState extends State<loginscreen> {
     Map<String, dynamic> body = {
       "email": result!.email,
       "profilePhoto": result!.photoUrl,
-      "FullName": result!.displayName,
+      "usernameFromGoogle": result!.displayName,
       "deviceConfig": deviceConfig,
       "deviceName": deviceName,
     };

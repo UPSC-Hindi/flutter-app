@@ -5,7 +5,6 @@ import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
-import 'package:upsc/view/screens/bottomnav/coursesdetails.dart';
 import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyCoursesScreen extends StatelessWidget {
@@ -27,16 +26,9 @@ class MyCoursesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'In Progress',
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
+            const SizedBox(height: 30,),
             BlocBuilder<ApiBloc, ApiState>(
               builder: (context, state) {
-                print(state);
                 if (state is ApiError) {
                   return const Center(
                     child: Text('Something Went Wrong'),
@@ -116,14 +108,12 @@ class MyCoursesScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          // builder: (context) => CoursesDetailsScreens(
-                          //   buycourses: false,
-                          //   coursename: courseData.batchDetails.batchName,
-                          //   id: courseData.batchDetails.id,
-                          // ),
                           builder: (context) => CourseViewScreen(
-                            chanelName: courseData.batchDetails.batchName,
-                            description: courseData.batchDetails.description,
+                            batchTitle: courseData.batchDetails.batchName,
+                            batchDesc: courseData.batchDetails.description,
+                            lecture: courseData.lectureDetails,
+                            startDate: courseData.batchDetails.startingDate,
+                            endDate: courseData.batchDetails.endingDate,
                           ),
                         ),
                       );

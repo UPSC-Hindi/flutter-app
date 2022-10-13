@@ -448,7 +448,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Logout response;
 
     try {
-      response = await RestClient(RetroApi2().dioData2()).logoutRequest();
+      var token = SharedPreferenceHelper.getString(Preferences.access_token);
+      response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
       if (response.status!) {
         Fluttertoast.showToast(
           msg: '${response.msg}',
