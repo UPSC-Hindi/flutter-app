@@ -22,45 +22,38 @@ class MyCoursesScreen extends StatelessWidget {
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30,),
-            BlocBuilder<ApiBloc, ApiState>(
-              builder: (context, state) {
-                if (state is ApiError) {
-                  return const Center(
-                    child: Text('Something Went Wrong'),
+      body:
+          BlocBuilder<ApiBloc, ApiState>(
+            builder: (context, state) {
+              if (state is ApiError) {
+                return const Center(
+                  child: Text('Something Went Wrong'),
+                );
+              }
+              if (state is ApiMyCoursesSuccess) {
+                if (state.myCourses.isEmpty) {
+                  return EmptyWidget(
+                    text: 'There are no courses',
+                    image: SvgImages.emptyCard,
+                  );
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.myCourses.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _myCoursesCardWidget(
+                        context,
+                        state.myCourses[index],
+                      ),
+                    ),
                   );
                 }
-                if (state is ApiMyCoursesSuccess) {
-                  if (state.myCourses.isEmpty) {
-                    return EmptyWidget(
-                      text: 'There are no courses',
-                      image: SvgImages.emptyCard,
-                    );
-                  } else {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.myCourses.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: _myCoursesCardWidget(
-                          context,
-                          state.myCourses[index],
-                        ),
-                      ),
-                    );
-                  }
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            ),
-          ],
-        ),
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
       ),
     );
   }
@@ -70,7 +63,6 @@ class MyCoursesScreen extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(10.0),
-        height: 120,
         width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
           color: const Color(0xFFF9F9F9),
@@ -95,7 +87,7 @@ class MyCoursesScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Expires in 2 months',
+                    'Expires in ${courseData.batchDetails.endingDate.difference(DateTime.now()).inDays} Days',
                     style: TextStyle(color: ColorResources.gray),
                   ),
                   ElevatedButton(
@@ -106,7 +98,7 @@ class MyCoursesScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => CourseViewScreen(
                             batchTitle: courseData.batchDetails.batchName,

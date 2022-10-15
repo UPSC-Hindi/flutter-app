@@ -52,10 +52,8 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       final queryParameters = <String, dynamic>{key: value};
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
-        queryParameters: {key: value},
+        // queryParameters: {key : value},
       );
-      print("$key $value");
-      print(response);
       return CoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;

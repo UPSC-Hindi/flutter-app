@@ -72,7 +72,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade300,
                             borderRadius: BorderRadius.circular(10),
@@ -134,7 +134,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                 ),
                               ),
                               Container(
-                                height: 70,
+                                height: 100,
                                 child: ListView.builder(
                                   itemCount: 3,
                                   scrollDirection: Axis.horizontal,
@@ -144,12 +144,16 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                       children: [
                                         Image.network(
                                           'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png',
-                                          height: 40,
+                                          height: 70,
                                         ),
-                                        Text(
-                                          'Raman',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 16, fontWeight: FontWeight.bold),
+                                        SizedBox(
+                                          width: 70,
+                                          child: Text(
+                                            'Raman',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16, fontWeight: FontWeight.bold),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -196,7 +200,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Duration  - 9:00 AM to 12:00 PM'),
+              Text('Duration  - 9:00 AM to 12:00 PM',style: TextStyle(fontSize: 15),),
               Text('Date  - 08/10/2022 '),
             ],
           ),

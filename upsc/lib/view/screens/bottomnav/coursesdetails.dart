@@ -17,12 +17,9 @@ import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
 class CoursesDetailsScreens extends StatefulWidget {
-  bool? buycourses;
-  String? coursename;
-  final String id;
-
+  final CoursesDataModel course;
   CoursesDetailsScreens(
-      {Key? key, this.buycourses, this.coursename, required this.id})
+      {Key? key, required this.course})
       : super(key: key);
 
   @override
@@ -30,36 +27,15 @@ class CoursesDetailsScreens extends StatefulWidget {
 }
 
 class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
-  bool? buycourse;
-  String? coursename;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      buycourse = widget.buycourses;
-      coursename = widget.coursename;
-    });
-    context.read<ApiBloc>().add(GetCourses(value: widget.id, key: 'id'));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ApiBloc, ApiState>(
-      builder: (context, state) {
-        if (state is ApiCoursesSuccess) {
-          return _bodyWidget(context, state.courseList[0]);
-        }
-        if (state is ApiError) {
-          return const Scaffold(
-            body: Center(child: Text('Something Went Wrong')),
-          );
-        }
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        );
-      },
-    );
+    return _bodyWidget(context, widget.course);
   }
 
   Scaffold _bodyWidget(BuildContext context, CoursesDataModel course) {
@@ -68,7 +44,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          coursename!,
+          widget.course.batchName,
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
       ),
@@ -134,7 +110,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                           Icon(
                             Icons.book,
                           ),
-                          Text('45 Readings')
+                          Text('${widget.course.student.length} Readings')
                         ]),
                       ],
                     ),
@@ -192,7 +168,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                     Container(
                       height: 110,
                       child: ListView.builder(
-                        itemCount: course.student.length,
+                        itemCount: course.teacher.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -203,9 +179,10 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                                 height: 80,
                               ),
                               Text(
-                                'Saurabh',
+                                course.teacher[index].fullName,
                                 style: GoogleFonts.poppins(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold,),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
@@ -260,8 +237,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
             Container(
               padding: EdgeInsets.all(8.0),
               height: 60,
-              child: buycourse!
-                  ? Row(
+              child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
@@ -286,23 +262,6 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             ))
                       ],
                     )
-                  : Align(
-                      alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: ColorResources.buttoncolor,
-                            shape: const StadiumBorder()),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('courseviewscreen');
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 5.0),
-                          child: Text('Go to Course',
-                              style: GoogleFonts.poppins(fontSize: 20)),
-                        ),
-                      ),
-                    ),
             ),
           ],
         ),
@@ -313,7 +272,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
   Future<BaseModel<AddToCart>> callApiaddtocart(CoursesDataModel course) async {
     AddToCart response;
     Map<String, dynamic> body = {
-      "batch_id": widget.id,
+      "batch_id": widget.course.id,
     };
     try {
       var token =
