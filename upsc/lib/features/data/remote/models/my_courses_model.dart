@@ -1,4 +1,3 @@
-
 class MyCoursesModel {
   MyCoursesModel({
     required this.status,
@@ -35,7 +34,7 @@ class MyCoursesDataModel {
   });
 
   final String myBatchId;
-  final DateTime createdAt;
+  final String createdAt;
   final int amount;
   final bool isPaid;
   final bool isActive;
@@ -44,17 +43,17 @@ class MyCoursesDataModel {
 
   factory MyCoursesDataModel.fromJson(Map<String, dynamic> json) => MyCoursesDataModel(
     myBatchId: json["MyBatch_id"],
-    createdAt: DateTime.parse(json["created_at"]),
+    createdAt: json["created_at"],
     amount: json["Amount"],
     isPaid: json["is_paid"],
     isActive: json["is_active"],
-      lectureDetails: List<LectureDetail>.from(json["lectureDetails"].map((x) => LectureDetail.fromJson(x))),
+    lectureDetails: List<LectureDetail>.from(json["lectureDetails"].map((x) => LectureDetail.fromJson(x))),
     batchDetails: BatchDetails.fromJson(json["batchDetails"]),
   );
 
   Map<String, dynamic> toJson() => {
     "MyBatch_id": myBatchId,
-    "created_at": createdAt.toIso8601String(),
+    "created_at": createdAt,
     "Amount": amount,
     "is_paid": isPaid,
     "is_active": isActive,
@@ -193,7 +192,7 @@ class LectureDetail {
   final String startingDate;
   final String endingDate;
   final List<dynamic> student;
-  final DateTime createdAt;
+  final String createdAt;
   final int v;
 
   factory LectureDetail.fromJson(Map<String, dynamic> json) => LectureDetail(
@@ -209,7 +208,7 @@ class LectureDetail {
     startingDate: json["starting_date"],
     endingDate: json["ending_date"],
     student: List<dynamic>.from(json["student"].map((x) => x)),
-    createdAt: DateTime.parse(json["created_at"]),
+    createdAt: json["created_at"],
     v: json["__v"],
   );
 
@@ -226,7 +225,7 @@ class LectureDetail {
     "starting_date": startingDate,
     "ending_date": endingDate,
     "student": List<dynamic>.from(student.map((x) => x)),
-    "created_at": createdAt.toIso8601String(),
+    "created_at": createdAt,
     "__v": v,
   };
 }

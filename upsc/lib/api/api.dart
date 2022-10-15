@@ -11,7 +11,7 @@ class Apis {
   static const String passwordverifyotp = "authentication/reset";
   static const String passwordotpresend = "authentication/resendotp";
   static const String resetpassword = "authentication/resetpassword";
-  static const String logout = "Logout";
+  static const String logout = "authentication/Logout";
 
   static const String googleSignIn = "authentication/googleSignIn";
   static const String postUserMobileNumber =  "authentication/postUserMobileNumber";
@@ -28,6 +28,5 @@ class Apis {
   static const String addToMyCourses = 'adminPanel/addtomybatch';
   static const String removefromCart = "adminPanel/deleteCartDetails/";
 
-  static const String agora =
-      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
+  static const String agora ="https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
 }

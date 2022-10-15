@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           'ProfilScreen': (context) => const ProfilScreen(),
           'editprofilescreen': (context) => const EditProfileScreen(),
           'downloadScreen': (context) => const DownloadScreen(),
-          'resourcesscreen': (context) => ResourcesScreen(),
+          'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),

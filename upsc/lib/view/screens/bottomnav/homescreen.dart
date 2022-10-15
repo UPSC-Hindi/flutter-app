@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +8,7 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/bloc/video/video_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
+import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreens extends StatelessWidget {
@@ -52,7 +54,14 @@ class HomeScreens extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => DailyNewsScreen(),
+                          ),
+                        );
+                      },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

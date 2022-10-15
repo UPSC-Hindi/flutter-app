@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/auth/register.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -101,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
+                        child: TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
@@ -113,11 +115,16 @@ class _SignUpState extends State<SignUp> {
                                 borderRadius: BorderRadius.circular(10.0)),
                             labelText: 'Email Id',
                           ),
+                          validator:
+                              ValidationBuilder().required().email().build(),
+                          onChanged: (value) {
+                            _formkey.currentState!.validate();
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
+                        child: TextFormField(
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
@@ -133,11 +140,20 @@ class _SignUpState extends State<SignUp> {
                                 borderRadius: BorderRadius.circular(10.0)),
                             labelText: 'Mobile No.',
                           ),
+                          validator: ValidationBuilder()
+                              .required()
+                              .phone()
+                              .maxLength(10)
+                              .minLength(10)
+                              .build(),
+                          onChanged: (value) {
+                            _formkey.currentState!.validate();
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
+                        child: TextFormField(
                           controller: _nameController,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
@@ -149,11 +165,15 @@ class _SignUpState extends State<SignUp> {
                                 borderRadius: BorderRadius.circular(10.0)),
                             labelText: 'Full name',
                           ),
+                          validator: ValidationBuilder().required().build(),
+                          onChanged: (value) {
+                            _formkey.currentState!.validate();
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextField(
+                        child: TextFormField(
                           obscureText: _passwordVisible,
                           controller: _passwordController,
                           keyboardType: TextInputType.visiblePassword,
@@ -181,6 +201,18 @@ class _SignUpState extends State<SignUp> {
                             ),
                             labelText: 'Password',
                           ),
+                          validator: ValidationBuilder()
+                              .required()
+                              .minLength(8)
+                              .regExp(
+                                  RegExp(
+                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                                  'valid password ex:Testing@1')
+                              .maxLength(50)
+                              .build(),
+                          onChanged: (value) {
+                            _formkey.currentState!.validate();
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -196,6 +228,7 @@ class _SignUpState extends State<SignUp> {
                             if (_formkey.currentState!.validate()) {
                               callApiRegister();
                             } else {
+                              flutterToast('pls enter all required fields');
                               print("Unsuccessful");
                             }
                             //   Navigator.of(context).pushNamed('otpverification');

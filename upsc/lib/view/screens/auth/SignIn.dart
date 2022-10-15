@@ -2,11 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/auth/login_model.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -28,7 +30,7 @@ class loginscreen extends StatefulWidget {
 class _loginscreenState extends State<loginscreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
   bool _passwordVisible = true;
   static String? deviceConfig;
   static String? deviceName;
@@ -115,129 +117,162 @@ class _loginscreenState extends State<loginscreen> {
               ),
               FractionallySizedBox(
                 widthFactor: 0.80,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Login',
-                      style: GoogleFonts.poppins(
-                          color: ColorResources.textblack,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextField(
-                        controller: emailController,
-                        style: const TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.blueAccent, width: 32.0),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          labelText: 'Email Id',
-                        ),
+                child: Form(
+                  key: _form,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextField(
-                        obscureText: _passwordVisible,
-                        controller: passwordController,
-                        style: const TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.blueAccent, width: 32.0),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              _passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: ColorResources.gray,
-                            ),
-                            onPressed: () {
-                              // Update the state i.e. toogle the state of passwordVisible variable
-                              setState(() {
-                                _passwordVisible = !_passwordVisible;
-                              });
-                            },
+                      Text(
+                        'Login',
+                        style: GoogleFonts.poppins(
+                            color: ColorResources.textblack,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextFormField(
+                          validator:
+                              ValidationBuilder().required().email().build(),
+                          controller: emailController,
+                          style: const TextStyle(fontSize: 20),
+                          onChanged: ((value) {
+                            _form.currentState!.validate();
+                          }),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueAccent, width: 32.0),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            labelText: 'Email Id',
                           ),
-                          labelText: 'Password',
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        child: Text(
-                          "Forgot password?",
-                          style: GoogleFonts.poppins(
-                              color: ColorResources.buttoncolor),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextFormField(
+                          validator: ValidationBuilder()
+                              .required()
+                              .minLength(8)
+                              .maxLength(50)
+                              .build(),
+                          onChanged: ((value) {
+                            _form.currentState!.validate();
+                          }),
+                          obscureText: _passwordVisible,
+                          controller: passwordController,
+                          style: const TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueAccent, width: 32.0),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: ColorResources.gray,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
+                            labelText: 'Password',
+                          ),
                         ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed('forgotpasswordscreen');
-                        },
                       ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.60,
-                      decoration: BoxDecoration(
-                          color: ColorResources.buttoncolor,
-                          borderRadius: BorderRadius.circular(14)),
-                      child: TextButton(
-                        onPressed: () {
-                          callApilogin();
-                          //Navigator.of(context).pushReplacementNamed('home');
-                        },
-                        child: Text(
-                          'Login',
-                          style: GoogleFonts.poppins(
-                              color: ColorResources.textWhite,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        const Expanded(
-                            child: Divider(
-                          thickness: 2,
-                        )),
-                        Text(
-                          "Or Sign in with",
-                          style: GoogleFonts.lato(),
-                        ),
-                        const Expanded(
-                            child: Divider(
-                          thickness: 2,
-                        )),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            googleLogin();
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          child: Text(
+                            "Forgot password?",
+                            style: GoogleFonts.poppins(
+                                color: ColorResources.buttoncolor),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('forgotpasswordscreen');
                           },
-                          child: Container(
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.60,
+                        decoration: BoxDecoration(
+                            color: ColorResources.buttoncolor,
+                            borderRadius: BorderRadius.circular(14)),
+                        child: TextButton(
+                          onPressed: () {
+                            if (_form.currentState!.validate()) {
+                              callApilogin();
+                            } else {
+                              flutterToast('pls enter all required fields');
+                            }
+                            //Navigator.of(context).pushReplacementNamed('home');
+                          },
+                          child: Text(
+                            'Login',
+                            style: GoogleFonts.poppins(
+                                color: ColorResources.textWhite,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          const Expanded(
+                              child: Divider(
+                            thickness: 2,
+                          )),
+                          Text(
+                            "Or Sign in with",
+                            style: GoogleFonts.lato(),
+                          ),
+                          const Expanded(
+                              child: Divider(
+                            thickness: 2,
+                          )),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              googleLogin();
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: SvgPicture.network(SvgImages.google),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
                             height: 50,
                             width: 50,
                             padding: const EdgeInsets.all(5),
@@ -245,47 +280,34 @@ class _loginscreenState extends State<loginscreen> {
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: SvgPicture.network(SvgImages.google),
+                            child: SvgPicture.network(SvgImages.apple),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Create an account?',
+                            style: GoogleFonts.poppins(),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: SvgPicture.network(SvgImages.apple),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Create an account?',
-                          style: GoogleFonts.poppins(),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('SignUp');
-                            },
-                            child: Text(
-                              ' Register',
-                              style: GoogleFonts.poppins(
-                                color: ColorResources.buttoncolor,
-                              ),
-                            ))
-                      ],
-                    ),
-                  ],
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('SignUp');
+                              },
+                              child: Text(
+                                ' Register',
+                                style: GoogleFonts.poppins(
+                                  color: ColorResources.buttoncolor,
+                                ),
+                              ))
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

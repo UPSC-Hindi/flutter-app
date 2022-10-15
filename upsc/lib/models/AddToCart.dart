@@ -18,11 +18,11 @@ class AddToCart {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['msg'] = this.msg;
+    data['msg'] = msg;
     return data;
   }
 }
@@ -43,12 +43,12 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.cartDetails != null) {
-      data['cartDetails'] = this.cartDetails!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (cartDetails != null) {
+      data['cartDetails'] = cartDetails!.toJson();
     }
-    if (this.batchDetails != null) {
-      data['batchDetails'] = this.batchDetails!.toJson();
+    if (batchDetails != null) {
+      data['batchDetails'] = batchDetails!.toJson();
     }
     return data;
   }
@@ -81,12 +81,12 @@ class CartDetails {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['user'] = this.user;
-    data['batch_id'] = this.batchId;
-    data['Amount'] = this.amount;
-    data['is_active'] = this.isActive;
-    data['_id'] = this.sId;
+    data['created_at'] = createdAt;
+    data['user'] = user;
+    data['batch_id'] = batchId;
+    data['Amount'] = amount;
+    data['is_active'] = isActive;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -166,28 +166,28 @@ class BatchDetails {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['user'] = this.user;
-    data['batch_name'] = this.batchName;
-    data['category'] = this.category;
-    data['exam_type'] = this.examType;
-    data['student'] = this.student;
-    data['subject'] = this.subject;
-    data['teacher'] = this.teacher;
-    data['starting_date'] = this.startingDate;
-    data['ending_date'] = this.endingDate;
-    data['mode'] = this.mode;
-    data['materials'] = this.materials;
-    data['language'] = this.language;
-    data['charges'] = this.charges;
-    data['discount'] = this.discount;
-    data['description'] = this.description;
-    data['remark'] = this.remark;
-    data['validity'] = this.validity;
-    data['is_active'] = this.isActive;
-    data['course_review'] = this.courseReview;
-    data['created_at'] = this.createdAt;
-    data['__v'] = this.iV;
+    data['_id'] = sId;
+    data['user'] = user;
+    data['batch_name'] = batchName;
+    data['category'] = category;
+    data['exam_type'] = examType;
+    data['student'] = student;
+    data['subject'] = subject;
+    data['teacher'] = teacher;
+    data['starting_date'] = startingDate;
+    data['ending_date'] = endingDate;
+    data['mode'] = mode;
+    data['materials'] = materials;
+    data['language'] = language;
+    data['charges'] = charges;
+    data['discount'] = discount;
+    data['description'] = description;
+    data['remark'] = remark;
+    data['validity'] = validity;
+    data['is_active'] = isActive;
+    data['course_review'] = courseReview;
+    data['created_at'] = createdAt;
+    data['__v'] = iV;
     return data;
   }
 }

@@ -25,6 +25,7 @@ class Languages {
   static String seeYourEnrollTest = '';
   static String seeYourEnrollCourses = '';
   static String saveChanges = '';
+  static String mobile = '';
 
   //Drawer
   static String aboutUs = '';
@@ -105,6 +106,7 @@ class Languages {
     seeYourEnrollCourses =
         isEnglish ? 'See your enrolled courses' : 'अपने दाखिल कोर्स देखे';
     saveChanges = isEnglish ? 'Save Changes' : 'परिवर्तनों को सुरक्षित करें';
+    mobile = isEnglish ? 'Mobile' : 'मोबाइल';
 
     //Drawer
     aboutUs = isEnglish ? 'About Us' : 'हमारे बारे में';
@@ -146,7 +148,7 @@ class Languages {
 
     //help and support
     freeMessage = isEnglish ? 'Feel free to message us at' : '+ कार्य जोड़ें';
-    emailText = isEnglish ? 'Mail us at' : 'ईमेल ';
+    emailText = isEnglish ? 'email' : 'ईमेल ';
     whatsApp = isEnglish ? 'Whatsapp us' : 'व्हाट्सप्प करें ';
   }
 }

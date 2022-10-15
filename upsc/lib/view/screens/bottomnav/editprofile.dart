@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -24,10 +27,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
   }
 
+  final profileImage = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
+
         appBar: AppBar(
           backgroundColor: ColorResources.textWhite,
           elevation: 0,
@@ -48,22 +53,36 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Center(
                 child: Stack(
                   children: [
-                    Icon(
-                      Icons.account_circle,
-                      color: ColorResources.gray,
-                      size: 200,
-                    ),
+                    profileImage.isEmpty
+                        ? Icon(
+                            Icons.account_circle,
+                            color: ColorResources.gray,
+                            size: 200,
+                          )
+                        : Image.file(
+                            File(profileImage),
+                          ),
                     Positioned(
                       top: 20,
                       right: 20,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            color: ColorResources.buttoncolor,
-                            borderRadius: BorderRadius.circular(100)),
-                        child: Icon(
-                          Icons.mode,
+                      child: InkWell(
+                        onTap: () async {
+                          final ImagePicker _picker = ImagePicker();
+                          final XFile? image = await _picker.pickImage(
+                              source: ImageSource.gallery);
+                          setState(() {
+                            // profileImage = image;
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: ColorResources.buttoncolor,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Icon(
+                            Icons.mode,
+                          ),
                         ),
                       ),
                     ),
@@ -81,41 +100,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(Languages.phoneText),
-                    TextField(
-                      controller: TextEditingController()
-                        ..text = '+91 $phoneNumber',
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          hintText: Languages.phoneText,
-                          suffixText: 'Edit'),
+                    Text(Languages.mobile),
+                    Container(
+                      height: 60,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: ColorResources.gray, width: 1.0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '+91 $phoneNumber',
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(Languages.emailText),
-                    TextField(
-                      controller: TextEditingController()..text = email,
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          hintText: Languages.emailText,
-                          suffixText: 'Edit'),
+                    Container(
+                      height: 60,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: ColorResources.gray, width: 1.0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(email),
                     ),
                     SizedBox(
                       height: 10,

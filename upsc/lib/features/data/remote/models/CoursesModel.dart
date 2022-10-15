@@ -52,11 +52,11 @@ class CoursesDataModel {
   final String id;
   final String user;
   final String batchName;
-  final String category;
+  final Category category;
   final String examType;
   final List<String> student;
   final String subject;
-  final List<String> teacher;
+  final List<Teacher> teacher;
   final DateTime startingDate;
   final DateTime endingDate;
   final String mode;
@@ -76,11 +76,11 @@ class CoursesDataModel {
     id: json["_id"],
     user: json["user"],
     batchName: json["batch_name"],
-    category: json["category"],
+    category: Category.fromJson(json["category"]),
     examType: json["exam_type"],
     student: List<String>.from(json["student"].map((x) => x)),
     subject: json["subject"],
-    teacher: List<String>.from(json["teacher"].map((x) => x)),
+    teacher: List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
     startingDate: DateTime.parse(json["starting_date"]),
     endingDate: DateTime.parse(json["ending_date"]),
     mode: json["mode"],
@@ -101,11 +101,11 @@ class CoursesDataModel {
     "_id": id,
     "user": user,
     "batch_name": batchName,
-    "category": category,
+    "category": category.toJson(),
     "exam_type": examType,
     "student": List<dynamic>.from(student.map((x) => x)),
     "subject": subject,
-    "teacher": List<dynamic>.from(teacher.map((x) => x)),
+    "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
     "starting_date": "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
     "ending_date": "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
     "mode": mode,
@@ -120,5 +120,69 @@ class CoursesDataModel {
     "course_review": courseReview,
     "created_at": createdAt,
     "__v": v,
+  };
+}
+
+class Category {
+  Category({
+    required this.id,
+    required this.title,
+    required this.isActive,
+    required this.createdAt,
+    required this.type,
+    required this.user,
+    required this.v,
+  });
+
+  final String id;
+  final String title;
+  final bool isActive;
+  final String createdAt;
+  final String type;
+  final String user;
+  final int v;
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+    id: json["_id"],
+    title: json["title"],
+    isActive: json["is_active"],
+    createdAt: json["created_at"],
+    type: json["type"],
+    user: json["user"],
+    v: json["__v"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "title": title,
+    "is_active": isActive,
+    "created_at": createdAt,
+    "type": type,
+    "user": user,
+    "__v": v,
+  };
+}
+
+class Teacher {
+  Teacher({
+    required this.id,
+    required this.fullName,
+    required this.profilePhoto,
+  });
+
+  final String id;
+  final String fullName;
+  final String profilePhoto;
+
+  factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
+    id: json["_id"],
+    fullName: json["FullName"],
+    profilePhoto: json["profilePhoto"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "FullName": fullName,
+    "profilePhoto": profilePhoto,
   };
 }

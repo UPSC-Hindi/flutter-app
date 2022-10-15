@@ -1,6 +1,6 @@
 class Logout {
   bool? status;
-  Null? data;
+  Null data;
   String? msg;
 
   Logout({this.status, this.data, this.msg});
@@ -12,10 +12,10 @@ class Logout {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
     data['data'] = this.data;
-    data['msg'] = this.msg;
+    data['msg'] = msg;
     return data;
   }
 }
