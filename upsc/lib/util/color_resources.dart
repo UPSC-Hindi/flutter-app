@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ColorResources {
   static Color buttoncolor = const Color(0xFFED5067);
   static Color textWhite = const Color(0xFFFFFFFF);
-  static Color textblack = const Color(0xFF000000);
+  static Color textblack = const Color(0xFF6b6b6b);
   static Color gray = Colors.grey;
 
   static Color youtube = const Color(0xFFFFE6E6);

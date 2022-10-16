@@ -10,6 +10,7 @@ import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
@@ -28,6 +29,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String? _profileimage =
+      SharedPreferenceHelper.getString(Preferences.profileImage) != "N/A"
+          ? SharedPreferenceHelper.getString(Preferences.profileImage)!
+          : SvgImages.avatar;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -106,10 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.account_circle,
-                    size: 60,
-                    color: Colors.white,
+                  CircleAvatar(
+                    radius: 25.0,
+                    backgroundImage: NetworkImage(_profileimage!),
+                    backgroundColor: Colors.grey,
+                  ),
+                  SizedBox(
+                    width: 10,
                   ),
                   SizedBox(
                     width: 200,
@@ -118,9 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       overflow: TextOverflow.clip,
                       maxLines: 2,
                       style: GoogleFonts.poppins(
-                          height: 1,
-                          color: ColorResources.textWhite,
-                          fontSize: 25),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: ColorResources.textWhite),
                     ),
                   ),
                 ],
@@ -147,7 +155,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.aboutUs,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -172,7 +183,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.yourDownloads,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -197,7 +211,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.myCart,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           ),
                         ],
                       ),
@@ -222,7 +239,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.myOrders,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -247,7 +267,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.myCourses,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -272,7 +295,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.mySchedule,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -297,7 +323,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.resources,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -322,7 +351,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.helpAndSupport,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -330,9 +362,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const Divider(),
                   TextButton(
-                   onPressed: () {
+                    onPressed: () {
                       Navigator.pop(context);
-                      Share.share('https://github.com/skkeskar2000/MyProfile');
+                      Share.share('https://upschindi.in/');
                     },
                     style: TextButton.styleFrom(
                       primary: ColorResources.textblack, // Text Color
@@ -348,7 +380,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.shareApp,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -381,7 +416,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             Languages.setting,
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
@@ -402,8 +440,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(30)),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.logout,
@@ -412,11 +451,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        'Logout',
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, color: Colors.redAccent),
-                      )
+                      Text('Logout',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                            color: Colors.redAccent,
+                          ))
                     ],
                   ),
                 ),

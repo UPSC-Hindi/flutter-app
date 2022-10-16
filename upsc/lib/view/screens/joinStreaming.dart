@@ -36,6 +36,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   static String? rtmtoken;
   final TextEditingController _message = TextEditingController();
   final int _selectedIndex = 0;
+  int? Participants;
+  List<String> chatmessges = [];
 
   @override
   void initState() {
@@ -48,37 +50,43 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
 // Instantiate the client
   late AgoraClient client = AgoraClient(
-      agoraChannelData: AgoraChannelData(
-        clientRole: ClientRole.Audience,
-        channelProfile: ChannelProfile.LiveBroadcasting,
-      ),
-      agoraConnectionData: AgoraConnectionData(
-        username: name,
-        appId: appId,
-        channelName: channel.toString(),
-        tempToken: rtctoken,
-        uid: widget.uid,
-        rtmEnabled: true,
-        rtmUid: widget.uid.toString(),
-        rtmChannelName: channel,
-        tempRtmToken: rtmtoken,
-      ),
-      agoraRtmChannelEventHandler: AgoraRtmChannelEventHandler(
-        onMemberJoined: (AgoraRtmMember) async {
-          print(AgoraRtmMember);
-        },
-        onMessageReceived: (message, fromMember) {
-          print('*' * 3000);
-          print(message);
-          print(fromMember);
-        },
-      ),
-      agoraRtmClientEventHandler:
-          AgoraRtmClientEventHandler(onConnectionStateChanged: (p0, p1) {
-        print('*' * 200);
-        print(p0);
-        print(p1);
-      }));
+    agoraChannelData: AgoraChannelData(
+      clientRole: ClientRole.Audience,
+      channelProfile: ChannelProfile.LiveBroadcasting,
+    ),
+    agoraConnectionData: AgoraConnectionData(
+      username: name,
+      appId: appId,
+      channelName: channel.toString(),
+      tempToken: rtctoken,
+      uid: widget.uid,
+      rtmEnabled: true,
+      rtmUid: widget.uid.toString(),
+      rtmChannelName: channel,
+      tempRtmToken: rtmtoken,
+    ),
+    agoraRtmChannelEventHandler: AgoraRtmChannelEventHandler(
+      onMemberCountUpdated: (count) {
+        Participants = count;
+        print(count);
+      },
+      onMemberJoined: (AgoraRtmMember) async {
+        print(AgoraRtmMember.toString());
+      },
+      onMessageReceived: (message, fromMember) {
+        print('*' * 3000);
+        chatmessges.add(fromMember.userId+':'+message.text);
+        print(message);
+        print(fromMember);
+      },
+    ),
+    agoraRtmClientEventHandler:
+        AgoraRtmClientEventHandler(onConnectionStateChanged: (p0, p1) {
+      print('*' * 200);
+      print(p0);
+      print(p1);
+    }),
+  );
 
   @override
   void dispose() {
@@ -104,114 +112,144 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: rtctoken == null
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.30,
-                    child: Stack(
-                      children: [
-                        AgoraVideoViewer(
-                          //showNumberOfUsers: true,
-                          client: client,
-                        ),
-                        Positioned(
-                          top: 10,
-                          left: -10,
-                          child: AgoraVideoButtons(
-                            verticalButtonPadding: 0.0,
-                            client: client,
-                            disconnectButtonChild: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: ColorResources.gray.withOpacity(0.5),
-                                ),
-                                child: Icon(Icons.close,
-                                    color: ColorResources.textWhite)),
-                            enabledButtons: const [BuiltInButtons.callEnd],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      padding: EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        child: SingleChildScrollView(
+          child: rtctoken == null
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.30,
+                      child: Stack(
                         children: [
-                          Text(widget.lecture.lectureTitle,
-                              style: TextStyle(fontSize: 30)),
-                          Text(widget.lecture.description),
-                          Text('By ' + widget.lecture.teacher.first),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05,
+                          AgoraVideoViewer(
+                            //showNumberOfUsers: true,
+                            client: client,
                           ),
-                          Align(
-                              alignment: Alignment.center,
-                              child: Text('Documents Shared with you')),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.04,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: ColorResources.gray),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Image.network(SvgImages.pdfimage),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Class 1 Notes',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                              Text(
-                                                '2.5 MB',
-                                                style: GoogleFonts.lato(
-                                                    fontSize: 16,
-                                                    color: ColorResources.gray),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Icon(
-                                        Icons.file_download_outlined,
-                                        size: 40,
-                                        color: ColorResources.buttoncolor,
-                                      )
-                                    ],
+                          Positioned(
+                              bottom: 0,
+                              left: 5,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        ColorResources.gray.withOpacity(0.5)),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.sensors,
+                                      color: ColorResources.buttoncolor,
+                                    ),
+                                    Text(
+                                      " Live",
+                                      style: TextStyle(
+                                          color: ColorResources.textWhite),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          Positioned(
+                            top: 5,
+                            left: -25,
+                            child: AgoraVideoButtons(
+                              verticalButtonPadding: 0.0,
+                              client: client,
+                              disconnectButtonChild: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: ColorResources.gray.withOpacity(0.4),
                                   ),
-                                ],
-                              ),
+                                  child: Icon(Icons.close,
+                                      color: ColorResources.textWhite)),
+                              enabledButtons: const [BuiltInButtons.callEnd],
                             ),
                           ),
                         ],
-                      ))
-                ],
-              ),
+                      ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.lecture.lectureTitle,
+                                style: TextStyle(fontSize: 30)),
+                            Text(widget.lecture.description),
+                            Text('By ' + widget.lecture.teacher.first),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.05,
+                            ),
+                            Align(
+                                alignment: Alignment.center,
+                                child: Text('Documents Shared with you')),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.04,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorResources.gray.withOpacity(0.5),
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Image.network(SvgImages.pdfimage),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Class 1 Notes',
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                Text(
+                                                  '2.5 MB',
+                                                  style: GoogleFonts.lato(
+                                                      fontSize: 16,
+                                                      color:
+                                                          ColorResources.gray),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Icon(
+                                          Icons.file_download_outlined,
+                                          size: 40,
+                                          color: ColorResources.buttoncolor,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -226,11 +264,14 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         onTap: (value) {
           if (value == 0) {
             showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 builder: (context) {
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.50,
+                    height: MediaQuery.of(context).size.height * 0.60,
                     width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -247,14 +288,20 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             ),
                           ],
                         ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: chatmessges.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Text(chatmessges[index]);
+                          },
+                        ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Row(
                             children: [
                               Expanded(
                                 child: TextField(
                                   controller: _message,
-                                  //autofocus: true,
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -278,8 +325,13 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                       .sendMessage(
                                     AgoraRtmMessage.fromText(_message.text),
                                   );
+                                  chatmessges.add("you :"+_message.text);
+                                  _message.clear();
                                 },
-                                icon: const Icon(Icons.send),
+                                icon: Icon(
+                                  Icons.send,
+                                  color: ColorResources.buttoncolor,
+                                ),
                               ),
                             ],
                           ),
@@ -304,7 +356,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                               IconButton(
                                   onPressed: () => Navigator.of(context).pop(),
                                   icon: const Icon(Icons.close)),
-                              const Text("Participants ")
+                              Text("Participants ${Participants.toString()}"),
                             ],
                           ),
                           const Center(

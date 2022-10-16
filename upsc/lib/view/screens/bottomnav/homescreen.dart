@@ -27,24 +27,28 @@ class HomeScreens extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.90,
               decoration: BoxDecoration(
-                border: Border.all(color: ColorResources.gray),
+                color: ColorResources.textWhite,
+                boxShadow: [
+                  BoxShadow(
+                      color: ColorResources.gray.withOpacity(0.5),
+                      blurRadius: 10)
+                ],
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
                 textDirection: TextDirection.ltr,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Explore Daily Current Affairs',
-                    style: TextStyle(fontSize: 25),
+                    style: TextStyle(
+                        fontSize: 20, color: ColorResources.textblack),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.80,
-                    child: Text(
+                  SizedBox(height: 5),
+                  Text(
                       'Revising and updating on current affairs will help you save your time',
-                      style: GoogleFonts.poppins(),
-                    ),
-                  ),
+                      style: GoogleFonts.lato(
+                          fontSize: 14, color: ColorResources.textblack)),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ElevatedButton(
@@ -70,8 +74,16 @@ class HomeScreens extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Icon(
-                            Icons.arrow_forward_ios,
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: ColorResources.gray.withOpacity(0.3),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 15,
+                            ),
                           ),
                         ],
                       ),
@@ -84,7 +96,10 @@ class HomeScreens extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Text(
                 Languages.learnAbout,
-                style: GoogleFonts.poppins(fontSize: 24),
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: ColorResources.textblack),
               ),
             ),
             SingleChildScrollView(
@@ -126,13 +141,15 @@ class HomeScreens extends StatelessWidget {
                                 Text(
                                   'Prelims',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
                                       color: ColorResources.textWhite),
                                 ),
                                 Text(
                                   'Syllabus, Best Strategies and more',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 9,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10,
                                       color: ColorResources.textWhite),
                                 )
                               ],
@@ -175,7 +192,8 @@ class HomeScreens extends StatelessWidget {
                                 Text(
                                   'Interviews',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
                                       color: ColorResources.textWhite),
                                 ),
                                 const SizedBox(
@@ -184,7 +202,8 @@ class HomeScreens extends StatelessWidget {
                                 Text(
                                   'Ethics, Personality and Tone',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 9,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10,
                                       color: ColorResources.textWhite),
                                 )
                               ],
@@ -227,7 +246,8 @@ class HomeScreens extends StatelessWidget {
                                 Text(
                                   'Interviews',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
                                       color: ColorResources.textWhite),
                                 ),
                                 const SizedBox(
@@ -236,7 +256,8 @@ class HomeScreens extends StatelessWidget {
                                 Text(
                                   'Ethics, Personality and Tone',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 9,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10,
                                       color: ColorResources.textWhite),
                                 )
                               ],
@@ -253,7 +274,10 @@ class HomeScreens extends StatelessWidget {
               padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
                 Languages.ncertBatches,
-                style: GoogleFonts.poppins(fontSize: 24),
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: ColorResources.textblack),
               ),
             ),
             Padding(
@@ -311,7 +335,10 @@ class HomeScreens extends StatelessWidget {
               padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
                 Languages.latestNews,
-                style: GoogleFonts.poppins(fontSize: 24),
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: ColorResources.textblack),
               ),
             ),
             Center(
@@ -345,17 +372,20 @@ class HomeScreens extends StatelessWidget {
                           children: [
                             Text(
                               'News : 14 November',
-                              style: GoogleFonts.poppins(fontSize: 20),
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: ColorResources.textblack),
                             ),
                             Row(
                               children: [
                                 Text(
-                                  'Read now',
+                                  'Read now ',
                                   style: GoogleFonts.poppins(
                                       color: ColorResources.buttoncolor),
                                 ),
                                 Icon(Icons.arrow_forward_ios,
-                                    color: ColorResources.buttoncolor)
+                                    size: 15, color: ColorResources.buttoncolor)
                               ],
                             )
                           ]),
