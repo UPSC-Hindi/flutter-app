@@ -1,12 +1,6 @@
 import 'dart:async';
-
 import 'package:agora_uikit/agora_uikit.dart';
-import 'package:agora_uikit/controllers/rtm_controller.dart';
-import 'package:agora_uikit/controllers/rtm_controller_helper.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
-import 'package:agora_uikit/models/agora_settings.dart';
-import 'package:agora_uikit/models/rtm_message.dart';
-import 'package:agora_rtm/agora_rtm.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -39,8 +33,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   static String? name = SharedPreferenceHelper.getString(Preferences.name);
   //static int uid; //random.nextInt(999); //= 123456;
   static String? rtmtoken;
-
-  int _selectedIndex = 0;
+  final TextEditingController _message = TextEditingController();
+  final int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -54,8 +48,9 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 // Instantiate the client
   late AgoraClient client = AgoraClient(
       agoraChannelData: AgoraChannelData(
-          clientRole: ClientRole.Audience,
-          channelProfile: ChannelProfile.LiveBroadcasting),
+        clientRole: ClientRole.Audience,
+        channelProfile: ChannelProfile.LiveBroadcasting,
+      ),
       agoraConnectionData: AgoraConnectionData(
         username: name,
         appId: appId,
@@ -68,7 +63,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         tempRtmToken: rtmtoken,
       ),
       agoraRtmChannelEventHandler: AgoraRtmChannelEventHandler(
-        onMemberJoined: (AgoraRtmMember) {
+        onMemberJoined: (AgoraRtmMember) async {
           print(AgoraRtmMember);
         },
         onMessageReceived: (message, fromMember) {
@@ -119,7 +114,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                     child: Stack(
                       children: [
                         AgoraVideoViewer(
-                          showNumberOfUsers: true,
+                          //showNumberOfUsers: true,
                           client: client,
                         ),
                         Positioned(
@@ -233,7 +228,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                 context: context,
                 builder: (context) {
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.40,
+                    height: MediaQuery.of(context).size.height * 0.50,
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,9 +238,9 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             Row(
                               children: [
                                 IconButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    icon: const Icon(Icons.close)),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  icon: const Icon(Icons.close),
+                                ),
                                 const Text("Chat"),
                               ],
                             ),
@@ -256,29 +251,35 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                           child: Row(
                             children: [
                               Expanded(
-                                  child: TextField(
-                                //autofocus: true,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        color: ColorResources.gray, width: 1.0),
+                                child: TextField(
+                                  controller: _message,
+                                  //autofocus: true,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                          color: ColorResources.gray,
+                                          width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ColorResources.gray,
+                                          width: 1.0),
+                                    ),
+                                    hintText: 'message',
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: ColorResources.gray, width: 1.0),
-                                  ),
-                                  hintText: 'message',
                                 ),
-                              )),
+                              ),
                               IconButton(
-                                  onPressed: () async {
-                                    await client.sessionController.value
-                                        .agoraRtmChannel!
-                                        .sendMessage(AgoraRtmMessage.fromText(
-                                            'hellooooooooooooooo'));
-                                  },
-                                  icon: const Icon(Icons.send))
+                                onPressed: () async {
+                                  await client
+                                      .sessionController.value.agoraRtmChannel!
+                                      .sendMessage(
+                                    AgoraRtmMessage.fromText(_message.text),
+                                  );
+                                },
+                                icon: const Icon(Icons.send),
+                              ),
                             ],
                           ),
                         ),

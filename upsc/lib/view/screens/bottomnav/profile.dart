@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
@@ -19,6 +21,16 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  String _profileimage = SvgImages.avatar;
+  @override
+  void initState() {
+    super.initState();
+    _profileimage =
+        SharedPreferenceHelper.getString(Preferences.profileImage)! == 'N/A'
+            ? SvgImages.avatar
+            : SharedPreferenceHelper.getString(Preferences.profileImage)!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,20 +50,16 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 margin: const EdgeInsets.only(top: 20, left: 40),
                 child: Row(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.account_circle,
-                        size: 70,
-                      ),
-                    ),
+                    Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Image.network(_profileimage)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           SharedPreferenceHelper.getString(Preferences.name)
                               .toString(),
-                          style: const TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 25),
                         ),
                         const Text('UPSC Aspirant')
                       ],
@@ -63,8 +71,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 height: 100,
               ),
               GestureDetector(
-                onTap: () =>
-                    Navigator.of(context).pushNamed('editprofilescreen'),
+                onTap: () => Navigator.of(context)
+                    .pushNamed('editprofilescreen')
+                    .then((value) {
+                  setState(() {
+                    _profileimage = SharedPreferenceHelper.getString(
+                        Preferences.profileImage)!;
+                  });
+                }),
                 child: Container(
                   height: 80,
                   width: MediaQuery.of(context).size.width * 0.90,

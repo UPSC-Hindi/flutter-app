@@ -136,7 +136,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             children: [
               Row(
                 children: [
-                  Image.network(SvgImages.pdfimage),
+                  Image.asset(SvgImages.pdfimage),
                   const SizedBox(
                     width: 20,
                   ),

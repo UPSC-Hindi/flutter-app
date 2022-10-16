@@ -349,6 +349,11 @@ class _loginscreenState extends State<loginscreen> {
             Preferences.phoneNUmber, response.data!.phoneNumber);
         await SharedPreferenceHelper.setString(
             Preferences.email, response.data!.email);
+        await SharedPreferenceHelper.setString(
+          Preferences.profileImage,
+          SvgImages.avatar,
+        );
+        await SharedPreferenceHelper.setString(Preferences.address, 'address');
 
         print(await SharedPreferenceHelper.getString(Preferences.access_token)
                 .toString() +
@@ -411,7 +416,10 @@ class _loginscreenState extends State<loginscreen> {
           await SharedPreferenceHelper.setString(Preferences.language,
               response.data!.language == "hi" ? "Hindi" : 'English');
           Languages.isEnglish = response.data!.language == "hi" ? false : true;
-
+          await SharedPreferenceHelper.setString(
+              Preferences.profileImage, response.data!.profilePhoto);
+          await SharedPreferenceHelper.setString(
+              Preferences.address, response.data!.address);
           Navigator.of(context).pushNamed('home');
         } else {
           await SharedPreferenceHelper.setString(
@@ -420,6 +428,8 @@ class _loginscreenState extends State<loginscreen> {
               Preferences.email, response.data!.email);
           await SharedPreferenceHelper.setString(
               Preferences.auth_token, response.data!.verificationToken);
+          SharedPreferenceHelper.setString(
+              Preferences.profileImage, response.data!.profilePhoto);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => MobileVerification(),

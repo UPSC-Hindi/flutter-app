@@ -15,6 +15,8 @@ class Preferences {
   static const String email = 'email';
   static const String phoneNUmber = 'phoneNUmber';
   static const String device_platform='device_platform';
+   static const String profileImage = 'profileImage';
+  static const String address = 'address';
 
    static hideDialog(BuildContext context) {
     Navigator.pop(context);

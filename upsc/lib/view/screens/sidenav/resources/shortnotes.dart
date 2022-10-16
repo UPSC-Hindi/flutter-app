@@ -96,7 +96,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
             children: [
               Row(
                 children: [
-                  Image.network(SvgImages.pdfimage),
+                  Image.asset(SvgImages.pdfimage),
                   SizedBox(
                     width: 20,
                   ),

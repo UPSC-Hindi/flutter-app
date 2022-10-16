@@ -1,3 +1,4 @@
+
 class MyCoursesModel {
   MyCoursesModel({
     required this.status,

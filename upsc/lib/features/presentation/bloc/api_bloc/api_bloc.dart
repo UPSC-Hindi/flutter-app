@@ -46,7 +46,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       emit(ApiLoading());
       try {
         CoursesModel response =
-            await remoteDataSourceImpl.getCourses(event.value, event.key);
+            await remoteDataSourceImpl.getCourses(event.key,event.value);
         if (response.status) {
           emit(ApiCoursesSuccess(courseList: response.data));
         } else {
@@ -57,18 +57,18 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       }
     });
 
-    on<GetResources>((event, emit) async {
+    on<GetResources>((event, emit) async{
       emit(ApiLoading());
-      try {
-        ResourcesModel response =
-            await remoteDataSourceImpl.getResources(event.key, event.value);
+      try{
+        ResourcesModel response = await remoteDataSourceImpl.getResources(event.key,event.value);
         print(response);
-        if (response.status == true) {
+        if(response.status == true){
           emit(ApiResourcesSuccess(resources: response));
-        } else {
+        }
+        else{
           emit(ApiError());
         }
-      } catch (error) {
+      }catch(error){
         emit(ApiError());
       }
     });
