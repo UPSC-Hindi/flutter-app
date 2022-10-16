@@ -20,7 +20,9 @@ class CourseViewScreen extends StatefulWidget {
       {Key? key,
       required this.lecture,
       required this.batchTitle,
-      required this.batchDesc, required this.startDate, required this.endDate})
+      required this.batchDesc,
+      required this.startDate,
+      required this.endDate})
       : super(key: key);
   final String batchTitle;
   final String batchDesc;
@@ -37,9 +39,12 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.batchTitle,style: TextStyle(
-          color: ColorResources.textblack,
-        ),),
+        title: Text(
+          widget.batchTitle,
+          style: TextStyle(
+            color: ColorResources.textblack,
+          ),
+        ),
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(
           color: ColorResources.textblack,
@@ -88,8 +93,11 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   fontSize: 24,
                                 ),
                               ),
-                              SizedBox(height: 10,),
-                              Text(widget.batchDesc,
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                widget.batchDesc,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
                                 textAlign: TextAlign.justify,
@@ -104,13 +112,16 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   style: GoogleFonts.poppins(fontSize: 16),
                                 ),
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Row(
                                 children: [
                                   Icon(
                                     Icons.access_time_rounded,
                                   ),
-                                  Text('  ${widget.endDate.difference(widget.startDate).inDays} Days'),
+                                  Text(
+                                      '  ${widget.endDate.difference(widget.startDate).inDays} Days'),
                                   Expanded(child: SizedBox()),
                                   Row(children: [
                                     Icon(
@@ -121,9 +132,9 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   ]),
                                 ],
                               ),
-
                               Container(
-                                margin: const EdgeInsets.symmetric(vertical: 10),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     color: const Color(0xFfD9D9D9),
@@ -139,7 +150,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   itemCount: 3,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) => Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
                                     child: Column(
                                       children: [
                                         Image.network(
@@ -151,7 +163,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                           child: Text(
                                             'Raman',
                                             style: GoogleFonts.poppins(
-                                                fontSize: 16, fontWeight: FontWeight.bold),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -166,7 +179,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                         ListView.builder(
                           itemCount: widget.lecture.length,
                           shrinkWrap: true,
-                          physics:const NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) =>
                               _infoCardWidget(context, widget.lecture[index]),
                         )
@@ -187,7 +200,6 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
   Container _infoCardWidget(BuildContext context, LectureDetail lecture) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 70,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.grey.shade300,
@@ -200,8 +212,11 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Duration  - 9:00 AM to 12:00 PM',style: TextStyle(fontSize: 15),),
-              Text('Date  - 08/10/2022 '),
+              Text(
+                'Duration- 9:00 AM to 12:00 PM',
+                style: TextStyle(fontSize: 15),
+              ),
+              Text('Date- 08/10/2022 '),
             ],
           ),
           trailing: ElevatedButton(
