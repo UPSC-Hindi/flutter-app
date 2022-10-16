@@ -21,14 +21,14 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
-  String _profileimage = SvgImages.avatar;
+  String? _profileimage;
   @override
   void initState() {
     super.initState();
     _profileimage =
-        SharedPreferenceHelper.getString(Preferences.profileImage)! == 'N/A'
-            ? SvgImages.avatar
-            : SharedPreferenceHelper.getString(Preferences.profileImage)!;
+        SharedPreferenceHelper.getString(Preferences.profileImage) != "N/A"
+            ? SharedPreferenceHelper.getString(Preferences.profileImage)!
+            : SvgImages.avatar;
   }
 
   @override
@@ -52,7 +52,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   children: [
                     Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Image.network(_profileimage)),
+                        child: Image.network(_profileimage!)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
