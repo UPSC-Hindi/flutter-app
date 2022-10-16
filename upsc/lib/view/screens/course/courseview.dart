@@ -231,8 +231,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                 )),
             onPressed: () async {
               await [Permission.camera, Permission.microphone].request();
-              callApiJoinStreamingScreen(
-                  lecture.lectureTitle, lecture.description);
+              callApiJoinStreamingScreen(lecture);
               //Navigator.of(context).pushNamed('joinstreaming');
             },
             child: Row(
@@ -253,18 +252,17 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
     );
   }
 
-  Future<BaseModel<JoinStreaming>> callApiJoinStreamingScreen(
-      String lectureTitle, String desc) async {
+  Future<BaseModel<JoinStreaming>> callApiJoinStreamingScreen(LectureDetail lecture) async {
     JoinStreaming response;
     var random = Random();
     int uid = random.nextInt(999); //= 123;
     Map<String, dynamic> body = {
-      "channelName": lectureTitle,
+      "channelName": lecture.lectureTitle,
       "expireTime": "3600",
       "tokentype": "uid",
       "Stream_title": "Mahadeva@12546987",
       "account": "askd",
-      "Description": desc,
+      "Description": lecture.description,
       "uid": uid.toString()
     };
     setState(() {
@@ -289,7 +287,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                 rtctoken: response.rtcToken!,
                 rtmtoken: response.rtmToke!,
                 uid: uid,
-                channelName: lectureTitle),
+                lecture: lecture),
           ),
         );
         Fluttertoast.showToast(

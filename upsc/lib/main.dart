@@ -106,12 +106,12 @@ class MyApp extends StatelessWidget {
           'youtubenotes': (context) => const YoutubeNotesScreen(),
           'samplenotes': (context) => const SampleNotesScreen(),
           'contactus': (context) => const ContactUsScreen(),
-          'joinstreaming': (context) => const JoinStreamingScreen(
-                channelName: '',
-                rtctoken: '',
-                rtmtoken: '',
-                uid: 0,
-              ),
+//           'joinstreaming': (context) => const JoinStreamingScreen(
+// lecture: '',
+//                 rtctoken: '',
+//                 rtmtoken: '',
+//                 uid: 0,
+//               ),
         },
       ),
     );
