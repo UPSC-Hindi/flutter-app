@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
@@ -329,7 +330,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const Divider(),
                   TextButton(
-                    onPressed: () {},
+                   onPressed: () {
+                      Navigator.pop(context);
+                      Share.share('https://github.com/skkeskar2000/MyProfile');
+                    },
                     style: TextButton.styleFrom(
                       primary: ColorResources.textblack, // Text Color
                     ),

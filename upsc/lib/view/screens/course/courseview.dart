@@ -213,7 +213,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Duration- 9:00 AM to 12:00 PM',
+                '9:00 AM to 12:00 PM',
                 style: TextStyle(fontSize: 15),
               ),
               Text('Date- 08/10/2022 '),
@@ -252,7 +252,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
     );
   }
 
-  Future<BaseModel<JoinStreaming>> callApiJoinStreamingScreen(LectureDetail lecture) async {
+  Future<BaseModel<JoinStreaming>> callApiJoinStreamingScreen(
+      LectureDetail lecture) async {
     JoinStreaming response;
     var random = Random();
     int uid = random.nextInt(999); //= 123;
