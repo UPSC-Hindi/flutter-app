@@ -3,6 +3,7 @@ import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -11,11 +12,11 @@ import 'package:upsc/util/preference.dart';
 class JoinStreamingScreen extends StatefulWidget {
   final String rtctoken;
   final String rtmtoken;
-  final String channelName;
+  final LectureDetail lecture;
   final int uid;
   const JoinStreamingScreen(
       {Key? key,
-      required this.channelName,
+      required this.lecture,
       required this.rtctoken,
       required this.rtmtoken,
       required this.uid})
@@ -38,7 +39,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
   @override
   void initState() {
-    channel = widget.channelName;
+    channel = widget.lecture.lectureTitle;
     rtctoken = widget.rtctoken;
     rtmtoken = widget.rtmtoken;
     initAgora();
@@ -141,10 +142,10 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.channelName,
+                          Text(widget.lecture.lectureTitle,
                               style: TextStyle(fontSize: 30)),
-                          Text('Course Info'),
-                          Text('By Lorem Ipsum'),
+                          Text(widget.lecture.description),
+                          Text('By ' + widget.lecture.teacher.first),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.05,
                           ),
@@ -303,11 +304,11 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                               IconButton(
                                   onPressed: () => Navigator.of(context).pop(),
                                   icon: const Icon(Icons.close)),
-                              const Text("Participants (170)")
+                              const Text("Participants ")
                             ],
                           ),
                           const Center(
-                            child: Text('Participants (170)'),
+                            child: Text('Participants'),
                           ),
                         ],
                       ),
