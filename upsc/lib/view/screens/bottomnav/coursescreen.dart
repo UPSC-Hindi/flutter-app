@@ -217,6 +217,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 primary: ColorResources.buttoncolor,
                 shape: const StadiumBorder()),
             onPressed: () {
+              Navigator.popUntil(context, (route) => false);
+              Navigator.pushNamed(context, 'homescreen');
               Navigator.push(
                 context,
                 CupertinoPageRoute(

@@ -22,15 +22,16 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  CartDataModel cartSelectedItem = CartDataModel(cartId: '',
-      createdAt: DateTime.now(),
-      amount: '0.00',
-      isActive: false,
-      batchDetails: [],);
+  int _selectedValue = 0;
+  CartDataModel? cartSelectedItem;
 
   @override
-  Widget build(BuildContext context) {
+  void initState(){
     context.read<ApiBloc>().add(GetCartDetails());
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
@@ -54,20 +55,27 @@ class _CartScreenState extends State<CartScreen> {
                 image: SvgImages.emptyCard,
               );
             }
+            cartSelectedItem = state.cartData[_selectedValue];
             return Stack(
               children: [
                 ListView.builder(
                   itemCount: state.cartData.length,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) =>
-                      CartContainerWidget(
+                  itemBuilder: (context, index) =>RadioListTile(
+                    value: index,
+                    groupValue: _selectedValue,
+                    visualDensity: const VisualDensity(
+                        horizontal: VisualDensity.minimumDensity,
+                        vertical: VisualDensity.minimumDensity),
+                    onChanged: (value) {
+                      setState((){
+                        _selectedValue = value as int;
+                      });
+                    },
+                    title: _cartContainerWidget(
                         cartData: state.cartData[index],
-                        selectedCartCourse: (CartDataModel selectedCart) {
-                          setState(() {
-                            cartSelectedItem = selectedCart;
-                          });
-                        },
                       ),
+                  ),
                 ),
                 _bottomButtonWidget(state.cartData.first, context)
               ],
@@ -95,7 +103,7 @@ class _CartScreenState extends State<CartScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  '₹${cartSelectedItem.amount}',
+                  '₹${cartSelectedItem!.amount ?? 0.00}',
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),
@@ -103,23 +111,7 @@ class _CartScreenState extends State<CartScreen> {
                     style: ElevatedButton.styleFrom(
                         primary: ColorResources.buttoncolor,
                         shape: const StadiumBorder()),
-                    onPressed: () {
-                      if (cartSelectedItem.amount != "0.00") {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CoursePaymentScreen(
-                                  course: cartSelectedItem,
-                                ),
-                          ),
-                        );
-                      }
-                      else{
-                        flutterToast('Select At least on item');
-                      }
-                    },
+                    onPressed: makePayment,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18.0, vertical: 10.0),
@@ -133,155 +125,154 @@ class _CartScreenState extends State<CartScreen> {
       ],
     );
   }
-}
 
-class CartContainerWidget extends StatefulWidget {
-  const CartContainerWidget(
-      {Key? key, required this.cartData, required this.selectedCartCourse})
-      : super(key: key);
-  final CartDataModel cartData;
-  final Function(CartDataModel) selectedCartCourse;
-
-  @override
-  State<CartContainerWidget> createState() => _CartContainerWidgetState();
-}
-
-class _CartContainerWidgetState extends State<CartContainerWidget> {
-  bool isSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            isSelected = !isSelected;
-          });
-          widget.selectedCartCourse(widget.cartData);
-        },
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          height: 100,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.90,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: isSelected ? Colors.red.shade50 : ColorResources.textWhite,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 5.0,
+  void makePayment(){
+    if (cartSelectedItem != null) {
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              CoursePaymentScreen(
+                course: cartSelectedItem!,
               ),
-            ],
-          ),
-          child: Padding(
-            padding:
-            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Column(
+        ),
+      );
+    }
+    else{
+      flutterToast('Select At least on item');
+    }
+  }
+  void removeFromCard(CartDataModel cartData) async {
+    RemoteDataSourceImpl remoteDataSourceImpl =
+    RemoteDataSourceImpl();
+    Preferences.onLoading(context);
+    try {
+      Response response = await remoteDataSourceImpl
+          .deleteCartCourse(cartData.cartId);
+      if (response.statusCode == 200) {
+        _selectedValue=0;
+        if (!mounted) return;
+        context.read<ApiBloc>().add(GetCartDetails());
+      } else {
+        flutterToast(response.data['msg']);
+      }
+    } catch (e) {
+      flutterToast(e.toString());
+    }
+    if (!mounted) return;
+    Preferences.hideDialog(context);
+  }
+
+  Widget _cartContainerWidget({required CartDataModel cartData}) {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        height: 100,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: ColorResources.textWhite,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5.0,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding:
+          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    width: 140,
+                    child: Text(
+                      cartData.batchDetails['batch_name'],
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          widget.cartData.batchDetails['batch_name'],
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                        Column(
+                          children: [
+                            Icon(
+                              Icons.sensors_outlined,
+                              color: ColorResources.buttoncolor,
+                            ),
+                            const Text(
+                              'Live lectures',
+                              style: TextStyle(fontSize: 8),
+                            )
+                          ],
                         ),
-                        const SizedBox(
-                          height: 10,
+                        Column(
+                          children: const [
+                            Icon(Icons.signal_cellular_alt),
+                            Text(
+                              '100% Online',
+                              style: TextStyle(fontSize: 8),
+                            )
+                          ],
                         ),
-                        Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.40,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Icon(
-                                    Icons.sensors_outlined,
-                                    color: ColorResources.buttoncolor,
-                                  ),
-                                  Text(
-                                    'Live lectures',
-                                    style: TextStyle(fontSize: 8),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: const [
-                                  Icon(Icons.signal_cellular_alt),
-                                  Text(
-                                    '100% Online',
-                                    style: TextStyle(fontSize: 8),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: const [
-                                  Icon(Icons.download),
-                                  Text(
-                                    'Downloadable',
-                                    style: TextStyle(fontSize: 8),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
+                        Column(
+                          children: const [
+                            Icon(Icons.download),
+                            Text(
+                              'Downloadable',
+                              style: TextStyle(fontSize: 8),
+                            )
+                          ],
+                        )
                       ],
                     ),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: ColorResources.buttoncolor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () async {
-                        RemoteDataSourceImpl remoteDataSourceImpl =
-                        RemoteDataSourceImpl();
-                        Preferences.onLoading(context);
-                        try {
-                          Response response = await remoteDataSourceImpl
-                              .deleteCartCourse(widget.cartData.cartId);
-                          if (response.statusCode == 200) {
-                            context.read<ApiBloc>().add(GetCartDetails());
-                          } else {
-                            flutterToast(response.data['msg']);
-                          }
-                        } catch (e) {
-                          print(e);
-                          flutterToast(e.toString());
-                        }
-                        Preferences.hideDialog(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 5.0),
-                        child: Text(Languages.remove),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: ColorResources.buttoncolor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    Text(
-                      '₹ ${widget.cartData.amount}',
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
+                    onPressed: (){
+                      removeFromCard(cartData);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 5.0),
+                      child: Text(Languages.remove),
                     ),
-                  ],
-                )
-              ],
-            ),
+                  ),
+                  Text(
+                    '₹ ${cartData.amount}',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),

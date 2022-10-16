@@ -23,7 +23,9 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Daily News'));
+    context
+        .read<ApiBloc>()
+        .add(const GetResources(key: 'Category', value: 'Daily News'));
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
 
@@ -35,28 +37,37 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Daily News',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style: GoogleFonts.poppins(
+            color: ColorResources.textblack,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
         builder: (context, state) {
-          if(state is ApiError){
-            return const Center(child: Text("Unable to get data"),);
+          if (state is ApiError) {
+            return const Center(
+              child: Text("Unable to get data"),
+            );
           }
-          if(state is ApiResourcesSuccess){
-            if(state.resources.data!.isEmpty){
-              return const Center(child: Text('There is no resources'),);
+          if (state is ApiResourcesSuccess) {
+            if (state.resources.data!.isEmpty) {
+              return const Center(
+                child: Text('There is no resources'),
+              );
             }
-            return _bodyWidget(context,state.resources.data!);
+            return _bodyWidget(context, state.resources.data!);
           }
-          return Center(child: CircularProgressIndicator(),);
-
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
   }
 
-  Container _bodyWidget(BuildContext context,List<ResourcesDataModel> resources) {
+  Container _bodyWidget(
+      BuildContext context, List<ResourcesDataModel> resources) {
     return Container(
       width: double.infinity,
       child: Column(children: [
@@ -64,17 +75,19 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
           height: 20,
         ),
         Text(
-          datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
-              ? 'News for Today'
-              : "News for",
-          style: GoogleFonts.poppins(fontSize: 20),
-        ),
+            datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
+                ? 'News for Today'
+                : "News for",
+            style: GoogleFonts.poppins(
+                color: ColorResources.textblack,
+                fontWeight: FontWeight.w500,
+                fontSize: 20)),
         SizedBox(
           height: 10,
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: ColorResources.textWhite,
+              primary: ColorResources.buttoncolor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20))),
           onPressed: () async {
@@ -87,7 +100,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
               print(
                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
               String formattedDate =
-              DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                  DateFormat('dd-MMMM-yyyy').format(pickedDate);
               print(
                   formattedDate); //formatted date output using intl package =>  2021-03-16
               setState(() {
@@ -101,12 +114,15 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             children: [
               Text(
                 '$datetoshow',
-                style: GoogleFonts.poppins(color: ColorResources.textblack),
+                style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: ColorResources.textWhite),
               ),
               Icon(
                 Icons.arrow_drop_down_outlined,
-                color: ColorResources.textblack,
-              )
+                color: ColorResources.textWhite)
+              
             ],
           ),
         ),
@@ -120,8 +136,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return _dailyNewsResourceWidget(resources[index]);
-                })
-        )
+                }))
       ]),
     );
   }
@@ -136,7 +151,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             children: [
               Row(
                 children: [
-                  Image.asset(SvgImages.pdfimage),
+                  Image.network(SvgImages.pdfimage),
                   const SizedBox(
                     width: 20,
                   ),
@@ -158,7 +173,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 ],
               ),
               InkWell(
-                onTap: (){},
+                onTap: () {},
                 child: Icon(
                   Icons.file_download_outlined,
                   size: 40,

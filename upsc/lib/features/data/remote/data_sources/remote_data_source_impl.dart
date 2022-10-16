@@ -40,10 +40,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       Response response = await dioAuthorizationData()
           .get('${Apis.baseUrl}${Apis.getcartdata}');
       CartModel data = CartModel.fromJson(response.data);
-      print(data);
-      print(response);
       return data;
     } catch (error) {
+      print(error);
       rethrow;
     }
   }
@@ -51,13 +50,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<CoursesModel> getCourses(String key, String value) async {
     try {
-      print(key);
-      print(value);
       final queryParameters = <String, dynamic>{key: value};
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
         queryParameters: queryParameters,
       );
+      print(response);
       return CoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -69,7 +67,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     try {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.mycourses}');
-      print(response);
       return MyCoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -99,7 +96,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<Response> deleteCartCourse(String id) async {
     try {
       var response = await dioAuthorizationData()
-          .delete('${Apis.baseUrl}${Apis.removefromCart}' + id);
+          .delete('${Apis.baseUrl}${Apis.removefromCart}$id');
       return response;
     } catch (error) {
       rethrow;

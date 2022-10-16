@@ -22,6 +22,7 @@ class ProfilScreen extends StatefulWidget {
 
 class _ProfilScreenState extends State<ProfilScreen> {
   String? _profileimage;
+
   @override
   void initState() {
     super.initState();
@@ -51,15 +52,24 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 child: Row(
                   children: [
                     Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Image.network(_profileimage!)),
+                      padding: EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 40.0,
+                        backgroundImage: NetworkImage(_profileimage!),
+                        backgroundColor: Colors.grey,
+                      ),
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           SharedPreferenceHelper.getString(Preferences.name)
                               .toString(),
-                          style: const TextStyle(fontSize: 25),
+                          style: const TextStyle(
+                            fontSize: 27,
+                            fontWeight: FontWeight.w900,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const Text('UPSC Aspirant')
                       ],
