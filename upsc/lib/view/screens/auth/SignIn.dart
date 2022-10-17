@@ -397,11 +397,16 @@ class _loginscreenState extends State<loginscreen> {
       "deviceConfig": deviceConfig,
       "deviceName": deviceName,
     };
-
+     setState(() {
+      Preferences.onLoading(context);
+    });
     try {
       response =
           await RestClient(RetroApi2().dioData2()).googleSigninRequest(body);
       if (response.status!) {
+        setState(() {
+        Preferences.hideDialog(context);
+      });
         if (response.data!.verified!) {
           await SharedPreferenceHelper.setString(
               Preferences.access_token, response.data!.accessToken);
@@ -450,6 +455,9 @@ class _loginscreenState extends State<loginscreen> {
           textColor: ColorResources.textWhite,
         );
       } else {
+         setState(() {
+        Preferences.hideDialog(context);
+      });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -459,6 +467,9 @@ class _loginscreenState extends State<loginscreen> {
         );
       }
     } catch (error, stacktrace) {
+       setState(() {
+        Preferences.hideDialog(context);
+      });
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }

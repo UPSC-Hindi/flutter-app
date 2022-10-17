@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
@@ -73,17 +74,16 @@ class TabCoursesWidget extends StatefulWidget {
 class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
   void initState() {
-      context.read<ApiBloc>().add(
-        GetCourses(key: 'Category',value: widget.value),
-      );
-      super.initState();
+    context.read<ApiBloc>().add(
+          GetCourses(key: 'Category', value: widget.value),
+        );
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ApiBloc, ApiState>(
-      listener: (context,state){
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is ApiError) {
           return const Center(
@@ -111,11 +111,11 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Courses',
-                style: TextStyle(fontSize: 24),
+                style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
             ListView.builder(
@@ -131,13 +131,13 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
 
   Container _cardWidget(CoursesDataModel data) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: ColorResources.gray.withOpacity(0.5),
             blurRadius: 5.0,
           ),
         ],
@@ -147,7 +147,10 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         children: [
           Text(
             data.batchName,
-            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style:
+                GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 10,
@@ -222,7 +225,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => CoursesDetailsScreens(course: data,
+                  builder: (context) => CoursesDetailsScreens(
+                    course: data,
                   ),
                 ),
               );

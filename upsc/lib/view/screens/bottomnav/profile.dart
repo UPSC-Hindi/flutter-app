@@ -251,13 +251,18 @@ class _ProfilScreenState extends State<ProfilScreen> {
     );
   }
 
-  Future<BaseModel<Logout>> callApilogout() async {
+   Future<BaseModel<Logout>> callApilogout() async {
     Logout response;
-
+     setState(() {
+        Preferences.onLoading(context);
+      });
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
       if (response.status!) {
+         setState(() {
+        Preferences.hideDialog(context);
+      });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -267,8 +272,19 @@ class _ProfilScreenState extends State<ProfilScreen> {
         );
         SharedPreferenceHelper.clearPref();
         Navigator.of(context).popAndPushNamed('/');
+      }else{
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
       }
     } catch (error, stacktrace) {
+       setState(() {
+        Preferences.hideDialog(context);
+      });
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
