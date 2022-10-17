@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 
 class MySchedule extends StatefulWidget {
   const MySchedule({Key? key}) : super(key: key);
@@ -25,22 +25,22 @@ class _MyScheduleState extends State<MySchedule> {
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
-        title: Text('My Schedule',
+        title: Text(Languages.mySchedule,
             style: GoogleFonts.poppins(color: ColorResources.textblack)),
       ),
       body: Container(
         width: double.infinity,
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
             datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
-                ? 'Schedule for Today'
+                ? Languages.scheduleForToday
                 : "Schedule for",
             style: GoogleFonts.poppins(fontSize: 20),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ElevatedButton(
@@ -81,7 +81,7 @@ class _MyScheduleState extends State<MySchedule> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           FractionallySizedBox(
@@ -104,7 +104,7 @@ class _MyScheduleState extends State<MySchedule> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("11:15 AM "),
+                              const Text("11:15 AM "),
                               Text(
                                 "Revise Sample Notes",
                                 style: GoogleFonts.poppins(fontSize: 20),
@@ -133,7 +133,7 @@ class _MyScheduleState extends State<MySchedule> {
                         )
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,7 +143,7 @@ class _MyScheduleState extends State<MySchedule> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("11:15 AM "),
+                              const Text("11:15 AM "),
                               Text(
                                 "Revise Sample Notes",
                                 style: GoogleFonts.poppins(fontSize: 20),
@@ -172,7 +172,7 @@ class _MyScheduleState extends State<MySchedule> {
                         )
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,7 +182,7 @@ class _MyScheduleState extends State<MySchedule> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("11:15 AM "),
+                              const Text("11:15 AM "),
                               Text(
                                 "Revise Sample Notes",
                                 style: GoogleFonts.poppins(fontSize: 20),
@@ -211,7 +211,7 @@ class _MyScheduleState extends State<MySchedule> {
                         )
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -221,7 +221,7 @@ class _MyScheduleState extends State<MySchedule> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("11:15 AM "),
+                              const Text("11:15 AM "),
                               Text(
                                 "Revise Sample Notes",
                                 style: GoogleFonts.poppins(fontSize: 20),
@@ -250,7 +250,7 @@ class _MyScheduleState extends State<MySchedule> {
                         )
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                   ],
                 ),
               ),
@@ -263,7 +263,7 @@ class _MyScheduleState extends State<MySchedule> {
           Navigator.of(context).pushNamed('MyScheduleAdd');
         },
         backgroundColor: ColorResources.buttoncolor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -273,7 +273,7 @@ class _MyScheduleState extends State<MySchedule> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0))),
           content: Container(
             height: 300,
@@ -308,7 +308,7 @@ class _MyScheduleState extends State<MySchedule> {
                       border: Border.all(color: ColorResources.gray)),
                   padding: const EdgeInsets.all(10),
                   child: Row(children: [
-                    Text('Notify at'),
+                    const Text('Notify at'),
                     Row(
                       children: [],
                     ),
@@ -323,7 +323,7 @@ class _MyScheduleState extends State<MySchedule> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Update')),
+                      child: const Text('Update')),
                 ),
               ],
             ),

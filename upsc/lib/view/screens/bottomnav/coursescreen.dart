@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/models/course_model.dart';
+import 'package:upsc/features/data/remote/models/CoursesModel.dart';
+import 'package:upsc/features/data/remote/models/cart_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/view/bloc/courses/courses_bloc.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/bottomnav/coursesdetails.dart';
 
 class CourseScreen extends StatefulWidget {
@@ -28,30 +30,26 @@ class _CourseScreenState extends State<CourseScreen> {
                   indicatorColor: ColorResources.buttoncolor,
                   labelColor: ColorResources.buttoncolor,
                   unselectedLabelColor: Colors.black,
-                  tabs: const [
-                    Tab(text: "Prelims"),
-                    Tab(text: "Mains"),
-                    Tab(text: "Interview"),
-                    Tab(text: "RO"),
+                  tabs: [
+                    Tab(text: Languages.prelims),
+                    Tab(text: Languages.mains),
+                    Tab(text: Languages.interview),
+                    Tab(text: Languages.ro),
                   ]),
             ),
-            Expanded(
+            const Expanded(
               child: TabBarView(children: [
-                const TabCoursesWidget(
-                  type: 'Prelims',
+                TabCoursesWidget(
+                  value: 'Prelims',
                 ),
-                const TabCoursesWidget(
-                  type: 'Mains',
+                TabCoursesWidget(
+                  value: 'Mains',
                 ),
-                SingleChildScrollView(
-                  child: Column(children: const [
-                    Text('Mock Interview     '),
-                    SizedBox(height: 300),
-                    Text('Script')
-                  ]),
+                Center(
+                  child: Text("Update will come soon......"),
                 ),
-                const Center(
-                  child: Text("ro"),
+                Center(
+                  child: Text("Update will come soon......"),
                 ),
               ]),
             )
@@ -65,9 +63,9 @@ class _CourseScreenState extends State<CourseScreen> {
 class TabCoursesWidget extends StatefulWidget {
   const TabCoursesWidget({
     Key? key,
-    required this.type,
+    required this.value,
   }) : super(key: key);
-  final String type;
+  final String value;
 
   @override
   State<TabCoursesWidget> createState() => _TabCoursesWidgetState();
@@ -75,73 +73,71 @@ class TabCoursesWidget extends StatefulWidget {
 
 class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
-  initState() {
-    context.read<CoursesBloc>().add(
-          GetCourses(filter: widget.type, type: 'Category'),
+  void initState() {
+    context.read<ApiBloc>().add(
+          GetCourses(key: 'Category', value: widget.value),
         );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoursesBloc, CoursesState>(
+    return BlocConsumer<ApiBloc, ApiState>(
+      listener: (context, state) {},
       builder: (context, state) {
-        if (state is CoursesLoading) {
-          return Center(
-            child: const CircularProgressIndicator(),
+        if (state is ApiError) {
+          return const Center(
+            child: Text('Something went wrong'),
           );
         }
-        if (state is CoursesSuccess) {
-          return _bodyWidget(state.courseList);
+        if (state is ApiCoursesSuccess) {
+          return state.courseList.isEmpty
+              ? const Center(
+                  child: Text('There is no courses'),
+                )
+              : _bodyWidget(state.courseList);
         }
+
         return const Center(
-          child: Text('Something went wrong'),
+          child: CircularProgressIndicator(),
         );
       },
     );
   }
 
-  SingleChildScrollView _bodyWidget(List<CourseModel> courseData) {
+  SingleChildScrollView _bodyWidget(List<CoursesDataModel> courseData) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Courses',
                 style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(8),
-              shrinkWrap: true,
-              itemCount: courseData.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return _cardWidget(courseData[index]);
-              },
-            ),
+            ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: courseData.length,
+                itemBuilder: (context, index) => _cardWidget(courseData[index]))
           ],
         ),
       ),
     );
   }
 
-  Container _cardWidget(CourseModel data) {
+  Container _cardWidget(CoursesDataModel data) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: ColorResources.gray.withOpacity(0.5),
             blurRadius: 5.0,
           ),
         ],
@@ -151,6 +147,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
         children: [
           Text(
             data.batchName,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style:
                 GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
           ),
@@ -161,90 +159,96 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: [
-                  Icon(Icons.sensors_outlined,color: ColorResources.buttoncolor,),
+                children: const [
+                  Icon(
+                    Icons.sensors_outlined,
+                    color: Colors.redAccent,
+                  ),
                   Text(
                     'Live lectures',
-                    style: GoogleFonts.poppins(fontSize: 8),
+                    style: TextStyle(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: [
+                children: const [
                   Icon(Icons.signal_cellular_alt),
                   Text(
                     '100% Online',
-                    style: GoogleFonts.poppins(fontSize: 8),
+                    style: TextStyle(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: [
+                children: const [
                   Icon(Icons.download),
                   Text(
                     'Downloadable',
-                    style: GoogleFonts.poppins(fontSize: 8),
+                    style: TextStyle(fontSize: 8),
                   )
                 ],
               )
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                data.charges,
-                style: GoogleFonts.poppins(
-                    fontSize: 16, fontWeight: FontWeight.bold),
+                '₹${data.charges}',
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
               ),
               Container(
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: ColorResources.greenshad),
                 child: Text(
                   'Aid Available',
-                  style: GoogleFonts.poppins(
-                      fontSize: 8, color: ColorResources.textWhite),
+                  style:
+                      TextStyle(fontSize: 8, color: ColorResources.textWhite),
                 ),
               )
             ],
+          ),
+          SizedBox(
+            height: 10,
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
                 primary: ColorResources.buttoncolor,
                 shape: const StadiumBorder()),
             onPressed: () {
+              Navigator.popUntil(context, (route) => false);
+              Navigator.pushNamed(context, 'homescreen');
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => BlocProvider(
-                    create: (context) => CoursesBloc(),
-                    child: CoursesDetailsScreens(
-                      id: data.id,
-                      buycourses: true,
-                      coursename: "Saurabh",
-                    ),
+                  builder: (context) => CoursesDetailsScreens(
+                    course: data,
                   ),
                 ),
               );
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Learn more'),
-                Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFfD9D9D9).withOpacity(0.38),
-                      borderRadius: BorderRadius.circular(90)),
-                  child: const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                  ),
-                )
-              ],
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.65,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Learn more'),
+                  Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFfD9D9D9).withOpacity(0.38),
+                        borderRadius: BorderRadius.circular(90)),
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20,
+                    ),
+                  )
+                ],
+              ),
             ),
           )
         ],

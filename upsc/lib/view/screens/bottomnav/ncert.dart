@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:upsc/features/presentation/widgets/youtube_player_widget.dart';
 import 'package:upsc/models/vidoe_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/view/bloc/video/video_bloc.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class NcertScreen extends StatefulWidget {
   const NcertScreen({Key? key}) : super(key: key);
@@ -40,7 +42,7 @@ class _NcertScreenState extends State<NcertScreen> {
           }
           if (state is YoutubeVideoSuccess) {
             return state.videoData.isEmpty
-                ? const Text('There is No Courses')
+                ? const Center(child: Text('There is No Video'))
                 : _bodyWidget(state.videoData);
           }
           return const Center(
@@ -74,22 +76,45 @@ class _NcertScreenState extends State<NcertScreen> {
                 ),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  return _youTubeContainerWidget(videData[index]);
+                  return YouTubeContainerWidget(
+                    videoUrl: videData[0].videoUrl,
+                  );
                 }),
           )
         ],
       ),
     );
   }
+}
 
-  Widget _youTubeContainerWidget(VideoModel data) {
+class YouTubeContainerWidget extends StatefulWidget {
+  const YouTubeContainerWidget({Key? key, required this.videoUrl})
+      : super(key: key);
+  final String videoUrl;
+  @override
+  State<YouTubeContainerWidget> createState() => _YouTubeContainerWidgetState();
+}
+
+class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
+
+  String videoId = '';
+
+  @override
+  void initState() {
+    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(data.videoUrl);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const YoutubePlayerWidget(),
+            builder: (context) => YoutubePlayerWidget(
+              videoId: videoId,
+            ),
           ),
         );
       },
@@ -102,6 +127,13 @@ class _NcertScreenState extends State<NcertScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: ColorResources.gray,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    YoutubePlayer.getThumbnail(
+                        videoId: videoId, webp: false),
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Icon(
                 Icons.play_circle_fill_rounded,
@@ -109,10 +141,6 @@ class _NcertScreenState extends State<NcertScreen> {
                 size: 50,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(data.title),
-            )
           ],
         ),
       ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:upsc/features/data/remote/data_sources/auth/auth_data_source_impl.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
-class LanguageScreen extends StatefulWidget {
-  const LanguageScreen({Key? key}) : super(key: key);
 
+class LanguageScreen extends StatefulWidget {
+  const LanguageScreen({Key? key, required this.isLogin}) : super(key: key);
+  final bool isLogin;
   @override
   State<LanguageScreen> createState() => _LanguageScreenState();
 }
@@ -15,7 +16,13 @@ class LanguageScreen extends StatefulWidget {
 class _LanguageScreenState extends State<LanguageScreen> {
   int selected = 0;
   int selected_course = 0;
-  int count = 0;
+  int Lcount = 0;
+  int Ccount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +85,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 200,
+                  height: 100,
                 ),
-                count > 1
+                Lcount > 0 && Ccount > 0
                     ? Container(
                         width: MediaQuery.of(context).size.width * 0.60,
                         decoration: BoxDecoration(
@@ -88,18 +95,39 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             borderRadius: BorderRadius.circular(14)),
                         child: TextButton(
                           onPressed: () {
-                          SharedPreferenceHelper.setString(Preferences.language, selected==2?'Hindi':'English');
-                            SharedPreferenceHelper.setString(Preferences.course, selected_course==3?'IAS':'PCS');
-                            Fluttertoast.showToast(
-                              msg: 'Successful Register',
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: ColorResources.gray,
-                              textColor: ColorResources.textWhite,
-                            );
-                            Navigator.popUntil(
-                                context, ModalRoute.withName('login'));
-                            Navigator.of(context).pushNamed('login');
+                            AuthDataSourceImpl authDataSourceImpl =
+                                AuthDataSourceImpl();
+
+                            SharedPreferenceHelper.setString(
+                                Preferences.language,
+                                selected == 2 ? 'Hindi' : 'English');
+                            SharedPreferenceHelper.setString(Preferences.course,
+                                selected_course == 3 ? 'IAS' : 'PCS');
+
+                            var token = SharedPreferenceHelper.getString(
+                                Preferences.auth_token);
+                            authDataSourceImpl.updateLanguage(
+                                selected == 2 ? 'hi' : 'en', token!);
+                            authDataSourceImpl.updateStream(
+                                selected_course == 3 ? 'IAS' : 'PCS', token);
+
+                            if (widget.isLogin) {
+                              Languages.isEnglish = selected == 2 ? false : true;
+                              Languages.initState();
+                              Navigator.popUntil(context, (route) => false);
+                              Navigator.pushNamed(context, 'home');
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: 'Successful Register',
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: ColorResources.gray,
+                                textColor: ColorResources.textWhite,
+                              );
+                              Navigator.popUntil(
+                                  context, ModalRoute.withName('SignIn'));
+                              Navigator.pushNamed(context, 'home');
+                            }
                           },
                           child: Text(
                             'Save & Continue',
@@ -136,7 +164,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       onPressed: () {
         setState(() {
           selected = index;
-          count = count + 1;
+          Lcount = Lcount + 1;
         });
       },
       child: Container(
@@ -155,6 +183,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                       fontSize: 50,
                       fontWeight: FontWeight.w800),
                 ),
+                //SizedBox(height: 60, child: SvgPicture.asset(src)),
                 Text(
                   text,
                   style: const TextStyle(color: Colors.black),
@@ -193,7 +222,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       onPressed: () {
         setState(() {
           selected_course = index;
-          count = count + 1;
+          Ccount = Ccount + 1;
         });
       },
       child: Container(
@@ -215,6 +244,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         fontSize: 40,
                         fontWeight: FontWeight.w800),
                   ),
+                  //SizedBox(height: 60, child: SvgPicture.asset(src)),
                   Text(
                     text,
                     style: const TextStyle(color: Colors.black),

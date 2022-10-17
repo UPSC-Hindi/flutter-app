@@ -5,13 +5,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 class Preferences {
   Preferences._();
 
-  static const String is_logged_in = "isLoggedIn";
+    static const String is_logged_in = "isLoggedIn";
   static const String name = "name";
   static const String auth_token = "authToken";
   static const String access_token = "accessToken";
   static const String password_change_data = "Passwordchangedata";
   static const String language = 'language';
   static const String course = 'course';
+  static const String email = 'email';
+  static const String phoneNUmber = 'phoneNUmber';
+  static const String device_platform='device_platform';
+   static const String profileImage = 'profileImage';
+  static const String address = 'address';
 
    static hideDialog(BuildContext context) {
     Navigator.pop(context);

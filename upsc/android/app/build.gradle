@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -33,6 +33,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        //Video
+        exclude 'lib/arm64-v8a/libagora_segmentation_extension.so'
+        exclude 'lib/arm64-v8a/libagora_fd_extension.so'
+        exclude 'lib/arm64-v8a/libagora_jnd_extension.so'
+        //Voice
+        exclude 'lib/arm64-v8a/libagora_ai_denoise_extension.so'
+        exclude 'lib/arm64-v8a/libagora_full_audio_format_extension.so'
+        exclude 'lib/arm64-v8a/libagora_spatial_audio_extension.so'
+        
+        //Video
+        exclude 'lib/armeabi-v7a/libagora_segmentation_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_fd_extension.so'
+        //Voice
+        exclude 'lib/armeabi-v7a/libagora_ai_denoise_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_full_audio_format_extension.so'
+        exclude 'lib/armeabi-v7a/libagora_spatial_audio_extension.so'
+    }
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -44,7 +62,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.upsc"
+        applicationId "com.upschindi"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
@@ -52,9 +70,21 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
+     
+     signingConfigs {
+        debug {
+            keyAlias 'your_key_alias'
+            keyPassword '123456'
+            storeFile file('keystore.jks')
+            storePassword '123456'
+        }
+    }
 
     buildTypes {
         release {
+            ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+        }
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug

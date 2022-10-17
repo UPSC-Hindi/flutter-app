@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
 
-class ResourcesScreen extends StatelessWidget {
+class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ResourcesScreen> createState() => _ResourcesScreenState();
+}
+
+class _ResourcesScreenState extends State<ResourcesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,86 +25,62 @@ class ResourcesScreen extends StatelessWidget {
           ),
         ),
         body: GridView.count(
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 10.0,
-          padding: EdgeInsets.all(10),
-          crossAxisCount: 2,
-          children: [
-            GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('dailynews'),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorResources.gray,
+              mainAxisSpacing: 20.0,
+              crossAxisSpacing: 20.0,
+              padding: const EdgeInsets.all(10),
+              crossAxisCount: 2,
+              childAspectRatio: 7 / 8,
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed('dailynews'),
+                  child: _resourceCardWidget(
+                      SvgImages.dailyNews, 'Daily News'),
                 ),
-                child: Center(
-                  child: Text(
-                    'Daily News',
-                    style: TextStyle(color: ColorResources.textWhite),
-                  ),
+                GestureDetector(
+                  child: _resourceCardWidget(
+                      SvgImages.courseIndex, 'Course Index'),
                 ),
-              ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed('shortnotes'),
+                  child: _resourceCardWidget(
+                      SvgImages.shortNotes, 'Short Notes'),
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed('youtubenotes'),
+                  child: _resourceCardWidget(
+                      SvgImages.youtubeNotes, 'Youtube Note'),
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed('samplenotes'),
+                  child: _resourceCardWidget(
+                      SvgImages.sampleNotes, 'Sample Notes'),
+                ),
+              ],
             ),
-            GestureDetector(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorResources.gray,
-                ),
-                child: Center(
-                  child: Text(
-                    'Course Index',
-                    style: TextStyle(color: ColorResources.textWhite),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('shortnotes'),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorResources.gray,
-                ),
-                child: Center(
-                  child: Text(
-                    'Short Notes',
-                    style: TextStyle(color: ColorResources.textWhite),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('youtubenotes'),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorResources.gray,
-                ),
-                child: Center(
-                  child: Text(
-                    'YouTube Notes',
-                    style: TextStyle(color: ColorResources.textWhite),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('samplenotes'),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorResources.gray,
-                ),
-                child: Center(
-                  child: Text(
-                    'Sample Notes',
-                    style: TextStyle(color: ColorResources.textWhite),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ));
+        );
+  }
+
+  Container _resourceCardWidget(String image, String text) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: ColorResources.gray,
+        image: DecorationImage(
+            image: NetworkImage(image), fit: BoxFit.cover, opacity: 0.6),
+        gradient: const LinearGradient(colors: [
+          Colors.white,
+          Colors.black,
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+      ),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Text(
+          text,
+          style: TextStyle(
+              color: ColorResources.textWhite, fontWeight: FontWeight.w800),
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.upsc">
+    package="com.upschindi">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission  android:name="android.permission.READ_PHONE_STATE"/>
 <uses-permission  android:name="android.permission.INTERNET"  />
@@ -9,10 +9,38 @@
 <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"  />
 <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices.-->
 <uses-permission  android:name="android.permission.BLUETOOTH"  />
+                <queries>
+           <!-- If your app opens https URLs -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <!-- If your app sends emails -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+        <!-- If your app checks for SMS support -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="sms" />
+        </intent>
+        <!-- If your app checks for call support -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tel" />
+        </intent>
+  </queries>
    <application
-        android:label="upsc"
+        android:label="UPSC Hindi"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,6 +53,7 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
+
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"

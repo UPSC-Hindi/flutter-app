@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
+import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/auth/SignIn.dart';
 import 'package:upsc/view/screens/auth/SignUp.dart';
@@ -14,7 +20,6 @@ import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/contactus.dart';
-import 'package:upsc/view/screens/course/courseview.dart';
 import 'package:upsc/view/screens/home.dart';
 import 'package:upsc/view/screens/joinStreaming.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
@@ -33,7 +38,17 @@ import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
 void main() {
-  runApp(const MyApp());
+  //Orientations
+  WidgetsFlutterBinding.ensureInitialized();
+  //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (_) async {
+      await SharedPreferenceHelper.init();
+      //Languages.isEnglish = (SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true) ?? true;
+      await Languages.initState();
+      runApp(const MyApp());
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -42,71 +57,84 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SharedPreferenceHelper.init();
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => ApiBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: const Splash(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Splash(),
+          'home': (context) => const HomeScreen(),
+          'SignIn': (context) => const loginscreen(), //SignIn(),
+          'SignUp': (context) => const SignUp(),
+          'otpverification': (context) => Otpverification(
+                number: '',
+              ),
+          'languagescreen': (context) => const LanguageScreen(
+                isLogin: false,
+              ),
+          'notifications': (context) => const NotificationScreen(),
+          'homescreen': (context) => const HomeScreen(),
+          'Coursescreen': (context) => const CourseScreen(),
+          'mocktestscreen': (context) => const mocktestscreen(),
+          'ProfilScreen': (context) => const ProfilScreen(),
+          'editprofilescreen': (context) => const EditProfileScreen(),
+          'downloadScreen': (context) => const DownloadScreen(),
+          'resourcesscreen': (context) => const ResourcesScreen(),
+          'cartscreen': (context) => const CartScreen(),
+          'mycoursesscreen': (context) => const MyCoursesScreen(),
+          'myordersscreen': (context) => const MyOrdersScreen(),
+          'helpandsupport': (context) => const HelpAndSupport(),
+          'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
+          'passwordotp': (context) => PasswordOtp(
+                Otpfor: '',
+              ),
+          'passwordverified': (context) => passwordVerified(
+                type: '',
+              ),
+          'passwordchange': (context) => const PasswordChange(),
+          'ncertscreen': (context) => const NcertScreen(),
+          'MySchedule': (context) => const MySchedule(),
+          'MyScheduleAdd': (context) => const MyScheduleAdd(),
+          'dailynews': (context) => const DailyNewsScreen(),
+          'shortnotes': (context) => const ShortNotesScreen(),
+          'youtubenotes': (context) => const YoutubeNotesScreen(),
+          'samplenotes': (context) => const SampleNotesScreen(),
+          'contactus': (context) => const ContactUsScreen(),
+//           'joinstreaming': (context) => const JoinStreamingScreen(
+// lecture: '',
+//                 rtctoken: '',
+//                 rtmtoken: '',
+//                 uid: 0,
+//               ),
+        },
       ),
-      //home: const Splash(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const Splash(),
-        'home': (context) => const HomeScreen(),
-        'SignIn': (context) => const loginscreen(), //SignIn(),
-        'SignUp': (context) => const SignUp(),
-        'otpverification': (context) => Otpverification(
-              number: '',
-            ),
-        'languagescreen': (context) => const LanguageScreen(),
-        'notifications': (context) => const NotificationScreen(),
-        'homescreen': (context) => const HomeScreen(),
-        'Coursescreen': (context) => const CourseScreen(),
-        'mocktestscreen': (context) => const mocktestscreen(),
-        'ProfilScreen': (context) => const ProfilScreen(),
-        'editprofilescreen': (context) => const EditProfileScreen(),
-        'downloadScreen': (context) => const DownloadScreen(),
-        'resourcesscreen': (context) => const ResourcesScreen(),
-        'cartscreen': (context) => const CartScreen(),
-        'mycoursesscreen': (context) => const MyCoursesScreen(),
-        'courseviewscreen': (context) => const CourseViewScreen(),
-        'myordersscreen': (context) => const MyOrdersScreen(),
-        'helpandsupport': (context) => const HelpAndSupport(),
-        'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
-        'passwordotp': (context) =>  PasswordOtp(Otpfor: '',),
-        'passwordverified': (context) => passwordVerified(type: '',),
-        'passwordchange': (context) => const PasswordChange(),
-        'ncertscreen': (context) => const NcertScreen(),
-        'MySchedule': (context) => const MySchedule(),
-        'MyScheduleAdd': (context) => const MyScheduleAdd(),
-        'dailynews': (context) => const DailyNewsScreen(),
-        'shortnotes': (context) => const ShortNotesScreen(),
-        'youtubenotes': (context) => const YoutubeNotesScreen(),
-        'samplenotes': (context) => const SampleNotesScreen(),
-        'contactus': (context) => const ContactUsScreen(),
-        'joinstreaming': (context) => const JoinStreamingScreen(),
-      },
     );
   }
 }
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
-
+                                                                                                                                                  
   @override
   State<Splash> createState() => _SplashState();
 }
 
 class _SplashState extends State<Splash> {
-
   @override
   Widget build(BuildContext context) {
     return SplashScreenView(
-      navigateRoute: loginscreen(),
-      duration: 3000,
+      navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)
+          ? const HomeScreen()
+          : const loginscreen(),
+      duration: 30,
       //imageSize: 130,
-      imageSrc: "assets/images/logo_Splash.jpg",
+      imageSrc: "assets/images/splash.gif",
       backgroundColor: Colors.white,
     );
   }

@@ -1,146 +1,203 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:upsc/features/data/remote/data_sources/auth/auth_data_source_impl.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/util/preference.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  String name = '';
+  String email = '';
+  String phoneNumber = '';
+  String address = 'Address';
+  String profileImage = SvgImages.avatar;
+
+  final authDataSourceImpl = AuthDataSourceImpl();
+
+  @override
+  void initState() {
+    name = SharedPreferenceHelper.getString(Preferences.name)!;
+    email = SharedPreferenceHelper.getString(Preferences.email)!;
+    phoneNumber = SharedPreferenceHelper.getString(Preferences.phoneNUmber)!;
+    address = SharedPreferenceHelper.getString(Preferences.address)!;
+    profileImage = SharedPreferenceHelper.getString(Preferences.profileImage)!;
+    super.initState();
+  }
+
+  bool isEnable = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: ColorResources.textWhite,
-          elevation: 0,
-          iconTheme: IconThemeData(
-            color: ColorResources.textblack,
-          ),
-          title: Text(
-            'Personal Information',
-            style: TextStyle(color: ColorResources.textblack),
-          ),
+      //resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: ColorResources.textWhite,
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: ColorResources.textblack,
         ),
-        body: SingleChildScrollView(
+        title: Text(
+          Languages.personalInformation,
+          style: TextStyle(color: ColorResources.textblack),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Center(
                 child: Stack(
                   children: [
-                    Icon(
-                      Icons.account_circle,
-                      color: ColorResources.gray,
-                      size: 200,
+                    CircleAvatar(
+                      radius: 70.0,
+                      backgroundImage: NetworkImage(profileImage),
+                      backgroundColor: Colors.grey,
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     Positioned(
-                      top: 20,
-                      right: 20,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            color: ColorResources.buttoncolor,
-                            borderRadius: BorderRadius.circular(100)),
-                        child: Icon(
-                          Icons.mode,
+                      top: 10,
+                      right: 10,
+                      child: InkWell(
+                        onTap: getImage,
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                              color: ColorResources.buttoncolor,
+                              borderRadius: BorderRadius.circular(100)),
+                          child: const Icon(
+                            Icons.mode,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
+              Stack(
                 children: [
-                  Text(
-                    'Pratik Gaur',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Edit',
-                    style: TextStyle(
-                      color: Colors.transparent,
-                      decorationColor: ColorResources.edit,
-                      decorationThickness: 5,
-                      decoration: TextDecoration.underline,
-                      decorationStyle: TextDecorationStyle.solid,
-                      shadows: [
-                        Shadow(
-                          color: ColorResources.edit,
-                          offset: Offset(0, -5),
+                  Positioned(
+                    top: 5,
+                    right: 2,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isEnable = !isEnable;
+                          print(isEnable);
+                        });
+                      },
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(100)),
+                        child: const Icon(
+                          Icons.mode,
                         ),
-                      ],
+                      ),
                     ),
-                  )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    child: TextFormField(
+                      onChanged: (value) {
+                        name = value;
+                      },
+                      textAlign: TextAlign.center,
+                      enabled: isEnable,
+                      initialValue: name,
+                      decoration:
+                          const InputDecoration(border: InputBorder.none),
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              Text('UPSC Aspirant'),
-              Container(
+              const Text('UPSC Aspirant'),
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.80,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('   Mobile'),
+                    Text(Languages.mobile),
+                    Container(
+                      height: 60,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: ColorResources.gray, width: 1.0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '+91 $phoneNumber',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(Languages.emailText),
+                    Container(
+                      height: 60,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: ColorResources.gray, width: 1.0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(email),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text('Address'),
                     TextField(
-                      controller: TextEditingController()
-                        ..text = '+91 99999 99999',
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          hintText: 'Mobile',
-                          suffixText: 'Edit'),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('   Email ID'),
-                    TextField(
-                      controller: TextEditingController()
-                        ..text = 'pratik@xyz.com',
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          hintText: 'Email ID',
-                          suffixText: 'Edit'),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('   Address'),
-                    TextField(
-                      controller: TextEditingController()
-                        ..text = 'XYZ Street, Abc Road Gujarat - 30000',
+                      onChanged: (value) {
+                        address = value;
+                      },
                       maxLines: 3,
                       decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          hintText: 'Email ID',
-                          suffixText: 'Edit'),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: ColorResources.gray, width: 1.0),
+                        ),
+                        hintText: address,
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
+                    const SizedBox(
+                      height: 10,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.80,
@@ -148,13 +205,31 @@ class EditProfileScreen extends StatelessWidget {
                           color: ColorResources.buttoncolor,
                           borderRadius: BorderRadius.circular(14)),
                       child: TextButton(
-                        onPressed: () {
-                          Navigator.popUntil(
-                              context, ModalRoute.withName('login'));
-                          Navigator.of(context).pushNamed('home');
+                        onPressed: () async {
+                          try {
+                            Response response = await authDataSourceImpl
+                                .updateUserDetails(name, address);
+                            if (response.statusCode == 200) {
+                              SharedPreferenceHelper.setString(
+                                Preferences.name,
+                                name,
+                              );
+                              SharedPreferenceHelper.setString(
+                                Preferences.address,
+                                address,
+                              );
+                              flutterToast(response.data['msg']);
+
+                              Navigator.of(context).pop();
+                            } else {
+                              flutterToast(response.data['msg']);
+                            }
+                          } catch (error) {
+                            flutterToast('Server Error');
+                          }
                         },
                         child: Text(
-                          'Save Changes',
+                          Languages.saveChanges,
                           style: TextStyle(
                               color: ColorResources.textWhite,
                               fontWeight: FontWeight.bold,
@@ -167,6 +242,35 @@ class EditProfileScreen extends StatelessWidget {
               )
             ],
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  Future getImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    try {
+      Response response =
+          await authDataSourceImpl.updateUserProfilePhoto(image!);
+      if (response.statusCode == 200) {
+        print(response.data);
+        await SharedPreferenceHelper.setString(
+          Preferences.profileImage,
+          response.data['data']['fileUploadedLocation'],
+        );
+        var Image = SharedPreferenceHelper.getString(Preferences.profileImage)!;
+        print(Image);
+        setState(() {
+          profileImage = response.data['data']['fileUploadedLocation'];
+        });
+        flutterToast(response.data['msg']);
+      } else {
+        flutterToast(response.data['msg']);
+      }
+    } catch (error) {
+      flutterToast('Server Error');
+    }
   }
 }

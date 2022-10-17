@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({Key? key}) : super(key: key);
@@ -17,127 +19,172 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        CustomPaint(
-          painter: MyPainter(),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 300,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: ColorResources.textWhite,
-                    ),
-                  ),
-                ),
-                Image.asset(
-                  SvgImages.logo,
-                  height: 100,
-                ),
-                Text(
-                  'We’re here to Solve',
-                  style: GoogleFonts.poppins(
-                    fontSize: 30,
-                    color: ColorResources.textWhite,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.40,
-            ),
-            Text(
-              'Feel free to message us at',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 30),
-                width: MediaQuery.of(context).size.width * 0.80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border: Border.all(color: ColorResources.gray),
-                  borderRadius: BorderRadius.circular(20),
-                ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Stack(children: [
+            CustomPaint(
+              painter: MyPainter(),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.35,
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.email,
-                      size: 30,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Mail us at',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: ColorResources.textWhite,
+                        ),
                       ),
                     ),
-                    Text(
-                      'upschindi@xyzmail.com',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                      ),
+                    const SizedBox(
+                      height: 30,
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Phone',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                      ),
+                    Image.network(
+                      SvgImages.logo,
+                      height: 50,
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Text(
-                      '+91 9999 999 999',
+                      'We’re here to Solve',
                       style: GoogleFonts.poppins(
-                        fontSize: 20,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Icon(
-                      Icons.whatsapp,
-                      size: 60,
-                    ),
-                    Text('Whatsapp Us!'),
-                    SizedBox(height: 20),
-                    Container(
-                      width: double.infinity * 0.40,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.facebook),
-                          Icon(Icons.tab_sharp),
-                          Icon(Icons.linked_camera_outlined)
-                        ],
+                        fontSize: 30,
+                        color: ColorResources.textWhite,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
               ),
-            )
-          ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.40,
+                ),
+                Text(
+                  'Feel free to message us at',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    width: MediaQuery.of(context).size.width * 0.80,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: ColorResources.gray),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.email,
+                          size: 30,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Mail us at',
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launchUrl(
+                                Uri(
+                                  scheme: 'mailto',
+                                  path: 'upschindi4cse@gmail.com',
+                                  query: 'subject=helpandsupport&body=msg',
+                                ),
+                                mode: LaunchMode.externalApplication);
+                          },
+                          child: Text(
+                            'upschindi4cse@gmail.com',
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          Languages.phoneText,
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launchUrl(Uri.parse("tel:+919519780078"));
+                          },
+                          child: Text(
+                            '+91  951 978 0078',
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                            onTap: () => launchUrl(
+                                Uri.parse('https://wa.me/+91951%209780078'),
+                                mode: LaunchMode.externalApplication),
+                            child: Image.network(SvgImages.whatsapp)),
+                        Text(Languages.whatsApp),
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.infinity * 0.40,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    launchUrl(
+                                        Uri.parse(
+                                            "https://www.facebook.com/UPSCHINDI4CSE"),
+                                        mode: LaunchMode.externalApplication);
+                                  },
+                                  child: Image.network(SvgImages.facebook)),
+                              GestureDetector(
+                                  onTap: () {
+                                    launchUrl(
+                                        Uri.parse(
+                                            "https://twitter.com/upschindi4cse"),
+                                        mode: LaunchMode.externalApplication);
+                                  },
+                                  child: Image.network(SvgImages.twitter)),
+                              GestureDetector(
+                                  onTap: () {
+                                    launchUrl(
+                                        Uri.parse(
+                                            "https://www.instagram.com/upschindi4cse"),
+                                        mode: LaunchMode.externalApplication);
+                                  },
+                                  child: Image.network(SvgImages.linkedin))
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ]),
         ),
-      ]),
+      ),
     );
   }
 }

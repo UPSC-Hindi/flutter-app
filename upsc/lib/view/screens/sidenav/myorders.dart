@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
@@ -10,11 +11,11 @@ class MyOrdersScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         backgroundColor: Colors.white,
         title: Text(
-          'My Orders',
+          Languages.myOrders,
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text('MyOrdersScreen'),
       ),
     );

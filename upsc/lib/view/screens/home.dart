@@ -1,14 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
+import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
-import 'package:upsc/view/bloc/courses/courses_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
 import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
+import 'package:upsc/view/screens/languagescreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,6 +29,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String? _profileimage =
+      SharedPreferenceHelper.getString(Preferences.profileImage) != "N/A"
+          ? SharedPreferenceHelper.getString(Preferences.profileImage)!
+          : SvgImages.avatar;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -27,14 +41,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static final List _widgetOptions = [
-    HomeScreens(),
-    BlocProvider(
-      create: (context) => CoursesBloc(),
-      child: const CourseScreen(),
-    ),
-    mocktestscreen(),
-    ProfilScreen()
+    const HomeScreens(),
+    const CourseScreen(),
+    const mocktestscreen(),
+    const ProfilScreen()
   ];
+
+  String name = "temp";
+
+  @override
+  void initState() {
+    print('Is english');
+    print(Languages.isEnglish);
+    name = SharedPreferenceHelper.getString(Preferences.name)!;
+    // Languages.isEnglish = SharedPreferenceHelper.getBoolean(Preferences.language)
+    Languages.initState();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +66,22 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         backgroundColor: Colors.white,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: IconButton(
+                icon: const ImageIcon(
+                  AssetImage('assets/images/menuIcon.png'),
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              ),
+            );
+          },
+        ),
         actions: [
           IconButton(
               onPressed: (() {
@@ -61,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 20, left: 30),
+              padding: const EdgeInsets.only(top: 10, left: 10),
               height: 100,
               width: double.infinity,
               decoration: BoxDecoration(
@@ -72,15 +111,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.account_circle,
-                    size: 40,
-                    color: Colors.white,
+                  CircleAvatar(
+                    radius: 25.0,
+                    backgroundImage: NetworkImage(_profileimage!),
+                    backgroundColor: Colors.grey,
                   ),
-                  Text(
-                    'Pratik Gaur',
-                    style: GoogleFonts.poppins(
-                        color: ColorResources.textWhite, fontSize: 30),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.clip,
+                      maxLines: 2,
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: ColorResources.textWhite),
+                    ),
                   ),
                 ],
               ),
@@ -88,212 +137,292 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(children: [
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.info),
-                          SizedBox(
+                          const Icon(Icons.info),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'About Us',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.aboutUs,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).popAndPushNamed('downloadScreen'),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).popAndPushNamed('downloadScreen');
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.download_rounded),
-                          SizedBox(
+                          const Icon(Icons.download_rounded),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Your Downloads',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.yourDownloads,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('cartscreen');
                     },
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.shopping_cart),
-                          SizedBox(
+                          const Icon(Icons.shopping_cart),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Cart',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.myCart,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           ),
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('myordersscreen');
                     },
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.list),
-                          SizedBox(
+                          const Icon(Icons.list),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Orders',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.myOrders,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('mycoursesscreen');
                     },
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.menu_book),
-                          SizedBox(
+                          const Icon(Icons.menu_book),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Courses',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.myCourses,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('MySchedule');
                     },
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.event_available_rounded),
-                          SizedBox(
+                          const Icon(Icons.event_available_rounded),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'My Schedule',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.mySchedule,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).popAndPushNamed(
-                            'resourcesscreen'),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).popAndPushNamed('resourcesscreen');
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(CupertinoIcons.layers),
-                          SizedBox(
+                          const Icon(CupertinoIcons.layers),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Resources',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.resources,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  GestureDetector(
-                    onTap: () {
+                  TextButton(
+                    onPressed: () {
                       Navigator.of(context).popAndPushNamed('helpandsupport');
                     },
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
                       child: Row(
                         children: [
-                          Icon(Icons.help_outlined),
-                          SizedBox(
+                          const Icon(Icons.help_outlined),
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Help & Support',
-                            style: GoogleFonts.poppins(fontSize: 20),
+                            Languages.helpAndSupport,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
                           )
                         ],
                       ),
                     ),
                   ),
                   const Divider(),
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                    child: Row(
-                      children: [
-                        Icon(CupertinoIcons.reply),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Share App',
-                          style: GoogleFonts.poppins(fontSize: 20),
-                        )
-                      ],
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Share.share('https://upschindi.in/');
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
+                      child: Row(
+                        children: [
+                          const Icon(CupertinoIcons.reply),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            Languages.shareApp,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Divider(),
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(left: 30, top: 10, bottom: 10),
-                    child: Row(
-                      children: [
-                        Icon(CupertinoIcons.settings),
-                        SizedBox(
-                          width: 10,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LanguageScreen(
+                            isLogin: true,
+                          ),
                         ),
-                        Text(
-                          'Settings',
-                          style: GoogleFonts.poppins(fontSize: 20),
-                        )
-                      ],
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorResources.textblack, // Text Color
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 0, bottom: 0, right: 0),
+                      child: Row(
+                        children: [
+                          const Icon(CupertinoIcons.settings),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            Languages.setting,
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: ColorResources.textblack),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Divider(),
@@ -302,31 +431,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             GestureDetector(
               onTap: () {
-                SharedPreferenceHelper.clearPref();
-                Navigator.of(context).popAndPushNamed('/');
+                callApilogout();
               },
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: 30, top: 10, bottom: 10, right: 30),
+                    left: 30, top: 0, bottom: 10, right: 30),
                 child: Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(30)),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.logout,
                         color: Colors.redAccent,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        'Logout',
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, color: Colors.redAccent),
-                      )
+                      Text('Logout',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: Colors.redAccent,
+                          ))
                     ],
                   ),
                 ),
@@ -341,18 +471,60 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.book), label: 'Courses'),
+              icon: const Icon(Icons.home), label: Languages.home),
           BottomNavigationBarItem(
-              icon: Icon(Icons.book_rounded), label: 'Mock Tests'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+              icon: const Icon(CupertinoIcons.book), label: Languages.courses),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.book_rounded), label: Languages.mockTest),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.person), label: Languages.profile),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: ColorResources.buttoncolor,
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  Future<BaseModel<Logout>> callApilogout() async {
+    Logout response;
+    setState(() {
+      Preferences.onLoading(context);
+    });
+    try {
+      var token = SharedPreferenceHelper.getString(Preferences.access_token);
+      response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
+      if (response.status!) {
+        setState(() {
+          Preferences.hideDialog(context);
+        });
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+        SharedPreferenceHelper.clearPref();
+        Navigator.of(context).popAndPushNamed('/');
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }
