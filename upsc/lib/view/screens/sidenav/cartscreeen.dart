@@ -103,7 +103,7 @@ class _CartScreenState extends State<CartScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  '₹${cartSelectedItem!.amount ?? 0.00}',
+                  '₹${cartSelectedItem!.amount}',
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),

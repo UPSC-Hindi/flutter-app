@@ -21,7 +21,6 @@ import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/contactus.dart';
 import 'package:upsc/view/screens/home.dart';
-import 'package:upsc/view/screens/joinStreaming.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
 import 'package:upsc/view/screens/sidenav/cartscreeen.dart';

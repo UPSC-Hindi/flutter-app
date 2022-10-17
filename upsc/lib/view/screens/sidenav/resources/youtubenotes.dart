@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
+import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 
@@ -29,6 +32,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
           'Youtube Notes',
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
+        elevation: 0,
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
         builder: (context, state) {
@@ -43,7 +47,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget();
+            return _bodyWidget(state.resources.data!);
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -53,254 +57,110 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
     );
   }
 
-  Container _bodyWidget() {
+  Container _bodyWidget(List<ResourcesDataModel> resources) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: _searchtest,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Search Notes",
-              suffixIcon: Icon(
-                Icons.search,
-                size: 30,
-              ), //icon at tail of input
-            ),
-          ),
-        ),
+        SearchBarWidget(searchtest: _searchtest),
         FractionallySizedBox(
           widthFactor: 0.95,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: ColorResources.gray),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.network(SvgImages.pdfimage),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Youtube Class 1 Notes',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    '2.5 MB',
-                                    style: GoogleFonts.lato(
-                                        fontSize: 16,
-                                        color: ColorResources.gray),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.file_download_outlined,
-                            size: 40,
-                            color: ColorResources.buttoncolor,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: ColorResources.gray),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.arrow_circle_right_rounded,
-                                    color: ColorResources.gray),
-                                label: Text(
-                                  "Watch on YouTube",
-                                  style: GoogleFonts.poppins(
-                                      color: ColorResources.textblack),
-                                )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: ColorResources.gray),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.network(SvgImages.pdfimage),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Youtube Class 1 Notes',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    '2.5 MB',
-                                    style: GoogleFonts.lato(
-                                        fontSize: 16,
-                                        color: ColorResources.gray),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.file_download_outlined,
-                            size: 40,
-                            color: ColorResources.buttoncolor,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: ColorResources.gray),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.arrow_circle_right_rounded,
-                                    color: ColorResources.gray),
-                                label: Text(
-                                  "Watch on YouTube",
-                                  style: GoogleFonts.poppins(
-                                      color: ColorResources.textblack),
-                                )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: ColorResources.gray),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.network(SvgImages.pdfimage),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Youtube Class 1 Notes',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    '2.5 MB',
-                                    style: GoogleFonts.lato(
-                                        fontSize: 16,
-                                        color: ColorResources.gray),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.file_download_outlined,
-                            size: 40,
-                            color: ColorResources.buttoncolor,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: ColorResources.gray),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.arrow_circle_right_rounded,
-                                    color: ColorResources.gray),
-                                label: Text(
-                                  "Watch on YouTube",
-                                  style: GoogleFonts.poppins(
-                                      color: ColorResources.textblack),
-                                )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          child: ListView.builder(
+            itemCount: resources.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return _videoResourceWidget(
+                resource: resources[index],
+              );
+            },
           ),
         )
       ]),
     );
+  }
+
+  Container _videoResourceWidget({required ResourcesDataModel resource}) {
+    return Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: ColorResources.borderColor),
+          ),
+          padding: const EdgeInsets.all(10),
+          margin:const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Image.network(SvgImages.pdfimage),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            resource.title!,
+                            style: GoogleFonts.poppins(
+                                fontSize: 15, fontWeight: FontWeight.w500,color: ColorResources.gray),
+                          ),
+                          Text(
+                            '2.5 MB',
+                            style: GoogleFonts.poppins(
+                                fontSize: 10, color: ColorResources.gray),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Text('PDF',style: TextStyle(
+                            fontSize: 15,
+                            color: ColorResources.buttoncolor,
+                            fontWeight: FontWeight.w700
+                        ),),
+                        Icon(
+                          Icons.file_download_outlined,
+                          size: 25,
+                          color: ColorResources.buttoncolor,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorResources.gray),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  width: 135,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Watch on YouTube",
+                        style: GoogleFonts.poppins(
+                          color: ColorResources.textblack,
+                          fontSize: 10,
+                        ),
+                      ),
+                      Icon(Icons.arrow_circle_right_rounded,
+                        color: ColorResources.gray,size: 15,),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
   }
 }

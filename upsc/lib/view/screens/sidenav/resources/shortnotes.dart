@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
+import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 
 class ShortNotesScreen extends StatefulWidget {
   const ShortNotesScreen({Key? key}) : super(key: key);
@@ -16,6 +17,13 @@ class ShortNotesScreen extends StatefulWidget {
 class _ShortNotesScreenState extends State<ShortNotesScreen> {
   TextEditingController _searchtest = TextEditingController();
 
+  @override
+  void initState() {
+    context
+        .read<ApiBloc>()
+        .add(const GetResources(key: 'Category', value: 'Daily News'));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,31 +60,20 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
 
   Container _bodyWidget(List<ResourcesDataModel> resources) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchtest,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Search Notes",
-                suffixIcon: Icon(
-                  Icons.search,
-                  size: 30,
-                ), //icon at tail of input
-              ),
-            ),
-          ),
+
+          SearchBarWidget(searchtest: _searchtest),
+
           FractionallySizedBox(
             widthFactor: 0.90,
-            child: BlocBuilder<ApiBloc, ApiState>(
-              builder: (context, state) {
-                return ListView.builder(
-                  itemCount: resources.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => _resorcesContainerWidget(resources[index]),
+            child: ListView.builder(
+              itemCount: resources.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ResourcesPdfWidget(
+                  resource: resources[index],
                 );
               },
             ),
@@ -86,47 +83,4 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
     );
   }
 
-  Column _resorcesContainerWidget(ResourcesDataModel resource) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.asset(SvgImages.pdfimage),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        resource.title!,
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      ),
-                      Text(
-                        '2.5 MB',
-                        style: GoogleFonts.lato(
-                            fontSize: 16, color: ColorResources.gray),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Icon(
-                Icons.file_download_outlined,
-                size: 40,
-                color: ColorResources.buttoncolor,
-              )
-            ],
-          ),
-        ),
-        Divider(),
-      ],
-    );
-  }
 }

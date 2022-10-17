@@ -10,13 +10,11 @@ import 'package:upsc/features/data/remote/models/video_model.dart';
 
 class RemoteDataSourceImpl extends RemoteDataSource {
   @override
-  Future<VideoModel> getVideo() async {
+  Future<VideoModel> getYouTubeVideo() async {
     try {
       var response = await dioAuthorizationData()
           .get('${Apis.baseUrl}${Apis.getYouTubeVideo}');
-      print("--- Video Response ---");
-      print(response);
-      return VideoModel(status: false, data: null, msg: 'testing');
+     return VideoModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

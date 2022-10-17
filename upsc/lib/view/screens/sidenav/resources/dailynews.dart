@@ -6,6 +6,7 @@ import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc/util/images_file.dart';
@@ -119,10 +120,8 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                     fontWeight: FontWeight.w500,
                     color: ColorResources.textWhite),
               ),
-              Icon(
-                Icons.arrow_drop_down_outlined,
-                color: ColorResources.textWhite)
-              
+              Icon(Icons.arrow_drop_down_outlined,
+                  color: ColorResources.textWhite)
             ],
           ),
         ),
@@ -130,61 +129,18 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
           height: 10,
         ),
         FractionallySizedBox(
-            widthFactor: 0.90,
-            child: ListView.builder(
-                itemCount: resources.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return _dailyNewsResourceWidget(resources[index]);
-                }))
-      ]),
-    );
-  }
-
-  Column _dailyNewsResourceWidget(ResourcesDataModel resource) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.network(SvgImages.pdfimage),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        resource.title!,
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      ),
-                      Text(
-                        '2.5 MB',
-                        style: GoogleFonts.lato(
-                            fontSize: 16, color: ColorResources.gray),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {},
-                child: Icon(
-                  Icons.file_download_outlined,
-                  size: 40,
-                  color: ColorResources.buttoncolor,
-                ),
-              )
-            ],
+          widthFactor: 0.90,
+          child: ListView.builder(
+            itemCount: resources.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return ResourcesPdfWidget(
+                resource: resources[index],
+              );
+            },
           ),
         ),
-        const Divider(),
-      ],
+      ]),
     );
   }
 }
