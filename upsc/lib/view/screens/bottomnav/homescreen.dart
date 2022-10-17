@@ -105,169 +105,177 @@ class HomeScreens extends StatelessWidget {
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      height: 160,
-                      width: 160,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 160,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color: ColorResources.textWhite,
+                          boxShadow: [
                             BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 2.0,
-                            ),
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 10,
+                                blurStyle: BlurStyle.normal)
                           ],
-                          color: const Color(0xffF1F1F1)),
-                      child: Column(
-                        children: [
-                          Container(
-                              height: 100,
-                              child: SvgPicture.network(SvgImages.notepaper)),
-                          Container(
-                            height: 60,
-                            width: 159,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
-                                color: ColorResources.buttoncolor),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  'Prelims',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: ColorResources.textWhite),
-                                ),
-                                Text(
-                                  'Syllabus, Best Strategies and more',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 10,
-                                      color: ColorResources.textWhite),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 100,
+                                child: SvgPicture.network(SvgImages.notepaper)),
+                            Container(
+                              height: 60,
+                              width: 159,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  color: ColorResources.buttoncolor),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Prelims',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        color: ColorResources.textWhite),
+                                  ),
+                                  Text(
+                                    'Syllabus, Best Strategies and more',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: ColorResources.textWhite),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      height: 160,
-                      width: 160,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 160,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color: ColorResources.textWhite,
+                          boxShadow: [
                             BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 2.0,
-                            ),
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 10,
+                                blurStyle: BlurStyle.normal)
                           ],
-                          color: const Color(0xffF1F1F1)),
-                      child: Column(
-                        children: [
-                          Container(
-                              height: 100,
-                              child: Image.network(SvgImages.intrview)),
-                          Container(
-                            height: 60,
-                            width: 160,
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
-                                color: ColorResources.buttoncolor),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Interviews',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: ColorResources.textWhite),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  'Ethics, Personality and Tone',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 10,
-                                      color: ColorResources.textWhite),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 100,
+                                child: Image.network(SvgImages.intrview)),
+                            Container(
+                              height: 60,
+                              width: 160,
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  color: ColorResources.buttoncolor),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Interviews',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        color: ColorResources.textWhite),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Ethics, Personality and Tone',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: ColorResources.textWhite),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      height: 160,
-                      width: 160,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 160,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color: ColorResources.textWhite,
+                          boxShadow: [
                             BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 2.0,
-                            ),
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 10,
+                                blurStyle: BlurStyle.normal)
                           ],
-                          color: const Color(0xffF1F1F1)),
-                      child: Column(
-                        children: [
-                          Container(
-                              height: 100,
-                              child: Image.network(SvgImages.intrview)),
-                          Container(
-                            height: 60,
-                            width: 160,
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
-                                color: ColorResources.buttoncolor),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Interviews',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: ColorResources.textWhite),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  'Ethics, Personality and Tone',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 10,
-                                      color: ColorResources.textWhite),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 100,
+                                child: Image.network(SvgImages.intrview)),
+                            Container(
+                              height: 60,
+                              width: 160,
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  color: ColorResources.buttoncolor),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Interviews',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        color: ColorResources.textWhite),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Ethics, Personality and Tone',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: ColorResources.textWhite),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -301,6 +309,12 @@ class HomeScreens extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.45,
                         decoration: BoxDecoration(
                             color: ColorResources.youtube,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: ColorResources.gray.withOpacity(0.5),
+                                  blurRadius: 5,
+                                  blurStyle: BlurStyle.normal)
+                            ],
                             borderRadius: BorderRadius.circular(20)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -319,6 +333,12 @@ class HomeScreens extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.45,
                       decoration: BoxDecoration(
                           color: ColorResources.telegarm,
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 5,
+                                blurStyle: BlurStyle.normal)
+                          ],
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -346,14 +366,14 @@ class HomeScreens extends StatelessWidget {
                 height: 100,
                 width: MediaQuery.of(context).size.width * 0.90,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF9F9F9),
-                  boxShadow: const [
+                  color: ColorResources.textWhite,
+                  boxShadow: [
                     BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 2.0,
-                    ),
+                        color: ColorResources.gray.withOpacity(0.5),
+                        blurRadius: 5,
+                        blurStyle: BlurStyle.normal)
                   ],
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   children: [
@@ -401,14 +421,14 @@ class HomeScreens extends StatelessWidget {
                   height: 100,
                   width: MediaQuery.of(context).size.width * 0.90,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF9F9F9),
-                    boxShadow: const [
+                    color: ColorResources.textWhite,
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 2.0,
-                      ),
+                          color: ColorResources.gray.withOpacity(0.5),
+                          blurRadius: 5,
+                          blurStyle: BlurStyle.normal)
                     ],
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
