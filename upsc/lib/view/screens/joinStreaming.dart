@@ -75,7 +75,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       },
       onMessageReceived: (message, fromMember) {
         print('*' * 3000);
-        chatmessges.add(fromMember.userId+':'+message.text);
+        chatmessges.add(fromMember.userId + ':' + message.text);
         print(message);
         print(fromMember);
       },
@@ -112,7 +112,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: rtctoken == null
@@ -268,75 +267,87 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                 context: context,
                 builder: (context) {
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.60,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  icon: const Icon(Icons.close),
-                                ),
-                                const Text("Chat"),
-                              ],
-                            ),
-                          ],
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: chatmessges.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Text(chatmessges[index]);
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Row(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
                             children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _message,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(
-                                          color: ColorResources.gray,
-                                          width: 1.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: ColorResources.gray,
-                                          width: 1.0),
-                                    ),
-                                    hintText: 'message',
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    icon: const Icon(Icons.close),
                                   ),
-                                ),
+                                  const Text("Chat"),
+                                ],
                               ),
-                              IconButton(
-                                onPressed: () async {
-                                  await client
-                                      .sessionController.value.agoraRtmChannel!
-                                      .sendMessage(
-                                    AgoraRtmMessage.fromText(_message.text),
-                                  );
-                                  chatmessges.add("you :"+_message.text);
-                                  _message.clear();
-                                },
-                                icon: Icon(
-                                  Icons.send,
-                                  color: ColorResources.buttoncolor,
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.45,
+                                child: SingleChildScrollView(
+                                  reverse: true,
+                                  physics: ScrollPhysics(),
+                                  child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: chatmessges.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Text(chatmessges[index]);
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: _message,
+                                    decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                            color: ColorResources.gray,
+                                            width: 1.0),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: ColorResources.gray,
+                                            width: 1.0),
+                                      ),
+                                      hintText: 'message',
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    await client.sessionController.value
+                                        .agoraRtmChannel!
+                                        .sendMessage(
+                                      AgoraRtmMessage.fromText(_message.text),
+                                    );
+                                    chatmessges.add("you :" + _message.text);
+                                    _message.clear();
+                                  },
+                                  icon: Icon(
+                                    Icons.send,
+                                    color: ColorResources.buttoncolor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 });

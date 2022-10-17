@@ -47,3 +47,9 @@ class ApiResourcesSuccess extends ApiState{
   @override
   List<Object?> get props => [resources];
 }
+class ApiYoutubeVideoSuccess extends ApiState{
+  final List<VideoDataModel> videoList;
+  const ApiYoutubeVideoSuccess({required this.videoList});
+  @override
+  List<Object?> get props => [videoList];
+}

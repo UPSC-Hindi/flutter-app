@@ -22,6 +22,11 @@ class GetCourses extends ApiEvent {
   List<Object?> get props => [];
 }
 
+class GetYouTubeVideo extends ApiEvent{
+  @override
+  List<Object?> get props => [];
+}
+
 class GetResources extends ApiEvent {
   final String key;
   final String value;

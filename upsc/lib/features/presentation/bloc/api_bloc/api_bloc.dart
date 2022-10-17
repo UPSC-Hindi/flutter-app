@@ -5,6 +5,7 @@ import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/data/remote/models/video_model.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -71,6 +72,20 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       }catch(error){
         emit(ApiError());
       }
+    });
+    on<GetYouTubeVideo>((event, emit) async{
+      try{
+        VideoModel videoData = await remoteDataSourceImpl.getYouTubeVideo();
+        if(videoData.status){
+          emit(ApiYoutubeVideoSuccess(videoList: videoData.data!));
+        }else{
+          emit(ApiError());
+        }
+
+      }catch(error){
+        emit(ApiError());
+      }
+
     });
   }
 }

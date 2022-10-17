@@ -6,10 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
-import 'package:upsc/view/bloc/video/video_bloc.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:upsc/features/data/remote/models/video_model.dart';
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({Key? key}) : super(key: key);
@@ -297,10 +297,7 @@ class HomeScreens extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => VideoBloc(),
-                            child: NcertScreen(),
-                          ),
+                          builder: (context) => NcertScreen(),
                         ),
                       );
                     },
