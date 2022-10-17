@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
+import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 
-import '../../../../features/presentation/bloc/api_bloc/api_bloc.dart';
 
 class SampleNotesScreen extends StatefulWidget {
   const SampleNotesScreen({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 
   @override
   void initState() {
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Daily News'));
+    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Sample Notes'));
     super.initState();
   }
 
@@ -31,8 +33,10 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
+        elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Sample Notes',
@@ -52,7 +56,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget();
+            return _bodyWidget(state.resources.data!);
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -62,143 +66,24 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
     );
   }
 
-  Container _bodyWidget() {
+  Container _bodyWidget(List<ResourcesDataModel> resources) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchtest,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Search Notes",
-                suffixIcon: Icon(
-                  Icons.search,
-                  size: 30,
-                ), //icon at tail of input
-              ),
-            ),
-          ),
+
+          SearchBarWidget(searchtest: _searchtest),
+
           FractionallySizedBox(
             widthFactor: 0.90,
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.network(SvgImages.pdfimage),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sample Notes 1',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                '2.5 MB',
-                                style: GoogleFonts.lato(
-                                    fontSize: 16, color: ColorResources.gray),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.file_download_outlined,
-                        size: 40,
-                        color: ColorResources.buttoncolor,
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(),
-                Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.network(SvgImages.pdfimage),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sample Notes 1',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                '2.5 MB',
-                                style: GoogleFonts.lato(
-                                    fontSize: 16, color: ColorResources.gray),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.file_download_outlined,
-                        size: 40,
-                        color: ColorResources.buttoncolor,
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(),
-                Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.network(SvgImages.pdfimage),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sample Notes 1',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                '2.5 MB',
-                                style: GoogleFonts.lato(
-                                    fontSize: 16, color: ColorResources.gray),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.file_download_outlined,
-                        size: 40,
-                        color: ColorResources.buttoncolor,
-                      )
-                    ],
-                  ),
-                ),
-              ],
+            child: ListView.builder(
+              itemCount: resources.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ResourcesPdfWidget(
+                  resource: resources[index],
+                );
+              },
             ),
           ),
         ],

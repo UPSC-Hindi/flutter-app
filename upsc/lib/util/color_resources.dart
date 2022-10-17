@@ -5,6 +5,7 @@ class ColorResources {
   static Color textWhite = const Color(0xFFFFFFFF);
   static Color textblack = const Color(0xFF6b6b6b);
   static Color gray = Colors.grey;
+    static Color borderColor = Colors.grey.shade300;
 
   static Color youtube = const Color(0xFFFFE6E6);
   static Color telegarm = const Color(0xFFBBE3FF);

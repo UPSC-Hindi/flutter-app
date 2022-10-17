@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:upsc/features/data/remote/models/video_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/youtube_player_widget.dart';
-import 'package:upsc/models/vidoe_model.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/view/bloc/video/video_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class NcertScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class NcertScreen extends StatefulWidget {
 class _NcertScreenState extends State<NcertScreen> {
   @override
   void initState() {
-    context.read<VideoBloc>().add(GetYoutubeVideo());
+    context.read<ApiBloc>().add(GetYouTubeVideo());
     super.initState();
   }
 
@@ -33,27 +32,27 @@ class _NcertScreenState extends State<NcertScreen> {
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
       ),
-      body: BlocBuilder<VideoBloc, VideoState>(
+      body: BlocBuilder<ApiBloc, ApiState>(
         builder: (context, state) {
-          if (state is VideoLoadingState) {
+          if (state is ApiError) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Text('Something Went Wrong'),
             );
           }
-          if (state is YoutubeVideoSuccess) {
-            return state.videoData.isEmpty
+          if (state is ApiYoutubeVideoSuccess) {
+            return state.videoList.isEmpty
                 ? const Center(child: Text('There is No Video'))
-                : _bodyWidget(state.videoData);
+                : _bodyWidget(state.videoList);
           }
           return const Center(
-            child: Text('Something Went Wrong'),
+            child: CircularProgressIndicator(),
           );
         },
       ),
     );
   }
 
-  SingleChildScrollView _bodyWidget(List<VideoModel> videData) {
+  SingleChildScrollView _bodyWidget(List<VideoDataModel> videData) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +76,7 @@ class _NcertScreenState extends State<NcertScreen> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return YouTubeContainerWidget(
-                    videoUrl: videData[0].videoUrl,
+                    videoUrl: videData[index].videoUrl,
                   );
                 }),
           )
