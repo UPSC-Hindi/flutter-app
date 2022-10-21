@@ -43,12 +43,12 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
             );
           }
           if (state is ApiResourcesSuccess) {
-            if (state.resources.data!.isEmpty) {
+            if (state.resources.data.isEmpty) {
               return const Center(
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget(state.resources.data!);
+            return _bodyWidget(state.resources.data);
           }
           return const Center(
             child: CircularProgressIndicator(),
