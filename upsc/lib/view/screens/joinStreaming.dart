@@ -75,7 +75,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       },
       onMessageReceived: (message, fromMember) {
         print('*' * 3000);
-        chatmessges.add(fromMember.userId + ':' + message.text);
+        //chatmessges.add(fromMember.userId + ':' + message.text);
+        chatmessges.add(message.text);
         print(message);
         print(fromMember);
       },
@@ -333,7 +334,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     await client.sessionController.value
                                         .agoraRtmChannel!
                                         .sendMessage(
-                                      AgoraRtmMessage.fromText(_message.text),
+                                      AgoraRtmMessage.fromText(name!+_message.text),
                                     );
                                     chatmessges.add("you :" + _message.text);
                                     _message.clear();
