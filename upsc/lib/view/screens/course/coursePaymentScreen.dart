@@ -14,7 +14,7 @@ import 'package:upsc/view/screens/course/paymentScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-const String razorPayId = 'rzp_test_tpxvFQzYjwZ7aY';
+const String razorPayId = 'rzp_test_lbnw3QoGv6Gsed';
 
 class CoursePaymentScreen extends StatefulWidget {
   const CoursePaymentScreen({Key? key, required this.course}) : super(key: key);
