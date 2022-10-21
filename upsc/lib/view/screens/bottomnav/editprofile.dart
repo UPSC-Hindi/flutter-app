@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -119,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: TextFormField(
                       onChanged: (value) {

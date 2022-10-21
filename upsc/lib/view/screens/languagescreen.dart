@@ -37,7 +37,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
                     child: const Text(
                       'Choose your preferred Medium',
@@ -63,7 +63,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
                     child: const Text(
                       'Select your stream',

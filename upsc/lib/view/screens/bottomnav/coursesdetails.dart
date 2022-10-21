@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +7,6 @@ import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -87,7 +85,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                       childAspectRatio: 20 / 4,
                       shrinkWrap: true,
                       children: [
-                        Row(children: [
+                        Row(children: const [
                           Icon(
                             Icons.play_circle_fill_outlined,
                           ),
@@ -98,16 +96,16 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             SvgImages.exampen,
                             height: 20,
                           ),
-                          Text('  25 Tests')
+                          const Text('  25 Tests')
                         ]),
-                        Row(children: [
+                        Row(children: const [
                           Icon(
                             Icons.sensors_outlined,
                           ),
                           Text(' Live Access')
                         ]),
                         Row(children: [
-                          Icon(
+                          const Icon(
                             Icons.book,
                           ),
                           Text('${widget.course.student.length} Readings')
@@ -117,8 +115,8 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(5),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             color: const Color(0xFfD9D9D9),
                             borderRadius: BorderRadius.circular(90)),
@@ -138,14 +136,14 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                         shrinkWrap: true,
                         children: [
                           Row(children: [
-                            Icon(
+                            const Icon(
                               Icons.access_time_rounded,
                             ),
                             Text(
                                 '  ${course.endingDate.difference(course.startingDate).inDays} Days')
                           ]),
                           Row(children: [
-                            Icon(
+                            const Icon(
                               Icons.calendar_month_rounded,
                             ),
                             Text(' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate)}')
@@ -154,8 +152,8 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.all(10),
-                        padding: EdgeInsets.all(5),
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             color: const Color(0xFfD9D9D9),
                             borderRadius: BorderRadius.circular(90)),
@@ -193,7 +191,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                         margin: const EdgeInsets.all(10),
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             color: const Color(0xFfD9D9D9),
                             borderRadius: BorderRadius.circular(90)),
@@ -204,7 +202,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                       ),
                     ),
                     SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
@@ -215,7 +213,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                               color: ColorResources.gray,
                               child: Column(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.account_circle_rounded,
                                     size: 80,
                                   ),
@@ -235,14 +233,14 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               height: 60,
               child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
                           '₹${course.charges}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         ElevatedButton(

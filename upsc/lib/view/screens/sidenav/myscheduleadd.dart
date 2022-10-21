@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:upsc/features/data/remote/data_sources/auth/auth_data_source_impl.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/domain/reused_function.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
@@ -10,7 +9,6 @@ import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
-import 'package:upsc/util/preference.dart';
 
 class MyScheduleAdd extends StatefulWidget {
   const MyScheduleAdd({Key? key}) : super(key: key);

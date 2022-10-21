@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -9,7 +8,6 @@ import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:upsc/features/data/remote/models/video_model.dart';
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({Key? key}) : super(key: key);
@@ -44,7 +42,7 @@ class HomeScreens extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20, color: ColorResources.textblack),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                       'Revising and updating on current affairs will help you save your time',
                       style: GoogleFonts.lato(
@@ -62,7 +60,7 @@ class HomeScreens extends StatelessWidget {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => DailyNewsScreen(),
+                            builder: (context) => const DailyNewsScreen(),
                           ),
                         );
                       },
@@ -71,16 +69,16 @@ class HomeScreens extends StatelessWidget {
                         children: [
                           Text('Start Now',
                               style: GoogleFonts.poppins()), // <-- Text
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               color: ColorResources.gray.withOpacity(0.3),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_forward_ios,
                               size: 15,
                             ),
@@ -93,7 +91,7 @@ class HomeScreens extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Text(
                 Languages.learnAbout,
                 style: GoogleFonts.poppins(
@@ -279,7 +277,7 @@ class HomeScreens extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
+              padding: const EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
                 Languages.ncertBatches,
                 style: GoogleFonts.poppins(
@@ -297,7 +295,7 @@ class HomeScreens extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => NcertScreen(),
+                          builder: (context) => const NcertScreen(),
                         ),
                       );
                     },
@@ -349,7 +347,7 @@ class HomeScreens extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, top: 20, bottom: 5),
+              padding: const EdgeInsets.only(left: 20, top: 20, bottom: 5),
               child: Text(
                 Languages.latestNews,
                 style: GoogleFonts.poppins(

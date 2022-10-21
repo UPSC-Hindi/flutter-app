@@ -140,7 +140,7 @@ class _MyScheduleState extends State<MySchedule> {
 
   Container schedularContainerWidget({required BuildContext context,required MySchedulerDataModel schedulerData}) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: ColorResources.borderColor),
@@ -151,7 +151,7 @@ class _MyScheduleState extends State<MySchedule> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.60,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +195,7 @@ class _MyScheduleState extends State<MySchedule> {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0))),
-          content: Container(
+          content: SizedBox(
             height: 300,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -234,7 +234,7 @@ class _MyScheduleState extends State<MySchedule> {
                     ),
                   ]),
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
