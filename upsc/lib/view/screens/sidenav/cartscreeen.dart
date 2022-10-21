@@ -194,7 +194,7 @@ class _CartScreenState extends State<CartScreen> {
                   SizedBox(
                     width: 140,
                     child: Text(
-                      cartData.batchDetails['batch_name'],
+                      cartData.batchDetails.batchName,
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,

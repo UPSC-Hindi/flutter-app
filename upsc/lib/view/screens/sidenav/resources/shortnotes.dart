@@ -72,7 +72,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
               itemCount: resources.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ResourcesPdfWidget(
+                return ResourcesContainerWidget(
                   resource: resources[index],
                 );
               },
