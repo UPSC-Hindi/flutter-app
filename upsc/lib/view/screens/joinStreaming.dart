@@ -296,11 +296,20 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                   child: ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    padding
+                                    padding: EdgeInsets.all(5),
                                     itemCount: chatmessges.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return Text(chatmessges[index]);
+                                      return Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: ColorResources.gray
+                                              .withOpacity(0.5),
+                                        ),
+                                        child: Text(chatmessges[index]),
+                                      );
                                     },
                                   ),
                                 ),
@@ -335,7 +344,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     await client.sessionController.value
                                         .agoraRtmChannel!
                                         .sendMessage(
-                                      AgoraRtmMessage.fromText(name!+_message.text),
+                                      AgoraRtmMessage.fromText(
+                                          name! + _message.text),
                                     );
                                     chatmessges.add("you :" + _message.text);
                                     _message.clear();
