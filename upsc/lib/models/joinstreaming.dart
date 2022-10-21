@@ -14,11 +14,11 @@ class JoinStreaming {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['RtcToken'] = this.rtcToken;
-    data['RtmToke'] = this.rtmToke;
-    data['msg'] = this.msg;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    data['RtcToken'] = rtcToken;
+    data['RtmToke'] = rtmToke;
+    data['msg'] = msg;
     return data;
   }
 }

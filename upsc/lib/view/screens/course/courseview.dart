@@ -82,7 +82,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                             color: Colors.grey.shade300,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -93,7 +93,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   fontSize: 24,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
@@ -103,7 +103,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                 textAlign: TextAlign.justify,
                               ),
                               Container(
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     color: const Color(0xFfD9D9D9),
                                     borderRadius: BorderRadius.circular(90)),
@@ -112,19 +112,19 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   style: GoogleFonts.poppins(fontSize: 16),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.access_time_rounded,
                                   ),
                                   Text(
                                       '  ${widget.endDate.difference(widget.startDate).inDays} Days'),
-                                  Expanded(child: SizedBox()),
+                                  const Expanded(child: SizedBox()),
                                   Row(children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.calendar_month_rounded,
                                     ),
                                     Text(
@@ -187,7 +187,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                     ),
                   ),
                 ),
-                CoursesVideoWidget(),
+                const CoursesVideoWidget(),
                 Container(),
               ]),
             ),
@@ -199,7 +199,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
 
   Container _infoCardWidget(BuildContext context, LectureDetail lecture) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.grey.shade300,
@@ -212,11 +212,11 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 '9:00 AM to 12:00 PM',
                 style: TextStyle(fontSize: 15),
               ),
-              Text('Date- 08/10/2022 '),
+              const Text('Date- 08/10/2022 '),
             ],
           ),
           trailing: ElevatedButton(
@@ -225,7 +225,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                side: BorderSide(
+                side: const BorderSide(
                   width: 1.0,
                   color: Colors.white,
                 )),
@@ -238,10 +238,10 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Start Now', style: GoogleFonts.poppins()), // <-- Text
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                 ),
               ],
@@ -330,7 +330,7 @@ class CoursesVideoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -349,7 +349,7 @@ class CoursesVideoWidget extends StatelessWidget {
                     color: ColorResources.gray),
                 child: Icon(Icons.play_circle, color: ColorResources.textWhite),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Column(
@@ -369,7 +369,7 @@ class CoursesVideoWidget extends StatelessWidget {
               ),
             ],
           ),
-          Divider(),
+          const Divider(),
         ]),
       ),
     );

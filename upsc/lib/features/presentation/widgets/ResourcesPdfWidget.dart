@@ -31,7 +31,7 @@ class ResourcesContainerWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    resource.title!,
+                    resource.title,
                     style: GoogleFonts.poppins(
                         fontSize: 15, fontWeight: FontWeight.w500,color: ColorResources.gray),
                   ),

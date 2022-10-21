@@ -1,5 +1,4 @@
 
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:upsc/util/color_resources.dart';
 

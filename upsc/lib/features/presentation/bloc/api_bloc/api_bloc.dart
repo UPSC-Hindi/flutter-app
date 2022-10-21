@@ -79,7 +79,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       try{
         VideoModel videoData = await remoteDataSourceImpl.getYouTubeVideo();
         if(videoData.status){
-          emit(ApiYoutubeVideoSuccess(videoList: videoData.data!));
+          emit(ApiYoutubeVideoSuccess(videoList: videoData.data));
         }else{
           loginRoute();
         }

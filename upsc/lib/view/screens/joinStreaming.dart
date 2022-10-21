@@ -119,7 +119,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
               ? const Center(child: CircularProgressIndicator())
               : Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.30,
                       child: Stack(
                         children: [
@@ -131,7 +131,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                               bottom: 0,
                               left: 5,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 2, horizontal: 5),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
@@ -171,18 +171,18 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.lecture.lectureTitle,
-                                style: TextStyle(fontSize: 30)),
+                                style: const TextStyle(fontSize: 30)),
                             Text(widget.lecture.description),
                             Text('By ' + widget.lecture.teacher.first),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
-                            Align(
+                            const Align(
                                 alignment: Alignment.center,
                                 child: Text('Documents Shared with you')),
                             SizedBox(
@@ -192,7 +192,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -209,7 +209,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                         Row(
                                           children: [
                                             Image.network(SvgImages.pdfimage),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 20,
                                             ),
                                             Column(
@@ -292,16 +292,16 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     MediaQuery.of(context).size.height * 0.45,
                                 child: SingleChildScrollView(
                                   reverse: true,
-                                  physics: ScrollPhysics(),
+                                  physics: const ScrollPhysics(),
                                   child: ListView.builder(
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    padding: EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(5),
                                     itemCount: chatmessges.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Container(
-                                        padding: EdgeInsets.all(5),
+                                        padding: const EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),

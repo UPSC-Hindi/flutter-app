@@ -13,11 +13,11 @@ class Login {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['msg'] = this.msg;
+    data['msg'] = msg;
     return data;
   }
 }
@@ -64,17 +64,17 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['RefreshTokenAuth'] = this.refreshTokenAuth;
-    data['accessToken'] = this.accessToken;
-    data['language'] = this.language;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['phoneNumber'] = this.phoneNumber;
-    data['userID'] = this.userID;
-    data['FullName'] = this.fullName;
-    data['profilePhoto'] = this.profilePhoto;
-    data['Address'] = this.address;
-    data['mobileVerified'] = this.mobileVerified;
+    data['RefreshTokenAuth'] = refreshTokenAuth;
+    data['accessToken'] = accessToken;
+    data['language'] = language;
+    data['username'] = username;
+    data['email'] = email;
+    data['phoneNumber'] = phoneNumber;
+    data['userID'] = userID;
+    data['FullName'] = fullName;
+    data['profilePhoto'] = profilePhoto;
+    data['Address'] = address;
+    data['mobileVerified'] = mobileVerified;
     return data;
   }
 }

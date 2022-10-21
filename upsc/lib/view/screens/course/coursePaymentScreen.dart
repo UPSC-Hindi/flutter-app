@@ -172,7 +172,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -218,13 +218,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             Center(
@@ -269,7 +269,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PaymentScreen(),
+            builder: (context) => const PaymentScreen(),
           ),
         );
       } else {

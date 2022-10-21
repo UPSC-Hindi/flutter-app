@@ -14,7 +14,7 @@ class NotificationScreen extends StatelessWidget {
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text('NotificationScreen'),
       ),
     );

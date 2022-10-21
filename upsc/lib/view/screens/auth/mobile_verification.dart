@@ -6,11 +6,9 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/auth/login_model.dart';
 import 'package:upsc/models/auth/postUserMobileNumber.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
-import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/auth/otpverification.dart';
@@ -23,7 +21,7 @@ class MobileVerification extends StatefulWidget {
 }
 
 class _MobileVerificationState extends State<MobileVerification> {
-  TextEditingController _numberController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

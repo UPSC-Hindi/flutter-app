@@ -1,7 +1,7 @@
 class ResetPassword {
   bool? status;
   String? msg;
-  Null? data;
+  Null data;
 
   ResetPassword({this.status, this.msg, this.data});
 
