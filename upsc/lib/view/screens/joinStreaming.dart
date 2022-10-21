@@ -296,6 +296,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                   child: ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
+                                    padding
                                     itemCount: chatmessges.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {

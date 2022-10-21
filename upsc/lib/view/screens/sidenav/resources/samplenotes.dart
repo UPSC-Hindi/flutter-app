@@ -80,7 +80,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
               itemCount: resources.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ResourcesPdfWidget(
+                return ResourcesContainerWidget(
                   resource: resources[index],
                 );
               },

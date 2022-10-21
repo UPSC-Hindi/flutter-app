@@ -35,3 +35,9 @@ class GetResources extends ApiEvent {
   @override
   List<Object?> get props => [key,value];
 }
+
+class GetMyScheduler extends ApiEvent{
+  @override
+  List<Object?> get props => [];
+
+}

@@ -134,7 +134,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             itemCount: resources.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return ResourcesPdfWidget(
+              return ResourcesContainerWidget(
                 resource: resources[index],
               );
             },

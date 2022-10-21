@@ -53,3 +53,12 @@ class ApiYoutubeVideoSuccess extends ApiState{
   @override
   List<Object?> get props => [videoList];
 }
+
+class ApiGetSchedulerSuccess extends ApiState{
+  final List<MySchedulerDataModel> schedulerList;
+
+  const ApiGetSchedulerSuccess({required this.schedulerList});
+  @override
+  List<Object?> get props => [];
+
+}

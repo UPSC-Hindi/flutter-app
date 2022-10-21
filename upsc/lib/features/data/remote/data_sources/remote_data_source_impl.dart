@@ -5,8 +5,11 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
+import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 
 class RemoteDataSourceImpl extends RemoteDataSource {
   @override
@@ -14,7 +17,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     try {
       var response = await dioAuthorizationData()
           .get('${Apis.baseUrl}${Apis.getYouTubeVideo}');
-     return VideoModel.fromJson(response.data);
+      return VideoModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -53,7 +56,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
         queryParameters: queryParameters,
       );
-      print(response);
       return CoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -97,6 +99,53 @@ class RemoteDataSourceImpl extends RemoteDataSource {
           .delete('${Apis.baseUrl}${Apis.removefromCart}$id');
       return response;
     } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> addSchedule(String task, String date) async {
+    try {
+      Response response = await dioAuthorizationData().post(
+          '${Apis.baseUrl}${Apis.addSchedulardetails}',
+          data: {'task': task, 'notify_at': date});
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MySchedulerModel> getSchedule() async {
+    try {
+      var response = await dioAuthorizationData().get(
+        '${Apis.baseUrl}${Apis.getScheduleDetails}',
+      );
+      return MySchedulerModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> savePaymentStatus(PaymentModel paymentData) async {
+    try {
+      Response response = await dioAuthorizationData().post(
+        '${Apis.baseUrl}${Apis.savePaymentStatus}',
+        data: paymentData.toJson(),
+      );
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> getOrderId(String batchId) async{
+    try{
+      return  '12345';
+    }catch(error){
+      flutterToast(error.toString());
       rethrow;
     }
   }

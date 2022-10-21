@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUp> {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     setState(() {
       deviceName = androidInfo.brand;
-      deviceConfig = androidInfo.androidId;
+      deviceConfig = androidInfo.id;
       print('Running on ${androidInfo.type}');
     });
   }
