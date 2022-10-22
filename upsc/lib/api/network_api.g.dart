@@ -205,6 +205,46 @@ class _RestClient implements RestClient {
   }
 
   @override
+  streaminguserdetailsRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<StreamingUserDetails>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.streamingUserDetails,
+                    queryParameters: queryParameters)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = StreamingUserDetails.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  deleteuserdetailsfromstreamRequest(body) async {
+    // try {
+    //   var response = await dioAuthorizationData()
+    //       .delete('${Apis.baseUrl}${Apis.deleteUserDetailsFromStream}$body');
+    //   print(response);
+    //   final value = DeleteUserDetailsFromStream.fromJson(response.data!);
+    //   return value;
+    // } catch (error) {
+    //   rethrow;
+    // }
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DeleteUserDetailsFromStream>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.deleteUserDetailsFromStream,
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DeleteUserDetailsFromStream.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   addtocartRequest(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

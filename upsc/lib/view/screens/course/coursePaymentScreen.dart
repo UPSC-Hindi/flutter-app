@@ -14,7 +14,7 @@ import 'package:upsc/view/screens/course/paymentScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-const String razorPayId = 'rzp_test_lbnw3QoGv6Gsed';
+const String razorPayId = 'rzp_test_tpxvFQzYjwZ7aY';
 
 class CoursePaymentScreen extends StatefulWidget {
   const CoursePaymentScreen({Key? key, required this.course}) : super(key: key);
@@ -51,11 +51,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   void openCheckout() async {
     var options = {
       'key': razorPayId,
-      'amount': 100,
-      'order_id': 9112916534,
-      'name': "Add Description",
-      'description': widget.course.batchDetails.description,
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'amount': (100*int.parse(widget.course.amount)).toString(),
+      'name': widget.course.batchDetails.batchName,
+      'description': "upschindi",
+      'prefill': {'contact': mobileNumber, 'email': userEmail},
       "notify": {"sms": true, "email": true},
       'timeout': 180,
       "currency": "INR",
@@ -75,18 +74,18 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     print(response.paymentId);
     print(response.orderId);
     print(response.signature);
-    Fluttertoast.showToast(msg: "SUCCESS: ");
+    Fluttertoast.showToast(msg: "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
     _savePaymentStatus(PaymentModel(
-        orderId: response.orderId!.toString(),
-        userpaymentOrderId: response.orderId!.toString(),
+        orderId: '',
+        userpaymentOrderId: '',
         paymentId: response.paymentId!.toString(),
         description: "",
         mobileNumber: mobileNumber!,
         userName: userName!,
         userEmail: userEmail!,
-        Signature: response.signature!.toString(),
+        Signature: "",
         batchId: widget.course.batchDetails.id,
-        price: '',
+        price: widget.course.amount,
         success: true));
   }
 
@@ -172,7 +171,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -218,13 +217,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
             ),
-            const SizedBox(
+            SizedBox(
               height: 60,
             ),
             Center(
@@ -269,7 +268,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PaymentScreen(),
+            builder: (context) => PaymentScreen(),
           ),
         );
       } else {

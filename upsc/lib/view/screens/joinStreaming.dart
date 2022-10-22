@@ -1,9 +1,16 @@
 import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/models/DeleteUserDetailsFromStream.dart';
+import 'package:upsc/models/StreamingUserDetails.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -39,12 +46,15 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   int? Participants;
   List<String> chatmessges = [];
 
+  List<Data>? userdetails;
+
   @override
   void initState() {
     channel = widget.lecture.lectureTitle;
     rtctoken = widget.rtctoken;
     rtmtoken = widget.rtmtoken;
     initAgora();
+    callApigetuserdetails();
     super.initState();
   }
 
@@ -70,13 +80,19 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         Participants = count;
         print(count);
       },
+      onMemberLeft: (member) {
+        callApigetuserdetails();
+      },
       onMemberJoined: (AgoraRtmMember) async {
+        callApigetuserdetails();
         print(AgoraRtmMember.toString());
       },
       onMessageReceived: (message, fromMember) {
         print('*' * 3000);
         //chatmessges.add(fromMember.userId + ':' + message.text);
+
         chatmessges.add(message.text);
+
         print(message);
         print(fromMember);
       },
@@ -91,6 +107,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
   @override
   void dispose() {
+    print('8' * 3000);
+    callApideleteuserdetailsfromstream(widget.uid);
     endthesession(sessionController: client.sessionController);
     super.dispose();
   }
@@ -155,6 +173,14 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             top: 5,
                             left: -25,
                             child: AgoraVideoButtons(
+                              onDisconnect: () async {
+                                //await callApideleteuserdetailsfromstream(
+                                //    widget.uid);
+                                // endthesession(
+                                //     sessionController:
+                                //         client.sessionController);
+                                Navigator.of(context).pop();
+                              },
                               verticalButtonPadding: 0.0,
                               client: client,
                               disconnectButtonChild: Container(
@@ -294,21 +320,31 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                   reverse: true,
                                   physics: const ScrollPhysics(),
                                   child: ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     padding: const EdgeInsets.all(5),
                                     itemCount: chatmessges.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Container(
+                                        margin: const EdgeInsets.all(5),
                                         padding: const EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           color: ColorResources.gray
-                                              .withOpacity(0.5),
+                                              .withOpacity(0.2),
                                         ),
-                                        child: Text(chatmessges[index]),
+                                        child: Row(
+                                          children: [
+                                            // Icon(Icons.person),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(chatmessges[index]),
+                                          ],
+                                        ),
                                       );
                                     },
                                   ),
@@ -325,7 +361,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     controller: _message,
                                     decoration: InputDecoration(
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(30),
                                         borderSide: BorderSide(
                                             color: ColorResources.gray,
                                             width: 1.0),
@@ -345,9 +381,9 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                         .agoraRtmChannel!
                                         .sendMessage(
                                       AgoraRtmMessage.fromText(
-                                          name! + _message.text),
+                                          "${name!} : ${_message.text}"),
                                     );
-                                    chatmessges.add("you :" + _message.text);
+                                    chatmessges.add("you :${_message.text}");
                                     _message.clear();
                                   },
                                   icon: Icon(
@@ -371,21 +407,44 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                   return SingleChildScrollView(
                     reverse: true,
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.80,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              IconButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  icon: const Icon(Icons.close)),
-                              Text("Participants ${Participants.toString()}"),
-                            ],
-                          ),
-                          const Center(
-                            child: Text('Participants'),
-                          ),
-                        ],
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    icon: const Icon(Icons.close)),
+                                Text("Participants ${Participants.toString()}"),
+                              ],
+                            ),
+                            GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: userdetails!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 4.0,
+                              ),
+                              shrinkWrap: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  child: Column(children: [
+                                    CircleAvatar(
+                                      radius: 40.0,
+                                      backgroundImage: NetworkImage(
+                                          userdetails![index].profilePicture!),
+                                      backgroundColor: Colors.grey,
+                                    ),
+                                    Text(userdetails![index].studentName!)
+                                  ]),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -394,5 +453,72 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         },
       ),
     );
+  }
+
+  Future<BaseModel<StreamingUserDetails>> callApigetuserdetails() async {
+    StreamingUserDetails response;
+
+    try {
+      var token = SharedPreferenceHelper.getString(Preferences.access_token);
+      response = await RestClient(RetroApi().dioData(token!))
+          .streaminguserdetailsRequest();
+
+      if (response.status!) {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+        userdetails = response.data;
+      } else {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
+
+  Future<BaseModel<DeleteUserDetailsFromStream>>
+      callApideleteuserdetailsfromstream(uid) async {
+    DeleteUserDetailsFromStream response;
+    Map<String, dynamic> body = {"id": uid};
+    try {
+      var token = SharedPreferenceHelper.getString(Preferences.access_token);
+      response = await RestClient(RetroApi().dioData(token!))
+          .deleteuserdetailsfromstreamRequest(body);
+
+      if (response.status!) {
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+        print('hello' * 5000);
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }

@@ -21,7 +21,12 @@ class Apis {
 
   static const String getCoursesFilter = "adminPanel/getBatchesDetails";
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
+
   static const String joinmeeting = "Streaming/JoinMeetingRTCAndRTMToken";
+  static const String deleteUserDetailsFromStream="Streaming/deleteUserDetailsFromStream/";
+  static const String streamingUserDetails="Streaming/StreamingUserDetails";
+  
+  
   static const String getResources = "adminPanel/ResourceDetails";
 
   static const String putUserStream = 'authentication/updateUserStream';
