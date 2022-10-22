@@ -77,7 +77,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
     ),
     agoraRtmChannelEventHandler: AgoraRtmChannelEventHandler(
       onMemberCountUpdated: (count) {
-        Participants = count;
+        Participants = count - 1;
         print(count);
       },
       onMemberLeft: (member) {
@@ -90,8 +90,9 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       onMessageReceived: (message, fromMember) {
         print('*' * 3000);
         //chatmessges.add(fromMember.userId + ':' + message.text);
-
-        chatmessges.add(message.text);
+        if (message.text.contains('{')) {
+          chatmessges.add(message.text);
+        }
 
         print(message);
         print(fromMember);
@@ -339,10 +340,13 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                         child: Row(
                                           children: [
                                             // Icon(Icons.person),
-                                            SizedBox(
-                                              width: 5,
+                                            // SizedBox(
+                                            //   width: 5,
+                                            // ),
+                                            Text(
+                                              chatmessges[index],
+                                              overflow: TextOverflow.clip,
                                             ),
-                                            Text(chatmessges[index]),
                                           ],
                                         ),
                                       );
