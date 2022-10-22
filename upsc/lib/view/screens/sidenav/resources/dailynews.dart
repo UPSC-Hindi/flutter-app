@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
-import 'package:upsc/util/images_file.dart';
 
 class DailyNewsScreen extends StatefulWidget {
   const DailyNewsScreen({Key? key}) : super(key: key);
@@ -52,14 +48,14 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             );
           }
           if (state is ApiResourcesSuccess) {
-            if (state.resources.data!.isEmpty) {
+            if (state.resources.data.isEmpty) {
               return const Center(
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget(context, state.resources.data!);
+            return _bodyWidget(context, state.resources.data);
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         },
@@ -72,7 +68,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
     return Container(
       width: double.infinity,
       child: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
@@ -83,7 +79,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 color: ColorResources.textblack,
                 fontWeight: FontWeight.w500,
                 fontSize: 20)),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         ElevatedButton(
@@ -125,7 +121,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         FractionallySizedBox(
@@ -134,7 +130,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             itemCount: resources.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return ResourcesPdfWidget(
+              return ResourcesContainerWidget(
                 resource: resources[index],
               );
             },

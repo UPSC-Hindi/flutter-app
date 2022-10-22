@@ -51,12 +51,12 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
             );
           }
           if (state is ApiResourcesSuccess) {
-            if (state.resources.data!.isEmpty) {
+            if (state.resources.data.isEmpty) {
               return const Center(
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget(state.resources.data!);
+            return _bodyWidget(state.resources.data);
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -80,7 +80,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
               itemCount: resources.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ResourcesPdfWidget(
+                return ResourcesContainerWidget(
                   resource: resources[index],
                 );
               },

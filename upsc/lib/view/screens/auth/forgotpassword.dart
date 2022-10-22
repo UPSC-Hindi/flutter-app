@@ -34,9 +34,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.arrow_back_ios)),
+                  icon: const Icon(Icons.arrow_back_ios)),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Align(
@@ -46,7 +46,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 style: GoogleFonts.poppins(fontSize: 30),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Center(
@@ -57,25 +57,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   children: [
                     TextField(
                       controller: _numberController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Mobile No.', border: OutlineInputBorder()),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       'Or',
                       style: GoogleFonts.lato(),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextField(
                       controller: _emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Email ID', border: OutlineInputBorder()),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     ElevatedButton(
@@ -83,6 +83,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         callApiforgotpassword();
                         //Navigator.of(context).pushNamed('passwordotp');
                       },
+                      style: ElevatedButton.styleFrom(
+                        primary: ColorResources.buttoncolor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 40),
@@ -90,12 +96,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           'Send OTP',
                           style: GoogleFonts.poppins(
                               fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: ColorResources.buttoncolor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                     )

@@ -4,8 +4,10 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.d
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
+import 'package:upsc/features/domain/reused_function.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -21,7 +23,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
         if (response.status) {
           emit(ApiCartDetailsSuccess(cartData: response.data));
         } else {
-          emit(ApiError());
+          loginRoute();
         }
       } catch (error) {
         print("Server Error");
@@ -35,7 +37,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
         if (response.status) {
           emit(ApiMyCoursesSuccess(myCourses: response.data));
         } else {
-          emit(ApiError());
+          loginRoute();
         }
       } catch (error) {
         print(error);
@@ -47,11 +49,11 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       emit(ApiLoading());
       try {
         CoursesModel response =
-            await remoteDataSourceImpl.getCourses(event.key,event.value);
+        await remoteDataSourceImpl.getCourses(event.key,event.value);
         if (response.status) {
           emit(ApiCoursesSuccess(courseList: response.data));
         } else {
-          emit(ApiError());
+          loginRoute();
         }
       } catch (error) {
         emit(ApiError());
@@ -67,7 +69,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
           emit(ApiResourcesSuccess(resources: response));
         }
         else{
-          emit(ApiError());
+          loginRoute();
         }
       }catch(error){
         emit(ApiError());
@@ -77,15 +79,26 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       try{
         VideoModel videoData = await remoteDataSourceImpl.getYouTubeVideo();
         if(videoData.status){
-          emit(ApiYoutubeVideoSuccess(videoList: videoData.data!));
+          emit(ApiYoutubeVideoSuccess(videoList: videoData.data));
         }else{
-          emit(ApiError());
+          loginRoute();
         }
 
       }catch(error){
         emit(ApiError());
       }
-
+    });
+    on<GetMyScheduler>((event, emit) async{
+      try{
+        MySchedulerModel schedulerData = await remoteDataSourceImpl.getSchedule();
+        if(schedulerData.status){
+          emit(ApiGetSchedulerSuccess(schedulerList: schedulerData.data));
+        }else{
+          loginRoute();
+        }
+      }catch(error){
+        emit(ApiError());
+      }
     });
   }
 }

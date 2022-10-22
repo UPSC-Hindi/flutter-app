@@ -1,21 +1,21 @@
-class ResetPassword {
+class DeleteUserDetailsFromStream {
   bool? status;
-  String? msg;
   Null data;
+  String? msg;
 
-  ResetPassword({this.status, this.msg, this.data});
+  DeleteUserDetailsFromStream({this.status, this.data, this.msg});
 
-  ResetPassword.fromJson(Map<String, dynamic> json) {
+  DeleteUserDetailsFromStream.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    msg = json['msg'];
     data = json['data'];
+    msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
-    data['msg'] = msg;
     data['data'] = this.data;
+    data['msg'] = msg;
     return data;
   }
 }

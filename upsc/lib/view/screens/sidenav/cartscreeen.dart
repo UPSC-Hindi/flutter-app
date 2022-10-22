@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
@@ -194,7 +193,7 @@ class _CartScreenState extends State<CartScreen> {
                   SizedBox(
                     width: 140,
                     child: Text(
-                      cartData.batchDetails['batch_name'],
+                      cartData.batchDetails.batchName,
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,

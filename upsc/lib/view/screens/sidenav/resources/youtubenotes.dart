@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
-import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -42,12 +41,12 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
             );
           }
           if (state is ApiResourcesSuccess) {
-            if (state.resources.data!.isEmpty) {
+            if (state.resources.data.isEmpty) {
               return const Center(
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget(state.resources.data!);
+            return _bodyWidget(state.resources.data);
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -102,7 +101,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            resource.title!,
+                            resource.title,
                             style: GoogleFonts.poppins(
                                 fontSize: 15, fontWeight: FontWeight.w500,color: ColorResources.gray),
                           ),
@@ -141,7 +140,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                     border: Border.all(color: ColorResources.gray),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 5),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
                   width: 135,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,7 +1,7 @@
 class PasswordVerifyOtp {
   bool? status;
   String? msg;
-  Null? data;
+  Null data;
 
   PasswordVerifyOtp({this.status, this.msg, this.data});
 

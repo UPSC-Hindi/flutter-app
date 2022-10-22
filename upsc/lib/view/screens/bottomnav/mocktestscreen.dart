@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 
 class mocktestscreen extends StatefulWidget {
   const mocktestscreen({Key? key}) : super(key: key);
@@ -99,7 +97,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             ),
             Container(
               height: 400,
-              child: Center(child: Text("Update will come soon......")),
+              child: const Center(child: Text("Update will come soon......")),
             )
             // Padding(
             //   padding: EdgeInsets.symmetric(horizontal: 20),

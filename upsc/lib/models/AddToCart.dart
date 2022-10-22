@@ -10,14 +10,14 @@ class AddToCart {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -35,10 +35,10 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     cartDetails = json['cartDetails'] != null
-        ? new CartDetails.fromJson(json['cartDetails'])
+        ? CartDetails.fromJson(json['cartDetails'])
         : null;
     batchDetails = json['batchDetails'] != null
-        ? new BatchDetails.fromJson(json['batchDetails'])
+        ? BatchDetails.fromJson(json['batchDetails'])
         : null;
   }
 
@@ -80,7 +80,7 @@ class CartDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['created_at'] = createdAt;
     data['user'] = user;
     data['batch_id'] = batchId;
@@ -165,7 +165,7 @@ class BatchDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
     data['user'] = user;
     data['batch_name'] = batchName;

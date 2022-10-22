@@ -36,6 +36,7 @@ import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() {
   //Orientations
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,8 @@ class MyApp extends StatelessWidget {
         ),
         //home: const Splash(),
         initialRoute: '/',
+        navigatorKey: navigatorKey,
+
         routes: {
           '/': (context) => const Splash(),
           'home': (context) => const HomeScreen(),

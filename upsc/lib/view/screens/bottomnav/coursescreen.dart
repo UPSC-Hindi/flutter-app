@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
-import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';

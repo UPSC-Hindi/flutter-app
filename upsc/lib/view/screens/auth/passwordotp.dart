@@ -51,7 +51,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
     height: 60,
     textStyle: const TextStyle(
       fontSize: 22,
-      color: const Color.fromRGBO(30, 60, 87, 1),
+      color: Color.fromRGBO(30, 60, 87, 1),
     ),
     decoration: BoxDecoration(
       color: fillColor,

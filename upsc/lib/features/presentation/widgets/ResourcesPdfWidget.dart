@@ -5,8 +5,8 @@ import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 
-class ResourcesPdfWidget extends StatelessWidget {
-  const ResourcesPdfWidget({Key? key, required this.resource}) : super(key: key);
+class ResourcesContainerWidget extends StatelessWidget {
+  const ResourcesContainerWidget({Key? key, required this.resource}) : super(key: key);
   final ResourcesDataModel resource;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ResourcesPdfWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    resource.title!,
+                    resource.title,
                     style: GoogleFonts.poppins(
                         fontSize: 15, fontWeight: FontWeight.w500,color: ColorResources.gray),
                   ),
@@ -48,13 +48,13 @@ class ResourcesPdfWidget extends StatelessWidget {
             onTap: () {},
             child: Column(
               children: [
-                Text('PDF',style: TextStyle(
+                Text(resource.resourceType =='file'?'PDF':'Link',style: TextStyle(
                     fontSize: 15,
                     color: ColorResources.buttoncolor,
                     fontWeight: FontWeight.w700
                 ),),
                 Icon(
-                  Icons.file_download_outlined,
+                  resource.resourceType =='file'?Icons.file_download_outlined:Icons.link,
                   size: 25,
                   color: ColorResources.buttoncolor,
                 ),

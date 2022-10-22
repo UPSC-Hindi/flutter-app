@@ -21,7 +21,12 @@ class Apis {
 
   static const String getCoursesFilter = "adminPanel/getBatchesDetails";
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
+
   static const String joinmeeting = "Streaming/JoinMeetingRTCAndRTMToken";
+  static const String deleteUserDetailsFromStream="Streaming/deleteUserDetailsFromStream/";
+  static const String streamingUserDetails="Streaming/StreamingUserDetails";
+  
+  
   static const String getResources = "adminPanel/ResourceDetails";
 
   static const String putUserStream = 'authentication/updateUserStream';
@@ -34,4 +39,12 @@ class Apis {
   static const String removefromCart = "adminPanel/deleteCartDetails/";
 
   static const String agora = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
+  
+  //Payment
+  static const String savePaymentStatus = 'UPSCPayment/verifyUserPayment';
+  static const String getOrderId = 'UPSCPayment/OrderIdGeneration';
+  
+  //schedulear
+  static const String addSchedulardetails = 'adminPanel/addSchedulardetails';
+  static const String getScheduleDetails = 'adminPanel/getScheduleDetails';
 }

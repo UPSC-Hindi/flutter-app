@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -119,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: TextFormField(
                       onChanged: (value) {
@@ -207,6 +206,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: TextButton(
                         onPressed: () async {
                           try {
+                            Preferences.onLoading(context);
                             Response response = await authDataSourceImpl
                                 .updateUserDetails(name, address);
                             if (response.statusCode == 200) {
@@ -219,12 +219,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 address,
                               );
                               flutterToast(response.data['msg']);
-
+                              Preferences.hideDialog(context);
                               Navigator.of(context).pop();
                             } else {
+                              Preferences.hideDialog(context);
                               flutterToast(response.data['msg']);
                             }
                           } catch (error) {
+                            Preferences.hideDialog(context);
                             flutterToast('Server Error');
                           }
                         },
@@ -255,13 +257,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       Response response =
           await authDataSourceImpl.updateUserProfilePhoto(image!);
       if (response.statusCode == 200) {
-        print(response.data);
         await SharedPreferenceHelper.setString(
           Preferences.profileImage,
           response.data['data']['fileUploadedLocation'],
         );
         var Image = SharedPreferenceHelper.getString(Preferences.profileImage)!;
-        print(Image);
         setState(() {
           profileImage = response.data['data']['fileUploadedLocation'];
         });
