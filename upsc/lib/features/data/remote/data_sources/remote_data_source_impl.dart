@@ -121,6 +121,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.getScheduleDetails}',
       );
+      print(response.data);
       return MySchedulerModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -141,10 +142,10 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<String> getOrderId(String batchId) async{
-    try{
-      return  '12345';
-    }catch(error){
+  Future<String> getOrderId(String batchId) async {
+    try {
+      return '12345';
+    } catch (error) {
       flutterToast(error.toString());
       rethrow;
     }

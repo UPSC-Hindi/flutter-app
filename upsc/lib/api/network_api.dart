@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:upsc/api/api.dart';
+import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/models/AddToCart.dart';
+import 'package:upsc/models/DeleteUserDetailsFromStream.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/RemovefromCart.dart';
+import 'package:upsc/models/StreamingUserDetails.dart';
 import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/models/auth/postUserMobileNumber.dart';
 import 'package:upsc/models/joinstreaming.dart';
@@ -45,18 +48,24 @@ abstract class RestClient {
 
   @POST(Apis.resetpassword)
   Future<ResetPassword> resetpasswordRequest(@Body() body);
-  
+
   @POST(Apis.logout)
   Future<Logout> logoutRequest();
-  
+
   @POST(Apis.googleSignIn)
   Future<GoogleSignIn> googleSigninRequest(@Body() body);
-  
+
   @POST(Apis.postUserMobileNumber)
   Future<postUserMobileNumber> postUserMobileNumberRequest(@Body() body);
 
   @POST(Apis.joinmeeting)
   Future<JoinStreaming> joinmeetingRequest(@Body() body);
+
+  @GET(Apis.streamingUserDetails)
+  Future<StreamingUserDetails> streaminguserdetailsRequest();
+
+  @DELETE(Apis.deleteUserDetailsFromStream)
+  Future<DeleteUserDetailsFromStream> deleteuserdetailsfromstreamRequest(@Body() body);
 
   @POST(Apis.joinmeeting)
   Future<AddToCart> addtocartRequest(@Body() body);

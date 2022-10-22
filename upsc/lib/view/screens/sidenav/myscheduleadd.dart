@@ -313,7 +313,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                   shape: const StadiumBorder()),
               onPressed: (){
                 if(task.isNotEmpty &&_selectedhour != null && _selectedmin != null){
-                  _addSchedular(task,_selectedhour+"/"+_selectedmin+"/"+_selectedAMPM);
+                  _addSchedular(task,_selectedhour+":"+_selectedmin+" "+_selectedAMPM);
                 }
                 else{
                   flutterToast('Select All the fields');
