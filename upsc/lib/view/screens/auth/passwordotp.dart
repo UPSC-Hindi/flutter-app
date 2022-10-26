@@ -88,7 +88,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                 },
                 child: Text(
                   ' $otpdatafor  Change',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
               const SizedBox(
@@ -116,7 +116,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Container(
@@ -138,13 +138,13 @@ class _PasswordOtpState extends State<PasswordOtp> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Did not recieve the code?'),
+                  const Text('Did not recieve the code?'),
                   TextButton(
                     onPressed: () {
                       callApipasswordotpresend();

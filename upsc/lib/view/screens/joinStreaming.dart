@@ -90,7 +90,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       onMessageReceived: (message, fromMember) {
         print('*' * 3000);
         //chatmessges.add(fromMember.userId + ':' + message.text);
-        if (message.text.contains('{')) {
+        if (message.text.contains('{') ) {
+        }else{
           chatmessges.add(message.text);
         }
 
@@ -205,7 +206,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             Text(widget.lecture.lectureTitle,
                                 style: const TextStyle(fontSize: 30)),
                             Text(widget.lecture.description),
-                            Text('By ' + widget.lecture.teacher.first),
+                            Text('By ${widget.lecture.teacher.first}'),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
@@ -421,7 +422,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
                                     icon: const Icon(Icons.close)),
-                                Text("Participants ${Participants.toString()}"),
+                                Text("Participants ${userdetails!.length.toString()}"),
                               ],
                             ),
                             GridView.builder(
@@ -466,25 +467,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .streaminguserdetailsRequest();
-
-      if (response.status!) {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-        userdetails = response.data;
-      } else {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
@@ -500,25 +482,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .deleteuserdetailsfromstreamRequest(body);
-
-      if (response.status!) {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      } else {
-        print('hello' * 5000);
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/scheduler_remote_data_source_impl.dart';
 import 'package:upsc/features/domain/reused_function.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -313,7 +313,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                   shape: const StadiumBorder()),
               onPressed: (){
                 if(task.isNotEmpty &&_selectedhour != null && _selectedmin != null){
-                  _addSchedular(task,_selectedhour+":"+_selectedmin+" "+_selectedAMPM);
+                  _addSchedular(task,_selectedhour+"/"+_selectedmin+"/"+_selectedAMPM);
                 }
                 else{
                   flutterToast('Select All the fields');
@@ -328,15 +328,16 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
   }
 
   void _addSchedular(String task,String time) async{
-    final remoteDataSourceImpl = RemoteDataSourceImpl();
+    final schedulerRemoteDataSourceImpl = SchedulerRemoteDataSourceImpl();
     try {
       Preferences.onLoading(context);
       Response response =
-          await remoteDataSourceImpl.addSchedule(task, time);
+          await schedulerRemoteDataSourceImpl.addSchedule(task, time);
       if (response.statusCode == 200) {
         Preferences.hideDialog(context);
         if(response.data['status']){
           Navigator.pop(context);
+          Navigator.popAndPushNamed(context, 'MySchedule');
           flutterToast(response.data['msg']);
         }else{
           loginRoute();

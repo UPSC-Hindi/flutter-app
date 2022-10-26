@@ -44,7 +44,9 @@ class Apis {
   static const String savePaymentStatus = 'UPSCPayment/verifyUserPayment';
   static const String getOrderId = 'UPSCPayment/OrderIdGeneration';
   
-  //schedulear
+  //Scheduler
   static const String addSchedulardetails = 'adminPanel/addSchedulardetails';
   static const String getScheduleDetails = 'adminPanel/getScheduleDetails';
+  static const String deleteScheduler = 'adminPanel/deleteSchedularDetails/';
+  static const String updateScheduler = 'adminPanel/updateSchedulardetails/';
 }
