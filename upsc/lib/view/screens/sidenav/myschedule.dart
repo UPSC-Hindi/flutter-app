@@ -20,6 +20,7 @@ class MySchedule extends StatefulWidget {
 
 class _MyScheduleState extends State<MySchedule> {
   String? datetoshow;
+  final _dateController = TextEditingController();
 
   @override
   void initState() {
@@ -204,6 +205,92 @@ class _MyScheduleState extends State<MySchedule> {
   }
 
   Future<void> updatetask(MySchedulerDataModel scheduler) async {
+    var hours = [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12"
+    ];
+    var min = [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49",
+      "50",
+      "51",
+      "52",
+      "53",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "60"
+    ];
+    var AMPM = [
+      "AM",
+      "PM",
+    ];
+    var _selectedhour;
+
+    var _selectedmin;
+
+    var _selectedAMPM = 'AM';
     String task = "";
     String date = "";
     return showDialog(
@@ -212,68 +299,144 @@ class _MyScheduleState extends State<MySchedule> {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(32.0))),
-          content: Container(
-            height: 300,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Schdeule details', style: GoogleFonts.poppins()),
-                TextField(
-                  onChanged: (value){
-                    task = value.toString();
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          BorderSide(color: ColorResources.gray, width: 1.0),
+          content: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              height: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Schdeule details', style: GoogleFonts.poppins()),
+                  TextField(
+                    onChanged: (value) {
+                      task = value.toString();
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            BorderSide(color: ColorResources.gray, width: 1.0),
+                      ),
+                      hintText: 'Task',
                     ),
-                    hintText: 'Task',
                   ),
-                ),
-                TextField(
-                  onChanged: (value){
-                    date = value;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          BorderSide(color: ColorResources.gray, width: 1.0),
+                  TextField(
+                    controller: _dateController,
+                    onChanged: (value) {
+                      date = value;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            BorderSide(color: ColorResources.gray, width: 1.0),
+                      ),
+                      hintText: 'Date',
                     ),
-                    hintText: 'Date',
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: ColorResources.gray)),
-                  padding: const EdgeInsets.all(10),
-                  child: Row(children: [
-                    const Text('Notify at'),
-                    Row(
-                      children: const [],
-                    ),
-                  ]),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: ColorResources.buttoncolor,
-                          shape: const StadiumBorder()),
-                      onPressed: () {
-                        String notifyAt = "";
-                        if(task.isNotEmpty||date.isNotEmpty){
-                          _updateTask(scheduler.id,task,date,notifyAt);
+                    onTap: () async {
+                      await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2015),
+                        lastDate: DateTime(2025),
+                      ).then((selectedDate) {
+                        if (selectedDate != null) {
+                          date = DateFormat('dd-MM-yyyy').format(selectedDate);
+                          setState(() {
+                          _dateController.text =  DateFormat('dd-MM-yyyy').format(selectedDate);
+                          });
                         }
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Update')),
-                ),
-              ],
-            ),
-          ),
+                      });
+                    },
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: ColorResources.gray)),
+                    padding: const EdgeInsets.all(10),
+                    child: Row(children: [
+                      const Text('Notify at'),
+                      Row(
+                        children: [
+                          DropdownButton(
+                            hint: const Text('HH'),
+                            value: _selectedhour,
+                            items: hours.map((String hours) {
+                              return DropdownMenuItem(
+                                value: hours,
+                                child: Text(hours),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedhour = newValue;
+                                print(newValue);
+                              });
+                            },
+                          ),
+                          Text(
+                            ':   ',
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold),
+                          ),
+                          DropdownButton(
+                            hint: const Text("MM"),
+                            value: _selectedmin,
+                            items: min.map((String hours) {
+                              return DropdownMenuItem(
+                                value: hours,
+                                child: Text(hours),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedmin = newValue;
+                                print(newValue);
+                              });
+                            },
+                          ),
+                          DropdownButton(
+                            hint: const Text("AM"),
+                            value: _selectedAMPM,
+                            items: AMPM.map((String hours) {
+                              return DropdownMenuItem(
+                                value: hours,
+                                child: Text(hours),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedAMPM = newValue.toString();
+                              });
+                            },
+                          ),
+                        ],
+                      )
+                    ]),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: ColorResources.buttoncolor,
+                            shape: const StadiumBorder()),
+                        onPressed: () {
+                          String notifyAt = _selectedhour +
+                              ":" +
+                              _selectedmin +
+                              " " +
+                              _selectedAMPM;
+                          if (task.isNotEmpty || date.isNotEmpty) {
+                            _updateTask(scheduler.id, task, date, notifyAt);
+                          }
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Update')),
+                  ),
+                ],
+              ),
+            );
+          }),
         );
       },
     );
@@ -292,12 +455,14 @@ class _MyScheduleState extends State<MySchedule> {
     Preferences.hideDialog(context);
   }
 
-  void _updateTask(String id,String task,String date,String notifyAt) async{
+  void _updateTask(String id, String task, String date, String notifyAt) async {
     Preferences.onLoading(context);
-    SchedulerRemoteDataSourceImpl schedulerRemoteDataSourceImpl = SchedulerRemoteDataSourceImpl();
-    Response response = await schedulerRemoteDataSourceImpl.updateScheduler(id,task,notifyAt,isActive: true);
+    SchedulerRemoteDataSourceImpl schedulerRemoteDataSourceImpl =
+        SchedulerRemoteDataSourceImpl();
+    Response response = await schedulerRemoteDataSourceImpl
+        .updateScheduler(id, task, notifyAt, isActive: true);
     flutterToast(response.data["msg"]);
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       context.read<ApiBloc>().add(GetMyScheduler());
     }
     Preferences.hideDialog(context);

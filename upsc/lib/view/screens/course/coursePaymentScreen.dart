@@ -37,11 +37,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     getUserInfo();
   }
-  void getUserInfo(){
+
+  void getUserInfo() {
     mobileNumber = SharedPreferenceHelper.getString(Preferences.phoneNUmber)!;
     userName = SharedPreferenceHelper.getString(Preferences.name)!;
     userEmail = SharedPreferenceHelper.getString(Preferences.email)!;
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -51,7 +53,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   void openCheckout() async {
     var options = {
       'key': razorPayId,
-      'amount': (100*int.parse(widget.course.amount)).toString(),
+      'amount': (100 * int.parse(widget.course.amount)).toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
       'prefill': {'contact': mobileNumber, 'email': userEmail},
@@ -74,16 +76,18 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     print(response.paymentId);
     print(response.orderId);
     print(response.signature);
-    Fluttertoast.showToast(msg: "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
+    Fluttertoast.showToast(
+        msg:
+            "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
     _savePaymentStatus(PaymentModel(
         orderId: '',
-        userpaymentOrderId: '',
+        userpaymentOrderId: response.orderId!,
         paymentId: response.paymentId!.toString(),
-        description: "",
+        description: "upschindi",
         mobileNumber: mobileNumber!,
         userName: userName!,
         userEmail: userEmail!,
-        Signature: "",
+        Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
         price: widget.course.amount,
         success: true));
@@ -102,7 +106,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: '',
         batchId: widget.course.batchDetails.id,
-        price: '',
+        price: widget.course.amount,
         success: false));
   }
 
