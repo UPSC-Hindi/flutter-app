@@ -44,7 +44,7 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
-      //Languages.isEnglish = (SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true) ?? true;
+      //Languages.isEnglish = SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true;
       await Languages.initState();
       runApp(const MyApp());
     },
