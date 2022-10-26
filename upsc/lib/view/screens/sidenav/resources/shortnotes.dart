@@ -15,7 +15,7 @@ class ShortNotesScreen extends StatefulWidget {
 }
 
 class _ShortNotesScreenState extends State<ShortNotesScreen> {
-  TextEditingController _searchtest = TextEditingController();
+  final TextEditingController _searchtest = TextEditingController();
 
   @override
   void initState() {

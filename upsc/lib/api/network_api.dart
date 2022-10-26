@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:upsc/api/api.dart';
-import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/models/DeleteUserDetailsFromStream.dart';
 import 'package:upsc/models/GoogleSignIn.dart';

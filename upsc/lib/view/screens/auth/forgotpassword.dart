@@ -18,8 +18,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _numberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
