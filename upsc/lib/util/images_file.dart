@@ -41,13 +41,13 @@ class SvgImages {
   static String youtube =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/YouTube+logo.png';
   static String facebook =
-      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/fb.png';
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/icons/fb_icon.png';
   static String twitter =
-      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/twiter.png';
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/icons/twitter_icon.png';
   static String whatsapp =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/whatsapp.png';
   static String linkedin =
-      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/linkedin.png';
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/icons/insta_icon.png';
 
   static String backgroung =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/Rectangle+61.png';
