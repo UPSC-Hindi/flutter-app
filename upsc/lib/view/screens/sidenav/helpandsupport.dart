@@ -65,7 +65,7 @@ class HelpAndSupport extends StatelessWidget {
                       ));
                     },
                     child: Text(
-                      'upschindi4cse@gmail.com',
+                      'info@upschindi.online',
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                       ),
