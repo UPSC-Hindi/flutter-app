@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:upsc/api/api.dart';
 import 'package:upsc/features/data/const_data.dart';
@@ -19,10 +20,14 @@ class SchedulerRemoteDataSourceImpl implements SchedulerRemoteDataSource {
 
   @override
   Future<MySchedulerModel> getSchedule() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    final queryParameters = <String, dynamic>{"deviceId": androidInfo.id};
     try {
       var response = await dioAuthorizationData().get(
-        '${Apis.baseUrl}${Apis.getScheduleDetails}',
-      );
+          '${Apis.baseUrl}${Apis.getScheduleDetails}',
+          queryParameters: queryParameters);
+          
       return MySchedulerModel.fromJson(response.data);
     } catch (e) {
       rethrow;

@@ -18,7 +18,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
   final TextEditingController _searchtest = TextEditingController();
   @override
   void initState() {
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Daily News'));
+    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'YouTube Notes'));
     super.initState();
   }
   @override

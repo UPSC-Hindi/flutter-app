@@ -76,6 +76,7 @@ class _MyScheduleState extends State<MySchedule> {
 
   Widget _bodyWidget(
       BuildContext context, List<MySchedulerDataModel> schedulerList) {
+    //flutterToast("loggedIn:${schedulerList[0].loggedIn}");
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -343,7 +344,8 @@ class _MyScheduleState extends State<MySchedule> {
                         if (selectedDate != null) {
                           date = DateFormat('dd-MM-yyyy').format(selectedDate);
                           setState(() {
-                          _dateController.text =  DateFormat('dd-MM-yyyy').format(selectedDate);
+                            _dateController.text =
+                                DateFormat('dd-MM-yyyy').format(selectedDate);
                           });
                         }
                       });

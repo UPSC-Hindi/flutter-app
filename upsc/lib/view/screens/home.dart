@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   CircleAvatar(
                     radius: 25.0,
-                    backgroundImage: NetworkImage(_profileimage!),
+                    backgroundImage: CachedNetworkImageProvider(_profileimage!),
                     backgroundColor: Colors.grey,
                   ),
                   SizedBox(
@@ -509,6 +510,9 @@ class _HomeScreenState extends State<HomeScreen> {
         SharedPreferenceHelper.clearPref();
         Navigator.of(context).popAndPushNamed('/');
       } else {
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,

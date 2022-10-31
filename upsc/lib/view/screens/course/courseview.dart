@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -154,8 +155,14 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                         horizontal: 5.0),
                                     child: Column(
                                       children: [
-                                        Image.network(
-                                          'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png',
+                                        CachedNetworkImage(
+                                          imageUrl:
+                                              'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png',
+                                          placeholder: (context, url) => Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
                                           height: 70,
                                         ),
                                         SizedBox(
@@ -202,7 +209,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color:  Colors.grey.shade300,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
