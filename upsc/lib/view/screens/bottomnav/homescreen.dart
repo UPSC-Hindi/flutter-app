@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -180,8 +181,16 @@ class HomeScreens extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                                height: 100,
-                                child: Image.network(SvgImages.intrview)),
+                              height: 100,
+                              child: CachedNetworkImage(
+                                key: UniqueKey(),
+                                imageUrl: SvgImages.intrview,
+                                placeholder: (context, url) =>
+                                    Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ),
+                            ),
                             Container(
                               height: 60,
                               width: 160,
@@ -235,8 +244,16 @@ class HomeScreens extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                                height: 100,
-                                child: Image.network(SvgImages.intrview)),
+                              height: 100,
+                              child: CachedNetworkImage(
+                                key: UniqueKey(),
+                                imageUrl: SvgImages.intrview,
+                                placeholder: (context, url) =>
+                                    Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ),
+                            ),
                             Container(
                               height: 60,
                               width: 160,
@@ -314,7 +331,13 @@ class HomeScreens extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Image.network(SvgImages.youtube),
+                            CachedNetworkImage(
+                              imageUrl: SvgImages.youtube,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                           ],
                         )),
                   ),
@@ -338,7 +361,13 @@ class HomeScreens extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Image.network(SvgImages.telegram),
+                          CachedNetworkImage(
+                            imageUrl: SvgImages.telegram,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                         ],
                       ),
                     ),
@@ -374,7 +403,12 @@ class HomeScreens extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.network(SvgImages.youtube),
+                      child: CachedNetworkImage(
+                        imageUrl: SvgImages.youtube,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     ),
                     const SizedBox(
                       width: 10,

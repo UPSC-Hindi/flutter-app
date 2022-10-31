@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
@@ -40,7 +41,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(SvgImages.backgroung),
+              image: CachedNetworkImageProvider(SvgImages.backgroung),
               fit: BoxFit.values[0],
               repeat: ImageRepeat.noRepeat,
             ),
@@ -55,7 +56,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       padding: EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 40.0,
-                        backgroundImage: NetworkImage(_profileimage!),
+                        backgroundImage: CachedNetworkImageProvider(_profileimage!),
                         backgroundColor: Colors.grey,
                       ),
                     ),

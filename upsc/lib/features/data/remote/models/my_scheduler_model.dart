@@ -25,6 +25,7 @@ class MySchedulerModel {
 
 class MySchedulerDataModel {
   MySchedulerDataModel({
+    //this.loggedIn,//
     required this.id,
     required this.user,
     required this.createdAt,
@@ -40,6 +41,7 @@ class MySchedulerDataModel {
   final String task;
   final String notifyAt;
   final bool isActive;
+  //final bool loggedIn;//
   final int v;
 
   factory MySchedulerDataModel.fromJson(Map<String, dynamic> json) => MySchedulerDataModel(
@@ -49,6 +51,7 @@ class MySchedulerDataModel {
     task: json["task"],
     notifyAt: json["notify_at"],
     isActive: json["is_active"],
+    //loggedIn: json["loggedIn"],//
     v: json["__v"],
   );
 
@@ -59,6 +62,7 @@ class MySchedulerDataModel {
     "task": task,
     "notify_at": notifyAt,
     "is_active": isActive,
+    //"loggedIn":loggedIn,//
     "__v": v,
   };
 }
