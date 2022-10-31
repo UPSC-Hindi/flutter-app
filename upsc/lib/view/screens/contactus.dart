@@ -111,7 +111,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 mode: LaunchMode.externalApplication);
                           },
                           child: Text(
-                            'upschindi4cse@gmail.com',
+                            'info@upschindi.online',
                             style: GoogleFonts.poppins(
                               fontSize: 20,
                             ),
