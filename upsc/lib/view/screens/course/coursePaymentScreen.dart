@@ -2,10 +2,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/base_model.dart';
+import 'package:upsc/api/network_api.dart';
+import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/orderIdgeneration.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -14,7 +19,7 @@ import 'package:upsc/view/screens/course/paymentScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-const String razorPayId = 'rzp_test_tpxvFQzYjwZ7aY';
+const String razorPayId = 'rzp_test_CWt1qviQEvI8wW';
 
 class CoursePaymentScreen extends StatefulWidget {
   const CoursePaymentScreen({Key? key, required this.course}) : super(key: key);
@@ -37,21 +42,26 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     getUserInfo();
   }
-  void getUserInfo(){
+
+  void getUserInfo() {
     mobileNumber = SharedPreferenceHelper.getString(Preferences.phoneNUmber)!;
     userName = SharedPreferenceHelper.getString(Preferences.name)!;
     userEmail = SharedPreferenceHelper.getString(Preferences.email)!;
   }
+
   @override
   void dispose() {
     super.dispose();
     _razorpay.clear();
   }
 
-  void openCheckout() async {
+  void openCheckout(id) async {
+    print('*' * 2000);
+    print(id.toString());
     var options = {
       'key': razorPayId,
-      'amount': (100*int.parse(widget.course.amount)).toString(),
+      "order_id": id,
+      'amount': (100 * int.parse(widget.course.amount)).toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
       'prefill': {'contact': mobileNumber, 'email': userEmail},
@@ -71,27 +81,31 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print("-----Payment Success-----");
     print(response.paymentId);
     print(response.orderId);
     print(response.signature);
-    Fluttertoast.showToast(msg: "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
+    Fluttertoast.showToast(
+        msg:
+            "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
     _savePaymentStatus(PaymentModel(
         orderId: '',
-        userpaymentOrderId: '',
+        userpaymentOrderId: response.orderId!,
         paymentId: response.paymentId!.toString(),
-        description: "",
+        description: "upschindi",
         mobileNumber: mobileNumber!,
         userName: userName!,
         userEmail: userEmail!,
-        Signature: "",
+        Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
         price: widget.course.amount,
         success: true));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
+    print("-----Payment error-----");
     Fluttertoast.showToast(
-        msg: "ERROR: " + response.code.toString() + " - " + response.message!);
+        msg: "ERROR: ${response.code} - ${response.message!}");
     _savePaymentStatus(PaymentModel(
         orderId: '',
         userpaymentOrderId: '',
@@ -102,12 +116,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: '',
         batchId: widget.course.batchDetails.id,
-        price: '',
+        price: widget.course.amount,
         success: false));
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(msg: "EXTERNAL_WALLET: " + response.walletName!);
+    print("-----Payment Success W-----");
+    Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
   }
 
   @override
@@ -171,7 +186,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -217,13 +232,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             Center(
@@ -235,7 +250,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                     borderRadius: BorderRadius.circular(14)),
                 child: TextButton(
                   onPressed: () {
-                    openCheckout();
+                    callApiorderid(widget.course.batchDetails.id);
+                    //openCheckout(widget.course.batchDetails.id);
                     //checkOutButton(context);
                   },
                   child: Text(
@@ -254,6 +270,52 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     );
   }
 
+  Future<BaseModel<OrderIdGeneration>> callApiorderid(id) async {
+    OrderIdGeneration response;
+    Map<String, dynamic> body = {
+      "batch_id": id,
+    };
+    setState(() {
+      Preferences.onLoading(context);
+    });
+    try {
+      var token = SharedPreferenceHelper.getString(Preferences.access_token);
+      response =
+          await RestClient(RetroApi().dioData(token!)).getorderidRequest(body);
+      if (response.status!) {
+        setState(() {
+          Preferences.hideDialog(context);
+        });
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+        openCheckout(response.data!.orderId.toString());
+      } else {
+        setState(() {
+          Preferences.hideDialog(context);
+        });
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
+
   void _savePaymentStatus(PaymentModel paymentData) async {
     print("----Saving Payment Details -----");
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
@@ -268,10 +330,11 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PaymentScreen(),
+            builder: (context) => const PaymentScreen(),
           ),
         );
       } else {
+        print("-----api Payment error -----");
         Preferences.onLoading(context);
         flutterToast("Something went wrong");
       }

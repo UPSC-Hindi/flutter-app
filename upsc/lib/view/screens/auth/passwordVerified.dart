@@ -18,7 +18,7 @@ class _passwordVerifiedState extends State<passwordVerified> {
     typer = widget.type;
     print(typer);
     Timer(
-      Duration(seconds: 3),
+      const Duration(seconds: 3),
       () => typer != 'change'
           ? Navigator.of(context).popAndPushNamed('passwordchange')
           : Navigator.of(context).popAndPushNamed('SignIn'),

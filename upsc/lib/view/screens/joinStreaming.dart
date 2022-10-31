@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
@@ -91,6 +92,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         print('*' * 3000);
         //chatmessges.add(fromMember.userId + ':' + message.text);
         if (message.text.contains('{')) {
+        } else {
           chatmessges.add(message.text);
         }
 
@@ -205,7 +207,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             Text(widget.lecture.lectureTitle,
                                 style: const TextStyle(fontSize: 30)),
                             Text(widget.lecture.description),
-                            Text('By ' + widget.lecture.teacher.first),
+                            Text('By ${widget.lecture.teacher.first}'),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
@@ -235,7 +237,15 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                       children: [
                                         Row(
                                           children: [
-                                            Image.network(SvgImages.pdfimage),
+                                            CachedNetworkImage(
+                                              imageUrl: SvgImages.pdfimage,
+                                              placeholder: (context, url) => Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
                                             const SizedBox(
                                               width: 20,
                                             ),
@@ -421,32 +431,40 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
                                     icon: const Icon(Icons.close)),
-                                Text("Participants ${Participants.toString()}"),
+                                Text("Participants ${userdetails!.length.toString()}"),
                               ],
                             ),
-                            GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: userdetails!.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 4.0,
-                              ),
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  child: Column(children: [
-                                    CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundImage: NetworkImage(
-                                          userdetails![index].profilePicture!),
-                                      backgroundColor: Colors.grey,
+                            userdetails!.length == 0
+                                ? const Center(
+                                    child: Text('There no one yet..'),
+                                  )
+                                : GridView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: userdetails!.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 4.0,
                                     ),
-                                    Text(userdetails![index].studentName!)
-                                  ]),
-                                );
-                              },
-                            ),
+                                    shrinkWrap: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        child: Column(children: [
+                                          CircleAvatar(
+                                            radius: 40.0,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    userdetails![index]
+                                                        .profilePicture!),
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                          Text(userdetails![index].studentName!)
+                                        ]),
+                                      );
+                                    },
+                                  ),
                           ],
                         ),
                       ),
@@ -466,25 +484,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .streaminguserdetailsRequest();
-
-      if (response.status!) {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-        userdetails = response.data;
-      } else {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
@@ -500,25 +499,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .deleteuserdetailsfromstreamRequest(body);
-
-      if (response.status!) {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      } else {
-        print('hello' * 5000);
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));

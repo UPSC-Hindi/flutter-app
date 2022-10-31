@@ -94,15 +94,12 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 firstDate: DateTime(1950),
                 lastDate: DateTime(2100));
             if (pickedDate != null) {
-              print(
-                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+              print( pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
               String formattedDate =
                   DateFormat('dd-MMMM-yyyy').format(pickedDate);
-              print(
-                  formattedDate); //formatted date output using intl package =>  2021-03-16
+              print(formattedDate); //formatted date output using intl package =>  2021-03-16
               setState(() {
-                datetoshow =
-                    formattedDate; //set output date to TextField value.
+                datetoshow =  formattedDate; //set output date to TextField value.
               });
             } else {}
           },

@@ -5,7 +5,6 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
-import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
@@ -102,32 +101,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       rethrow;
     }
   }
-
-  @override
-  Future<Response> addSchedule(String task, String date) async {
-    try {
-      Response response = await dioAuthorizationData().post(
-          '${Apis.baseUrl}${Apis.addSchedulardetails}',
-          data: {'task': task, 'notify_at': date});
-      return response;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<MySchedulerModel> getSchedule() async {
-    try {
-      var response = await dioAuthorizationData().get(
-        '${Apis.baseUrl}${Apis.getScheduleDetails}',
-      );
-      print(response.data);
-      return MySchedulerModel.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   @override
   Future<Response> savePaymentStatus(PaymentModel paymentData) async {
     try {
@@ -142,10 +115,10 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<String> getOrderId(String batchId) async {
-    try {
-      return '12345';
-    } catch (error) {
+  Future<String> getOrderId(String batchId) async{
+    try{
+      return  '12345';
+    }catch(error){
       flutterToast(error.toString());
       rethrow;
     }

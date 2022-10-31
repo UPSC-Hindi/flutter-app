@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/scheduler_remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
@@ -8,6 +9,7 @@ import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/domain/reused_function.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -15,6 +17,7 @@ part 'api_state.dart';
 class ApiBloc extends Bloc<ApiEvent, ApiState> {
   ApiBloc() : super(ApiInitial()) {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
+    final schedulerRemoteDataSourceImpl = SchedulerRemoteDataSourceImpl();
 
     on<GetCartDetails>((event, emit) async {
       try {
@@ -50,12 +53,16 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       try {
         CoursesModel response =
         await remoteDataSourceImpl.getCourses(event.key,event.value);
+        print(response);
         if (response.status) {
           emit(ApiCoursesSuccess(courseList: response.data));
         } else {
+          flutterToast(response.msg.toString());
           loginRoute();
         }
       } catch (error) {
+        print(error);
+        flutterToast(error.toString());
         emit(ApiError());
       }
     });
@@ -76,6 +83,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       }
     });
     on<GetYouTubeVideo>((event, emit) async{
+      emit(ApiLoading());
       try{
         VideoModel videoData = await remoteDataSourceImpl.getYouTubeVideo();
         if(videoData.status){
@@ -89,8 +97,9 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       }
     });
     on<GetMyScheduler>((event, emit) async{
+      emit(ApiLoading());
       try{
-        MySchedulerModel schedulerData = await remoteDataSourceImpl.getSchedule();
+        MySchedulerModel schedulerData = await schedulerRemoteDataSourceImpl.getSchedule();
         if(schedulerData.status){
           emit(ApiGetSchedulerSuccess(schedulerList: schedulerData.data));
         }else{

@@ -21,6 +21,7 @@ import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/contactus.dart';
 import 'package:upsc/view/screens/home.dart';
+import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
 import 'package:upsc/view/screens/sidenav/cartscreeen.dart';
@@ -34,17 +35,22 @@ import 'package:upsc/view/screens/sidenav/resources.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void main() {
+void main() async{
   //Orientations
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+    debug: true, // optional: set to false to disable printing logs to console (default: true)
+    ignoreSsl: true // option: set to false to disable working with http links (default: false)
+  );
   //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
-      //Languages.isEnglish = (SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true) ?? true;
+      //Languages.isEnglish = SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true;
       await Languages.initState();
       runApp(const MyApp());
     },
@@ -80,7 +86,7 @@ class MyApp extends StatelessWidget {
                 isLogin: false,
               ),
           'notifications': (context) => const NotificationScreen(),
-          'homescreen': (context) => const HomeScreen(),
+          'homescreen': (context) => const HomeScreens(),
           'Coursescreen': (context) => const CourseScreen(),
           'mocktestscreen': (context) => const mocktestscreen(),
           'ProfilScreen': (context) => const ProfilScreen(),

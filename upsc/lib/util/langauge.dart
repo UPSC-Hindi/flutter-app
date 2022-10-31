@@ -75,6 +75,10 @@ class Languages {
   static String whatsApp = '';
 
   static initState() {
+    Languages.isEnglish =
+        SharedPreferenceHelper.getString(Preferences.language)! == "English"
+            ? true
+            : false;
 
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
     ncertBatches = isEnglish ? 'NCERT Batches' : 'NCERT बेच';

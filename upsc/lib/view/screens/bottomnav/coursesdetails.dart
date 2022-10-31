@@ -16,16 +16,13 @@ import 'package:upsc/util/preference.dart';
 
 class CoursesDetailsScreens extends StatefulWidget {
   final CoursesDataModel course;
-  CoursesDetailsScreens(
-      {Key? key, required this.course})
-      : super(key: key);
+  CoursesDetailsScreens({Key? key, required this.course}) : super(key: key);
 
   @override
   State<CoursesDetailsScreens> createState() => _CoursesDetailsScreensState();
 }
 
 class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
-
   @override
   void initState() {
     super.initState();
@@ -146,7 +143,8 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             const Icon(
                               Icons.calendar_month_rounded,
                             ),
-                            Text(' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate)}')
+                            Text(
+                                ' Starts : ${DateFormat("dd-MM-yyyy").format(course.startingDate)}')
                           ]),
                         ]),
                     Align(
@@ -179,7 +177,9 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                               Text(
                                 course.teacher[index].fullName,
                                 style: GoogleFonts.poppins(
-                                    fontSize: 16, fontWeight: FontWeight.bold,),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
@@ -233,34 +233,31 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(8.0),
-              height: 60,
-              child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          '₹${course.charges}',
-                          style: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: ColorResources.buttoncolor,
-                                shape: const StadiumBorder()),
-                            onPressed: () {
-                              callApiaddtocart(course);
-                              Navigator.of(context)
-                                  .popAndPushNamed('cartscreen');
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 18.0, vertical: 5.0),
-                              child: Text('Add to Cart',
-                                  style: GoogleFonts.poppins(fontSize: 20)),
-                            ))
-                      ],
-                    )
-            ),
+                padding: const EdgeInsets.all(8.0),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      '₹${course.charges}',
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: ColorResources.buttoncolor,
+                            shape: const StadiumBorder()),
+                        onPressed: () {
+                          callApiaddtocart(course);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 5.0),
+                          child: Text('Add to Cart',
+                              style: GoogleFonts.poppins(fontSize: 20)),
+                        ))
+                  ],
+                )),
           ],
         ),
       ),
@@ -273,11 +270,17 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       "batch_id": widget.course.id,
     };
     try {
+      setState(() {
+        Preferences.onLoading(context);
+      });
       var token =
           SharedPreferenceHelper.getString(Preferences.access_token).toString();
       response =
           await RestClient(RetroApi().dioData(token)).addtocartRequest(body);
       if (response.status!) {
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Navigator.of(context).popAndPushNamed('cartscreen');
         Fluttertoast.showToast(
           msg: '${response.msg}',

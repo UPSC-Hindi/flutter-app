@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/scheduler_remote_data_source_impl.dart';
 import 'package:upsc/features/domain/reused_function.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -167,159 +167,162 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
               ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
+          Padding(
             padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              border: Border.all(color: ColorResources.gray),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  Languages.scheduleDetails,
-                  style: GoogleFonts.poppins(),
-                ),
-                TextField(
-                  onChanged: (value){
-                    task = value;
-                  },
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                          color: ColorResources.gray, width: 1.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorResources.gray, width: 1.0),
-                    ),
-                    hintText: Languages.task,
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: Border.all(color: ColorResources.gray),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    Languages.scheduleDetails,
+                    style: GoogleFonts.poppins(),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    border: Border.all(color: ColorResources.gray),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        Languages.notifyAt,
-                        style: GoogleFonts.poppins(),
+                  TextField(
+                    onChanged: (value) {
+                      task = value;
+                    },
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            BorderSide(color: ColorResources.gray, width: 1.0),
                       ),
-                      Row(
-                        children: [
-                          DropdownButton(
-                            hint: const Text('HH'),
-                            value: _selectedhour,
-                            items: hours.map((String hours) {
-                              return DropdownMenuItem(
-                                value: hours,
-                                child: Text(hours),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedhour = newValue;
-                                print(newValue);
-                              });
-                            },
-                          ),
-                          Text(
-                            ':   ',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold),
-                          ),
-                          DropdownButton(
-                            hint: const Text("MM"),
-                            value: _selectedmin,
-                            items: min.map((String hours) {
-                              return DropdownMenuItem(
-                                value: hours,
-                                child: Text(hours),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedmin = newValue;
-                                print(newValue);
-                              });
-                            },
-                          ),
-                          DropdownButton(
-                            hint: const Text("AM"),
-                            value: _selectedAMPM,
-                            items: AMPM.map((String hours) {
-                              return DropdownMenuItem(
-                                value: hours,
-                                child: Text(hours),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedAMPM = newValue.toString();
-                              });
-                            },
-                          ),
-                        ],
-                      )
-                    ],
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: ColorResources.gray, width: 1.0),
+                      ),
+                      hintText: Languages.task,
+                    ),
                   ),
-                ),
-                Row(children: [
-                  Switch(
-                      value: _iseveryday,
-                      onChanged: (value) {
-                        setState(() {
-                          _iseveryday = value;
-                        });
-                      }),
-                  Text(Languages.scheduleForEveryday)
-                ]),
-                // Align(
-                //   alignment: Alignment.centerRight,
-                //   child: TextButton(
-                //       onPressed: () {
-                //         setState(() {
-                //           addtaskcount = addtaskcount + 1;
-                //         });
-                //       },
-                //       child: Text(
-                //         Languages.addTask,
-                //         style: GoogleFonts.poppins(
-                //           color: ColorResources.buttoncolor,
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       )),
-                // )
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: ColorResources.gray),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          Languages.notifyAt,
+                          style: GoogleFonts.poppins(),
+                        ),
+                        Row(
+                          children: [
+                            DropdownButton(
+                              hint: const Text('HH'),
+                              value: _selectedhour,
+                              items: hours.map((String hours) {
+                                return DropdownMenuItem(
+                                  value: hours,
+                                  child: Text(hours),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedhour = newValue;
+                                  print(newValue);
+                                });
+                              },
+                            ),
+                            Text(
+                              ':   ',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            DropdownButton(
+                              hint: const Text("MM"),
+                              value: _selectedmin,
+                              items: min.map((String hours) {
+                                return DropdownMenuItem(
+                                  value: hours,
+                                  child: Text(hours),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedmin = newValue;
+                                  print(newValue);
+                                });
+                              },
+                            ),
+                            DropdownButton(
+                              hint: const Text("AM"),
+                              value: _selectedAMPM,
+                              items: AMPM.map((String hours) {
+                                return DropdownMenuItem(
+                                  value: hours,
+                                  child: Text(hours),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _selectedAMPM = newValue.toString();
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(children: [
+                    Switch(
+                        value: _iseveryday,
+                        onChanged: (value) {
+                          setState(() {
+                            _iseveryday = value;
+                          });
+                        }),
+                    Text(Languages.scheduleForEveryday)
+                  ]),
+                  // Align(
+                  //   alignment: Alignment.centerRight,
+                  //   child: TextButton(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           addtaskcount = addtaskcount + 1;
+                  //         });
+                  //       },
+                  //       child: Text(
+                  //         Languages.addTask,
+                  //         style: GoogleFonts.poppins(
+                  //           color: ColorResources.buttoncolor,
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       )),
+                  // )
+                ],
+              ),
             ),
           ),
-        ),
           Container(
             width: MediaQuery.of(context).size.width * 0.80,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: ColorResources.buttoncolor,
                   shape: const StadiumBorder()),
-              onPressed: (){
-                if(task.isNotEmpty &&_selectedhour != null && _selectedmin != null){
-                  _addSchedular(task,_selectedhour+":"+_selectedmin+" "+_selectedAMPM);
-                }
-                else{
+              onPressed: () {
+                if (task.isNotEmpty &&
+                    _selectedhour != null &&
+                    _selectedmin != null) {
+                  _addSchedular(task,
+                      _selectedhour + ":" + _selectedmin + " " + _selectedAMPM);
+                } else {
                   flutterToast('Select All the fields');
                 }
               },
-              child: Text('${Languages.createdFor} ${DateFormat('MMMM dd').format(selectDate)}'),
+              child: Text(
+                  '${Languages.createdFor} ${DateFormat('MMMM dd').format(selectDate)}'),
             ),
           ),
         ]),
@@ -327,18 +330,19 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
     );
   }
 
-  void _addSchedular(String task,String time) async{
-    final remoteDataSourceImpl = RemoteDataSourceImpl();
+  void _addSchedular(String task, String time) async {
+    final schedulerRemoteDataSourceImpl = SchedulerRemoteDataSourceImpl();
     try {
       Preferences.onLoading(context);
       Response response =
-          await remoteDataSourceImpl.addSchedule(task, time);
+          await schedulerRemoteDataSourceImpl.addSchedule(task, time);
       if (response.statusCode == 200) {
         Preferences.hideDialog(context);
-        if(response.data['status']){
+        if (response.data['status']) {
           Navigator.pop(context);
+          Navigator.popAndPushNamed(context, 'MySchedule');
           flutterToast(response.data['msg']);
-        }else{
+        } else {
           loginRoute();
         }
       } else {
@@ -349,6 +353,5 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
       print(error);
       flutterToast('Server Error');
     }
-
   }
 }

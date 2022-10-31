@@ -9,14 +9,17 @@ import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/auth/register.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/auth/mobile_verification.dart';
 import 'package:upsc/view/screens/auth/otpverification.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:google_sign_in/google_sign_in.dart' as googleauth;
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -26,15 +29,16 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _numberController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   bool _passwordVisible = true;
   static String? deviceConfig;
   static String? deviceName;
+  googleauth.GoogleSignInAccount? result;
 
   @override
   void initState() {
@@ -50,6 +54,27 @@ class _SignUpState extends State<SignUp> {
       deviceConfig = androidInfo.id;
       print('Running on ${androidInfo.type}');
     });
+  }
+
+  googleLogin() async {
+    try {
+      print("---googleLogin method Called----");
+      final _googleSignIn = googleauth.GoogleSignIn();
+      result = await _googleSignIn.signIn();
+      // print("Result $result");
+      // print("Result ${result!.authHeaders}");
+      // print("Result ${result!.displayName}");
+      // print("Result ${result!.email}");
+      // print("Result ${result!.photoUrl}");
+      // print("Result ${result!.authentication}");
+      if (result!.email != null) {
+        callApigooglelogin();
+        await _googleSignIn.signOut();
+        await _googleSignIn.disconnect();
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
@@ -264,15 +289,20 @@ class _SignUpState extends State<SignUp> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(100),
+                          GestureDetector(
+                            onTap: () {
+                              googleLogin();
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: SvgPicture.network(SvgImages.google),
                             ),
-                            child: SvgPicture.network(SvgImages.google),
                           ),
                           const SizedBox(
                             width: 10,
@@ -371,6 +401,94 @@ class _SignUpState extends State<SignUp> {
       }
     } catch (error, stacktrace) {
       setState(() {
+        Preferences.hideDialog(context);
+      });
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
+  Future<BaseModel<GoogleSignIn>> callApigooglelogin() async {
+    GoogleSignIn response;
+    print("*123" * 200);
+    Map<String, dynamic> body = {
+      "email": result!.email,
+      "profilePhoto": result!.photoUrl,
+      "usernameFromGoogle": result!.displayName,
+      "deviceConfig": deviceConfig,
+      "deviceName": deviceName,
+    };
+     setState(() {
+      Preferences.onLoading(context);
+    });
+    try {
+      response =
+          await RestClient(RetroApi2().dioData2()).googleSigninRequest(body);
+      if (response.status!) {
+        setState(() {
+        Preferences.hideDialog(context);
+      });
+        if (response.data!.verified!) {
+          await SharedPreferenceHelper.setString(
+              Preferences.access_token, response.data!.accessToken);
+          await SharedPreferenceHelper.setBoolean(
+              Preferences.is_logged_in, true);
+          await SharedPreferenceHelper.setString(
+              Preferences.name, response.data!.fullName);
+          await SharedPreferenceHelper.setString(
+              Preferences.email, response.data!.email);
+          await SharedPreferenceHelper.setString(
+              Preferences.phoneNUmber, response.data!.phoneNumber);
+          await SharedPreferenceHelper.setString(Preferences.language,
+              response.data!.language == "hi" ? "Hindi" : 'English');
+          Languages.isEnglish = response.data!.language == "hi" ? false : true;
+          await SharedPreferenceHelper.setString(
+              Preferences.profileImage, response.data!.profilePhoto);
+          await SharedPreferenceHelper.setString(
+              Preferences.address, response.data!.address);
+          Navigator.of(context).pushNamed('home');
+        } else {
+          await SharedPreferenceHelper.setString(
+              Preferences.name, response.data!.fullName);
+          await SharedPreferenceHelper.setString(
+              Preferences.email, response.data!.email);
+          await SharedPreferenceHelper.setString(
+              Preferences.auth_token, response.data!.verificationToken);
+          SharedPreferenceHelper.setString(
+              Preferences.profileImage, response.data!.profilePhoto);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MobileVerification(),
+            ),
+          );
+        }
+        // await SharedPreferenceHelper.setString(Preferences.language,
+        //     response.data!.language == "hi" ? "Hindi" : 'English');
+        // Languages.isEnglish = response.data!.language == "hi" ? false : true;
+        //await Languages.initState();
+        //Navigator.of(context).popUntil((route) => route.isFirst);
+        print(SharedPreferenceHelper.getString(Preferences.access_token));
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      } else {
+         setState(() {
+        Preferences.hideDialog(context);
+      });
+        Fluttertoast.showToast(
+          msg: '${response.msg}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: ColorResources.gray,
+          textColor: ColorResources.textWhite,
+        );
+      }
+    } catch (error, stacktrace) {
+       setState(() {
         Preferences.hideDialog(context);
       });
       print("Exception occur: $error stackTrace: $stacktrace");

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -90,11 +91,17 @@ class HelpAndSupport extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
-                      onTap: () {
-                        launchUrl(Uri.parse("https://www.wa.me/+919519780078"),
-                            mode: LaunchMode.externalApplication);
-                      },
-                      child: Image.network(SvgImages.whatsapp)),
+                    onTap: () {
+                      launchUrl(Uri.parse("https://www.wa.me/+919519780078"),
+                          mode: LaunchMode.externalApplication);
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: SvgImages.whatsapp,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
                   Text(Languages.whatsApp),
                   const SizedBox(height: 20),
                   Container(
@@ -104,29 +111,49 @@ class HelpAndSupport extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         GestureDetector(
-                            onTap: () {
-                              launchUrl(
-                                  Uri.parse(
-                                      "https://www.facebook.com/UPSCHINDI4CSE"),
-                                  mode: LaunchMode.externalApplication);
-                            },
-                            child: Image.network(SvgImages.facebook)),
+                          onTap: () {
+                            launchUrl(
+                                Uri.parse(
+                                    "https://www.facebook.com/UPSCHINDI4CSE"),
+                                mode: LaunchMode.externalApplication);
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: SvgImages.facebook,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
                         GestureDetector(
-                            onTap: () {
-                              launchUrl(
-                                  Uri.parse(
-                                      "https://twitter.com/upschindi4cse"),
-                                  mode: LaunchMode.externalApplication);
-                            },
-                            child: Image.network(SvgImages.twitter)),
+                          onTap: () {
+                            launchUrl(
+                                Uri.parse("https://twitter.com/upschindi4cse"),
+                                mode: LaunchMode.externalApplication);
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: SvgImages.twitter,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
                         GestureDetector(
-                            onTap: () {
-                              launchUrl(
-                                  Uri.parse(
-                                      "https://www.instagram.com/upschindi4cse"),
-                                  mode: LaunchMode.externalApplication);
-                            },
-                            child: Image.network(SvgImages.linkedin))
+                          onTap: () {
+                            launchUrl(
+                                Uri.parse(
+                                    "https://www.instagram.com/upschindi4cse"),
+                                mode: LaunchMode.externalApplication);
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl: SvgImages.linkedin,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        )
                       ],
                     ),
                   ),

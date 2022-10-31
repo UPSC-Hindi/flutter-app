@@ -15,15 +15,16 @@ class ShortNotesScreen extends StatefulWidget {
 }
 
 class _ShortNotesScreenState extends State<ShortNotesScreen> {
-  TextEditingController _searchtest = TextEditingController();
+  final TextEditingController _searchtest = TextEditingController();
 
   @override
   void initState() {
     context
         .read<ApiBloc>()
-        .add(const GetResources(key: 'Category', value: 'Daily News'));
+        .add(const GetResources(key: 'Category', value: 'short Notes'));
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,9 +64,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-
           SearchBarWidget(searchtest: _searchtest),
-
           FractionallySizedBox(
             widthFactor: 0.90,
             child: ListView.builder(
@@ -82,5 +81,4 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
       ),
     );
   }
-
 }

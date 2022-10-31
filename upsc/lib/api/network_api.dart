@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:upsc/api/api.dart';
-import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/models/DeleteUserDetailsFromStream.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
@@ -18,6 +17,7 @@ import 'package:upsc/models/auth/passwordverifyotp.dart';
 import 'package:upsc/models/auth/register.dart';
 import 'package:upsc/models/auth/resendotp.dart';
 import 'package:upsc/models/auth/resetpassword.dart';
+import 'package:upsc/models/orderIdgeneration.dart';
 
 part 'network_api.g.dart';
 
@@ -69,6 +69,9 @@ abstract class RestClient {
 
   @POST(Apis.joinmeeting)
   Future<AddToCart> addtocartRequest(@Body() body);
+
+    @POST(Apis.joinmeeting)
+  Future<OrderIdGeneration> getorderidRequest(@Body() body);
 
   @DELETE(Apis.removefromCart)
   Future<RemovefromCart> removefromcartRequest(@Body() body);
