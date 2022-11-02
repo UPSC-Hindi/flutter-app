@@ -11,6 +11,7 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/auth/login_model.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -34,13 +35,34 @@ class _loginscreenState extends State<loginscreen> {
   bool _passwordVisible = true;
   static String? deviceConfig;
   static String? deviceName;
-
+  List<Widget> images = [];
   googleauth.GoogleSignInAccount? result;
 
   @override
   void initState() {
+    callApigetbanner();
     getdevices();
     super.initState();
+  }
+
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          print(image);
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+      print(images);
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   Future getdevices() async {
@@ -89,17 +111,18 @@ class _loginscreenState extends State<loginscreen> {
           child: Column(
             children: [
               CarouselSlider(
-                items: [
-                  Image.network(
-                    SvgImages.banner_1,
-                  ), // SvgPicture.asset(SvgImages.banner_1,),
-                  Image.network(SvgImages
-                      .banner_2), // SvgPicture.asset(SvgImages.banner_2),
-                  Image.network(SvgImages
-                      .banner_3), // SvgPicture.asset(SvgImages.banner_3),
-                  Image.network(SvgImages.banner_4),
-                  // SvgPicture.asset(SvgImages.banner_4),
-                ],
+                items: images,
+                // [
+                //   Image.network(
+                //     SvgImages.banner_1,
+                //   ), // SvgPicture.asset(SvgImages.banner_1,),
+                //   Image.network(SvgImages
+                //       .banner_2), // SvgPicture.asset(SvgImages.banner_2),
+                //   Image.network(SvgImages
+                //       .banner_3), // SvgPicture.asset(SvgImages.banner_3),
+                //   Image.network(SvgImages.banner_4),
+                //   // SvgPicture.asset(SvgImages.banner_4),
+                // ],
                 options: CarouselOptions(
                   height: 250,
                   aspectRatio: 16 / 9,
@@ -353,7 +376,8 @@ class _loginscreenState extends State<loginscreen> {
           Preferences.profileImage,
           response.data!.profilePhoto,
         );
-        await SharedPreferenceHelper.setString(Preferences.address, response.data!.address);
+        await SharedPreferenceHelper.setString(
+            Preferences.address, response.data!.address);
 
         print(await SharedPreferenceHelper.getString(Preferences.access_token)
                 .toString() +
@@ -397,7 +421,7 @@ class _loginscreenState extends State<loginscreen> {
       "deviceConfig": deviceConfig,
       "deviceName": deviceName,
     };
-     setState(() {
+    setState(() {
       Preferences.onLoading(context);
     });
     try {
@@ -405,8 +429,8 @@ class _loginscreenState extends State<loginscreen> {
           await RestClient(RetroApi2().dioData2()).googleSigninRequest(body);
       if (response.status!) {
         setState(() {
-        Preferences.hideDialog(context);
-      });
+          Preferences.hideDialog(context);
+        });
         if (response.data!.verified!) {
           await SharedPreferenceHelper.setString(
               Preferences.access_token, response.data!.accessToken);
@@ -455,9 +479,9 @@ class _loginscreenState extends State<loginscreen> {
           textColor: ColorResources.textWhite,
         );
       } else {
-         setState(() {
-        Preferences.hideDialog(context);
-      });
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -467,7 +491,7 @@ class _loginscreenState extends State<loginscreen> {
         );
       }
     } catch (error, stacktrace) {
-       setState(() {
+      setState(() {
         Preferences.hideDialog(context);
       });
       print("Exception occur: $error stackTrace: $stacktrace");

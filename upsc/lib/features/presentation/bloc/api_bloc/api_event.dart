@@ -21,6 +21,10 @@ class GetCourses extends ApiEvent {
   @override
   List<Object?> get props => [];
 }
+class GetmyClassSchedule extends ApiEvent {
+  @override
+  List<Object?> get props => [];
+}
 
 class GetYouTubeVideo extends ApiEvent{
   @override

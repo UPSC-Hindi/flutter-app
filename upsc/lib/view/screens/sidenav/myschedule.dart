@@ -10,6 +10,7 @@ import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/view/screens/sidenav/class_schedule.dart';
 
 class MySchedule extends StatefulWidget {
   const MySchedule({Key? key}) : super(key: key);
@@ -94,6 +95,40 @@ class _MyScheduleState extends State<MySchedule> {
               ),
               const SizedBox(
                 height: 10,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'My Schedule',
+                        style: GoogleFonts.poppins(
+                          shadows: [
+                            Shadow(
+                                color: ColorResources.buttoncolor,
+                                offset: Offset(0, -10))
+                          ],
+                          color: Colors.transparent,
+                          decoration: TextDecoration.underline,
+                          decorationColor: ColorResources.buttoncolor,
+                          decorationThickness: 4,
+                        ),
+                      )),
+                  TextButton(
+                      onPressed: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ClassSchedule(),
+                            ),
+                          ),
+                      child: Text(
+                        'Class Schedule',
+                        style: GoogleFonts.poppins(
+                            color: ColorResources.textblack),
+                      ))
+                ],
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(

@@ -24,6 +24,7 @@ import 'package:upsc/view/screens/home.dart';
 import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
+import 'package:upsc/view/screens/sidenav/aboutus.dart';
 import 'package:upsc/view/screens/sidenav/cartscreeen.dart';
 import 'package:upsc/view/screens/sidenav/download.dart';
 import 'package:upsc/view/screens/sidenav/helpandsupport.dart';
@@ -113,6 +114,7 @@ class MyApp extends StatelessWidget {
           'youtubenotes': (context) => const YoutubeNotesScreen(),
           'samplenotes': (context) => const SampleNotesScreen(),
           'contactus': (context) => const ContactUsScreen(),
+          'aboutusscreen': (context) => const AboutUsScreen(),
 //           'joinstreaming': (context) => const JoinStreamingScreen(
 // lecture: '',
 //                 rtctoken: '',
@@ -139,7 +141,7 @@ class _SplashState extends State<Splash> {
       navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)
           ? const HomeScreen()
           : const loginscreen(),
-      duration: 30,
+      //duration: 30,
       //imageSize: 130,
       imageSrc: "assets/images/splash.gif",
       backgroundColor: Colors.white,

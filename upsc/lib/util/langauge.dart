@@ -118,7 +118,7 @@ class Languages {
     myCart = isEnglish ? 'My Cart' : 'कार्ट ';
     myOrders = isEnglish ? 'My Orders' : 'ऑर्डर्स ';
     myCourses = isEnglish ? 'My Courses' : 'कोर्सेस';
-    mySchedule = isEnglish ? 'My Scheduler' : 'अनुसूची';
+    mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
     resources = isEnglish ? 'Resources' : 'संसाधन ';
     helpAndSupport = isEnglish ? 'Help & Support' : 'सहायता और समर्थन';
     shareApp = isEnglish ? 'Share App' : 'एप शेयर करें ';

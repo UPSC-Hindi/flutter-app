@@ -9,6 +9,7 @@ import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/VerifyMobileNumber.dart';
 import 'package:upsc/models/auth/resendotp.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -27,13 +28,35 @@ class _OtpverificationState extends State<Otpverification> {
   final controller = TextEditingController();
   final focusNode = FocusNode();
   String? phonenumber, otp;
+    List<Widget> images = [];
 
   var token;
 
   @override
   void initState() {
     phonenumber = widget.number;
+    callApigetbanner();
     super.initState();
+  }
+
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          print(image);
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+      print(images);
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   @override
@@ -71,12 +94,13 @@ class _OtpverificationState extends State<Otpverification> {
           child: Column(
             children: [
               CarouselSlider(
-                items: [
-                  Image.network(SvgImages.banner_1,),
-                  Image.network(SvgImages.banner_2,),
-                  Image.network(SvgImages.banner_3,),
-                  Image.network(SvgImages.banner_4,),
-                ],
+                items: images,
+                // [
+                //   Image.network(SvgImages.banner_1,),
+                //   Image.network(SvgImages.banner_2,),
+                //   Image.network(SvgImages.banner_3,),
+                //   Image.network(SvgImages.banner_4,),
+                // ],
                 options: CarouselOptions(
                   height: 250,
                   initialPage: 0,

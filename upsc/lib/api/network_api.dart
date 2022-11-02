@@ -8,6 +8,7 @@ import 'package:upsc/models/RemovefromCart.dart';
 import 'package:upsc/models/StreamingUserDetails.dart';
 import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/models/auth/postUserMobileNumber.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/models/auth/VerifyMobileNumber.dart';
 import 'package:upsc/models/auth/forgotpassword.dart';
@@ -24,6 +25,9 @@ part 'network_api.g.dart';
 @RestApi(baseUrl: Apis.baseUrl)
 abstract class RestClient {
   factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
+
+  @GET(Apis.banner)
+  Future<getbannerdetails> bannerimagesRequest();
 
   @POST(Apis.login)
   Future<Login> loginRequest(@Body() body);

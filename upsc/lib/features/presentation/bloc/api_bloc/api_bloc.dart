@@ -10,6 +10,7 @@ import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/domain/reused_function.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/classschedule.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -56,6 +57,25 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
         print(response);
         if (response.status) {
           emit(ApiCoursesSuccess(courseList: response.data));
+        } else {
+          flutterToast(response.msg.toString());
+          loginRoute();
+        }
+      } catch (error) {
+        print(error);
+        flutterToast(error.toString());
+        emit(ApiError());
+      }
+    });
+
+    on<GetmyClassSchedule>((event, emit) async {
+      emit(ApiLoading());
+      try {
+        ClassSchedulermodel response =
+        await remoteDataSourceImpl.getMyClassSchedule();
+        print(response);
+        if (response.status!) {
+          emit(ApiGetMyclassSchedulerSucces(myclassschedulerList: response.data!));
         } else {
           flutterToast(response.msg.toString());
           loginRoute();
