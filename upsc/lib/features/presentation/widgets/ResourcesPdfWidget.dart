@@ -24,11 +24,11 @@ class ResourcesContainerWidget extends StatefulWidget {
 class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
   ReceivePort _port = ReceivePort();
 
-  Future download(String url) async {
+  Future download(String url, String? name) async {
     final baseStorage = await getExternalStorageDirectory();
 
     print('directory:${baseStorage!.path}');
-      
+
     List files = baseStorage.listSync();
 
     await FlutterDownloader.enqueue(
@@ -37,8 +37,8 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
       savedDir: baseStorage.path,
       showNotification:
           true, // show download progress in status bar (for Android)
-      openFileFromNotification:
-          true, // click on notification to open downloaded file (for Android)
+      fileName: '${name!}.${url.split('.').last}',
+      openFileFromNotification:false, // click on notification to open downloaded file (for Android)
     );
   }
 
@@ -122,7 +122,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               ].request();
               if (await Permission.storage.isGranted) {
                 if (widget.resource.resourceType == 'file') {
-                  download(widget.resource.fileUrl);
+                  download(widget.resource.fileUrl, widget.resource.title);
                 } else {
                   launchUrl(Uri.parse(widget.resource.fileUrl),
                       mode: LaunchMode.externalApplication);

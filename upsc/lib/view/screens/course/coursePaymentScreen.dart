@@ -120,10 +120,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         success: false));
   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    print("-----Payment Success W-----");
-    Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
-  }
+   void _handleExternalWallet(ExternalWalletResponse response) {
+     print("-----Payment Success W-----");
+     Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +251,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 child: TextButton(
                   onPressed: () {
                     callApiorderid(widget.course.batchDetails.id);
-                    //openCheckout(widget.course.batchDetails.id);
+                    openCheckout(widget.course.batchDetails.id);
                     //checkOutButton(context);
                   },
                   child: Text(

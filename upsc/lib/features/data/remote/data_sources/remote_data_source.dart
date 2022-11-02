@@ -6,10 +6,12 @@ import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
+import 'package:upsc/models/classschedule.dart';
 
 abstract class RemoteDataSource{
   Future<VideoModel> getYouTubeVideo();
   Future<CoursesModel> getCourses(String filter,String type);
+  Future<ClassSchedulermodel> getMyClassSchedule();
   Future<ResourcesModel> getResources(String key,String value);
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();

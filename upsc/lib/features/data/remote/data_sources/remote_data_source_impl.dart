@@ -9,6 +9,7 @@ import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/classschedule.dart';
 
 class RemoteDataSourceImpl extends RemoteDataSource {
   @override
@@ -67,6 +68,16 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.mycourses}');
       return MyCoursesModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+    @override
+  Future<ClassSchedulermodel> getMyClassSchedule() async {
+    try {
+      var response =
+          await dioAuthorizationData().get('${Apis.baseUrl}${Apis.classScheduler}');
+      return ClassSchedulermodel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

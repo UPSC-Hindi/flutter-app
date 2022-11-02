@@ -119,6 +119,7 @@ class HelpAndSupport extends StatelessWidget {
                           },
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.facebook,
+                            height: 30,
                             placeholder: (context, url) =>
                                 Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
@@ -133,6 +134,7 @@ class HelpAndSupport extends StatelessWidget {
                           },
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.twitter,
+                            height: 30,
                             placeholder: (context, url) =>
                                 Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
@@ -148,6 +150,7 @@ class HelpAndSupport extends StatelessWidget {
                           },
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.linkedin,
+                            height: 30,
                             placeholder: (context, url) =>
                                 Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>

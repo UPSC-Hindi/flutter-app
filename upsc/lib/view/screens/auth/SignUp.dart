@@ -11,6 +11,7 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/auth/register.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -34,7 +35,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  List<Widget> images = [];
   bool _passwordVisible = true;
   static String? deviceConfig;
   static String? deviceName;
@@ -43,7 +44,28 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     getdevices();
+    callApigetbanner();
     super.initState();
+  }
+  
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          print(image);
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+      print(images);
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   Future getdevices() async {
@@ -85,20 +107,21 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             children: [
               CarouselSlider(
-                items: [
-                  Image.network(SvgImages
-                      .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
-                  Image.network(SvgImages
-                      .banner_2), // SvgPicture.asset(SvgImages.banner_2),
-                  Image.network(SvgImages
-                      .banner_3), // SvgPicture.asset(SvgImages.banner_3),
-                  Image.network(SvgImages
-                      .banner_4), // SvgPicture.asset(SvgImages.banner_4),
-                ],
+                items: images,
+                // [
+                //   Image.network(SvgImages
+                //       .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
+                //   Image.network(SvgImages
+                //       .banner_2), // SvgPicture.asset(SvgImages.banner_2),
+                //   Image.network(SvgImages
+                //       .banner_3), // SvgPicture.asset(SvgImages.banner_3),
+                //   Image.network(SvgImages
+                //       .banner_4), // SvgPicture.asset(SvgImages.banner_4),
+                // ],
                 options: CarouselOptions(
                   height: 250,
                   aspectRatio: 16 / 9,
-                  viewportFraction: 0.8,
+                  viewportFraction: 1,
                   initialPage: 0,
                   enableInfiniteScroll: true,
                   reverse: false,

@@ -10,6 +10,20 @@ class _RestClient implements RestClient {
   final Dio _dio;
 
   String? baseUrl;
+  @override
+  Future<getbannerdetails> bannerimagesRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Resendotp>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.banner,
+                    queryParameters: queryParameters)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = getbannerdetails.fromJson(_result.data!);
+    return value;
+  }
 
   @override
   Future<Login> loginRequest(body) async {
@@ -259,7 +273,8 @@ class _RestClient implements RestClient {
     final value = AddToCart.fromJson(_result.data!);
     return value;
   }
-    @override
+
+  @override
   getorderidRequest(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

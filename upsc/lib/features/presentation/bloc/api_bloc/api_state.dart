@@ -62,3 +62,10 @@ class ApiGetSchedulerSuccess extends ApiState{
   List<Object?> get props => [];
 
 }
+class ApiGetMyclassSchedulerSucces extends ApiState{
+  final List<classScheduleModel> myclassschedulerList;
+  const ApiGetMyclassSchedulerSucces({required this.myclassschedulerList});
+  @override
+  List<Object?> get props => [];
+
+}
