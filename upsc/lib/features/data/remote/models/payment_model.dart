@@ -9,7 +9,7 @@ class PaymentModel {
   final String Signature;
   final String batchId;
   final String price;
-  final bool success;
+  final String success;
 
   PaymentModel(
       {required this.orderId,

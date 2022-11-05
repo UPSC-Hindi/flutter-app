@@ -220,7 +220,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 shape: const StadiumBorder()),
             onPressed: () {
               Navigator.popUntil(context, (route) => false);
-              Navigator.pushNamed(context, 'homescreen');
+              Navigator.pushNamed(context, 'home');
               Navigator.push(
                 context,
                 CupertinoPageRoute(

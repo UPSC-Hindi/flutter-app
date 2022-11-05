@@ -55,7 +55,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     _razorpay.clear();
   }
 
-  void openCheckout(id) async {
+  void openCheckout(id, razorpaykey) async {
     print('*' * 2000);
     print(id.toString());
     var options = {
@@ -99,7 +99,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
         price: widget.course.amount,
-        success: true));
+        success: true.toString()));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -117,13 +117,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Signature: '',
         batchId: widget.course.batchDetails.id,
         price: widget.course.amount,
-        success: false));
+        success: false.toString()));
   }
 
-   void _handleExternalWallet(ExternalWalletResponse response) {
-     print("-----Payment Success W-----");
-     Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
-   }
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print("-----Payment Success W-----");
+    Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +251,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 child: TextButton(
                   onPressed: () {
                     callApiorderid(widget.course.batchDetails.id);
-                    openCheckout(widget.course.batchDetails.id);
+                    //openCheckout(widget.course.batchDetails.id);
                     //checkOutButton(context);
                   },
                   child: Text(
@@ -273,7 +273,14 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   Future<BaseModel<OrderIdGeneration>> callApiorderid(id) async {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
-      "batch_id": id,
+      "amount": widget.course.amount,
+      "name": SharedPreferenceHelper.getString(Preferences.name),
+      "email": SharedPreferenceHelper.getString(Preferences.email),
+      "mobileNumber": SharedPreferenceHelper.getString(Preferences.phoneNUmber),
+      "description": "upschindi",
+      "transactionId": '123',
+      "transactiondate": DateTime.now().toString(),
+      //"batch_id": id,
     };
     setState(() {
       Preferences.onLoading(context);
@@ -293,7 +300,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           backgroundColor: ColorResources.gray,
           textColor: ColorResources.textWhite,
         );
-        openCheckout(response.data!.orderId.toString());
+        openCheckout(response.id, response.keyId);
       } else {
         setState(() {
           Preferences.hideDialog(context);
@@ -324,6 +331,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       Response response =
           await remoteDataSourceImpl.savePaymentStatus(paymentData);
       if (response.statusCode == 200) {
+        print(response.data);
         flutterToast(response.data['msg']);
         Preferences.hideDialog(context);
         Navigator.pop(context);
