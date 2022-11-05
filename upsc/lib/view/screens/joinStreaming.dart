@@ -431,40 +431,42 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
                                     icon: const Icon(Icons.close)),
-                                Text("Participants ${userdetails!.length.toString()}"),
+                                Text(
+                                    "Participants ${userdetails!.length.toString()}"),
                               ],
                             ),
-                            userdetails!.length == 0
-                                ? const Center(
-                                    child: Text('There no one yet..'),
-                                  )
-                                : GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: userdetails!.length,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 4.0,
+                            // userdetails!.length == 0
+                            //     ? const Center(
+                            //         child: Text('There no one yet..'),
+                            //       )
+                            //     :
+                            GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: userdetails!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 4.0,
+                              ),
+                              shrinkWrap: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                print("+" * 200);
+                                print(userdetails![index].profilePicture!);
+                                return Container(
+                                  child: Column(children: [
+                                    CircleAvatar(
+                                      radius: 40.0,
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              userdetails![index]
+                                                  .profilePicture!),
+                                      backgroundColor: Colors.grey,
                                     ),
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        child: Column(children: [
-                                          CircleAvatar(
-                                            radius: 40.0,
-                                            backgroundImage:
-                                                CachedNetworkImageProvider(
-                                                    userdetails![index]
-                                                        .profilePicture!),
-                                            backgroundColor: Colors.grey,
-                                          ),
-                                          Text(userdetails![index].studentName!)
-                                        ]),
-                                      );
-                                    },
-                                  ),
+                                    Text(userdetails![index].studentName!)
+                                  ]),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -484,6 +486,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .streaminguserdetailsRequest();
+      userdetails = response.data;
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
