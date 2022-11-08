@@ -43,6 +43,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -60,47 +61,54 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     importance: Importance.high,
     playSound: true);
 
-Future<void> main() async{
+Future<void> main() async {
   //Orientations
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                color: Colors.blue,
-                playSound: true,
-                icon: '@mipmap/ic_launcher',
-              ),
-            ));
-      }
-    });
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              color: Colors.blue,
+              playSound: true,
+              icon: '@mipmap/ic_launcher',
+            ),
+          ));
+    }
+  });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FlutterDownloader.initialize(
-    debug: true, // optional: set to false to disable printing logs to console (default: true)
-    ignoreSsl: true // option: set to false to disable working with http links (default: false)
-  );
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
+  await firebaseMessaging.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
+  
   //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
       //Languages.isEnglish = SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true;
       await Languages.initState();
+      print(await firebaseMessaging.getToken());
       runApp(const MyApp());
     },
   );
@@ -177,7 +185,7 @@ class MyApp extends StatelessWidget {
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
-                                                                                                                                                  
+
   @override
   State<Splash> createState() => _SplashState();
 }
