@@ -49,6 +49,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
   List<Data>? userdetails;
 
+  static bool blockchat = false;
+
   @override
   void initState() {
     channel = widget.lecture.lectureTitle;
@@ -93,7 +95,24 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         //chatmessges.add(fromMember.userId + ':' + message.text);
         if (message.text.contains('{')) {
         } else {
-          chatmessges.add(message.text);
+          print(message.text + ' in first');
+          if (widget.uid.toString() == message.text.split(':')[1]) {
+            //widget.uid.toString()) {
+            setState(() {
+              print("*" * 3000);
+              print(message.text + ' in uid');
+              blockchat = true;
+            });
+          } 
+          else {
+            print("*" * 3000);
+            print(message.text + ' in data');
+            setState(() {
+              message.text.contains('BlockUserId:')
+                  ? print("df")
+                  : chatmessges.add(message.text);
+            });
+          }
         }
 
         print(message);
@@ -113,6 +132,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
     print('8' * 3000);
     callApideleteuserdetailsfromstream(widget.uid);
     endthesession(sessionController: client.sessionController);
+    blockchat = false;
     super.dispose();
   }
 
@@ -371,34 +391,43 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: TextField(
-                                    controller: _message,
-                                    decoration: InputDecoration(
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            color: ColorResources.gray,
-                                            width: 1.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: ColorResources.gray,
-                                            width: 1.0),
-                                      ),
-                                      hintText: 'message',
-                                    ),
-                                  ),
+                                  child: blockchat
+                                      ? Container(
+                                          child: Text(
+                                              "user hase been block by the admin"),
+                                        )
+                                      : TextField(
+                                          controller: _message,
+                                          decoration: InputDecoration(
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: BorderSide(
+                                                  color: ColorResources.gray,
+                                                  width: 1.0),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: ColorResources.gray,
+                                                  width: 1.0),
+                                            ),
+                                            hintText: 'message',
+                                          ),
+                                        ),
                                 ),
                                 IconButton(
                                   onPressed: () async {
-                                    await client.sessionController.value
-                                        .agoraRtmChannel!
-                                        .sendMessage(
-                                      AgoraRtmMessage.fromText(
-                                          "${name!} : ${_message.text}"),
-                                    );
-                                    chatmessges.add("you :${_message.text}");
-                                    _message.clear();
+                                    if (_message.text.isNotEmpty) {
+                                      await client.sessionController.value
+                                          .agoraRtmChannel!
+                                          .sendMessage(
+                                        AgoraRtmMessage.fromText(
+                                            "${name!} : ${_message.text}"),
+                                      );
+                                      chatmessges.add("you :${_message.text}");
+                                      _message.clear();
+                                      setState(() {});
+                                    }
                                   },
                                   icon: Icon(
                                     Icons.send,
