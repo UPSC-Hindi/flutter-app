@@ -53,4 +53,6 @@ class Apis {
   static const String deleteScheduler = 'adminPanel/deleteSchedularDetails/';
   static const String updateScheduler = 'adminPanel/updateSchedulardetails/';
   static const String classScheduler = 'adminPanel/getMySchedular';
+
+  static const String getnotification="Notification/getNotifictions";
 }

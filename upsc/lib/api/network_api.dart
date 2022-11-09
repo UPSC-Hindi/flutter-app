@@ -18,6 +18,7 @@ import 'package:upsc/models/auth/passwordverifyotp.dart';
 import 'package:upsc/models/auth/register.dart';
 import 'package:upsc/models/auth/resendotp.dart';
 import 'package:upsc/models/auth/resetpassword.dart';
+import 'package:upsc/models/notificationget.dart';
 import 'package:upsc/models/orderIdgeneration.dart';
 
 part 'network_api.g.dart';
@@ -69,14 +70,18 @@ abstract class RestClient {
   Future<StreamingUserDetails> streaminguserdetailsRequest();
 
   @DELETE(Apis.deleteUserDetailsFromStream)
-  Future<DeleteUserDetailsFromStream> deleteuserdetailsfromstreamRequest(@Body() body);
+  Future<DeleteUserDetailsFromStream> deleteuserdetailsfromstreamRequest(
+      @Body() body);
 
   @POST(Apis.joinmeeting)
   Future<AddToCart> addtocartRequest(@Body() body);
 
-    @POST(Apis.joinmeeting)
+  @POST(Apis.joinmeeting)
   Future<OrderIdGeneration> getorderidRequest(@Body() body);
 
   @DELETE(Apis.removefromCart)
   Future<RemovefromCart> removefromcartRequest(@Body() body);
+
+  @GET(Apis.getnotification)
+  Future<NotificationGet> getnotificationRequest();
 }
