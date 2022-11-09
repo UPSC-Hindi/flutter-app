@@ -84,10 +84,14 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         print(count);
       },
       onMemberLeft: (member) {
+        setState(() {
         callApigetuserdetails();
+        });
       },
       onMemberJoined: (AgoraRtmMember) async {
+        setState(() {
         callApigetuserdetails();
+        });
         print(AgoraRtmMember.toString());
       },
       onMessageReceived: (message, fromMember) {
@@ -103,8 +107,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
               print(message.text + ' in uid');
               blockchat = true;
             });
-          } 
-          else {
+          } else {
             print("*" * 3000);
             print(message.text + ' in data');
             setState(() {
@@ -324,183 +327,190 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    icon: const Icon(Icons.close),
-                                  ),
-                                  const Text("Chat"),
-                                ],
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.45,
-                                child: SingleChildScrollView(
-                                  reverse: true,
-                                  physics: const ScrollPhysics(),
-                                  child: ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    padding: const EdgeInsets.all(5),
-                                    itemCount: chatmessges.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        margin: const EdgeInsets.all(5),
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: ColorResources.gray
-                                              .withOpacity(0.2),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            // Icon(Icons.person),
-                                            // SizedBox(
-                                            //   width: 5,
-                                            // ),
-                                            Text(
-                                              chatmessges[index],
-                                              overflow: TextOverflow.clip,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
+                  return StatefulBuilder(builder: (context,setState) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
                               children: [
-                                Expanded(
-                                  child: blockchat
-                                      ? Container(
-                                          child: Text(
-                                              "user hase been block by the admin"),
-                                        )
-                                      : TextField(
-                                          controller: _message,
-                                          decoration: InputDecoration(
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              borderSide: BorderSide(
-                                                  color: ColorResources.gray,
-                                                  width: 1.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: ColorResources.gray,
-                                                  width: 1.0),
-                                            ),
-                                            hintText: 'message',
-                                          ),
-                                        ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      icon: const Icon(Icons.close),
+                                    ),
+                                    const Text("Chat"),
+                                  ],
                                 ),
-                                IconButton(
-                                  onPressed: () async {
-                                    if (_message.text.isNotEmpty) {
-                                      await client.sessionController.value
-                                          .agoraRtmChannel!
-                                          .sendMessage(
-                                        AgoraRtmMessage.fromText(
-                                            "${name!} : ${_message.text}"),
-                                      );
-                                      chatmessges.add("you :${_message.text}");
-                                      _message.clear();
-                                      setState(() {});
-                                    }
-                                  },
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: ColorResources.buttoncolor,
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.45,
+                                  child: SingleChildScrollView(
+                                    reverse: true,
+                                    physics: const ScrollPhysics(),
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      padding: const EdgeInsets.all(5),
+                                      itemCount: chatmessges.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          margin: const EdgeInsets.all(5),
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: ColorResources.gray
+                                                .withOpacity(0.2),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              // Icon(Icons.person),
+                                              // SizedBox(
+                                              //   width: 5,
+                                              // ),
+                                              Text(
+                                                chatmessges[index],
+                                                overflow: TextOverflow.clip,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: blockchat
+                                        ? Container(
+                                            child: Text(
+                                                "user hase been block by the admin"),
+                                          )
+                                        : TextField(
+                                            controller: _message,
+                                            decoration: InputDecoration(
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                borderSide: BorderSide(
+                                                    color: ColorResources.gray,
+                                                    width: 1.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: ColorResources.gray,
+                                                    width: 1.0),
+                                              ),
+                                              hintText: 'message',
+                                            ),
+                                          ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      if (_message.text.isNotEmpty) {
+                                        await client.sessionController.value
+                                            .agoraRtmChannel!
+                                            .sendMessage(
+                                          AgoraRtmMessage.fromText(
+                                              "${name!} : ${_message.text}"),
+                                        );
+                                        setState(() {
+                                          chatmessges
+                                              .add("you :${_message.text}");
+                                          _message.clear();
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(
+                                      Icons.send,
+                                      color: ColorResources.buttoncolor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 });
           } else {
             showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return SingleChildScrollView(
-                    reverse: true,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.45,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    icon: const Icon(Icons.close)),
-                                Text(
-                                    "Participants ${userdetails!.length.toString()}"),
-                              ],
-                            ),
-                            // userdetails!.length == 0
-                            //     ? const Center(
-                            //         child: Text('There no one yet..'),
-                            //       )
-                            //     :
-                            GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: userdetails!.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 4.0,
+                  return StatefulBuilder(builder: (context, setState) {
+                    return SingleChildScrollView(
+                      reverse: true,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      icon: const Icon(Icons.close)),
+                                  Text(
+                                      "Participants ${userdetails!.length.toString()}"),
+                                ],
                               ),
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                print("+" * 200);
-                                print(userdetails![index].profilePicture!);
-                                return Container(
-                                  child: Column(children: [
-                                    CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                              userdetails![index]
-                                                  .profilePicture!),
-                                      backgroundColor: Colors.grey,
-                                    ),
-                                    Text(userdetails![index].studentName!)
-                                  ]),
-                                );
-                              },
-                            ),
-                          ],
+                              // userdetails!.length == 0
+                              //     ? const Center(
+                              //         child: Text('There no one yet..'),
+                              //       )
+                              //     :
+                              GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: userdetails!.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 4.0,
+                                ),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  print("+" * 200);
+                                  print(userdetails![index].profilePicture!);
+                                  return Container(
+                                    child: Column(children: [
+                                      CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                userdetails![index]
+                                                    .profilePicture!),
+                                        backgroundColor: Colors.grey,
+                                      ),
+                                      Text(userdetails![index].studentName!)
+                                    ]),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 });
           }
         },
