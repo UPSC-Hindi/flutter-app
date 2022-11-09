@@ -303,6 +303,21 @@ class _RestClient implements RestClient {
     return value;
   }
 
+    @override
+  getnotificationRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<NotificationGet>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, Apis.getnotification,
+                    queryParameters: queryParameters)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = NotificationGet.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
