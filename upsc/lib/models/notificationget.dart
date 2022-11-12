@@ -28,20 +28,29 @@ class NotificationGet {
 }
 
 class Data {
-  String? batchDetails;
-  String? batchName;
+  String? title;
+  String? createdAt;
+  String? userId;
+  String? status;
+  String? message;
 
-  Data({this.batchDetails, this.batchName});
+  Data({this.title, this.createdAt, this.userId, this.status, this.message});
 
   Data.fromJson(Map<String, dynamic> json) {
-    batchDetails = json['batchDetails'];
-    batchName = json['batchName'];
+    title = json['title'];
+    createdAt = json['created_at'];
+    userId = json['user_id'];
+    status = json['status'];
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['batchDetails'] = batchDetails;
-    data['batchName'] = batchName;
+    data['title'] = title;
+    data['created_at'] = createdAt;
+    data['user_id'] = userId;
+    data['status'] = status;
+    data['message'] = message;
     return data;
   }
 }

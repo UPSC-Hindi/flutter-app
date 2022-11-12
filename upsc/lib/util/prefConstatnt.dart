@@ -7,6 +7,7 @@ class Preferences {
 
     static const String is_logged_in = "isLoggedIn";
   static const String name = "name";
+  static const String userid = "userid";
   static const String auth_token = "authToken";
   static const String access_token = "accessToken";
   static const String password_change_data = "Passwordchangedata";

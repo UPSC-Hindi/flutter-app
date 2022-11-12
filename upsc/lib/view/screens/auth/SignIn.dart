@@ -377,6 +377,8 @@ class _loginscreenState extends State<loginscreen> {
           response.data!.profilePhoto,
         );
         await SharedPreferenceHelper.setString(
+            Preferences.userid, response.data!.userID);
+        await SharedPreferenceHelper.setString(
             Preferences.address, response.data!.address);
 
         print(await SharedPreferenceHelper.getString(Preferences.access_token)

@@ -49,10 +49,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      notificationData[index].batchName!,
+                      notificationData[index].title!,
                       style: GoogleFonts.poppins(fontSize: 24),
                     ),
-                    Text(notificationData[index].batchDetails!),
+                    Text(notificationData[index].message!),
                   ],
                 ),
               ),

@@ -209,7 +209,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color:  Colors.grey.shade300,
+        color: Colors.grey.shade300,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
@@ -292,6 +292,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => JoinStreamingScreen(
+                userID: response.userID!,
+                userblock: response.userBlocked!,
                 rtctoken: response.rtcToken!,
                 rtmtoken: response.rtmToke!,
                 uid: uid,

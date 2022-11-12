@@ -112,11 +112,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Future<BaseModel<ForgetPassword>> callApiforgotpassword() async {
     ForgetPassword response;
     String? _data;
-    if (_numberController.text != '') {
+    if (_numberController.text.isNotEmpty) {
       setState(() {
         _data = _numberController.text;
       });
-    } else if (_emailController.text != '') {
+    } else if (_emailController.text.isNotEmpty) {
       setState(() {
         _data = _emailController.text;
       });
