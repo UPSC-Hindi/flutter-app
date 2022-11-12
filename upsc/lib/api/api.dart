@@ -54,5 +54,5 @@ class Apis {
   static const String updateScheduler = 'adminPanel/updateSchedulardetails/';
   static const String classScheduler = 'adminPanel/getMySchedular';
 
-  static const String getnotification="Notification/getNotifictions";
+  static const String getnotification="Notification/getNotifications";
 }

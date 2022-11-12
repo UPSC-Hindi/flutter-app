@@ -77,6 +77,7 @@ class _MyScheduleState extends State<MySchedule> {
 
   Widget _bodyWidget(
       BuildContext context, List<MySchedulerDataModel> schedulerList) {
+        
     //flutterToast("loggedIn:${schedulerList[0].loggedIn}");
     return SingleChildScrollView(
       child: Column(

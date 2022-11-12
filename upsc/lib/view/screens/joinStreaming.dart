@@ -20,6 +20,8 @@ import 'package:upsc/util/preference.dart';
 class JoinStreamingScreen extends StatefulWidget {
   final String rtctoken;
   final String rtmtoken;
+  final bool userblock;
+  final String userID;
   final LectureDetail lecture;
   final int uid;
   const JoinStreamingScreen(
@@ -27,6 +29,8 @@ class JoinStreamingScreen extends StatefulWidget {
       required this.lecture,
       required this.rtctoken,
       required this.rtmtoken,
+      required this.userblock,
+      required this.userID,
       required this.uid})
       : super(key: key);
 
@@ -36,6 +40,7 @@ class JoinStreamingScreen extends StatefulWidget {
 
 class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   static String? channel;
+  String? userID;
   static String appId =
       "5d035487d2bb4859a5faa4677c039873"; //"1541a573c5d84ce6ae3996f02626f462";//9675807e93584b4c9fec19451a1186fa
   static String? rtctoken;
@@ -53,6 +58,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
   @override
   void initState() {
+    blockchat = widget.userblock;
+    userID = widget.userID;
     channel = widget.lecture.lectureTitle;
     rtctoken = widget.rtctoken;
     rtmtoken = widget.rtmtoken;
@@ -85,12 +92,12 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       },
       onMemberLeft: (member) {
         setState(() {
-        callApigetuserdetails();
+          callApigetuserdetails();
         });
       },
       onMemberJoined: (AgoraRtmMember) async {
         setState(() {
-        callApigetuserdetails();
+          callApigetuserdetails();
         });
         print(AgoraRtmMember.toString());
       },
@@ -100,20 +107,36 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         if (message.text.contains('{')) {
         } else {
           print(message.text + ' in first');
-          if (widget.uid.toString() == message.text.split(':')[1]) {
-            //widget.uid.toString()) {
-            setState(() {
-              print("*" * 3000);
-              print(message.text + ' in uid');
-              blockchat = true;
-            });
+          if (message.text.contains("blockeduserid:") ||
+              message.text.contains('unblockeduserid:')) {
+            if (message.text.contains("blockeduserid:")) {
+              userID == message.text.split(':')[1]
+                  ? setState(() {
+                      print("*" * 3000);
+                      print(message.text + ' in uid');
+                      blockchat = true;
+                    })
+                  : print('');
+            }
+            if (message.text.contains('unblockeduserid:')) {
+              userID == message.text.split(':')[1]
+                  ? setState(() {
+                      print("*" * 3000);
+                      blockchat = false;
+                      print(message.text + ' in uid');
+                      print("*" * 3000);
+                    })
+                  : print('');
+            }
           } else {
             print("*" * 3000);
             print(message.text + ' in data');
             setState(() {
-              message.text.contains('BlockUserId:')
+              message.text.contains('blockeduserid:')
                   ? print("df")
-                  : chatmessges.add(message.text);
+                  : message.text.contains('unblockeduserid:')
+                      ? print("")
+                      : chatmessges.add(message.text);
             });
           }
         }
@@ -327,7 +350,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return StatefulBuilder(builder: (context,setState) {
+                  return StatefulBuilder(builder: (context, setState) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.only(
