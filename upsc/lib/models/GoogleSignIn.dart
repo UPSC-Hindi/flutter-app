@@ -38,7 +38,7 @@ class Data {
   bool? userMobileNumberVerified;
   String? language;
   String? stream;
-  bool? verified;
+  late bool verified;
 
   Data(
       {this.accessToken,
@@ -56,7 +56,7 @@ class Data {
         this.userMobileNumberVerified,
         this.language,
         this.stream,
-        this.verified});
+        required this.verified});
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];

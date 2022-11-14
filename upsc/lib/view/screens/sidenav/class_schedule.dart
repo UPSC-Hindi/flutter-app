@@ -1,16 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/scheduler_remote_data_source_impl.dart';
-import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
-import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
-import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/view/screens/sidenav/myschedule.dart';
 
 class ClassSchedule extends StatefulWidget {
@@ -52,6 +47,8 @@ class _ClassScheduleState extends State<ClassSchedule> {
             );
           }
           if (state is ApiGetMyclassSchedulerSucces) {
+            state.myclassschedulerList
+                .sort((a, b) => (a.startingDate!.compareTo(b.startingDate!)));
             return state.myclassschedulerList.isEmpty
                 ? const Center(
                     child: Text('There is no Scheduler'),
@@ -196,48 +193,66 @@ class _ClassScheduleState extends State<ClassSchedule> {
   Widget schedularContainerWidget(
       {required BuildContext context,
       required classScheduleModel schedulerData}) {
-    return Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.60,
-              child: Text(
-                schedulerData.lectureTitle!,
-                style: GoogleFonts.poppins(fontSize: 20),
-                overflow: TextOverflow.ellipsis,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorResources.gray),
+        borderRadius: BorderRadius.circular(20),
+        color: ColorResources.textWhite.withOpacity(0.9),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 5.0,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.70,
+                child: Text(
+                  schedulerData.lectureTitle!,
+                  style: GoogleFonts.poppins(fontSize: 20),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            Text(schedulerData.startingDate!),
-          ],
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.60,
-              child: Text(
-                schedulerData.description!,
-                maxLines: 1,
-                style: GoogleFonts.poppins(fontSize: 20),
-                overflow: TextOverflow.ellipsis,
+              //Text(schedulerData.startingDate!),
+              Text(DateFormat.jm()
+                  .format(DateFormat(' dd-MM-yyyy HH:mm:ss')
+                      .parse(schedulerData.startingDate!))
+                  .toString()),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.70,
+                child: Text(
+                  schedulerData.description!,
+                  maxLines: 1,
+                  style: GoogleFonts.poppins(fontSize: 14),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('mycoursesscreen');
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: ColorResources.buttoncolor,
-                    shape: const StadiumBorder()),
-                child: Text("go")),
-          ],
-        ),
-        const Divider(),
-      ],
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('mycoursesscreen');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: ColorResources.buttoncolor,
+                      shape: const StadiumBorder()),
+                  child: Text("go")),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
