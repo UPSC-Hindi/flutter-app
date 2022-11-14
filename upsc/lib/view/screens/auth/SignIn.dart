@@ -359,33 +359,36 @@ class _loginscreenState extends State<loginscreen> {
         Preferences.hideDialog(context);
       });
       if (response.status!) {
-        await SharedPreferenceHelper.setString(
-            Preferences.access_token, response.data!.accessToken);
-        await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
-        await SharedPreferenceHelper.setString(Preferences.language,
-            response.data!.language == "hi" ? "Hindi" : 'English');
-        Languages.isEnglish = response.data!.language == "hi" ? false : true;
-        await Languages.initState();
-        await SharedPreferenceHelper.setString(
-            Preferences.name, response.data!.fullName);
-        await SharedPreferenceHelper.setString(
-            Preferences.phoneNUmber, response.data!.phoneNumber);
-        await SharedPreferenceHelper.setString(
-            Preferences.email, response.data!.email);
-        await SharedPreferenceHelper.setString(
-          Preferences.profileImage,
-          response.data!.profilePhoto,
-        );
-        await SharedPreferenceHelper.setString(
-            Preferences.userid, response.data!.userID);
-        await SharedPreferenceHelper.setString(
-            Preferences.address, response.data!.address);
-
-        print(await SharedPreferenceHelper.getString(Preferences.access_token)
-                .toString() +
-            '*' * 200);
         //Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushNamed('home');
+        if (response.data != null) {
+          await SharedPreferenceHelper.setString(
+              Preferences.access_token, response.data!.accessToken);
+          await SharedPreferenceHelper.setBoolean(
+              Preferences.is_logged_in, true);
+          await SharedPreferenceHelper.setString(Preferences.language,
+              response.data!.language == "hi" ? "Hindi" : 'English');
+          Languages.isEnglish = response.data!.language == "hi" ? false : true;
+          await Languages.initState();
+          await SharedPreferenceHelper.setString(
+              Preferences.name, response.data!.fullName);
+          await SharedPreferenceHelper.setString(
+              Preferences.phoneNUmber, response.data!.phoneNumber);
+          await SharedPreferenceHelper.setString(
+              Preferences.email, response.data!.email);
+          await SharedPreferenceHelper.setString(
+            Preferences.profileImage,
+            response.data!.profilePhoto,
+          );
+          await SharedPreferenceHelper.setString(
+              Preferences.userid, response.data!.userID);
+          await SharedPreferenceHelper.setString(
+              Preferences.address, response.data!.address);
+
+          print(await SharedPreferenceHelper.getString(Preferences.access_token)
+                  .toString() +
+              '*' * 200);
+          Navigator.of(context).pushNamed('home');
+        }
         print(SharedPreferenceHelper.getString(Preferences.access_token));
         Fluttertoast.showToast(
           msg: '${response.msg}',
