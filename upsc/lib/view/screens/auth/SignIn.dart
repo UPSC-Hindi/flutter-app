@@ -95,7 +95,7 @@ class _loginscreenState extends State<loginscreen> {
       print("Result ${result!.authentication}");
       if (result!.email != null) {
         callApigooglelogin();
-        await _googleSignIn.signOut();
+        //await _googleSignIn.signOut();
         await _googleSignIn.disconnect();
       }
     } catch (error) {
@@ -181,6 +181,10 @@ class _loginscreenState extends State<loginscreen> {
                           validator: ValidationBuilder()
                               .required()
                               .minLength(8)
+                               .regExp(
+                                  RegExp(
+                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                                  'valid password ex:Testing@1')
                               .maxLength(50)
                               .build(),
                           onChanged: ((value) {
@@ -436,53 +440,71 @@ class _loginscreenState extends State<loginscreen> {
         setState(() {
           Preferences.hideDialog(context);
         });
-        if (response.data!.verified!) {
-          await SharedPreferenceHelper.setString(
-              Preferences.access_token, response.data!.accessToken);
-          await SharedPreferenceHelper.setBoolean(
-              Preferences.is_logged_in, true);
-          await SharedPreferenceHelper.setString(
-              Preferences.name, response.data!.fullName);
-          await SharedPreferenceHelper.setString(
-              Preferences.email, response.data!.email);
-          await SharedPreferenceHelper.setString(
-              Preferences.phoneNUmber, response.data!.phoneNumber);
-          await SharedPreferenceHelper.setString(Preferences.language,
-              response.data!.language == "hi" ? "Hindi" : 'English');
-          Languages.isEnglish = response.data!.language == "hi" ? false : true;
-          await SharedPreferenceHelper.setString(
-              Preferences.profileImage, response.data!.profilePhoto);
-          await SharedPreferenceHelper.setString(
-              Preferences.address, response.data!.address);
-          Navigator.of(context).pushNamed('home');
-        } else {
-          await SharedPreferenceHelper.setString(
-              Preferences.name, response.data!.fullName);
-          await SharedPreferenceHelper.setString(
-              Preferences.email, response.data!.email);
-          await SharedPreferenceHelper.setString(
-              Preferences.auth_token, response.data!.verificationToken);
-          SharedPreferenceHelper.setString(
-              Preferences.profileImage, response.data!.profilePhoto);
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MobileVerification(),
-            ),
+        if (response.data == null) {
+          Fluttertoast.showToast(
+            msg: '${response.msg}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: ColorResources.gray,
+            textColor: ColorResources.textWhite,
           );
+        } else {
+          if (response.data!.verified) {
+            await SharedPreferenceHelper.setString(
+                Preferences.access_token, response.data!.accessToken);
+            await SharedPreferenceHelper.setBoolean(
+                Preferences.is_logged_in, true);
+            await SharedPreferenceHelper.setString(
+                Preferences.name, response.data!.fullName);
+            await SharedPreferenceHelper.setString(
+                Preferences.email, response.data!.email);
+            await SharedPreferenceHelper.setString(
+                Preferences.phoneNUmber, response.data!.phoneNumber);
+            await SharedPreferenceHelper.setString(Preferences.language,
+                response.data!.language == "hi" ? "Hindi" : 'English');
+            Languages.isEnglish =
+                response.data!.language == "hi" ? false : true;
+            await SharedPreferenceHelper.setString(
+                Preferences.profileImage, response.data!.profilePhoto);
+            await SharedPreferenceHelper.setString(
+                Preferences.address, response.data!.address);
+            Navigator.of(context).pushNamed('home');
+            Fluttertoast.showToast(
+              msg: '${response.msg}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: ColorResources.gray,
+              textColor: ColorResources.textWhite,
+            );
+          } else {
+            await SharedPreferenceHelper.setString(
+                Preferences.name, response.data!.fullName);
+            await SharedPreferenceHelper.setString(
+                Preferences.email, response.data!.email);
+            await SharedPreferenceHelper.setString(
+                Preferences.auth_token, response.data!.verificationToken);
+            await SharedPreferenceHelper.setString(
+                Preferences.profileImage, response.data!.profilePhoto);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => MobileVerification(),
+              ),
+            );
+            print(SharedPreferenceHelper.getString(Preferences.access_token));
+            Fluttertoast.showToast(
+              msg: '${response.msg}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: ColorResources.gray,
+              textColor: ColorResources.textWhite,
+            );
+          }
         }
         // await SharedPreferenceHelper.setString(Preferences.language,
         //     response.data!.language == "hi" ? "Hindi" : 'English');
         // Languages.isEnglish = response.data!.language == "hi" ? false : true;
         //await Languages.initState();
         //Navigator.of(context).popUntil((route) => route.isFirst);
-        print(SharedPreferenceHelper.getString(Preferences.access_token));
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
       } else {
         setState(() {
           Preferences.hideDialog(context);

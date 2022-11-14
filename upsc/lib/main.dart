@@ -102,7 +102,7 @@ Future<void> main() async {
     badge: true,
     sound: true,
   );
-  
+
   //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
