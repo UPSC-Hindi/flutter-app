@@ -274,12 +274,12 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
       "amount": widget.course.amount,
-      "name": SharedPreferenceHelper.getString(Preferences.name),
-      "email": SharedPreferenceHelper.getString(Preferences.email),
-      "mobileNumber": SharedPreferenceHelper.getString(Preferences.phoneNUmber),
-      "description": "upschindi",
-      "transactionId": '123',
-      "transactiondate": DateTime.now().toString(),
+      // "name": SharedPreferenceHelper.getString(Preferences.name),
+      // "email": SharedPreferenceHelper.getString(Preferences.email),
+      // "mobileNumber": SharedPreferenceHelper.getString(Preferences.phoneNUmber),
+      // "description": "upschindi",
+      // "transactionId": '123',
+      // "transactiondate": DateTime.now().toString(),
       //"batch_id": id,
     };
     setState(() {
