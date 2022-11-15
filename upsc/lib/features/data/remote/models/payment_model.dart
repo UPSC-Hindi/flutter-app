@@ -25,14 +25,14 @@ class PaymentModel {
       required this.success});
 
   Map<String, dynamic> toJson() => {
-        "razorpay_order_id": orderId,
-        "userpaymentOrderId": userpaymentOrderId,
+        "pay_order_id": orderId,
+        "razorpay_order_id": userpaymentOrderId,
         "razorpay_payment_id": paymentId,
         "description": description,
         "mobileNumber": mobileNumber,
         "userName": userName,
         "userEmail": userEmail,
-        "Signature": Signature,
+        "razorpay_signature": Signature,
         "batchId": batchId,
         "price": price,
         "success": success,

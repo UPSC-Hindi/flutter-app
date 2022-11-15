@@ -67,18 +67,16 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     try {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.mycourses}');
-      print(response.data);
       return MyCoursesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
   }
-
-  @override
+    @override
   Future<ClassSchedulermodel> getMyClassSchedule() async {
     try {
-      var response = await dioAuthorizationData()
-          .get('${Apis.baseUrl}${Apis.classScheduler}');
+      var response =
+          await dioAuthorizationData().get('${Apis.baseUrl}${Apis.classScheduler}');
       return ClassSchedulermodel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -114,7 +112,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       rethrow;
     }
   }
-
   @override
   Future<Response> savePaymentStatus(PaymentModel paymentData) async {
     try {
@@ -129,10 +126,10 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<String> getOrderId(String batchId) async {
-    try {
-      return '12345';
-    } catch (error) {
+  Future<String> getOrderId(String batchId) async{
+    try{
+      return  '12345';
+    }catch(error){
       flutterToast(error.toString());
       rethrow;
     }

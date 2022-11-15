@@ -69,7 +69,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   height: MediaQuery.of(context).size.height * 0.40,
                 ),
                 Text(
-                  'Feel free to message us at',
+                  'Feel free to reach us on',
                   style: GoogleFonts.poppins(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -89,9 +89,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                     child: Column(
                       children: [
-                        const Icon(
-                          Icons.email,
-                          size: 30,
+                        Image.network(
+                          SvgImages.email,
+                          height: 30,
                         ),
                         const SizedBox(height: 10),
                         Text(
