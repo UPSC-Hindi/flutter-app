@@ -14,6 +14,9 @@ class SvgImages {
 
   static String logo = 'assets/images/logo_Splash.jpg';
 
+  static String currentaffer1 =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/Image.png";
+  static String currentaffer2 = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/thehindu.png";
 //support auth images
   static String google =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/flat-color-icons_google.svg';
@@ -36,6 +39,7 @@ class SvgImages {
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/cources.svg";
 
   //social media
+  static String email='https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/gmail_logo.png';
   static String telegram =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/telegram.png';
   static String youtube =

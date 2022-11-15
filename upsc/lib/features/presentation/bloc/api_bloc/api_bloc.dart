@@ -26,7 +26,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
         print(response.data);
         if (response.status) {
           emit(ApiCartDetailsSuccess(cartData: response.data));
-        } else {
+        } else{
           loginRoute();
         }
       } catch (error) {

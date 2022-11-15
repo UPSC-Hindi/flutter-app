@@ -81,7 +81,7 @@ class Languages {
             : false;
 
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
-    ncertBatches = isEnglish ? 'NCERT Batches' : 'NCERT बेच';
+    ncertBatches = isEnglish ? 'Join Us on' : 'को हमारे साथ शामिल हों';
     youTube = isEnglish ? 'On YouTube' : 'यूट्यूब पर ';
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
     latestNews = isEnglish ? 'On YouTube' : 'नवीनतम खबरें ';
@@ -153,6 +153,6 @@ class Languages {
     //help and support
     freeMessage = isEnglish ? 'Feel free to message us at' : '+ कार्य जोड़ें';
     emailText = isEnglish ? 'email' : 'ईमेल ';
-    whatsApp = isEnglish ? 'Whatsapp us' : 'व्हाट्सप्प करें ';
+    whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सप्प करें ';
   }
 }
