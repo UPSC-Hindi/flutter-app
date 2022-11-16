@@ -69,9 +69,9 @@ class _HomeScreensState extends State<HomeScreens> {
               itemBuilder:
                   (BuildContext context, int itemIndex, int pageViewIndex) =>
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Image.asset('assets/images/homeBanner.png'),
-                      ),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Image.asset('assets/images/homeBanner.png'),
+              ),
               options: CarouselOptions(
                 height: 140,
                 aspectRatio: 16 / 9,
@@ -88,7 +88,8 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 15,right: 10,top: 10,bottom: 10),
+              margin: const EdgeInsets.only(
+                  left: 15, right: 10, top: 10, bottom: 10),
               padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.90,
               decoration: BoxDecoration(
@@ -115,7 +116,8 @@ class _HomeScreensState extends State<HomeScreens> {
                             fontWeight: FontWeight.w600),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 3),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
                           color: ColorResources.buttoncolor,
                           borderRadius: BorderRadius.circular(20),
@@ -166,11 +168,11 @@ class _HomeScreensState extends State<HomeScreens> {
                     children: [
                       Image.network(
                         SvgImages.currentaffer2,
-                        height: MediaQuery.of(context).size.height*0.021,
+                        height: MediaQuery.of(context).size.height * 0.021,
                       ),
                       Image.network(
                         SvgImages.currentaffer1,
-                        height: MediaQuery.of(context).size.height*0.021,
+                        height: MediaQuery.of(context).size.height * 0.021,
                       ),
                     ],
                   ),
@@ -195,15 +197,18 @@ class _HomeScreensState extends State<HomeScreens> {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
-                    learnAboutContainer(),
-                    learnAboutContainer(),
-                    learnAboutContainer(),
+                    learnAboutContainer("Prelims", SvgImages.notepaper,
+                        "Syllabus, Best Strategies and more"),
+                    learnAboutContainer("Mains", SvgImages.intrview,
+                        "Syllabus, Best Strategies and more"),
+                    learnAboutContainer("Interviews", SvgImages.intrview,
+                        "Syllabus, Best Strategies and more"),
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,bottom: 5),
+              padding: const EdgeInsets.only(left: 20, bottom: 5),
               child: Text(
                 Languages.ncertBatches,
                 style: GoogleFonts.poppins(
@@ -296,8 +301,8 @@ class _HomeScreensState extends State<HomeScreens> {
                         color: ColorResources.textblack),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width*0.25,
-                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 3),
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
                       color: ColorResources.buttoncolor,
                       borderRadius: BorderRadius.circular(15),
@@ -374,7 +379,8 @@ class _HomeScreensState extends State<HomeScreens> {
                                 width: 130,
                                 height: 90,
                                 child: YouTubeContainerWidget(
-                                  videoUrl: videoList[index].videoUrl, height: 90,
+                                  videoUrl: videoList[index].videoUrl,
+                                  height: 90,
                                 ),
                               ),
                             );
@@ -438,63 +444,60 @@ class _HomeScreensState extends State<HomeScreens> {
     );
   }
 
-  Padding learnAboutContainer() {
+  Padding learnAboutContainer(name, imagefile, dec) {
     return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      height: 140,
-                      width: 160,
-                      decoration: BoxDecoration(
-                        color: ColorResources.textWhite,
-                        boxShadow: [
-                          BoxShadow(
-                              color: ColorResources.gray.withOpacity(0.5),
-                              blurRadius: 10,
-                              blurStyle: BlurStyle.normal)
-                        ],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                              height: 90,
-                              child: SvgPicture.network(SvgImages.notepaper)),
-                          Container(
-                            height: 50,
-                            width: double.infinity,
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20)),
-                                color: ColorResources.buttoncolor),
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Prelims',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        color: ColorResources.textWhite),
-                                  ),
-                                  Text(
-                                    'Syllabus, Best Strategies and more',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 8,
-                                        color: ColorResources.textWhite),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Container(
+        height: 140,
+        width: 160,
+        decoration: BoxDecoration(
+          color: ColorResources.textWhite,
+          boxShadow: [
+            BoxShadow(
+                color: ColorResources.gray.withOpacity(0.5),
+                blurRadius: 10,
+                blurStyle: BlurStyle.normal)
+          ],
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Container(height: 90, child: Image.network(imagefile)),
+            Container(
+              height: 50,
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
+                  color: ColorResources.buttoncolor),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name,
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                          color: ColorResources.textWhite),
                     ),
-                  );
+                    Text(
+                      dec,
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 8,
+                          color: ColorResources.textWhite),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

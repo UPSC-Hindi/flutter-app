@@ -344,7 +344,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       } else {
         print("-----api Payment error -----");
         Preferences.onLoading(context);
-        flutterToast("Something went wrong");
+        flutterToast("Pls Refresh (or) Reopen App");
       }
     } catch (error) {
       print(error);
