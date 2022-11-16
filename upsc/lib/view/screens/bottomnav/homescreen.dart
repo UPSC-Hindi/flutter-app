@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
@@ -69,9 +68,12 @@ class _HomeScreensState extends State<HomeScreens> {
               itemCount: images.length,
               itemBuilder:
                   (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      images[itemIndex],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Image.asset('assets/images/homeBanner.png'),
+                      ),
               options: CarouselOptions(
-                //height: 150,
+                height: 140,
                 aspectRatio: 16 / 9,
                 viewportFraction: 1,
                 initialPage: 0,
@@ -86,7 +88,7 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.only(left: 15,right: 10,top: 10,bottom: 10),
               padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.90,
               decoration: BoxDecoration(
@@ -113,10 +115,10 @@ class _HomeScreensState extends State<HomeScreens> {
                             fontWeight: FontWeight.w600),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 3),
                         decoration: BoxDecoration(
                           color: ColorResources.buttoncolor,
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: InkWell(
                           onTap: () {
@@ -158,21 +160,17 @@ class _HomeScreensState extends State<HomeScreens> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  // Text(
-                  //     'Revising and updating on current affairs will help you save your time',
-                  //     style: GoogleFonts.lato(
-                  //         fontSize: 14, color: ColorResources.textblack)),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.network(
                         SvgImages.currentaffer2,
-                        height: 15,
+                        height: MediaQuery.of(context).size.height*0.021,
                       ),
                       Image.network(
                         SvgImages.currentaffer1,
-                        height: 15,
+                        height: MediaQuery.of(context).size.height*0.021,
                       ),
                     ],
                   ),
@@ -192,197 +190,20 @@ class _HomeScreensState extends State<HomeScreens> {
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: Container(
+                margin: const EdgeInsets.only(left: 10.0),
+                padding: EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        height: 160,
-                        width: 160,
-                        decoration: BoxDecoration(
-                          color: ColorResources.textWhite,
-                          boxShadow: [
-                            BoxShadow(
-                                color: ColorResources.gray.withOpacity(0.5),
-                                blurRadius: 10,
-                                blurStyle: BlurStyle.normal)
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                                height: 100,
-                                child: SvgPicture.network(SvgImages.notepaper)),
-                            Container(
-                              height: 60,
-                              width: 159,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  color: ColorResources.buttoncolor),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'Prelims',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: ColorResources.textWhite),
-                                  ),
-                                  Text(
-                                    'Syllabus, Best Strategies and more',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 10,
-                                        color: ColorResources.textWhite),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        height: 160,
-                        width: 160,
-                        decoration: BoxDecoration(
-                          color: ColorResources.textWhite,
-                          boxShadow: [
-                            BoxShadow(
-                                color: ColorResources.gray.withOpacity(0.5),
-                                blurRadius: 10,
-                                blurStyle: BlurStyle.normal)
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              child: CachedNetworkImage(
-                                key: UniqueKey(),
-                                imageUrl: SvgImages.intrview,
-                                placeholder: (context, url) =>
-                                    Center(child: CircularProgressIndicator()),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              ),
-                            ),
-                            Container(
-                              height: 60,
-                              width: 159,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  color: ColorResources.buttoncolor),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    'Mains',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: ColorResources.textWhite),
-                                  ),
-                                  Text(
-                                    'Syllabus, Best Strategies and more',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 10,
-                                        color: ColorResources.textWhite),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        height: 160,
-                        width: 160,
-                        decoration: BoxDecoration(
-                          color: ColorResources.textWhite,
-                          boxShadow: [
-                            BoxShadow(
-                                color: ColorResources.gray.withOpacity(0.5),
-                                blurRadius: 10,
-                                blurStyle: BlurStyle.normal)
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              child: CachedNetworkImage(
-                                key: UniqueKey(),
-                                imageUrl: SvgImages.intrview,
-                                placeholder: (context, url) =>
-                                    Center(child: CircularProgressIndicator()),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              ),
-                            ),
-                            Container(
-                              height: 60,
-                              width: 160,
-                              padding: const EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  color: ColorResources.buttoncolor),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Interviews',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15,
-                                        color: ColorResources.textWhite),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    'Ethics, Personality and Tone',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 10,
-                                        color: ColorResources.textWhite),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    learnAboutContainer(),
+                    learnAboutContainer(),
+                    learnAboutContainer(),
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20, bottom: 5),
+              padding: const EdgeInsets.only(left: 20,bottom: 5),
               child: Text(
                 Languages.ncertBatches,
                 style: GoogleFonts.poppins(
@@ -475,7 +296,8 @@ class _HomeScreensState extends State<HomeScreens> {
                         color: ColorResources.textblack),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    width: MediaQuery.of(context).size.width*0.25,
+                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 3),
                     decoration: BoxDecoration(
                       color: ColorResources.buttoncolor,
                       borderRadius: BorderRadius.circular(15),
@@ -521,7 +343,8 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ),
             Container(
-              height: 180,
+              height: 120,
+              width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
                 color: ColorResources.textWhite,
@@ -548,10 +371,10 @@ class _HomeScreensState extends State<HomeScreens> {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => Container(
                                 margin: const EdgeInsets.all(5),
-                                width: 200,
-                                //height: 90,
+                                width: 130,
+                                height: 90,
                                 child: YouTubeContainerWidget(
-                                  videoUrl: videoList[index].videoUrl,
+                                  videoUrl: videoList[index].videoUrl, height: 90,
                                 ),
                               ),
                             );
@@ -559,7 +382,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       return const Text("No Video");
                     }
                   } else {
-                    return const CircularProgressIndicator();
+                    return Center(child: const CircularProgressIndicator());
                   }
                 },
               ),
@@ -613,5 +436,65 @@ class _HomeScreensState extends State<HomeScreens> {
         ),
       ),
     );
+  }
+
+  Padding learnAboutContainer() {
+    return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      height: 140,
+                      width: 160,
+                      decoration: BoxDecoration(
+                        color: ColorResources.textWhite,
+                        boxShadow: [
+                          BoxShadow(
+                              color: ColorResources.gray.withOpacity(0.5),
+                              blurRadius: 10,
+                              blurStyle: BlurStyle.normal)
+                        ],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                              height: 90,
+                              child: SvgPicture.network(SvgImages.notepaper)),
+                          Container(
+                            height: 50,
+                            width: double.infinity,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
+                                color: ColorResources.buttoncolor),
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Prelims',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                        color: ColorResources.textWhite),
+                                  ),
+                                  Text(
+                                    'Syllabus, Best Strategies and more',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 8,
+                                        color: ColorResources.textWhite),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
   }
 }
