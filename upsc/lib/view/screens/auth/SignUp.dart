@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUp> {
     callApigetbanner();
     super.initState();
   }
-  
+
   Future<BaseModel<getbannerdetails>> callApigetbanner() async {
     getbannerdetails response;
     try {
@@ -431,6 +431,7 @@ class _SignUpState extends State<SignUp> {
     }
     return BaseModel()..data = response;
   }
+
   Future<BaseModel<GoogleSignIn>> callApigooglelogin() async {
     GoogleSignIn response;
     print("*123" * 200);
@@ -441,7 +442,7 @@ class _SignUpState extends State<SignUp> {
       "deviceConfig": deviceConfig,
       "deviceName": deviceName,
     };
-     setState(() {
+    setState(() {
       Preferences.onLoading(context);
     });
     try {
@@ -449,9 +450,9 @@ class _SignUpState extends State<SignUp> {
           await RestClient(RetroApi2().dioData2()).googleSigninRequest(body);
       if (response.status!) {
         setState(() {
-        Preferences.hideDialog(context);
-      });
-        if (response.data!.verified!) {
+          Preferences.hideDialog(context);
+        });
+        if (response.data!.verified) {
           await SharedPreferenceHelper.setString(
               Preferences.access_token, response.data!.accessToken);
           await SharedPreferenceHelper.setBoolean(
@@ -499,9 +500,9 @@ class _SignUpState extends State<SignUp> {
           textColor: ColorResources.textWhite,
         );
       } else {
-         setState(() {
-        Preferences.hideDialog(context);
-      });
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -511,7 +512,7 @@ class _SignUpState extends State<SignUp> {
         );
       }
     } catch (error, stacktrace) {
-       setState(() {
+      setState(() {
         Preferences.hideDialog(context);
       });
       print("Exception occur: $error stackTrace: $stacktrace");
