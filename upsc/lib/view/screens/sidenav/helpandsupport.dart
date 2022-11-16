@@ -45,9 +45,9 @@ class HelpAndSupport extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Icon(
-                    Icons.email,
-                    size: 30,
+                  Image.network(
+                    SvgImages.email,
+                    height: 40,
                   ),
                   const SizedBox(height: 10),
                   Text(

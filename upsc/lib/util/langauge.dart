@@ -84,7 +84,7 @@ class Languages {
     ncertBatches = isEnglish ? 'Join Us on' : 'को हमारे साथ शामिल हों';
     youTube = isEnglish ? 'On YouTube' : 'यूट्यूब पर ';
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
-    latestNews = isEnglish ? 'On YouTube' : 'नवीनतम खबरें ';
+    latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
 
     //tab bar course
     prelims = isEnglish ? 'Prelims' : 'प्रीलिम्स';
