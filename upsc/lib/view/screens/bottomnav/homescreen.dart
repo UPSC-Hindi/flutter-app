@@ -550,8 +550,7 @@ class _HomeScreensState extends State<HomeScreens> {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => Container(
                                 margin: const EdgeInsets.all(5),
-                                width: 130,
-                                height: 90,
+                              
                                 child: YouTubeContainerWidget(
                                   videoUrl: videoList[index].videoUrl,
                                 ),

@@ -121,7 +121,7 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
         child: Column(
           children: [
             Container(
-              height: 100,
+              height: 140,
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
