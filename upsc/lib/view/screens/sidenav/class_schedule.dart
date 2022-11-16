@@ -43,7 +43,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text('Something went wrong'),
+              child: Text('Pls Refresh (or) Reopen App'),
             );
           }
           if (state is ApiGetMyclassSchedulerSucces) {

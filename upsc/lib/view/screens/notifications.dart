@@ -71,6 +71,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       response =
           await RestClient(RetroApi().dioData(token!)).getnotificationRequest();
       setState(() {
+        print(response.data);
         notificationData = response.data!;
       });
     } catch (error, stacktrace) {

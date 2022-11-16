@@ -45,7 +45,7 @@ class _MyScheduleState extends State<MySchedule> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text('Something went wrong'),
+              child: Text('Pls Refresh (or) Reopen App'),
             );
           }
           if (state is ApiGetSchedulerSuccess) {
@@ -77,7 +77,6 @@ class _MyScheduleState extends State<MySchedule> {
 
   Widget _bodyWidget(
       BuildContext context, List<MySchedulerDataModel> schedulerList) {
-        
     //flutterToast("loggedIn:${schedulerList[0].loggedIn}");
     return SingleChildScrollView(
       child: Column(

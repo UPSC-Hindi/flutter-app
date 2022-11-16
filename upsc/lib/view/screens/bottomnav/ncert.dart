@@ -77,7 +77,7 @@ class _NcertScreenState extends State<NcertScreen> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return YouTubeContainerWidget(
-                    videoUrl: videData[index].videoUrl,
+                    videoUrl: videData[index].videoUrl, height: 140,
                   );
                 }),
           )
@@ -88,9 +88,10 @@ class _NcertScreenState extends State<NcertScreen> {
 }
 
 class YouTubeContainerWidget extends StatefulWidget {
-  const YouTubeContainerWidget({Key? key, required this.videoUrl})
+  const YouTubeContainerWidget({Key? key, required this.videoUrl, required this.height})
       : super(key: key);
   final String videoUrl;
+  final double  height;
   @override
   State<YouTubeContainerWidget> createState() => _YouTubeContainerWidgetState();
 }
@@ -121,7 +122,7 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
         child: Column(
           children: [
             Container(
-              height: 140,
+              height: widget.height,
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),

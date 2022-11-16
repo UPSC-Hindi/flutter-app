@@ -86,7 +86,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
       builder: (context, state) {
         if (state is ApiError) {
           return const Center(
-            child: Text('Something went wrong'),
+            child: Text('Pls Refresh (or) Reopen App'),
           );
         }
         if (state is ApiCoursesSuccess) {
