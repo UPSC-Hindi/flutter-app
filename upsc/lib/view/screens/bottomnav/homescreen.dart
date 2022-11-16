@@ -131,9 +131,9 @@ class _HomeScreensState extends State<HomeScreens> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Start Now',
+                                'Explore',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 8,
+                                  fontSize: 10,
                                   color: Colors.white,
                                 ),
                               ), // <-- Text
@@ -167,11 +167,11 @@ class _HomeScreensState extends State<HomeScreens> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.network(
-                        SvgImages.currentaffer1,
+                        SvgImages.currentaffer2,
                         height: 15,
                       ),
                       Image.network(
-                        SvgImages.currentaffer2,
+                        SvgImages.currentaffer1,
                         height: 15,
                       ),
                     ],
@@ -196,61 +196,58 @@ class _HomeScreensState extends State<HomeScreens> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Container(
-                          height: 160,
-                          width: 160,
-                          decoration: BoxDecoration(
-                            color: ColorResources.textWhite,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: ColorResources.gray.withOpacity(0.5),
-                                  blurRadius: 10,
-                                  blurStyle: BlurStyle.normal)
-                            ],
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                  height: 100,
-                                  child:
-                                      SvgPicture.network(SvgImages.notepaper)),
-                              Container(
-                                height: 60,
-                                width: 159,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10)),
-                                    color: ColorResources.buttoncolor),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      'Prelims',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15,
-                                          color: ColorResources.textWhite),
-                                    ),
-                                    Text(
-                                      'Syllabus, Best Strategies and more',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 10,
-                                          color: ColorResources.textWhite),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 160,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color: ColorResources.textWhite,
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 10,
+                                blurStyle: BlurStyle.normal)
+                          ],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 100,
+                                child: SvgPicture.network(SvgImages.notepaper)),
+                            Container(
+                              height: 60,
+                              width: 159,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  color: ColorResources.buttoncolor),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Prelims',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        color: ColorResources.textWhite),
+                                  ),
+                                  Text(
+                                    'Syllabus, Best Strategies and more',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: ColorResources.textWhite),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -284,27 +281,27 @@ class _HomeScreensState extends State<HomeScreens> {
                             ),
                             Container(
                               height: 60,
-                              width: 160,
-                              padding: const EdgeInsets.all(6),
+                              width: 159,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10)),
                                   color: ColorResources.buttoncolor),
                               child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
-                                    'Interviews',
+                                    'Mains',
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 15,
                                         color: ColorResources.textWhite),
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
                                   Text(
-                                    'Ethics, Personality and Tone',
+                                    'Syllabus, Best Strategies and more',
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 10,
@@ -524,7 +521,7 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ),
             Container(
-              height: 120,
+              height: 180,
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
                 color: ColorResources.textWhite,
@@ -546,11 +543,13 @@ class _HomeScreensState extends State<HomeScreens> {
                       return videoList.isEmpty
                           ? const Text("No Video")
                           : ListView.builder(
+                              shrinkWrap: true,
                               itemCount: videoList.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => Container(
                                 margin: const EdgeInsets.all(5),
-                              
+                                width: 200,
+                                //height: 90,
                                 child: YouTubeContainerWidget(
                                   videoUrl: videoList[index].videoUrl,
                                 ),
