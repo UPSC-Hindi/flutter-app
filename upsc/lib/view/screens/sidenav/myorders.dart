@@ -25,7 +25,7 @@ class MyOrdersScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text('Something Went Wrong'),
+              child: Text('Pls Refresh (or) Reopen App'),
             );
           }
           if (state is ApiMyCoursesSuccess) {
@@ -80,9 +80,13 @@ class MyOrdersScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    courseData.batchDetails.batchName,
-                    style: TextStyle(fontSize: 24),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.58,
+                    child: Text(
+                      courseData.batchDetails.batchName,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 24),
+                    ),
                   ),
                   Text(
                     "₹ ${courseData.batchDetails.charges}",

@@ -22,38 +22,37 @@ class MyCoursesScreen extends StatelessWidget {
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body:
-          BlocBuilder<ApiBloc, ApiState>(
-            builder: (context, state) {
-              if (state is ApiError) {
-                return const Center(
-                  child: Text('Something Went Wrong'),
-                );
-              }
-              if (state is ApiMyCoursesSuccess) {
-                if (state.myCourses.isEmpty) {
-                  return EmptyWidget(
-                    text: 'There are no courses',
-                    image: SvgImages.emptyCard,
-                  );
-                } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.myCourses.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _myCoursesCardWidget(
-                        context,
-                        state.myCourses[index],
-                      ),
-                    ),
-                  );
-                }
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
+      body: BlocBuilder<ApiBloc, ApiState>(
+        builder: (context, state) {
+          if (state is ApiError) {
+            return const Center(
+              child: Text('Pls Refresh (or) Reopen App'),
+            );
+          }
+          if (state is ApiMyCoursesSuccess) {
+            if (state.myCourses.isEmpty) {
+              return EmptyWidget(
+                text: 'There are no courses',
+                image: SvgImages.emptyCard,
               );
-            },
+            } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: state.myCourses.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _myCoursesCardWidget(
+                    context,
+                    state.myCourses[index],
+                  ),
+                ),
+              );
+            }
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

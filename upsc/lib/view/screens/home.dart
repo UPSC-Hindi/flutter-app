@@ -104,11 +104,45 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         actions: [
-          IconButton(
-              onPressed: (() {
-                Navigator.of(context).pushNamed('notifications');
-              }),
-              icon: const Icon(Icons.circle_notifications_outlined))
+           Container(
+            width: 130,
+            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            decoration: BoxDecoration(
+                color: Color(0xFFF6CBB4),
+                borderRadius: BorderRadius.circular(20)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Notification',
+                  style: TextStyle(
+                    color: Color(0xFF783B3B),
+                  ),
+                ),
+                InkWell(
+                  onTap: (() {
+                    Navigator.of(context).pushNamed('notifications');
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 16,
+                      child: Stack(
+                        children: [
+                          const Center(child: Icon(Icons.notifications_none_outlined,color: Color(0xFF783B3B),size: 20,)),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 11,left: 17,top: 9,),
+                            child: const CircleAvatar(backgroundColor: Colors.red,radius: 3,),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
       drawer: SafeArea(

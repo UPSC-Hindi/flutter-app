@@ -24,7 +24,7 @@ class SvgImages {
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/bi_apple.svg';
 
   static String notepaper =
-      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/note-paper+1.svg';
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/penpaper.png';
   static String intrview =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/Group.jpg';
   static String blurimageexam =
