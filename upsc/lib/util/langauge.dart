@@ -12,7 +12,7 @@ class Languages {
   static String mains = '';
   static String interview = '';
   static String ro = '';
-  static String courses = 'c';
+  static String courses = '';
   static String home = '';
   static String mockTest = '';
 
