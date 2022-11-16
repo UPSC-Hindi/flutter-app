@@ -16,7 +16,8 @@ class ClassSchedule extends StatefulWidget {
 }
 
 class _ClassScheduleState extends State<ClassSchedule> {
-  String? datetoshow;
+  String datetoshow = DateFormat('dd-MM-yyyy').format(DateTime.now());
+  List listdata = [];
   final _dateController = TextEditingController();
 
   @override
@@ -25,7 +26,6 @@ class _ClassScheduleState extends State<ClassSchedule> {
           GetmyClassSchedule(),
         );
     super.initState();
-    datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
 
   @override
@@ -49,6 +49,32 @@ class _ClassScheduleState extends State<ClassSchedule> {
           if (state is ApiGetMyclassSchedulerSucces) {
             state.myclassschedulerList
                 .sort((a, b) => (a.startingDate!.compareTo(b.startingDate!)));
+            state.myclassschedulerList.forEach((element) {
+              print(DateFormat("dd-MM-yyyy")
+                  .parse(element.startingDate!)
+                  .toString()
+                  .split(" ")[0]);
+              print('-' * 200);
+              print(datetoshow! + "sdasd");
+              print('*' * 200);
+              print(DateFormat("dd-MM-yyyy")
+                      .parse(datetoshow!)
+                      .toString()
+                      .split(" ")[0] +
+                  "sdasd");
+              print('-' * 200);
+              if (DateFormat("dd-MM-yyyy")
+                      .parse(element.startingDate!)
+                      .toString()
+                      .split(" ")[0] ==
+                  DateFormat("dd-MM-yyyy")
+                      .parse(datetoshow)
+                      .toString()
+                      .split(" ")[0]) {
+                listdata.add(element);
+                print('------found u---------');
+              }
+            });
             return state.myclassschedulerList.isEmpty
                 ? const Center(
                     child: Text('There is no Scheduler'),
@@ -77,7 +103,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                 height: 20,
               ),
               Text(
-                datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
+                datetoshow == DateFormat('dd-MM-yyyy').format(DateTime.now())
                     ? Languages.scheduleForToday
                     : "Schedule for",
                 style: GoogleFonts.poppins(fontSize: 20),
@@ -146,7 +172,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                     print(
                         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                     String formattedDate =
-                        DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                        DateFormat('dd-MM-yyyy').format(pickedDate);
                     print(
                         formattedDate); //formatted date output using intl package =>  2021-03-16
                     setState(() {
@@ -223,7 +249,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
               ),
               //Text(schedulerData.startingDate!),
               Text(DateFormat.jm()
-                  .format(DateFormat(' dd-MM-yyyy HH:mm:ss')
+                  .format(DateFormat('dd-MM-yyyy HH:mm:ss')
                       .parse(schedulerData.startingDate!))
                   .toString()),
             ],
