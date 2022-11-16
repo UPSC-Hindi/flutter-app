@@ -152,7 +152,7 @@ class Languages {
 
     //help and support
     freeMessage = isEnglish ? 'Feel free to message us at' : '+ कार्य जोड़ें';
-    emailText = isEnglish ? 'email' : 'ईमेल ';
+    emailText = isEnglish ? 'Mail us at' : 'हमें मेल करें';
     whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सप्प करें ';
   }
 }

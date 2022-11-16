@@ -148,8 +148,10 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             data.batchName,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style:
-                GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                color: Color(0Xff444444)),
           ),
           const SizedBox(
             height: 10,

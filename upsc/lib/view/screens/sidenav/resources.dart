@@ -48,6 +48,10 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             onTap: () => Navigator.of(context).pushNamed('samplenotes'),
             child: _resourceCardWidget(SvgImages.sampleNotes, 'Sample Notes'),
           ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed('samplenotes'),
+            child: _resourceCardWidget(SvgImages.sampleNotes, 'Air'),
+          ),
         ],
       ),
     );
