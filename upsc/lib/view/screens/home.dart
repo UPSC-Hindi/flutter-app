@@ -41,8 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  static final List _widgetOptions = [
-    const HomeScreens(),
+  final List<Widget> _widgetOptions = [
+    HomeScreens(),
     const CourseScreen(),
     const mocktestscreen(),
     const ProfilScreen()
@@ -591,5 +591,11 @@ class _HomeScreenState extends State<HomeScreen> {
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
+  }
+
+  void _changePage() {
+      setState(() {
+
+      });
   }
 }

@@ -9,6 +9,7 @@ import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/models/banner.dart';
@@ -20,7 +21,8 @@ import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreens extends StatefulWidget {
-  const HomeScreens({Key? key}) : super(key: key);
+  const HomeScreens({Key? key,}) : super(key: key);
+  // final VoidCallback onTap;
 
   @override
   State<HomeScreens> createState() => _HomeScreensState();
@@ -28,6 +30,7 @@ class HomeScreens extends StatefulWidget {
 
 class _HomeScreensState extends State<HomeScreens> {
   List<Widget> images = [];
+  RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
 
   Future<BaseModel<getbannerdetails>> callApigetbanner() async {
     getbannerdetails response;
@@ -49,9 +52,12 @@ class _HomeScreensState extends State<HomeScreens> {
     return BaseModel()..data = response;
   }
 
+  late Future<MyCoursesModel> myCoursesData;
+
   @override
   void initState() {
     callApigetbanner();
+    myCoursesData = remoteDataSourceImpl.getMyCourses();
     super.initState();
   }
 
@@ -64,27 +70,23 @@ class _HomeScreensState extends State<HomeScreens> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CarouselSlider.builder(
-              itemCount: images.length,
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Image.asset('assets/images/homeBanner.png'),
-              ),
-              options: CarouselOptions(
-                height: 140,
-                aspectRatio: 16 / 9,
-                viewportFraction: 1,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                // enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: CarouselSlider(
+                items: images,
+                options: CarouselOptions(
+                  height: 140,
+                  viewportFraction: 1,
+                  initialPage: 0,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                ),
               ),
             ),
             Container(
@@ -180,113 +182,119 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: Text(
-                Languages.learnAbout,
+                Languages.myCourses,
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
                     color: ColorResources.textblack),
               ),
             ),
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                margin: const EdgeInsets.only(left: 10.0),
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    learnAboutContainer("Prelims", SvgImages.notepaper,
-                        "Syllabus, Best Strategies and more"),
-                    learnAboutContainer("Mains", SvgImages.intrview,
-                        "Syllabus, Best Strategies and more"),
-                    learnAboutContainer("Interviews", SvgImages.intrview,
-                        "Syllabus, Best Strategies and more"),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, bottom: 5),
-              child: Text(
-                Languages.ncertBatches,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: ColorResources.textblack),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      launchUrl(
-                          Uri.parse(
-                              "https://www.youtube.com/c/GauravTripathiiitroorkee"),
-                          mode: LaunchMode.externalApplication);
-                    },
-                    child: Container(
-                        height: 100,
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        decoration: BoxDecoration(
-                            color: ColorResources.youtube,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: ColorResources.gray.withOpacity(0.5),
-                                  blurRadius: 5,
-                                  blurStyle: BlurStyle.normal)
-                            ],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: SvgImages.youtube,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ],
-                        )),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      launchUrl(Uri.parse("https://t.me/upschindi4cs"),
-                          mode: LaunchMode.externalApplication);
-                    },
-                    child: Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      decoration: BoxDecoration(
-                          color: ColorResources.telegarm,
-                          boxShadow: [
-                            BoxShadow(
-                                color: ColorResources.gray.withOpacity(0.5),
-                                blurRadius: 5,
-                                blurStyle: BlurStyle.normal)
-                          ],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: SvgImages.telegram,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            Container(
+              margin: const EdgeInsets.only(left: 10.0),
+              height: 138,
+              child: FutureBuilder<MyCoursesModel>(
+                  future: myCoursesData,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        MyCoursesModel? myCourses = snapshot.data;
+                        return myCourses!.data.isEmpty
+                            ? Container(
+                                margin: const EdgeInsets.only(
+                                    left: 8, right: 20, top: 10, bottom: 10),
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: ColorResources.textWhite,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          ColorResources.gray.withOpacity(0.5),
+                                      blurRadius: 5.0,
+                                    ),
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      'Do Explore all the courses',
+                                      style: TextStyle(
+                                          color: ColorResources.gray,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    GestureDetector(
+                                      onTap: (){
+                                        //TODO: hello dinesh check this issue
+                                      },
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.3,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: ColorResources.buttoncolor,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Continue',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                color: Colors.white,
+                                              ),
+                                            ), // <-- Text
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: ColorResources.gray
+                                                    .withOpacity(0.3),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: const Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 10,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: myCourses.data.length,
+                                itemBuilder: (context, index) =>
+                                    _myCoursesCardWidget(
+                                  myCourses.data[index],
+                                ),
+                              );
+                      } else {
+                        return const Text("There is no internet Connection");
+                      }
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  }),
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -302,7 +310,8 @@ class _HomeScreensState extends State<HomeScreens> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.25,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
                       color: ColorResources.buttoncolor,
                       borderRadius: BorderRadius.circular(15),
@@ -388,10 +397,94 @@ class _HomeScreensState extends State<HomeScreens> {
                       return const Text("No Video");
                     }
                   } else {
-                    return Center(child: const CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, bottom: 10, top: 15),
+              child: Text(
+                Languages.ncertBatches,
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: ColorResources.textblack),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      launchUrl(
+                          Uri.parse(
+                              "https://www.youtube.com/c/GauravTripathiiitroorkee"),
+                          mode: LaunchMode.externalApplication);
+                    },
+                    child: Container(
+                        height: 100,
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        decoration: BoxDecoration(
+                            color: ColorResources.youtube,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: ColorResources.gray.withOpacity(0.5),
+                                  blurRadius: 5,
+                                  blurStyle: BlurStyle.normal)
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: SvgImages.youtube,
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                          ],
+                        )),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      launchUrl(Uri.parse("https://t.me/upschindi4cs"),
+                          mode: LaunchMode.externalApplication);
+                    },
+                    child: Container(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      decoration: BoxDecoration(
+                          color: ColorResources.telegarm,
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 5,
+                                blurStyle: BlurStyle.normal)
+                          ],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: SvgImages.telegram,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             Center(
               child: Padding(
@@ -444,59 +537,115 @@ class _HomeScreensState extends State<HomeScreens> {
     );
   }
 
-  Padding learnAboutContainer(name, imagefile, dec) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Container(
-        height: 140,
-        width: 160,
-        decoration: BoxDecoration(
-          color: ColorResources.textWhite,
-          boxShadow: [
-            BoxShadow(
-                color: ColorResources.gray.withOpacity(0.5),
-                blurRadius: 10,
-                blurStyle: BlurStyle.normal)
-          ],
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          children: [
-            Container(height: 90, child: Image.network(imagefile)),
-            Container(
-              height: 50,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  color: ColorResources.buttoncolor),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      name,
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                          color: ColorResources.textWhite),
-                    ),
-                    Text(
-                      dec,
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 8,
-                          color: ColorResources.textWhite),
-                    )
-                  ],
-                ),
+  Container _myCoursesCardWidget(MyCoursesDataModel data) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      width: MediaQuery.of(context).size.width * 0.6,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: ColorResources.textWhite,
+        boxShadow: [
+          BoxShadow(
+            color: ColorResources.gray.withOpacity(0.5),
+            blurRadius: 5.0,
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            data.batchDetails.batchName,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: const Color(0Xff444444)),
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: const [
+                  Icon(
+                    Icons.sensors_outlined,
+                    color: Colors.redAccent,
+                  ),
+                  Text(
+                    'Live lectures',
+                    style: TextStyle(fontSize: 8),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
+              Column(
+                children: const [
+                  Icon(Icons.signal_cellular_alt),
+                  Text(
+                    '100% Online',
+                    style: TextStyle(fontSize: 8),
+                  )
+                ],
+              ),
+              Column(
+                children: const [
+                  Icon(Icons.download),
+                  Text(
+                    'Downloadable',
+                    style: TextStyle(fontSize: 8),
+                  )
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, 'mycoursesscreen');
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.3,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: ColorResources.buttoncolor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Continue',
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: Colors.white,
+                    ),
+                  ), // <-- Text
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: ColorResources.gray.withOpacity(0.3),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 10,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

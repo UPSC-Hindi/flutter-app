@@ -14,6 +14,7 @@ class SvgImages {
 
   static String logo = 'assets/images/logo_Splash.jpg';
 
+  static String aboutLogo = 'https://storage-upschindi.s3.ap-south-1.amazonaws.com/app_final.png';
   static String currentaffer1 =
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/Image.png";
   static String currentaffer2 = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/thehindu.png";

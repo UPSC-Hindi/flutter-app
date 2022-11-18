@@ -142,7 +142,7 @@ class MyApp extends StatelessWidget {
                 isLogin: false,
               ),
           'notifications': (context) => const NotificationScreen(),
-          'homescreen': (context) => const HomeScreens(),
+          // 'homescreen': (context) => const HomeScreens(),
           'Coursescreen': (context) => const CourseScreen(),
           'mocktestscreen': (context) => const mocktestscreen(),
           'ProfilScreen': (context) => const ProfilScreen(),
