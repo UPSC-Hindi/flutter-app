@@ -56,12 +56,12 @@ class _CourseScreenState extends State<CourseScreen> {
                 itemBuilder: (BuildContext bc) {
                   return const [
                     PopupMenuItem(
-                      child: Text("Hello"),
                       value: '/hello',
+                      child: Text("Hello"),
                     ),
                     PopupMenuItem(
-                      child: Text("About"),
                       value: '/about',
+                      child: Text("About"),
                     ),
                     PopupMenuItem(
                       child: Text("Contact"),
