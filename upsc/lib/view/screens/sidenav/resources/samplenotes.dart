@@ -8,7 +8,6 @@ import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 
-
 class SampleNotesScreen extends StatefulWidget {
   const SampleNotesScreen({Key? key}) : super(key: key);
 
@@ -21,7 +20,9 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 
   @override
   void initState() {
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Sample Notes'));
+    context
+        .read<ApiBloc>()
+        .add(const GetResources(key: 'Category', value: 'Sample Notes'));
     super.initState();
   }
 
@@ -48,7 +49,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text("Unable to get data"),
+              child: Text("Sample Notes not available"),
+              //child: Text("Unable to get data"),
             );
           }
           if (state is ApiResourcesSuccess) {
@@ -72,9 +74,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-
           SearchBarWidget(searchtest: _searchtest),
-
           FractionallySizedBox(
             widthFactor: 0.90,
             child: ListView.builder(

@@ -19,9 +19,12 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
   final TextEditingController _searchtest = TextEditingController();
   @override
   void initState() {
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'YouTube Notes'));
+    context
+        .read<ApiBloc>()
+        .add(const GetResources(key: 'Category', value: 'YouTube Notes'));
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +41,8 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text("Unable to get data"),
+              child: Text("Youtube Notes not available"),
+              //child: Text("Unable to get data"),
             );
           }
           if (state is ApiResourcesSuccess) {
@@ -80,87 +84,94 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
 
   Container _videoResourceWidget({required BatchNotesDataModel resource}) {
     return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: ColorResources.borderColor),
-          ),
-          padding: const EdgeInsets.all(10),
-          margin:const EdgeInsets.symmetric(vertical: 10),
-          child: Column(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: ColorResources.borderColor),
+      ),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Image.network(SvgImages.pdfimage),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            resource.title,
-                            style: GoogleFonts.poppins(
-                                fontSize: 15, fontWeight: FontWeight.w500,color: ColorResources.gray),
-                          ),
-                          Text(
-                            '2.5 MB',
-                            style: GoogleFonts.poppins(
-                                fontSize: 10, color: ColorResources.gray),
-                          ),
-                        ],
-                      ),
-                    ],
+                  Image.network(SvgImages.pdfimage),
+                  const SizedBox(
+                    width: 30,
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: Column(
-                      children: [
-                        Text('PDF',style: TextStyle(
-                            fontSize: 15,
-                            color: ColorResources.buttoncolor,
-                            fontWeight: FontWeight.w700
-                        ),),
-                        Icon(
-                          Icons.file_download_outlined,
-                          size: 25,
-                          color: ColorResources.buttoncolor,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: ColorResources.gray),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  width: 135,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Watch on YouTube",
+                        resource.title,
                         style: GoogleFonts.poppins(
-                          color: ColorResources.textblack,
-                          fontSize: 10,
-                        ),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: ColorResources.gray),
                       ),
-                      Icon(Icons.arrow_circle_right_rounded,
-                        color: ColorResources.gray,size: 15,),
+                      Text(
+                        '2.5 MB',
+                        style: GoogleFonts.poppins(
+                            fontSize: 10, color: ColorResources.gray),
+                      ),
                     ],
                   ),
+                ],
+              ),
+              InkWell(
+                onTap: () {},
+                child: Column(
+                  children: [
+                    Text(
+                      'PDF',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: ColorResources.buttoncolor,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Icon(
+                      Icons.file_download_outlined,
+                      size: 25,
+                      color: ColorResources.buttoncolor,
+                    ),
+                  ],
                 ),
               )
             ],
           ),
-        );
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: ColorResources.gray),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              width: 135,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "Watch on YouTube",
+                    style: GoogleFonts.poppins(
+                      color: ColorResources.textblack,
+                      fontSize: 10,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_circle_right_rounded,
+                    color: ColorResources.gray,
+                    size: 15,
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
