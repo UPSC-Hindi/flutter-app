@@ -41,16 +41,17 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text("Unable to get data"),
+              child: Text("Short notes not available"),
+              //child: Text("Unable to get data"),
             );
           }
           if (state is ApiResourcesSuccess) {
-            if (state.resources.data.isEmpty) {
+            if (state.resources!.data.isEmpty) {
               return const Center(
                 child: Text('There is no resources'),
               );
             }
-            return _bodyWidget(state.resources.data);
+            return _bodyWidget(state.resources!.data);
           }
           return const Center(
             child: CircularProgressIndicator(),

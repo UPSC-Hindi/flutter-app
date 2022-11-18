@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -25,9 +26,14 @@ class AboutUsScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.20,
                 child: Column(
                   children: [
-                    Image.asset(
-                      SvgImages.logo,
-                      height: 50,
+                    SizedBox(
+                      height: 60,
+                      child: CachedNetworkImage(
+                        imageUrl: SvgImages.aboutLogo,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -52,7 +58,8 @@ class AboutUsScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    'जो भी अभ्यर्थी हमारे साथ paid courses में शामिल हैं ,हम उनके साथ समय- समय पर \n \n zoom , Google meet के ज़रिए जुड़ते है और वो भी एक परिवार की भाँति सुझाव देते है कि किस प्रकार UPSC हिन्दी को और बेहतर बनाया जा सकता है ।\n \n  –UPSC हिन्दी का अन्य किसी भी YouTube चैनल से view/subscriber ratio ज़्यादा है , जो की हमारे प्रति लोगों के भरोसे को प्रदर्शित करता है ।\n \n –हमारी टीम में स्वयं ASPIRANT है जिससे हम परीक्षा की गतिशीलता के अनुसार रणनीति में ज़रूरी बदलाव करते रहते है, और ट्रेंड्स को पकड़े रहते हैं ,जो की किसी भी अन्य संस्थान (जो निर्धारित ढर्रे पर चले जा रहे हैं) के विपरीत है ।',
+                    'UPSC HINDI एक उत्कृष्ट शैक्षणिक संस्थान है जिसका उद्देश्य विशेष तौर पर सिविल सेवा परीक्षा में क्रांति लाना है। UPSC HINDI अपने ध्येय वाक्य “सिद्धिर्भवति कर्मजा” को श्रीमद्भागवतगीता से ग्रहण करता है एवं इसके सार को छात्रों के मध्य प्रसारित करता है कि “अभ्यास से ही सफलता प्राप्त होती है।” \n\nUPSC HINDI वर्तमान में संघ लोक सेवा आयोग एवं राज्य लोक सेवा आयोग के क्षेत्र में कार्य कर रहा है। भविष्य में UPSC HINDI अन्य सभी परीक्षाओं के लिए भी विद्यार्थियों को वहनीय, गुणवत्तापूर्ण एवं प्रभावी शिक्षण के साथ मार्गदर्शन उपलब्ध कराने हेतु प्रयासरत है। \n\n#AffordableEducation\n\nUPSC HINDI टीम बेहद अनुभवी एवं सफल है जिसके साथ अभी तक बहुत से अभ्यर्थियों ने अपने लक्ष्य को प्राप्त किया है। \n\nसंस्थापक: \n\nगौरव कुमार त्रिपाठी (02 IAS INTERVIEW, UPPSC 2020 SELECTED, IIT R)'
+                    '\n\nसत्यप्रकाश त्रिपाठी (MA (हिन्दी), NET)\n\nरमन दीप (IIT DHN)\n\nनिशांत त्रिपाठी (PCS विशेषज्ञ)\n\nपल्लव (MMMUT)',
                     textAlign: TextAlign.justify,
                     style: GoogleFonts.poppins(
                       fontSize: 18,

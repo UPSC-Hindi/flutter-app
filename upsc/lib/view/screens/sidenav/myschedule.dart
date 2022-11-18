@@ -49,7 +49,6 @@ class _MyScheduleState extends State<MySchedule> {
             );
           }
           if (state is ApiGetSchedulerSuccess) {
-            print(state.schedulerList[0].notifyAt);
             return state.schedulerList.isEmpty
                 ? const Center(
                     child: Text('There is no Scheduler'),

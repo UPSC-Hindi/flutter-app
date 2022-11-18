@@ -45,7 +45,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       height: 30,
                     ),
                     Image.asset(
-                      SvgImages.logo,
+                      SvgImages.aboutLogo,
                       height: 50,
                     ),
                     const SizedBox(

@@ -45,7 +45,8 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text("Unable to get data"),
+              child: Text("Daily News not available"),
+              //child: Text("Unable to get data"),
             );
           }
           if (state is ApiResourcesSuccess) {
