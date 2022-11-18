@@ -150,6 +150,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
                 onPressed: () async {
+                  listdata.clear();
                   DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
@@ -163,7 +164,6 @@ class _ClassScheduleState extends State<ClassSchedule> {
                     print(
                         formattedDate); //formatted date output using intl package =>  2021-03-16
                     setState(() {
-                      listdata.clear();
                       datetoshow =
                           formattedDate; //set output date to TextField value.
                     });
