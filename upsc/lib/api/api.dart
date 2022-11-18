@@ -39,6 +39,8 @@ class Apis {
   static const String mycourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';
   static const String removefromCart = "adminPanel/deleteCartDetails/";
+  static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
+  static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
 
   static const String agora =
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";

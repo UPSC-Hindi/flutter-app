@@ -42,7 +42,7 @@ class ApiCoursesSuccess extends ApiState{
 }
 
 class ApiResourcesSuccess extends ApiState{
-  final ResourcesModel resources;
+  final BatchNotesModel resources;
   const ApiResourcesSuccess({required this.resources});
   @override
   List<Object?> get props => [resources];
