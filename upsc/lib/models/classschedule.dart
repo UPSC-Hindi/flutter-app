@@ -39,7 +39,6 @@ class classScheduleModel {
   String? liveOrRecorded;
   String? startingDate;
   String? endingDate;
-  List<String>? student;
   String? createdAt;
   String? language;
   int? iV;
@@ -56,7 +55,6 @@ class classScheduleModel {
       this.liveOrRecorded,
       this.startingDate,
       this.endingDate,
-      this.student,
       this.createdAt,
       this.language,
       this.iV});
@@ -73,7 +71,6 @@ class classScheduleModel {
     liveOrRecorded = json['LiveOrRecorded'];
     startingDate = json['starting_date'];
     endingDate = json['ending_date'];
-    student = json['student'].cast<String>();
     createdAt = json['created_at'];
     language = json['language'];
     iV = json['__v'];
@@ -92,7 +89,6 @@ class classScheduleModel {
     data['LiveOrRecorded'] = liveOrRecorded;
     data['starting_date'] = startingDate;
     data['ending_date'] = endingDate;
-    data['student'] = student;
     data['created_at'] = createdAt;
     data['language'] = language;
     data['__v'] = iV;

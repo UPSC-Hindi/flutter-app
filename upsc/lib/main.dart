@@ -128,9 +128,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const Splash(),
-        initialRoute: '/',
         navigatorKey: navigatorKey,
-
+        initialRoute: '/',
         routes: {
           '/': (context) => const Splash(),
           'home': (context) => const HomeScreen(),

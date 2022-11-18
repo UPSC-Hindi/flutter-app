@@ -100,11 +100,8 @@ class MyCoursesScreen extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => CourseViewScreen(
-                            batchTitle: courseData.batchDetails.batchName,
-                            batchDesc: courseData.batchDetails.description,
                             lecture: courseData.lectureDetails,
-                            startDate: courseData.batchDetails.startingDate,
-                            endDate: courseData.batchDetails.endingDate,
+                            batch: courseData.batchDetails,
                           ),
                         ),
                       );

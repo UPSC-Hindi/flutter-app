@@ -10,6 +10,7 @@ import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,13 +114,8 @@ class MyOrdersScreen extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => CourseViewScreen(
-                                  batchTitle: courseData.batchDetails.batchName,
-                                  batchDesc:
-                                      courseData.batchDetails.description,
                                   lecture: courseData.lectureDetails,
-                                  startDate:
-                                      courseData.batchDetails.startingDate,
-                                  endDate: courseData.batchDetails.endingDate,
+                                  batch: courseData.batchDetails,
                                 ),
                               ),
                             );
@@ -152,11 +148,8 @@ class MyOrdersScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => CourseViewScreen(
-                                batchTitle: courseData.batchDetails.batchName,
-                                batchDesc: courseData.batchDetails.description,
                                 lecture: courseData.lectureDetails,
-                                startDate: courseData.batchDetails.startingDate,
-                                endDate: courseData.batchDetails.endingDate,
+                                batch: courseData.batchDetails,
                               ),
                             ),
                           );

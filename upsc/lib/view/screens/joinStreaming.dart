@@ -253,7 +253,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             Text(widget.lecture.lectureTitle,
                                 style: const TextStyle(fontSize: 30)),
                             Text(widget.lecture.description),
-                            Text('By ${widget.lecture.teacher.first}'),
+                            Text('By Saurabh Keskar'),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),

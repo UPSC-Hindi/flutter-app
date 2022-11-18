@@ -50,19 +50,6 @@ class _ClassScheduleState extends State<ClassSchedule> {
             state.myclassschedulerList
                 .sort((a, b) => (a.startingDate!.compareTo(b.startingDate!)));
             state.myclassschedulerList.forEach((element) {
-              print(DateFormat("dd-MM-yyyy")
-                  .parse(element.startingDate!)
-                  .toString()
-                  .split(" ")[0]);
-              print('-' * 200);
-              print(datetoshow! + "sdasd");
-              print('*' * 200);
-              print(DateFormat("dd-MM-yyyy")
-                      .parse(datetoshow!)
-                      .toString()
-                      .split(" ")[0] +
-                  "sdasd");
-              print('-' * 200);
               if (DateFormat("dd-MM-yyyy")
                       .parse(element.startingDate!)
                       .toString()
@@ -163,6 +150,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
                 onPressed: () async {
+                  listdata.clear();
                   DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
@@ -199,13 +187,17 @@ class _ClassScheduleState extends State<ClassSchedule> {
               const SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                itemCount: schedulerList.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => schedularContainerWidget(
-                    context: context, schedulerData: schedulerList[index]),
-              ),
+              listdata.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: listdata.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) => schedularContainerWidget(
+                          context: context, schedulerData: listdata[index]),
+                    )
+                  : Center(
+                      child: Text('There is no Scheduler'),
+                    ),
               const SizedBox(
                 height: 50,
               ),
@@ -223,12 +215,12 @@ class _ClassScheduleState extends State<ClassSchedule> {
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       decoration: BoxDecoration(
-        border: Border.all(color: ColorResources.gray),
+        border: Border.all(color: ColorResources.gray.withOpacity(0.5)),
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite.withOpacity(0.9),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: Colors.grey.withOpacity(0.5),
             blurRadius: 5.0,
           ),
         ],
