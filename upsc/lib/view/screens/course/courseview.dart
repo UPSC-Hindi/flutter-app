@@ -1,35 +1,37 @@
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
+import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
+import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/joinStreaming.dart';
 import 'package:intl/intl.dart';
 
 class CourseViewScreen extends StatefulWidget {
-  const CourseViewScreen(
-      {Key? key,
-      required this.lecture,
-      required this.batchTitle,
-      required this.batchDesc,
-      required this.startDate,
-      required this.endDate})
-      : super(key: key);
-  final String batchTitle;
-  final String batchDesc;
-  final DateTime startDate;
-  final DateTime endDate;
+  const CourseViewScreen({
+    Key? key,
+    required this.lecture,
+    required this.batch,
+  }) : super(key: key);
+
   final List<LectureDetail> lecture;
+  final BatchDetails batch;
 
   @override
   State<CourseViewScreen> createState() => _CourseViewScreenState();
@@ -41,7 +43,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.batchTitle,
+          widget.batch.batchName,
           style: TextStyle(
             color: ColorResources.textblack,
           ),
@@ -88,7 +90,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.batchTitle,
+                                widget.batch.batchName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 24,
@@ -98,7 +100,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                 height: 10,
                               ),
                               Text(
-                                widget.batchDesc,
+                                widget.batch.description,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 4,
                                 textAlign: TextAlign.justify,
@@ -122,14 +124,14 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                     Icons.access_time_rounded,
                                   ),
                                   Text(
-                                      '  ${widget.endDate.difference(widget.startDate).inDays} Days'),
+                                      '  ${widget.batch.endingDate.difference(widget.batch.startingDate).inDays} Days'),
                                   const Expanded(child: SizedBox()),
                                   Row(children: [
                                     const Icon(
                                       Icons.calendar_month_rounded,
                                     ),
                                     Text(
-                                        'Starts : ${DateFormat("dd-MM-yyyy").format(widget.startDate)}')
+                                        'Starts : ${DateFormat("dd-MM-yyyy").format(widget.batch.startingDate)}')
                                   ]),
                                 ],
                               ),
@@ -194,8 +196,10 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                     ),
                   ),
                 ),
-                const CoursesVideoWidget(),
-                Container(),
+                CoursesVideoWidget(
+                  batchId: widget.batch.id,
+                ),
+                BatchNotesWidget(batchId: widget.batch.id)
               ]),
             ),
           ),
@@ -330,57 +334,114 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
   }
 }
 
+class BatchNotesWidget extends StatelessWidget {
+  const BatchNotesWidget({Key? key, required this.batchId}) : super(key: key);
+  final String batchId;
+  @override
+  Widget build(BuildContext context) {
+    RemoteDataSourceImpl batchNotesDataModel = RemoteDataSourceImpl();
+    List<BatchNotesDataModel>? notesList;
+    return FutureBuilder<List<BatchNotesDataModel>>(
+        initialData: notesList,
+        future: batchNotesDataModel.getBatchNotes(batchId: batchId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              notesList = snapshot.data!;
+              return notesList!.isEmpty
+                  ? EmptyWidget(
+                  image: SvgImages.emptyCard, text: "There is no Notes")
+                  : ListView.builder(
+                itemCount: notesList!.length,
+                itemBuilder: (context, index) => ResourcesContainerWidget(resource: notesList![index]),
+              );
+            } else {
+              return const Center(child: Text("Something Went Wrong"));
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+}
+
 class CoursesVideoWidget extends StatelessWidget {
   const CoursesVideoWidget({
     Key? key,
+    required this.batchId,
   }) : super(key: key);
+  final String batchId;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(
-              'Lecture 1',
-              style: GoogleFonts.poppins(fontSize: 24),
+    RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
+    List<RecordedVideoDataModel>? videoList;
+    return FutureBuilder<List<RecordedVideoDataModel>>(
+        initialData: videoList,
+        future: remoteDataSourceImpl.getRecordedVideo(batchId: batchId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              videoList = snapshot.data!;
+              return videoList!.isEmpty
+                  ? EmptyWidget(
+                      image: SvgImages.emptyCard, text: "There is no video")
+                  : ListView.builder(
+                      itemCount: videoList!.length,
+                      itemBuilder: (context, index) => _recordedVideoWidget(),
+                    );
+            } else {
+              return const Center(child: Text("Something Went Wrong"));
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Container _recordedVideoWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            'Lecture 1',
+            style: GoogleFonts.poppins(fontSize: 24),
+          ),
+        ),
+        Row(
+          children: [
+            Container(
+              height: 60,
+              width: 90,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorResources.gray),
+              child: Icon(Icons.play_circle, color: ColorResources.textWhite),
             ),
-          ),
-          Row(
-            children: [
-              Container(
-                height: 60,
-                width: 90,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorResources.gray),
-                child: Icon(Icons.play_circle, color: ColorResources.textWhite),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Prelims Part 1',
-                    style: GoogleFonts.poppins(
-                        fontSize: 20, fontWeight: FontWeight.w400),
-                  ),
-                  Text(
-                    '1hr 2mins',
-                    style: GoogleFonts.lato(
-                        fontSize: 16, color: ColorResources.gray),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Divider(),
-        ]),
-      ),
+            const SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Prelims Part 1',
+                  style: GoogleFonts.poppins(
+                      fontSize: 20, fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  '1hr 2mins',
+                  style: GoogleFonts.lato(
+                      fontSize: 16, color: ColorResources.gray),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const Divider(),
+      ]),
     );
   }
 }

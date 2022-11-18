@@ -60,6 +60,7 @@ dependencies:
   share_plus: ^4.5.3
   shared_preferences: ^2.0.15
   splash_screen_view: ^3.0.0
+  syncfusion_flutter_pdfviewer: ^20.3.57
   table_calendar: ^3.0.7
   url_launcher: ^6.1.6
   youtube_player_flutter: ^8.1.0

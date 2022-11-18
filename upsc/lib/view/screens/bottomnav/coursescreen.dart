@@ -20,9 +20,57 @@ class _CourseScreenState extends State<CourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 4,
+        length: 3,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Container(
+              width: 80,
+              height: 25,
+              margin:const EdgeInsets.only(left: 10),
+              padding:const EdgeInsets.symmetric(horizontal: 13),
+              decoration: BoxDecoration(
+                color: ColorResources.gray,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: PopupMenuButton(
+                onSelected: (value) {
+                  // your logic
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'IAS',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: ColorResources.textblack.withOpacity(0.5),
+                    ),
+                  ],
+                ),
+                itemBuilder: (BuildContext bc) {
+                  return const [
+                    PopupMenuItem(
+                      child: Text("Hello"),
+                      value: '/hello',
+                    ),
+                    PopupMenuItem(
+                      child: Text("About"),
+                      value: '/about',
+                    ),
+                    PopupMenuItem(
+                      child: Text("Contact"),
+                      value: '/contact',
+                    )
+                  ];
+                },
+              ),
+            ),
             Container(
               constraints: const BoxConstraints.expand(height: 50),
               child: TabBar(
@@ -33,7 +81,6 @@ class _CourseScreenState extends State<CourseScreen> {
                     Tab(text: Languages.prelims),
                     Tab(text: Languages.mains),
                     Tab(text: Languages.interview),
-                    Tab(text: Languages.ro),
                   ]),
             ),
             const Expanded(
@@ -43,9 +90,6 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
                 TabCoursesWidget(
                   value: 'Mains',
-                ),
-                Center(
-                  child: Text("Update will come soon......"),
                 ),
                 Center(
                   child: Text("Update will come soon......"),

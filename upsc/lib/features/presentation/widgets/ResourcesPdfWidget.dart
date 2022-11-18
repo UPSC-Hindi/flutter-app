@@ -6,6 +6,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -14,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ResourcesContainerWidget extends StatefulWidget {
   const ResourcesContainerWidget({Key? key, required this.resource})
       : super(key: key);
-  final ResourcesDataModel resource;
+  final BatchNotesDataModel resource;
 
   @override
   State<ResourcesContainerWidget> createState() =>
@@ -33,12 +34,14 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
 
     await FlutterDownloader.enqueue(
       url: url,
-      headers: {}, // optional: header send with url (auth token etc)
+      headers: {},
+      // optional: header send with url (auth token etc)
       savedDir: baseStorage.path,
-      showNotification:
-          true, // show download progress in status bar (for Android)
+      showNotification: true,
+      // show download progress in status bar (for Android)
       fileName: '${name!}.${url.split('.').last}',
-      openFileFromNotification:false, // click on notification to open downloaded file (for Android)
+      openFileFromNotification:
+          false, // click on notification to open downloaded file (for Android)
     );
   }
 
@@ -121,10 +124,10 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 Permission.manageExternalStorage,
               ].request();
               if (await Permission.storage.isGranted) {
-                if (widget.resource.resourceType == 'file') {
-                  download(widget.resource.fileUrl, widget.resource.title);
+                if (true) {
+                  download(widget.resource.uploadFile, widget.resource.title);
                 } else {
-                  launchUrl(Uri.parse(widget.resource.fileUrl),
+                  launchUrl(Uri.parse(''),
                       mode: LaunchMode.externalApplication);
                 }
               }
@@ -132,15 +135,15 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
             child: Column(
               children: [
                 Text(
-                  widget.resource.resourceType == 'file' ? 'PDF' : 'Link',
+                   true ? 'PDF' : 'Link',
                   style: TextStyle(
-                      fontSize: 15,
-                      color: ColorResources.buttoncolor,
-                      fontWeight: FontWeight.w700),
+                    fontSize: 15,
+                    color: ColorResources.buttoncolor,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 Icon(
-                  widget.resource.resourceType == 'file'
-                      ? Icons.file_download_outlined
+true                      ? Icons.file_download_outlined
                       : Icons.link,
                   size: 25,
                   color: ColorResources.buttoncolor,

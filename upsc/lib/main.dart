@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -129,9 +128,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //home: const Splash(),
-        initialRoute: '/',
         navigatorKey: navigatorKey,
-
+        initialRoute: '/',
         routes: {
           '/': (context) => const Splash(),
           'home': (context) => const HomeScreen(),
