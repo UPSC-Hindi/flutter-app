@@ -150,7 +150,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                               Container(
                                 height: 100,
                                 child: ListView.builder(
-                                  itemCount: 3,
+                                  itemCount: widget.batch.teacher.length,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) => Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -158,8 +158,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                     child: Column(
                                       children: [
                                         CachedNetworkImage(
-                                          imageUrl:
-                                              'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png',
+                                          imageUrl: widget.batch.teacher[index]
+                                              .profilePhoto,
                                           placeholder: (context, url) => Center(
                                               child:
                                                   CircularProgressIndicator()),
@@ -170,7 +170,9 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                         SizedBox(
                                           width: 70,
                                           child: Text(
-                                            'Raman',
+                                            widget
+                                                .batch.teacher[index].fullName,
+                                            textAlign: TextAlign.center,
                                             style: GoogleFonts.poppins(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -350,11 +352,12 @@ class BatchNotesWidget extends StatelessWidget {
               notesList = snapshot.data!;
               return notesList!.isEmpty
                   ? EmptyWidget(
-                  image: SvgImages.emptyCard, text: "There is no Notes")
+                      image: SvgImages.emptyCard, text: "There is no Notes")
                   : ListView.builder(
-                itemCount: notesList!.length,
-                itemBuilder: (context, index) => ResourcesContainerWidget(resource: notesList![index]),
-              );
+                      itemCount: notesList!.length,
+                      itemBuilder: (context, index) =>
+                          ResourcesContainerWidget(resource: notesList![index]),
+                    );
             } else {
               return const Center(child: Text("Something Went Wrong"));
             }
