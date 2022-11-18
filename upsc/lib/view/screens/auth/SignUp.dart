@@ -102,11 +102,12 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CarouselSlider(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: CarouselSlider(
                 items: images,
                 // [
                 //   Image.network(SvgImages
@@ -119,8 +120,6 @@ class _SignUpState extends State<SignUp> {
                 //       .banner_4), // SvgPicture.asset(SvgImages.banner_4),
                 // ],
                 options: CarouselOptions(
-                  height: 250,
-                  aspectRatio: 16 / 9,
                   viewportFraction: 1,
                   initialPage: 0,
                   enableInfiniteScroll: true,
@@ -133,204 +132,193 @@ class _SignUpState extends State<SignUp> {
                   scrollDirection: Axis.horizontal,
                 ),
               ),
-              FractionallySizedBox(
-                widthFactor: 0.80,
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Create Account',
-                        style: TextStyle(
-                            color: ColorResources.textblack,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.blueAccent, width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            labelText: 'Email Id',
-                          ),
-                          validator:
-                              ValidationBuilder().required().email().build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.80,
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  children: [
+                    Text(
+                      'Create Account',
+                      style: TextStyle(
+                          color: ColorResources.textblack,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10,),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: 'Email Id',
                         ),
+                        validator:
+                            ValidationBuilder().required().email().build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          controller: _numberController,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 61, 72, 91),
-                                    width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            labelText: 'Mobile No.',
-                          ),
-                          validator: ValidationBuilder()
-                              .required()
-                              .phone()
-                              .maxLength(10)
-                              .minLength(10)
-                              .build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          controller: _nameController,
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.blueAccent, width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            labelText: 'Full name',
-                          ),
-                          validator: ValidationBuilder().required().build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          obscureText: _passwordVisible,
-                          controller: _passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.blueAccent, width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Based on passwordVisible state choose the icon
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: ColorResources.gray,
-                              ),
-                              onPressed: () {
-                                // Update the state i.e. toogle the state of passwordVisible variable
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
-                            ),
-                            labelText: 'Password',
-                          ),
-                          validator: ValidationBuilder()
-                              .required()
-                              .minLength(8)
-                              .regExp(
-                                  RegExp(
-                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
-                                  'valid password ex:Testing@1')
-                              .maxLength(50)
-                              .build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.60,
-                        decoration: BoxDecoration(
-                            color: ColorResources.buttoncolor,
-                            borderRadius: BorderRadius.circular(14)),
-                        child: TextButton(
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              callApiRegister();
-                            } else {
-                              flutterToast('pls enter all required fields');
-                              print("Unsuccessful");
-                            }
-                            //   Navigator.of(context).pushNamed('otpverification');
-                          },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(
-                                color: ColorResources.textWhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: const [
-                          Expanded(
-                              child: Divider(
-                            thickness: 2,
-                          )),
-                          Text("Or Register with"),
-                          Expanded(
-                              child: Divider(
-                            thickness: 2,
-                          )),
+                    ),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
                         ],
+                        controller: _numberController,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 61, 72, 91),
+                                  width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: 'Mobile No.',
+                        ),
+                        validator: ValidationBuilder()
+                            .required()
+                            .phone()
+                            .maxLength(10)
+                            .minLength(10)
+                            .build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
                       ),
-                      const SizedBox(
-                        height: 10,
+                    ),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: _nameController,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: 'Full name',
+                        ),
+                        validator: ValidationBuilder().required().build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              googleLogin();
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: SvgPicture.network(SvgImages.google),
+                    ),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        obscureText: _passwordVisible,
+                        controller: _passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: ColorResources.gray,
                             ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
+                          labelText: 'Password',
+                        ),
+                        validator: ValidationBuilder()
+                            .required()
+                            .minLength(8)
+                            .regExp(
+                                RegExp(
+                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                                'valid password ex:Testing@1')
+                            .maxLength(50)
+                            .build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.60,
+                      decoration: BoxDecoration(
+                          color: ColorResources.buttoncolor,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: TextButton(
+                        onPressed: () {
+                          if (_formkey.currentState!.validate()) {
+                            callApiRegister();
+                          } else {
+                            flutterToast('pls enter all required fields');
+                            print("Unsuccessful");
+                          }
+                          //   Navigator.of(context).pushNamed('otpverification');
+                        },
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(
+                              color: ColorResources.textWhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: const [
+                        Expanded(
+                            child: Divider(
+                          thickness: 2,
+                        )),
+                        Text("Or Register with"),
+                        Expanded(
+                            child: Divider(
+                          thickness: 2,
+                        )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            googleLogin();
+                          },
+                          child: Container(
                             height: 50,
                             width: 50,
                             padding: const EdgeInsets.all(5),
@@ -338,34 +326,47 @@ class _SignUpState extends State<SignUp> {
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: SvgPicture.network(SvgImages.apple),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Create an account?'),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).popAndPushNamed('SignIn');
-                              },
-                              child: Text(
-                                ' Login',
-                                style: TextStyle(
-                                    color: ColorResources.buttoncolor),
-                              ))
-                        ],
-                      ),
-                    ],
-                  ),
+                            child: SvgPicture.network(SvgImages.google),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: SvgPicture.network(SvgImages.apple),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Create an account?'),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).popAndPushNamed('SignIn');
+                            },
+                            child: Text(
+                              ' Login',
+                              style: TextStyle(
+                                  color: ColorResources.buttoncolor),
+                            ))
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

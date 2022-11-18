@@ -69,8 +69,6 @@ class _MobileVerificationState extends State<MobileVerification> {
             //   // SvgPicture.asset(SvgImages.banner_4),
             // ],
             options: CarouselOptions(
-              height: 250,
-              aspectRatio: 16 / 9,
               viewportFraction: 1,
               initialPage: 0,
               enableInfiniteScroll: true,
@@ -84,14 +82,14 @@ class _MobileVerificationState extends State<MobileVerification> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 25,
           ),
           const Text(
             'Verify Your Phone Number',
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24),
           ),
           const SizedBox(
-            height: 40,
+            height: 45,
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
@@ -111,7 +109,7 @@ class _MobileVerificationState extends State<MobileVerification> {
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.50,
-            margin: const EdgeInsets.symmetric(vertical: 30),
+            margin: const EdgeInsets.symmetric(vertical: 35),
             decoration: BoxDecoration(
                 color: ColorResources.buttoncolor,
                 borderRadius: BorderRadius.circular(14)),

@@ -30,7 +30,7 @@ class _CourseScreenState extends State<CourseScreen> {
               margin:const EdgeInsets.only(left: 10),
               padding:const EdgeInsets.symmetric(horizontal: 13),
               decoration: BoxDecoration(
-                color: ColorResources.gray,
+                color: ColorResources.gray.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: PopupMenuButton(
@@ -43,7 +43,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     Text(
                       'IAS',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: ColorResources.textblack.withOpacity(0.9),
                         fontWeight: FontWeight.w900,
                       ),
                     ),
