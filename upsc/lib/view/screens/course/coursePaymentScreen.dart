@@ -61,7 +61,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     var options = {
       'key': razorPayId,
       "order_id": id,
-      'amount': (100 * int.parse(widget.course.amount)).toString(),
+      'amount': (100 * int.parse(widget.course.amount) +
+              (100 * (int.parse(widget.course.amount) * 0.18)))
+          .toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
       'prefill': {'contact': mobileNumber, 'email': userEmail},
@@ -98,7 +100,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
-        price: widget.course.amount,
+        price: (int.parse(widget.course.amount) +
+              ((int.parse(widget.course.amount) * 0.18)))
+          .round().toString(),
         success: true.toString()));
   }
 
@@ -116,7 +120,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: '',
         batchId: widget.course.batchDetails.id,
-        price: widget.course.amount,
+        price: (int.parse(widget.course.amount) +
+              ((int.parse(widget.course.amount) * 0.18)))
+          .round().toString(),
         success: false.toString()));
   }
 
@@ -197,16 +203,16 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Tax',
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
-                  '120.40',
-                  style: TextStyle(
+                  (int.parse(widget.course.amount) * 0.18).round().toString(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -231,7 +237,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                 ),
                 Text(
-                  widget.course.amount,
+                  (int.parse(widget.course.amount) +
+                          ((int.parse(widget.course.amount) * 0.18)))
+                      .round()
+                      .toString(),
                   style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
@@ -273,7 +282,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   Future<BaseModel<OrderIdGeneration>> callApiorderid(id) async {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
-      "amount": widget.course.amount,
+      "amount": (int.parse(widget.course.amount) +
+              ((int.parse(widget.course.amount) * 0.18)))
+          .round(),
       // "name": SharedPreferenceHelper.getString(Preferences.name),
       // "email": SharedPreferenceHelper.getString(Preferences.email),
       // "mobileNumber": SharedPreferenceHelper.getString(Preferences.phoneNUmber),

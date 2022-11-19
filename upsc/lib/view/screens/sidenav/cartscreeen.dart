@@ -41,50 +41,53 @@ class _CartScreenState extends State<CartScreen> {
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body: BlocBuilder<ApiBloc, ApiState>(
-        builder: (context, state) {
-          if (state is ApiError) {
-            return const Center(
-              child: Text('Pls Refresh (or) Reopen App'),
-            );
-          }
-          if (state is ApiCartDetailsSuccess) {
-            if (state.cartData.isEmpty) {
-              return EmptyWidget(
-                text: 'Your Cart is Empty!',
-                image: SvgImages.emptyCard,
+      body: RefreshIndicator(
+        onRefresh: () => Future.delayed(Duration(seconds: 1)),
+        child: BlocBuilder<ApiBloc, ApiState>(
+          builder: (context, state) {
+            if (state is ApiError) {
+              return const Center(
+                child: Text('Pls Refresh (or) Reopen App'),
               );
             }
-            cartSelectedItem = state.cartData[_selectedValue];
-            return Stack(
-              children: [
-                ListView.builder(
-                  itemCount: state.cartData.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => RadioListTile(
-                    value: index,
-                    groupValue: _selectedValue,
-                    visualDensity: const VisualDensity(
-                        horizontal: VisualDensity.minimumDensity,
-                        vertical: VisualDensity.minimumDensity),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as int;
-                      });
-                    },
-                    title: _cartContainerWidget(
-                      cartData: state.cartData[index],
+            if (state is ApiCartDetailsSuccess) {
+              if (state.cartData.isEmpty) {
+                return EmptyWidget(
+                  text: 'Your Cart is Empty!',
+                  image: SvgImages.emptyCard,
+                );
+              }
+              cartSelectedItem = state.cartData[_selectedValue];
+              return Stack(
+                children: [
+                  ListView.builder(
+                    itemCount: state.cartData.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => RadioListTile(
+                      value: index,
+                      groupValue: _selectedValue,
+                      visualDensity: const VisualDensity(
+                          horizontal: VisualDensity.minimumDensity,
+                          vertical: VisualDensity.minimumDensity),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedValue = value as int;
+                        });
+                      },
+                      title: _cartContainerWidget(
+                        cartData: state.cartData[index],
+                      ),
                     ),
                   ),
-                ),
-                _bottomButtonWidget(state.cartData.first, context)
-              ],
+                  _bottomButtonWidget(state.cartData.first, context)
+                ],
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          },
+        ),
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
@@ -253,7 +252,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             Text(widget.lecture.lectureTitle,
                                 style: const TextStyle(fontSize: 30)),
                             Text(widget.lecture.description),
-                            Text('By Saurabh Keskar'),
+                            //Text('By ${widget.lecture.subject}'),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
