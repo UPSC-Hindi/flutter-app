@@ -44,8 +44,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Image.asset(
-                      SvgImages.aboutLogo,
+                    CachedNetworkImage(
+                      imageUrl: SvgImages.aboutLogo,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                       height: 50,
                     ),
                     const SizedBox(
