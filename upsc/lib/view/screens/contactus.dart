@@ -49,7 +49,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       placeholder: (context, url) =>
                           Center(child: CircularProgressIndicator()),
                       errorWidget: (context, url, error) => Icon(Icons.error),
-                      height: 50,
+                      height: 80,
                     ),
                     const SizedBox(
                       height: 20,

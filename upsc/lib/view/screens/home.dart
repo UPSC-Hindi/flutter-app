@@ -22,7 +22,8 @@ import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final int? index;
+  const HomeScreen({Key? key, this.index}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -41,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final List<Widget> _widgetOptions = [
-    HomeScreens(),
+  final List _widgetOptions = [
+    const HomeScreens(),
     const CourseScreen(),
     const mocktestscreen(),
     const ProfilScreen()
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    widget.index != null ? _onItemTapped(widget.index!) : print("back");
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published!');
       RemoteNotification? notification = message.notification;
@@ -104,16 +106,16 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         actions: [
-           Container(
+          Container(
             width: 130,
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
             decoration: BoxDecoration(
-                color: Color(0xFFF6CBB4),
+                color: const Color(0xFFF6CBB4),
                 borderRadius: BorderRadius.circular(20)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   'Notification',
                   style: TextStyle(
                     color: Color(0xFF783B3B),
@@ -130,10 +132,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       radius: 16,
                       child: Stack(
                         children: [
-                          const Center(child: Icon(Icons.notifications_none_outlined,color: Color(0xFF783B3B),size: 20,)),
+                          const Center(
+                              child: Icon(
+                            Icons.notifications_none_outlined,
+                            color: Color(0xFF783B3B),
+                            size: 20,
+                          )),
                           Container(
-                            margin: const EdgeInsets.only(bottom: 11,left: 17,top: 9,),
-                            child: const CircleAvatar(backgroundColor: Colors.red,radius: 3,),
+                            margin: const EdgeInsets.only(
+                              bottom: 11,
+                              left: 17,
+                              top: 9,
+                            ),
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.red,
+                              radius: 3,
+                            ),
                           ),
                         ],
                       ),
@@ -591,11 +605,5 @@ class _HomeScreenState extends State<HomeScreen> {
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
-  }
-
-  void _changePage() {
-      setState(() {
-
-      });
   }
 }
