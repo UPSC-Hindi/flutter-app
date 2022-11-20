@@ -9,7 +9,6 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/postUserMobileNumber.dart';
 import 'package:upsc/models/banner.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/auth/otpverification.dart';

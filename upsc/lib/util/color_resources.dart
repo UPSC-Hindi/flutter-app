@@ -7,6 +7,8 @@ class ColorResources {
   static Color gray = Colors.grey;
     static Color borderColor = Colors.grey.shade300;
 
+  static Color resourcesCardColor = Color(0xFFFB5259);
+
   static Color youtube = const Color(0xFFFFE6E6);
   static Color telegarm = const Color(0xFFBBE3FF);
 

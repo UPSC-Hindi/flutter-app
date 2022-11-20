@@ -1,29 +1,24 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
-import 'package:upsc/features/data/remote/models/daily_news_model.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/features/data/remote/models/air_resource_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
 
-class DailyNewsScreen extends StatefulWidget {
-  const DailyNewsScreen({Key? key, required this.resourceDataSourceImpl})
-      : super(key: key);
+class AirResourcesScreen extends StatefulWidget {
+  const AirResourcesScreen({Key? key, required this.resourceDataSourceImpl}) : super(key: key);
   final ResourceDataSourceImpl resourceDataSourceImpl;
   @override
-  State<DailyNewsScreen> createState() => _DailyNewsScreenState();
+  State<AirResourcesScreen> createState() => _AirResourcesScreenState();
 }
 
-class _DailyNewsScreenState extends State<DailyNewsScreen> {
+class _AirResourcesScreenState extends State<AirResourcesScreen> {
   String? datetoshow;
   @override
   void initState() {
     super.initState();
-    context
-        .read<ApiBloc>()
-        .add(const GetResources(key: 'Category', value: 'Daily News'));
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
 
@@ -41,21 +36,21 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
           ),
         ),
       ),
-      body: FutureBuilder<DailyNewsModel>(
-          future: widget.resourceDataSourceImpl.getDailyNews(),
-          builder: (context, snapshots) {
-            if (ConnectionState.done == snapshots.connectionState) {
-              if (snapshots.hasData) {
-                DailyNewsModel? response = snapshots.data;
-                if (response!.status) {
+      body: FutureBuilder<AirResourcesModel>(
+          future: widget.resourceDataSourceImpl.getAir(),
+          builder: (context,snapshots){
+            if(ConnectionState.done == snapshots.connectionState){
+              if(snapshots.hasData){
+                AirResourcesModel? response = snapshots.data;
+                if(response!.status){
                   return _bodyWidget(context, response.data);
-                } else {
+                }else{
                   return Text(response.msg);
                 }
-              } else {
+              }else{
                 return const Text('Server Error');
               }
-            } else {
+            }else{
               return const CircularProgressIndicator();
             }
           }),
@@ -63,7 +58,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
   }
 
   Container _bodyWidget(
-      BuildContext context, List<DailyNewsDataModel> resources) {
+      BuildContext context, List<AirResourcesDataModel> resources) {
     return Container(
       width: double.infinity,
       child: Column(children: [
@@ -93,15 +88,12 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 firstDate: DateTime(1950),
                 lastDate: DateTime(2100));
             if (pickedDate != null) {
-              print(
-                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+              print( pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
               String formattedDate =
-                  DateFormat('dd-MMMM-yyyy').format(pickedDate);
-              print(
-                  formattedDate); //formatted date output using intl package =>  2021-03-16
+              DateFormat('dd-MMMM-yyyy').format(pickedDate);
+              print(formattedDate); //formatted date output using intl package =>  2021-03-16
               setState(() {
-                datetoshow =
-                    formattedDate; //set output date to TextField value.
+                datetoshow =  formattedDate; //set output date to TextField value.
               });
             } else {}
           },
@@ -130,8 +122,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return ResourcesContainerWidget(
-                title: resources[index].title,
-                uploadFile: resources[index].fileUrl,
+                title: resources[index].data, uploadFile: resources[index].audioFile,
               );
             },
           ),

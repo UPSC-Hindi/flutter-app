@@ -93,7 +93,7 @@ class _loginscreenState extends State<loginscreen> {
       print("Result ${result!.email}");
       print("Result ${result!.photoUrl}");
       print("Result ${result!.authentication}");
-      if (result!.email != null) {
+      if (result!.email.isNotEmpty) {
         callApigooglelogin();
         //await _googleSignIn.signOut();
         await _googleSignIn.disconnect();
@@ -375,7 +375,7 @@ class _loginscreenState extends State<loginscreen> {
           await SharedPreferenceHelper.setString(
               Preferences.address, response.data!.address);
 
-          print(await SharedPreferenceHelper.getString(Preferences.access_token)
+          print(SharedPreferenceHelper.getString(Preferences.access_token)
                   .toString() +
               '*' * 200);
           Navigator.of(context).pushNamed('home');

@@ -6,16 +6,15 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
-import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
-  const ResourcesContainerWidget({Key? key, required this.resource})
+  const ResourcesContainerWidget({Key? key, required this.title, required this.uploadFile})
       : super(key: key);
-  final BatchNotesDataModel resource;
+  final String title;
+  final String uploadFile;
 
   @override
   State<ResourcesContainerWidget> createState() =>
@@ -23,13 +22,13 @@ class ResourcesContainerWidget extends StatefulWidget {
 }
 
 class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
-  ReceivePort _port = ReceivePort();
+  final ReceivePort _port = ReceivePort();
 
   Future download(String url, String? name) async {
     final baseStorage = await getExternalStorageDirectory();
 
     print('directory:${baseStorage!.path}');
-
+    //todo pls chek this variable use
     List files = baseStorage.listSync();
 
     await FlutterDownloader.enqueue(
@@ -50,6 +49,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
+      //todo pls chek this variable use
       String id = data[0];
       DownloadTaskStatus status = data[1];
       int progress = data[2];
@@ -92,8 +92,8 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               CachedNetworkImage(
                 imageUrl: SvgImages.pdfimage,
                 placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
               const SizedBox(
                 width: 30,
@@ -102,7 +102,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.resource.title,
+                    widget.title,
                     style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -125,8 +125,10 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               ].request();
               if (await Permission.storage.isGranted) {
                 if (true) {
-                  download(widget.resource.uploadFile, widget.resource.title);
-                } else {
+                  download(widget.uploadFile, widget.title);
+                }
+                //todo this dead code pls check onces
+                 else {
                   launchUrl(Uri.parse(''),
                       mode: LaunchMode.externalApplication);
                 }
@@ -134,6 +136,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
             },
             child: Column(
               children: [
+                //todo this dead code pls check onces of link why true always
                 Text(
                    true ? 'PDF' : 'Link',
                   style: TextStyle(
@@ -143,6 +146,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                   ),
                 ),
                 Icon(
+                  //todo this dead code pls check onces
 true                      ? Icons.file_download_outlined
                       : Icons.link,
                   size: 25,

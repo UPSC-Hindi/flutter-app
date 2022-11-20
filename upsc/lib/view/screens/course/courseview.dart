@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
@@ -160,11 +159,11 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                         CachedNetworkImage(
                                           imageUrl: widget.batch.teacher[index]
                                               .profilePhoto,
-                                          placeholder: (context, url) => Center(
+                                          placeholder: (context, url) => const Center(
                                               child:
                                                   CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
+                                              const Icon(Icons.error),
                                           height: 70,
                                         ),
                                         SizedBox(
@@ -224,12 +223,12 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
           // subtitle:Text('Starts : ${DateFormat("dd-MM-yyyy",'UTC').parse(lecture.startingDate)}'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 '9:00 AM to 12:00 PM',
                 style: TextStyle(fontSize: 15),
               ),
-              const Text('Date- 08/10/2022 '),
+              Text('Date- 08/10/2022 '),
             ],
           ),
           trailing: ElevatedButton(
@@ -339,6 +338,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
 class BatchNotesWidget extends StatelessWidget {
   const BatchNotesWidget({Key? key, required this.batchId}) : super(key: key);
   final String batchId;
+
   @override
   Widget build(BuildContext context) {
     RemoteDataSourceImpl batchNotesDataModel = RemoteDataSourceImpl();
@@ -355,8 +355,10 @@ class BatchNotesWidget extends StatelessWidget {
                       image: SvgImages.emptyCard, text: "There is no Notes")
                   : ListView.builder(
                       itemCount: notesList!.length,
-                      itemBuilder: (context, index) =>
-                          ResourcesContainerWidget(resource: notesList![index]),
+                      itemBuilder: (context, index) => ResourcesContainerWidget(
+                        title: notesList![index].title,
+                        uploadFile: notesList![index].uploadFile,
+                      ),
                     );
             } else {
               return const Center(child: Text("Something Went Wrong"));

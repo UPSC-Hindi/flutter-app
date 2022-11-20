@@ -86,12 +86,12 @@ class MyOrdersScreen extends StatelessWidget {
                     child: Text(
                       courseData.batchDetails.batchName,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 24),
+                      style: const TextStyle(fontSize: 24),
                     ),
                   ),
                   Text(
                     "₹ ${courseData.batchDetails.charges}",
-                    style: TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24),
                   ),
                 ],
               ),

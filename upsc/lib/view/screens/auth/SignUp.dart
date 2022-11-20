@@ -89,7 +89,7 @@ class _SignUpState extends State<SignUp> {
       // print("Result ${result!.email}");
       // print("Result ${result!.photoUrl}");
       // print("Result ${result!.authentication}");
-      if (result!.email != null) {
+      if (result!.email.isNotEmpty) {
         callApigooglelogin();
         await _googleSignIn.signOut();
         await _googleSignIn.disconnect();

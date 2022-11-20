@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,6 @@ import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/contactus.dart';
 import 'package:upsc/view/screens/home.dart';
-import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
 import 'package:upsc/view/screens/sidenav/aboutus.dart';
@@ -32,6 +32,7 @@ import 'package:upsc/view/screens/sidenav/myorders.dart';
 import 'package:upsc/view/screens/sidenav/myschedule.dart';
 import 'package:upsc/view/screens/sidenav/myscheduleadd.dart';
 import 'package:upsc/view/screens/sidenav/resources.dart';
+import 'package:upsc/view/screens/sidenav/resources/airResourcesScreen.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
@@ -91,8 +92,8 @@ Future<void> main() async {
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FlutterDownloader.initialize(
-      debug:
-          true, // optional: set to false to disable printing logs to console (default: true)
+      debug: true,
+      // optional: set to false to disable printing logs to console (default: true)
       ignoreSsl:
           true // option: set to false to disable working with http links (default: false)
       );
@@ -116,9 +117,11 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ResourceDataSourceImpl resourceDataSourceImpl = ResourceDataSourceImpl();
     return BlocProvider(
       create: (context) => ApiBloc(),
       child: MaterialApp(
@@ -164,10 +167,19 @@ class MyApp extends StatelessWidget {
           'ncertscreen': (context) => const NcertScreen(),
           'MySchedule': (context) => const MySchedule(),
           'MyScheduleAdd': (context) => const MyScheduleAdd(),
-          'dailynews': (context) => const DailyNewsScreen(),
-          'shortnotes': (context) => const ShortNotesScreen(),
+          'dailynews': (context) => DailyNewsScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
+          'shortnotes': (context) => ShortNotesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
           'youtubenotes': (context) => const YoutubeNotesScreen(),
-          'samplenotes': (context) => const SampleNotesScreen(),
+          'samplenotes': (context) => SampleNotesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
+          'airResources': (context) => AirResourcesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
           'contactus': (context) => const ContactUsScreen(),
           'aboutusscreen': (context) => const AboutUsScreen(),
 //           'joinstreaming': (context) => const JoinStreamingScreen(

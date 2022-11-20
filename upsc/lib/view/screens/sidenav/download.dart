@@ -1,10 +1,8 @@
 import 'dart:io' as io;
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mime/mime.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -162,7 +160,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         _directories.isNotEmpty ? _directories.first : null;
                     return GestureDetector(
                       onTap: () =>
-                          OpenFile.open(_savedDirectory + "/" + _filename),
+                          OpenFile.open("$_savedDirectory/$_filename"),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
@@ -176,7 +174,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                             Row(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 20.0, vertical: 5),
                                   child: Icon(
                                     Icons.picture_as_pdf,
@@ -185,7 +183,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -197,7 +195,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       _status == DownloadTaskStatus.complete
-                                          ? Text('')
+                                          ? const Text('')
                                           : Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -252,7 +250,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
 
     return _status == DownloadTaskStatus.canceled
         ? GestureDetector(
-            child: Icon(Icons.cached, size: 30, color: Colors.green),
+            child: const Icon(Icons.cached, size: 30, color: Colors.green),
             onTap: () {
               FlutterDownloader.retry(taskId: taskid).then((newTaskID) {
                 changeTaskID(taskid, newTaskID!);
@@ -261,7 +259,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
           )
         : _status == DownloadTaskStatus.failed
             ? GestureDetector(
-                child: Icon(Icons.cached, size: 30, color: Colors.green),
+                child: const Icon(Icons.cached, size: 30, color: Colors.green),
                 onTap: () {
                   FlutterDownloader.retry(taskId: taskid).then((newTaskID) {
                     changeTaskID(taskid, newTaskID!);
@@ -274,7 +272,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       GestureDetector(
-                        child: Icon(Icons.play_arrow,
+                        child: const Icon(Icons.play_arrow,
                             size: 30, color: Colors.blue),
                         onTap: () {
                           FlutterDownloader.resume(taskId: taskid).then(
@@ -283,7 +281,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         },
                       ),
                       GestureDetector(
-                        child: Icon(Icons.close, size: 30, color: Colors.red),
+                        child: const Icon(Icons.close, size: 30, color: Colors.red),
                         onTap: () {
                           FlutterDownloader.cancel(taskId: taskid);
                         },
@@ -296,7 +294,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           GestureDetector(
-                            child: Icon(Icons.pause,
+                            child: const Icon(Icons.pause,
                                 size: 30, color: Colors.green),
                             onTap: () {
                               FlutterDownloader.pause(taskId: taskid);
@@ -304,7 +302,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                           ),
                           GestureDetector(
                             child:
-                                Icon(Icons.close, size: 30, color: Colors.red),
+                                const Icon(Icons.close, size: 30, color: Colors.red),
                             onTap: () {
                               FlutterDownloader.cancel(taskId: taskid);
                             },
@@ -314,7 +312,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                     : _status == DownloadTaskStatus.complete
                         ? GestureDetector(
                             child:
-                                Icon(Icons.delete, size: 30, color: Colors.red),
+                                const Icon(Icons.delete, size: 30, color: Colors.red),
                             onTap: () {
                               downloadsListMaps.removeAt(index);
                               FlutterDownloader.remove(

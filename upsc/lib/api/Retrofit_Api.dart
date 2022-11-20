@@ -16,7 +16,7 @@ class RetroApi {
     dio.options.followRedirects = false;
     dio.options.connectTimeout = 75000; //5s
     dio.options.receiveTimeout = 3000;
-    print('token in =' + token);
+    print('token in =$token');
     dio.options.headers["Authorization"] = "Bearer $token";
     return dio;
   }

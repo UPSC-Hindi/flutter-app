@@ -80,7 +80,7 @@ class MyCoursesScreen extends StatelessWidget {
             children: [
               Text(
                 courseData.batchDetails.batchName,
-                style: TextStyle(fontSize: 24),
+                style: const TextStyle(fontSize: 24),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

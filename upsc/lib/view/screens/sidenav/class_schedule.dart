@@ -173,7 +173,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '$datetoshow',
+                      datetoshow,
                       style:
                           GoogleFonts.poppins(color: ColorResources.textblack),
                     ),
@@ -195,7 +195,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                       itemBuilder: (context, index) => schedularContainerWidget(
                           context: context, schedulerData: listdata[index]),
                     )
-                  : Center(
+                  : const Center(
                       child: Text('There is no Scheduler'),
                     ),
               const SizedBox(
@@ -212,8 +212,8 @@ class _ClassScheduleState extends State<ClassSchedule> {
       {required BuildContext context,
       required classScheduleModel schedulerData}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       decoration: BoxDecoration(
         border: Border.all(color: ColorResources.gray.withOpacity(0.5)),
         borderRadius: BorderRadius.circular(20),
@@ -266,7 +266,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                   style: ElevatedButton.styleFrom(
                       primary: ColorResources.buttoncolor,
                       shape: const StadiumBorder()),
-                  child: Text("go")),
+                  child: const Text("go")),
             ],
           ),
         ],

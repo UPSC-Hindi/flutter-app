@@ -108,7 +108,7 @@ class _MyScheduleState extends State<MySchedule> {
                           shadows: [
                             Shadow(
                                 color: ColorResources.buttoncolor,
-                                offset: Offset(0, -10))
+                                offset: const Offset(0, -10))
                           ],
                           color: Colors.transparent,
                           decoration: TextDecoration.underline,
@@ -120,7 +120,7 @@ class _MyScheduleState extends State<MySchedule> {
                       onPressed: () => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ClassSchedule(),
+                              builder: (context) => const ClassSchedule(),
                             ),
                           ),
                       child: Text(
@@ -235,7 +235,7 @@ class _MyScheduleState extends State<MySchedule> {
             )
           ],
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

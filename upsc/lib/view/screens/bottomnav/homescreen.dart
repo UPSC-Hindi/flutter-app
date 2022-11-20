@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
@@ -16,7 +15,6 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/home.dart';
-import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreens extends StatefulWidget {
@@ -67,7 +65,7 @@ class _HomeScreensState extends State<HomeScreens> {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(Duration(seconds: 5)),
+        onRefresh: () => Future.delayed(const Duration(seconds: 5)),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -130,12 +128,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           ),
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => const DailyNewsScreen(),
-                                ),
-                              );
+                              Navigator.pushNamed(context, 'dailynews');
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +229,6 @@ class _HomeScreensState extends State<HomeScreens> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          //TODO: hello dinesh check this issue
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                             builder: (context) =>

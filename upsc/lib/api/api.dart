@@ -42,6 +42,11 @@ class Apis {
   static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
   static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
 
+  //Resources
+  static const String getDailyNews = 'adminPanel/getNewsClips';
+  static const String getAirResources = 'adminPanel/getallindiaradio';
+  static const String getNotesDetails = 'adminPanel/getNotesDetails';
+
   static const String agora =
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/agora/";
 
