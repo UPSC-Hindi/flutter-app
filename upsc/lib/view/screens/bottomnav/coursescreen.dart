@@ -64,8 +64,8 @@ class _CourseScreenState extends State<CourseScreen> {
                       child: Text("About"),
                     ),
                     PopupMenuItem(
-                      child: Text("Contact"),
                       value: '/contact',
+                      child: Text("Contact"),
                     )
                   ];
                 },
@@ -155,14 +155,14 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Courses',
                 style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
             ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: courseData.length,
                 itemBuilder: (context, index) => _cardWidget(courseData[index]))
@@ -174,7 +174,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
 
   Container _cardWidget(CoursesDataModel data) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite,
@@ -195,7 +195,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             style: GoogleFonts.poppins(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: Color(0Xff444444)),
+                color: const Color(0Xff444444)),
           ),
           const SizedBox(
             height: 10,
@@ -257,7 +257,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ElevatedButton(

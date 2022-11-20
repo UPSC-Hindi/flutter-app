@@ -47,8 +47,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     CachedNetworkImage(
                       imageUrl: SvgImages.aboutLogo,
                       placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                       height: 80,
                     ),
                     const SizedBox(
@@ -146,9 +146,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.whatsapp,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         ),
                         Text(Languages.whatsApp),
@@ -169,10 +169,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   child: CachedNetworkImage(
                                     imageUrl: SvgImages.facebook,
                                     height: 30,
-                                    placeholder: (context, url) => Center(
+                                    placeholder: (context, url) => const Center(
                                         child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
+                                        const Icon(Icons.error),
                                   )),
                               GestureDetector(
                                 onTap: () {
@@ -184,10 +184,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 child: CachedNetworkImage(
                                   imageUrl: SvgImages.twitter,
                                   height: 30,
-                                  placeholder: (context, url) => Center(
+                                  placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator()),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 ),
                               ),
                               GestureDetector(
@@ -200,10 +200,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 child: CachedNetworkImage(
                                   imageUrl: SvgImages.linkedin,
                                   height: 30,
-                                  placeholder: (context, url) => Center(
+                                  placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator()),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 ),
                               )
                             ],

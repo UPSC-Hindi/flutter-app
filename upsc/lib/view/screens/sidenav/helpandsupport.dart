@@ -98,8 +98,8 @@ class HelpAndSupport extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl: SvgImages.whatsapp,
                       placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                   Text(Languages.whatsApp),
@@ -121,9 +121,9 @@ class HelpAndSupport extends StatelessWidget {
                             imageUrl: SvgImages.facebook,
                             height: 30,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         ),
                         GestureDetector(
@@ -136,9 +136,9 @@ class HelpAndSupport extends StatelessWidget {
                             imageUrl: SvgImages.twitter,
                             height: 30,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         ),
                         GestureDetector(
@@ -152,9 +152,9 @@ class HelpAndSupport extends StatelessWidget {
                             imageUrl: SvgImages.linkedin,
                             height: 30,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         )
                       ],

@@ -6,9 +6,9 @@ class InterviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('InterviewScreen'),
+        title: const Text('InterviewScreen'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('InterviewScreen'),
       ),
     );

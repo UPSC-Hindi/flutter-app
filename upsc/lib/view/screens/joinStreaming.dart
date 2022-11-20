@@ -105,14 +105,14 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         //chatmessges.add(fromMember.userId + ':' + message.text);
         if (message.text.contains('{')) {
         } else {
-          print(message.text + ' in first');
+          print('${message.text} in first');
           if (message.text.contains("blockeduserid:") ||
               message.text.contains('unblockeduserid:')) {
             if (message.text.contains("blockeduserid:")) {
               userID == message.text.split(':')[1]
                   ? setState(() {
                       print("*" * 3000);
-                      print(message.text + ' in uid');
+                      print('${message.text} in uid');
                       blockchat = true;
                     })
                   : print('');
@@ -122,14 +122,14 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                   ? setState(() {
                       print("*" * 3000);
                       blockchat = false;
-                      print(message.text + ' in uid');
+                      print('${message.text} in uid');
                       print("*" * 3000);
                     })
                   : print('');
             }
           } else {
             print("*" * 3000);
-            print(message.text + ' in data');
+            print('${message.text} in data');
             setState(() {
               message.text.contains('blockeduserid:')
                   ? print("df")
@@ -171,7 +171,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
     await sessionController.value.engine?.destroy();
   }
 
-  @override
   void initAgora() async {
     await client.initialize();
   }
@@ -284,12 +283,12 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                           children: [
                                             CachedNetworkImage(
                                               imageUrl: SvgImages.pdfimage,
-                                              placeholder: (context, url) => Center(
+                                              placeholder: (context, url) => const Center(
                                                   child:
                                                       CircularProgressIndicator()),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      Icon(Icons.error),
+                                                      const Icon(Icons.error),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -420,7 +419,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                   Expanded(
                                     child: blockchat
                                         ? Container(
-                                            child: Text(
+                                            child: const Text(
                                                 "user hase been block by the admin"),
                                           )
                                         : TextField(

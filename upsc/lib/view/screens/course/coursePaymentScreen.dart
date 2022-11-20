@@ -10,9 +10,9 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.d
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/models/orderIdgeneration.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/course/paymentScreen.dart';
@@ -34,9 +34,11 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   String? mobileNumber;
   String? userName;
   String? userEmail;
+  List<Widget> images = [];
   @override
   void initState() {
     super.initState();
+    callApigetbanner();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
@@ -125,6 +127,23 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           .round().toString(),
         success: false.toString()));
   }
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     print("-----Payment Success W-----");
@@ -140,19 +159,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
-              items: [
-                Image.network(SvgImages.banner_1),
-                // SvgPicture.asset(SvgImages.banner_1,),
-                Image.network(SvgImages.banner_2),
-                // SvgPicture.asset(SvgImages.banner_2),
-                Image.network(SvgImages.banner_3),
-                // SvgPicture.asset(SvgImages.banner_3),
-                Image.network(SvgImages.banner_4),
-                // SvgPicture.asset(SvgImages.banner_4),
-              ],
+              items: images,
               options: CarouselOptions(
-                height: 250,
-                aspectRatio: 16 / 9,
                 viewportFraction: 1,
                 initialPage: 0,
                 enableInfiniteScroll: true,

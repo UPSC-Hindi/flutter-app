@@ -20,7 +20,7 @@ class SharedPreferenceHelper {
   }
 
   static Future setInt(String key, int value) async {
-    return await _preferences!.setInt("$key", value);
+    return await _preferences!.setInt(key, value);
   }
 
   static void clearPref() {

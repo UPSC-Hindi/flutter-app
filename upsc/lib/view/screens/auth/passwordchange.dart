@@ -64,6 +64,12 @@ class _PasswordChangeState extends State<PasswordChange> {
                 //   ),
                 // );
               },
+              style: ElevatedButton.styleFrom(
+                primary: ColorResources.buttoncolor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40),
@@ -71,12 +77,6 @@ class _PasswordChangeState extends State<PasswordChange> {
                   'Change Password',
                   style: GoogleFonts.poppins(
                       fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: ColorResources.buttoncolor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             )

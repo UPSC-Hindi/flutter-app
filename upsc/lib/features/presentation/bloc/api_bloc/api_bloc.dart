@@ -7,7 +7,6 @@ import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
-import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/domain/reused_function.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
