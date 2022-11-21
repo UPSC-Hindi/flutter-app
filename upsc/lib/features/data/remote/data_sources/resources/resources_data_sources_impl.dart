@@ -30,8 +30,14 @@ class ResourceDataSourceImpl extends ResourcesDataSource{
   }
 
   @override
-  void getCourseIndex() {
-    // TODO: implement getCourseIndex
+  getCourseIndex() async{
+    try{
+      Response response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getNotesDetails}');
+      return NotesModel.fromJson(response.data);
+    }catch(error){
+      print(error);
+      rethrow;
+    }
   }
 
 

@@ -33,6 +33,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             child: _resourceCardWidget(SvgImages.dailyNews, 'Daily News'),
           ),
           GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed('courseIndex'),
             child: _resourceCardWidget(SvgImages.courseIndex, 'Course Index'),
           ),
           GestureDetector(
@@ -40,7 +41,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             child: _resourceCardWidget(SvgImages.shortNotes, 'Short Notes'),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed('youtubenotes'),
+            //onTap: () => Navigator.of(context).pushNamed('youtubenotes'),
+            onTap: () => Navigator.of(context).pushNamed('ncertscreen'),
             child: _resourceCardWidget(SvgImages.youtubeNotes, 'Youtube Note'),
           ),
           GestureDetector(
@@ -48,7 +50,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             child: _resourceCardWidget(SvgImages.sampleNotes, 'Sample Notes'),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed('samplenotes'),
+            onTap: () => Navigator.of(context).pushNamed('airResources'),
             child: _resourceCardWidget(SvgImages.sampleNotes, 'Air'),
           ),
         ],
