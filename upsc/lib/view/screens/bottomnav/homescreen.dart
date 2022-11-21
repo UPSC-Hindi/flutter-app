@@ -334,7 +334,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'View All',
+                              ' Explore ',
                               style: GoogleFonts.poppins(
                                 fontSize: 10,
                                 color: Colors.white,

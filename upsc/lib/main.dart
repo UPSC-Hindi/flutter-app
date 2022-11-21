@@ -24,6 +24,7 @@ import 'package:upsc/view/screens/home.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
 import 'package:upsc/view/screens/sidenav/aboutus.dart';
+import 'package:upsc/view/screens/sidenav/achievements.dart';
 import 'package:upsc/view/screens/sidenav/cartscreeen.dart';
 import 'package:upsc/view/screens/sidenav/download.dart';
 import 'package:upsc/view/screens/sidenav/helpandsupport.dart';
@@ -31,6 +32,7 @@ import 'package:upsc/view/screens/sidenav/mycourses.dart';
 import 'package:upsc/view/screens/sidenav/myorders.dart';
 import 'package:upsc/view/screens/sidenav/myschedule.dart';
 import 'package:upsc/view/screens/sidenav/myscheduleadd.dart';
+import 'package:upsc/view/screens/sidenav/mytest.dart';
 import 'package:upsc/view/screens/sidenav/resources.dart';
 import 'package:upsc/view/screens/sidenav/resources/airResourcesScreen.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
@@ -154,6 +156,8 @@ class MyApp extends StatelessWidget {
           'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
+          'mytestseries': (context) => const MyTestSeries(),
+          'ourachievements': (context) => const OurAchievementsScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),
           'helpandsupport': (context) => const HelpAndSupport(),
           'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),

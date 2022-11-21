@@ -393,7 +393,7 @@ class CoursesVideoWidget extends StatelessWidget {
                       image: SvgImages.emptyCard, text: "There is no video")
                   : ListView.builder(
                       itemCount: videoList!.length,
-                      itemBuilder: (context, index) => _recordedVideoWidget(),
+                      itemBuilder: (context, index) => _recordedVideoWidget(videoList![index]),
                     );
             } else {
               return const Center(child: Text("Something Went Wrong"));
@@ -404,14 +404,14 @@ class CoursesVideoWidget extends StatelessWidget {
         });
   }
 
-  Container _recordedVideoWidget() {
+  Container _recordedVideoWidget(RecordedVideoDataModel videosdata) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
-            'Lecture 1',
+            videosdata.lectureId.lectureTitle,
             style: GoogleFonts.poppins(fontSize: 24),
           ),
         ),
@@ -432,7 +432,7 @@ class CoursesVideoWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Prelims Part 1',
+                  videosdata.title,
                   style: GoogleFonts.poppins(
                       fontSize: 20, fontWeight: FontWeight.w400),
                 ),
