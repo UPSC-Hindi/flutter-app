@@ -14,7 +14,7 @@ class Languages {
   static String ro = '';
   static String courses = '';
   static String home = '';
-  static String mockTest = '';
+  static String Test = '';
 
   //profile
   static String profile = '';
@@ -98,7 +98,7 @@ class Languages {
     courses = isEnglish ? 'Courses' : 'कोर्सेस ';
     home = isEnglish ? 'Home' : 'होम ';
     profile = isEnglish ? 'Profile' : 'प्रोफाइल ';
-    mockTest = isEnglish ? 'Mock Test' : 'मॉक टेस्ट';
+    Test = isEnglish ? 'Test' : 'टेस्ट';
 
     //profile info
     personalInformation =

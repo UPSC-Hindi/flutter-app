@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/view/screens/bottomnav/ncert.dart';
 
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({Key? key}) : super(key: key);
@@ -42,7 +43,11 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
           GestureDetector(
             //onTap: () => Navigator.of(context).pushNamed('youtubenotes'),
-            onTap: () => Navigator.of(context).pushNamed('ncertscreen'),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => NcertScreen(
+                from: 'note',
+              ),
+            )),
             child: _resourceCardWidget(SvgImages.youtubeNotes, 'Youtube Note'),
           ),
           GestureDetector(

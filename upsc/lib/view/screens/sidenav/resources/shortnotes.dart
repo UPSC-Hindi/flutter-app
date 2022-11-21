@@ -54,7 +54,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
                 return const Text('Server Error');
               }
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );

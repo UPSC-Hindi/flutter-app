@@ -173,7 +173,8 @@ class _ClassScheduleState extends State<ClassSchedule> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      datetoshow,
+                      DateFormat('dd-MMMM-yyyy')
+                          .format(DateFormat('dd-MM-yyyy').parse(datetoshow)),
                       style:
                           GoogleFonts.poppins(color: ColorResources.textblack),
                     ),

@@ -48,7 +48,7 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
                 return const Text('Server Error');
               }
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );

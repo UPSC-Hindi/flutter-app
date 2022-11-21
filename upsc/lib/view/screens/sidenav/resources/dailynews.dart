@@ -18,10 +18,12 @@ class DailyNewsScreen extends StatefulWidget {
 
 class _DailyNewsScreenState extends State<DailyNewsScreen> {
   String? datetoshow;
+
+  List<DailyNewsDataModel> listdata = [];
   @override
   void initState() {
     super.initState();
-    datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
+    datetoshow = DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
   @override
@@ -45,7 +47,28 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
               if (snapshots.hasData) {
                 DailyNewsModel? response = snapshots.data;
                 if (response!.status) {
-                  return _bodyWidget(context, response.data);
+                  print(response.data[0].createdAt);
+                  response.data.sort(
+                    (a, b) {
+                      return a.createdAt.compareTo(b.createdAt);
+                    },
+                  );
+                  response.data.forEach(
+                    (element) {
+                      if (DateFormat("dd-MM-yyyy")
+                              .parse(element.createdAt)
+                              .toString()
+                              .split(" ")[0] ==
+                          DateFormat("dd-MM-yyyy")
+                              .parse(datetoshow!)
+                              .toString()
+                              .split(" ")[0]) {
+                        listdata.add(element);
+                        print('------found u---------');
+                      }
+                    },
+                  );
+                  return _bodyWidget(context, listdata);
                 } else {
                   return Text(response.msg);
                 }
@@ -53,7 +76,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                 return const Text('Server Error');
               }
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );
@@ -68,7 +91,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
           height: 20,
         ),
         Text(
-            datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
+            datetoshow == DateFormat('dd-MM-yyyy').format(DateTime.now())
                 ? 'News for Today'
                 : "News for",
             style: GoogleFonts.poppins(
@@ -93,7 +116,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
               print(
                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
               String formattedDate =
-                  DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                  DateFormat('dd-MM-yyyy').format(pickedDate);
               print(
                   formattedDate); //formatted date output using intl package =>  2021-03-16
               setState(() {
@@ -106,7 +129,8 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '$datetoshow',
+                DateFormat('dd-MMMM-yyyy')
+                    .format(DateFormat('dd-MM-yyyy').parse(datetoshow!)),
                 style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -120,19 +144,23 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
         const SizedBox(
           height: 10,
         ),
-        FractionallySizedBox(
-          widthFactor: 0.90,
-          child: ListView.builder(
-            itemCount: resources.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return ResourcesContainerWidget(
-                title: resources[index].title,
-                uploadFile: resources[index].fileUrl,
-              );
-            },
-          ),
-        ),
+        resources.isEmpty
+            ? const Center(
+                child: Text('No news avilable for select date'),
+              )
+            : FractionallySizedBox(
+                widthFactor: 0.90,
+                child: ListView.builder(
+                  itemCount: resources.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return ResourcesContainerWidget(
+                      title: resources[index].title,
+                      uploadFile: resources[index].fileUrl,
+                    );
+                  },
+                ),
+              ),
       ]),
     );
   }

@@ -84,7 +84,7 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Air',
+          'AIR',
           style: GoogleFonts.poppins(
             color: ColorResources.textblack,
             fontWeight: FontWeight.w500,
@@ -106,7 +106,7 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                 return const Text('Server Error');
               }
             }else{
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );
