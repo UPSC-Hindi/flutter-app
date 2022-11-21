@@ -125,7 +125,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => ApiBloc(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'UPSC HINDI',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
