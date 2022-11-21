@@ -8,7 +8,8 @@ import 'package:upsc/util/color_resources.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class NcertScreen extends StatefulWidget {
-  const NcertScreen({Key? key}) : super(key: key);
+  final String? from;
+  const NcertScreen({Key? key,this.from}) : super(key: key);
 
   @override
   State<NcertScreen> createState() => _NcertScreenState();
@@ -27,7 +28,10 @@ class _NcertScreenState extends State<NcertScreen> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: ColorResources.textblack),
         backgroundColor: Colors.white,
-        title: Text(
+        title:widget.from=='note'?Text(
+          'Youtube Notes',
+          style: GoogleFonts.poppins(color: ColorResources.textblack),
+        ):Text(
           'NCERT Batches',
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
@@ -77,7 +81,8 @@ class _NcertScreenState extends State<NcertScreen> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return YouTubeContainerWidget(
-                    videoUrl: videData[index].videoUrl, height: 140,
+                    videoUrl: videData[index].videoUrl,
+                    height: 140,
                   );
                 }),
           )
@@ -88,10 +93,11 @@ class _NcertScreenState extends State<NcertScreen> {
 }
 
 class YouTubeContainerWidget extends StatefulWidget {
-  const YouTubeContainerWidget({Key? key, required this.videoUrl, required this.height})
+  const YouTubeContainerWidget(
+      {Key? key, required this.videoUrl, required this.height})
       : super(key: key);
   final String videoUrl;
-  final double  height;
+  final double height;
   @override
   State<YouTubeContainerWidget> createState() => _YouTubeContainerWidgetState();
 }

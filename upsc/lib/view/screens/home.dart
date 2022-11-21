@@ -378,10 +378,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                     const Divider(),
+                    const Divider(),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).popAndPushNamed('ourachievements');
+                        Navigator.of(context)
+                            .popAndPushNamed('ourachievements');
                       },
                       style: TextButton.styleFrom(
                         primary: ColorResources.textblack, // Text Color
@@ -609,7 +610,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: const Icon(CupertinoIcons.book), label: Languages.courses),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.book_rounded), label: Languages.mockTest),
+              icon: const Icon(Icons.book_rounded), label: Languages.Test),
           BottomNavigationBarItem(
               icon: const Icon(Icons.person), label: Languages.profile),
         ],

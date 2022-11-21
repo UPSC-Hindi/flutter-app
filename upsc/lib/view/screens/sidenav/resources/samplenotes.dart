@@ -62,7 +62,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                 return const Text('Server Error');
               }
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );
