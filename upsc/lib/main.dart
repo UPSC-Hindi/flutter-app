@@ -23,6 +23,7 @@ import 'package:upsc/view/screens/contactus.dart';
 import 'package:upsc/view/screens/home.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
+import 'package:upsc/view/screens/sidenav/resources/courseIndexResources.dart';
 import 'package:upsc/view/screens/sidenav/aboutus.dart';
 import 'package:upsc/view/screens/sidenav/achievements.dart';
 import 'package:upsc/view/screens/sidenav/cartscreeen.dart';
@@ -175,6 +176,9 @@ class MyApp extends StatelessWidget {
                 resourceDataSourceImpl: resourceDataSourceImpl,
               ),
           'shortnotes': (context) => ShortNotesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
+          'courseIndex': (context) => CoursesIndexResources(
                 resourceDataSourceImpl: resourceDataSourceImpl,
               ),
           'youtubenotes': (context) => const YoutubeNotesScreen(),

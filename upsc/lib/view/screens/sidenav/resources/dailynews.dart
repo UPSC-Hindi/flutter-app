@@ -21,9 +21,6 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<ApiBloc>()
-        .add(const GetResources(key: 'Category', value: 'Daily News'));
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
 
