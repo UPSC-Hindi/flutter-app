@@ -33,6 +33,8 @@ class Languages {
   static String myCart = '';
   static String myOrders = '';
   static String myCourses = '';
+  static String myTestseries='';
+  static String ourachievements='';
   static String mySchedule = '';
   static String resources = '';
   static String helpAndSupport = '';
@@ -118,6 +120,8 @@ class Languages {
     myCart = isEnglish ? 'My Cart' : 'कार्ट ';
     myOrders = isEnglish ? 'My Orders' : 'ऑर्डर्स ';
     myCourses = isEnglish ? 'My Courses' : 'कोर्सेस';
+    myTestseries = isEnglish ? 'My Test Series' : 'मेरी टेस्ट सीरीज';
+    ourachievements=isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
     mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
     resources = isEnglish ? 'Resources' : 'संसाधन ';
     helpAndSupport = isEnglish ? 'Help & Support' : 'सहायता और समर्थन';

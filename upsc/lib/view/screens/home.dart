@@ -353,6 +353,62 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Divider(),
                     TextButton(
                       onPressed: () {
+                        Navigator.of(context).popAndPushNamed('mytestseries');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.text_snippet),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.myTestseries,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                     const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('ourachievements');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.people),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.ourachievements,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
                         Navigator.of(context).popAndPushNamed('MySchedule');
                       },
                       style: TextButton.styleFrom(
