@@ -40,7 +40,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
         ),
       ),
       body: FutureBuilder<NotesModel>(
-          future: widget.resourceDataSourceImpl.getNotes(filter: 'shortnotes'),
+          future: widget.resourceDataSourceImpl.getNotes(filter: 'shorts'),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
