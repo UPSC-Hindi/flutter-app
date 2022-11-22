@@ -7,12 +7,12 @@ class ResourcesModel {
   });
 
   final bool status;
-  final List<ResourcesDataModel> data;
+  final List<ResourcesDataModle> data;
   final String msg;
 
   factory ResourcesModel.fromJson(Map<String, dynamic> json) => ResourcesModel(
     status: json["status"],
-    data: List<ResourcesDataModel>.from(json["data"].map((x) => ResourcesDataModel.fromJson(x))),
+    data: List<ResourcesDataModle>.from(json["data"].map((x) => ResourcesDataModle.fromJson(x))),
     msg: json["msg"],
   );
 
@@ -23,8 +23,8 @@ class ResourcesModel {
   };
 }
 
-class ResourcesDataModel {
-  ResourcesDataModel({
+class ResourcesDataModle {
+  ResourcesDataModle({
     required this.id,
     required this.user,
     required this.category,
@@ -35,6 +35,7 @@ class ResourcesDataModel {
     required this.createdAt,
     required this.resourceType,
     required this.v,
+    required this.isActive,
   });
 
   final String id;
@@ -47,8 +48,9 @@ class ResourcesDataModel {
   final String createdAt;
   final String resourceType;
   final int v;
+  final bool isActive;
 
-  factory ResourcesDataModel.fromJson(Map<String, dynamic> json) => ResourcesDataModel(
+  factory ResourcesDataModle.fromJson(Map<String, dynamic> json) => ResourcesDataModle(
     id: json["_id"],
     user: json["user"],
     category: Category.fromJson(json["category"]),
@@ -59,6 +61,7 @@ class ResourcesDataModel {
     createdAt: json["Created_At"],
     resourceType: json["resource_type"],
     v: json["__v"],
+    isActive: json["is_active"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +75,7 @@ class ResourcesDataModel {
     "Created_At": createdAt,
     "resource_type": resourceType,
     "__v": v,
+    "is_active": isActive,
   };
 }
 

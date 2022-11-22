@@ -8,6 +8,7 @@ import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/classschedule.dart';
@@ -25,13 +26,13 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<BatchNotesModel> getResources(String key, String value) async {
-    try {
+Future<ResourcesModel> getResources() async {
+      try {
       Response response = await dioAuthorizationData().get(
           '${Apis.baseUrl}${Apis.getResources}',
-          queryParameters: {key: value});
+          queryParameters: {'Category': 'Pathyakram'});
 
-      return BatchNotesModel.fromJson(response.data);
+      return ResourcesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

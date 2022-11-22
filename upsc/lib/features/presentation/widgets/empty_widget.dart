@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({
@@ -27,7 +28,7 @@ class EmptyWidget extends StatelessWidget {
           ),
           Text(
             text,
-            style: TextStyle(
+            style: GoogleFonts.notoSansDevanagari(
               fontWeight: FontWeight.w900,
               fontSize: 16,
               color: Colors.black.withOpacity(0.3),

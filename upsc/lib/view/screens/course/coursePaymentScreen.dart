@@ -103,8 +103,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
         price: (int.parse(widget.course.amount) +
-              ((int.parse(widget.course.amount) * 0.18)))
-          .round().toString(),
+                ((int.parse(widget.course.amount) * 0.18)))
+            .round()
+            .toString(),
         success: true.toString()));
   }
 
@@ -123,10 +124,12 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Signature: '',
         batchId: widget.course.batchDetails.id,
         price: (int.parse(widget.course.amount) +
-              ((int.parse(widget.course.amount) * 0.18)))
-          .round().toString(),
+                ((int.parse(widget.course.amount) * 0.18)))
+            .round()
+            .toString(),
         success: false.toString()));
   }
+
   Future<BaseModel<getbannerdetails>> callApigetbanner() async {
     getbannerdetails response;
     try {
@@ -182,7 +185,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             ),
             Text(
               '${widget.course.amount} INR',
-              style: const TextStyle(
+              style:  GoogleFonts.notoSansDevanagari(
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -192,15 +195,15 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                 Text(
                   'Total Amount',
-                  style: TextStyle(
+                  style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
                   widget.course.amount,
-                  style: const TextStyle(
+                  style:  GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -212,15 +215,15 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                 Text(
                   'Tax',
-                  style: TextStyle(
+                  style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
                   (int.parse(widget.course.amount) * 0.18).round().toString(),
-                  style: const TextStyle(
+                  style:  GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -238,9 +241,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                 Text(
                   'Payable Amount',
-                  style: TextStyle(
+                  style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -249,7 +252,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                           ((int.parse(widget.course.amount) * 0.18)))
                       .round()
                       .toString(),
-                  style: const TextStyle(
+                  style:  GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -273,7 +276,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   },
                   child: Text(
                     'Checkout',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textWhite,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),

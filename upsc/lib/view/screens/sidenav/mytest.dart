@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 
 class MyTestSeries extends StatelessWidget {
@@ -11,7 +12,8 @@ class MyTestSeries extends StatelessWidget {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'My TestSeries',
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: const Center(

@@ -13,7 +13,6 @@ abstract class RemoteDataSource{
   Future<VideoModel> getYouTubeVideo();
   Future<CoursesModel> getCourses(String filter,String type);
   Future<ClassSchedulermodel> getMyClassSchedule();
-  Future<BatchNotesModel> getResources(String key,String value);
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();
   Future<void>addMyCart();

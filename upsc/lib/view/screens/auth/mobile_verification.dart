@@ -22,8 +22,8 @@ class MobileVerification extends StatefulWidget {
 
 class _MobileVerificationState extends State<MobileVerification> {
   final TextEditingController _numberController = TextEditingController();
-   List<Widget> images = [];
-    @override
+  List<Widget> images = [];
+  @override
   void initState() {
     callApigetbanner();
     super.initState();
@@ -83,9 +83,10 @@ class _MobileVerificationState extends State<MobileVerification> {
           const SizedBox(
             height: 25,
           ),
-          const Text(
+           Text(
             'Verify Your Phone Number',
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24),
+            style: GoogleFonts.notoSansDevanagari(
+                fontWeight: FontWeight.w900, fontSize: 24),
           ),
           const SizedBox(
             height: 45,
@@ -94,7 +95,7 @@ class _MobileVerificationState extends State<MobileVerification> {
             margin: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: TextField(
               controller: _numberController,
-              style: const TextStyle(fontSize: 20),
+              style:  GoogleFonts.notoSansDevanagari(fontSize: 20),
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -118,7 +119,7 @@ class _MobileVerificationState extends State<MobileVerification> {
               },
               child: Text(
                 'Send OTP',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.notoSansDevanagari(
                     color: ColorResources.textWhite,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),

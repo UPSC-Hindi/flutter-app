@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
@@ -19,7 +20,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Resources',
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: GridView.count(
@@ -87,7 +89,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 alignment: Alignment.center,
                 child: Text(
                   text,
-                  style: TextStyle(
+                  style: GoogleFonts.notoSansDevanagari(
                     color: ColorResources.textblack,
                     fontWeight: FontWeight.w800,
                     fontSize: 19,

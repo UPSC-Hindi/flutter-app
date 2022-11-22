@@ -33,7 +33,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
         backgroundColor: Colors.white,
         title: Text(
           'NotificationScreen',
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: ListView.builder(
@@ -50,7 +51,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   children: [
                     Text(
                       notificationData[index].title!,
-                      style: GoogleFonts.poppins(fontSize: 24),
+                      style: GoogleFonts.notoSansDevanagari(fontSize: 24),
                     ),
                     Text(notificationData[index].message!),
                   ],
