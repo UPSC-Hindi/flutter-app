@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -53,7 +51,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 child: Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 40.0,
                         backgroundImage: CachedNetworkImageProvider(_profileimage!),

@@ -5,6 +5,8 @@ class JoinStreaming {
   String? rtcToken;
   String? rtmToke;
   int? userRole;
+  bool? userBlocked;
+  String? userID;
   String? msg;
 
   JoinStreaming(
@@ -14,6 +16,8 @@ class JoinStreaming {
       this.rtcToken,
       this.rtmToke,
       this.userRole,
+      this.userBlocked,
+      this.userID,
       this.msg});
 
   JoinStreaming.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,8 @@ class JoinStreaming {
     rtcToken = json['RtcToken'];
     rtmToke = json['RtmToke'];
     userRole = json['userRole'];
+    userBlocked = json['userBlocked'];
+    userID = json['userID'];
     msg = json['msg'];
   }
 
@@ -34,6 +40,8 @@ class JoinStreaming {
     data['RtcToken'] = rtcToken;
     data['RtmToke'] = rtmToke;
     data['userRole'] = userRole;
+    data['userBlocked'] = userBlocked;
+    data['userID'] = userID;
     data['msg'] = msg;
     return data;
   }

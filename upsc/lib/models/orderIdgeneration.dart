@@ -1,39 +1,40 @@
 class OrderIdGeneration {
   bool? status;
-  Data? data;
+  String? keyId;
+  String? keySecret;
+  String? id;
+  String? currency;
+  int? amount;
   String? msg;
 
-  OrderIdGeneration({this.status, this.data, this.msg});
+  OrderIdGeneration(
+      {this.status,
+      this.keyId,
+      this.keySecret,
+      this.id,
+      this.currency,
+      this.amount,
+      this.msg});
 
   OrderIdGeneration.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    keyId = json['key_id'];
+    keySecret = json['key_secret'];
+    id = json['id'];
+    currency = json['currency'];
+    amount = json['amount'];
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
+    data['key_id'] = keyId;
+    data['key_secret'] = keySecret;
+    data['id'] = id;
+    data['currency'] = currency;
+    data['amount'] = amount;
     data['msg'] = msg;
-    return data;
-  }
-}
-
-class Data {
-  String? orderId;
-
-  Data({this.orderId});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    orderId = json['orderId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['orderId'] = orderId;
     return data;
   }
 }

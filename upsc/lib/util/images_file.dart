@@ -14,6 +14,10 @@ class SvgImages {
 
   static String logo = 'assets/images/logo_Splash.jpg';
 
+  static String aboutLogo = 'https://storage-upschindi.s3.ap-south-1.amazonaws.com/app_final.png';
+  static String currentaffer1 =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/Image.png";
+  static String currentaffer2 = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/thehindu.png";
 //support auth images
   static String google =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/flat-color-icons_google.svg';
@@ -21,7 +25,7 @@ class SvgImages {
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/bi_apple.svg';
 
   static String notepaper =
-      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/note-paper+1.svg';
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/penpaper.png';
   static String intrview =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/Group.jpg';
   static String blurimageexam =
@@ -36,6 +40,7 @@ class SvgImages {
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/contactInfo/cources.svg";
 
   //social media
+  static String email='https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/gmail_logo.png';
   static String telegram =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/telegram.png';
   static String youtube =

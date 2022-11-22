@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,8 @@ import 'package:upsc/util/preference.dart';
 class JoinStreamingScreen extends StatefulWidget {
   final String rtctoken;
   final String rtmtoken;
+  final bool userblock;
+  final String userID;
   final LectureDetail lecture;
   final int uid;
   const JoinStreamingScreen(
@@ -27,6 +28,8 @@ class JoinStreamingScreen extends StatefulWidget {
       required this.lecture,
       required this.rtctoken,
       required this.rtmtoken,
+      required this.userblock,
+      required this.userID,
       required this.uid})
       : super(key: key);
 
@@ -36,6 +39,7 @@ class JoinStreamingScreen extends StatefulWidget {
 
 class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   static String? channel;
+  String? userID;
   static String appId =
       "5d035487d2bb4859a5faa4677c039873"; //"1541a573c5d84ce6ae3996f02626f462";//9675807e93584b4c9fec19451a1186fa
   static String? rtctoken;
@@ -49,8 +53,12 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
   List<Data>? userdetails;
 
+  static bool blockchat = false;
+
   @override
   void initState() {
+    blockchat = widget.userblock;
+    userID = widget.userID;
     channel = widget.lecture.lectureTitle;
     rtctoken = widget.rtctoken;
     rtmtoken = widget.rtmtoken;
@@ -82,10 +90,14 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         print(count);
       },
       onMemberLeft: (member) {
-        callApigetuserdetails();
+        setState(() {
+          callApigetuserdetails();
+        });
       },
       onMemberJoined: (AgoraRtmMember) async {
-        callApigetuserdetails();
+        setState(() {
+          callApigetuserdetails();
+        });
         print(AgoraRtmMember.toString());
       },
       onMessageReceived: (message, fromMember) {
@@ -93,7 +105,39 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
         //chatmessges.add(fromMember.userId + ':' + message.text);
         if (message.text.contains('{')) {
         } else {
-          chatmessges.add(message.text);
+          print('${message.text} in first');
+          if (message.text.contains("blockeduserid:") ||
+              message.text.contains('unblockeduserid:')) {
+            if (message.text.contains("blockeduserid:")) {
+              userID == message.text.split(':')[1]
+                  ? setState(() {
+                      print("*" * 3000);
+                      print('${message.text} in uid');
+                      blockchat = true;
+                    })
+                  : print('');
+            }
+            if (message.text.contains('unblockeduserid:')) {
+              userID == message.text.split(':')[1]
+                  ? setState(() {
+                      print("*" * 3000);
+                      blockchat = false;
+                      print('${message.text} in uid');
+                      print("*" * 3000);
+                    })
+                  : print('');
+            }
+          } else {
+            print("*" * 3000);
+            print('${message.text} in data');
+            setState(() {
+              message.text.contains('blockeduserid:')
+                  ? print("df")
+                  : message.text.contains('unblockeduserid:')
+                      ? print("")
+                      : chatmessges.add(message.text);
+            });
+          }
         }
 
         print(message);
@@ -113,6 +157,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
     print('8' * 3000);
     callApideleteuserdetailsfromstream(widget.uid);
     endthesession(sessionController: client.sessionController);
+    blockchat = false;
     super.dispose();
   }
 
@@ -126,7 +171,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
     await sessionController.value.engine?.destroy();
   }
 
-  @override
   void initAgora() async {
     await client.initialize();
   }
@@ -207,7 +251,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             Text(widget.lecture.lectureTitle,
                                 style: const TextStyle(fontSize: 30)),
                             Text(widget.lecture.description),
-                            Text('By ${widget.lecture.teacher.first}'),
+                            //Text('By ${widget.lecture.subject}'),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
@@ -239,12 +283,12 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                           children: [
                                             CachedNetworkImage(
                                               imageUrl: SvgImages.pdfimage,
-                                              placeholder: (context, url) => Center(
+                                              placeholder: (context, url) => const Center(
                                                   child:
                                                       CircularProgressIndicator()),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      Icon(Icons.error),
+                                                      const Icon(Icons.error),
                                             ),
                                             const SizedBox(
                                               width: 20,
@@ -304,172 +348,190 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    icon: const Icon(Icons.close),
-                                  ),
-                                  const Text("Chat"),
-                                ],
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.45,
-                                child: SingleChildScrollView(
-                                  reverse: true,
-                                  physics: const ScrollPhysics(),
-                                  child: ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    padding: const EdgeInsets.all(5),
-                                    itemCount: chatmessges.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        margin: const EdgeInsets.all(5),
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: ColorResources.gray
-                                              .withOpacity(0.2),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            // Icon(Icons.person),
-                                            // SizedBox(
-                                            //   width: 5,
-                                            // ),
-                                            Text(
-                                              chatmessges[index],
-                                              overflow: TextOverflow.clip,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
+                  return StatefulBuilder(builder: (context, setState) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
                               children: [
-                                Expanded(
-                                  child: TextField(
-                                    controller: _message,
-                                    decoration: InputDecoration(
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            color: ColorResources.gray,
-                                            width: 1.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: ColorResources.gray,
-                                            width: 1.0),
-                                      ),
-                                      hintText: 'message',
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      icon: const Icon(Icons.close),
                                     ),
-                                  ),
+                                    const Text("Chat"),
+                                  ],
                                 ),
-                                IconButton(
-                                  onPressed: () async {
-                                    await client.sessionController.value
-                                        .agoraRtmChannel!
-                                        .sendMessage(
-                                      AgoraRtmMessage.fromText(
-                                          "${name!} : ${_message.text}"),
-                                    );
-                                    chatmessges.add("you :${_message.text}");
-                                    _message.clear();
-                                  },
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: ColorResources.buttoncolor,
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.45,
+                                  child: SingleChildScrollView(
+                                    reverse: true,
+                                    physics: const ScrollPhysics(),
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      padding: const EdgeInsets.all(5),
+                                      itemCount: chatmessges.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          margin: const EdgeInsets.all(5),
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: ColorResources.gray
+                                                .withOpacity(0.2),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              // Icon(Icons.person),
+                                              // SizedBox(
+                                              //   width: 5,
+                                              // ),
+                                              Text(
+                                                chatmessges[index],
+                                                overflow: TextOverflow.clip,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: blockchat
+                                        ? Container(
+                                            child: const Text(
+                                                "user hase been block by the admin"),
+                                          )
+                                        : TextField(
+                                            controller: _message,
+                                            decoration: InputDecoration(
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                borderSide: BorderSide(
+                                                    color: ColorResources.gray,
+                                                    width: 1.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: ColorResources.gray,
+                                                    width: 1.0),
+                                              ),
+                                              hintText: 'message',
+                                            ),
+                                          ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      if (_message.text.isNotEmpty) {
+                                        await client.sessionController.value
+                                            .agoraRtmChannel!
+                                            .sendMessage(
+                                          AgoraRtmMessage.fromText(
+                                              "${name!} : ${_message.text}"),
+                                        );
+                                        setState(() {
+                                          chatmessges
+                                              .add("you :${_message.text}");
+                                          _message.clear();
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(
+                                      Icons.send,
+                                      color: ColorResources.buttoncolor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 });
           } else {
             showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
-                  return SingleChildScrollView(
-                    reverse: true,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.45,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    icon: const Icon(Icons.close)),
-                                Text("Participants ${userdetails!.length.toString()}"),
-                              ],
-                            ),
-                            userdetails!.length == 0
-                                ? const Center(
-                                    child: Text('There no one yet..'),
-                                  )
-                                : GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: userdetails!.length,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 4.0,
-                                    ),
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        child: Column(children: [
-                                          CircleAvatar(
-                                            radius: 40.0,
-                                            backgroundImage:
-                                                CachedNetworkImageProvider(
-                                                    userdetails![index]
-                                                        .profilePicture!),
-                                            backgroundColor: Colors.grey,
-                                          ),
-                                          Text(userdetails![index].studentName!)
-                                        ]),
-                                      );
-                                    },
-                                  ),
-                          ],
+                  return StatefulBuilder(builder: (context, setState) {
+                    return SingleChildScrollView(
+                      reverse: true,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      icon: const Icon(Icons.close)),
+                                  Text(
+                                      "Participants ${userdetails!.length.toString()}"),
+                                ],
+                              ),
+                              // userdetails!.length == 0
+                              //     ? const Center(
+                              //         child: Text('There no one yet..'),
+                              //       )
+                              //     :
+                              GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: userdetails!.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 4.0,
+                                ),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  print("+" * 200);
+                                  print(userdetails![index].profilePicture!);
+                                  return Container(
+                                    child: Column(children: [
+                                      CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                userdetails![index]
+                                                    .profilePicture!),
+                                        backgroundColor: Colors.grey,
+                                      ),
+                                      Text(userdetails![index].studentName!)
+                                    ]),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 });
           }
         },
@@ -484,6 +546,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .streaminguserdetailsRequest();
+      userdetails = response.data;
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));

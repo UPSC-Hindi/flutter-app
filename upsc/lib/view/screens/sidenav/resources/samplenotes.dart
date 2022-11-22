@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
+import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 
-
 class SampleNotesScreen extends StatefulWidget {
-  const SampleNotesScreen({Key? key}) : super(key: key);
+  const SampleNotesScreen({Key? key, required this.resourceDataSourceImpl})
+      : super(key: key);
+  final ResourceDataSourceImpl resourceDataSourceImpl;
 
   @override
   State<SampleNotesScreen> createState() => _SampleNotesScreenState();
@@ -20,7 +22,9 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 
   @override
   void initState() {
-    context.read<ApiBloc>().add(const GetResources(key: 'Category', value: 'Sample Notes'));
+    context
+        .read<ApiBloc>()
+        .add(const GetResources(key: 'Category', value: 'Sample Notes'));
     super.initState();
   }
 
@@ -43,37 +47,33 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
       ),
-      body: BlocBuilder<ApiBloc, ApiState>(
-        builder: (context, state) {
-          if (state is ApiError) {
-            return const Center(
-              child: Text("Unable to get data"),
-            );
-          }
-          if (state is ApiResourcesSuccess) {
-            if (state.resources.data.isEmpty) {
-              return const Center(
-                child: Text('There is no resources'),
-              );
+      body: FutureBuilder<NotesModel>(
+          future: widget.resourceDataSourceImpl.getNotes(),
+          builder: (context, snapshots) {
+            if (ConnectionState.done == snapshots.connectionState) {
+              if (snapshots.hasData) {
+                NotesModel? response = snapshots.data;
+                if (response!.status) {
+                  return _bodyWidget(context, response.data);
+                } else {
+                  return Text(response.msg);
+                }
+              } else {
+                return const Text('Server Error');
+              }
+            } else {
+              return const Center(child: CircularProgressIndicator());
             }
-            return _bodyWidget(state.resources.data);
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+          }),
     );
   }
 
-  Container _bodyWidget(List<ResourcesDataModel> resources) {
+  Container _bodyWidget(BuildContext context, List<NotesDataModel> resources) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-
           SearchBarWidget(searchtest: _searchtest),
-
           FractionallySizedBox(
             widthFactor: 0.90,
             child: ListView.builder(
@@ -81,7 +81,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
-                  resource: resources[index],
+                  title: resources[index].title,
+                  uploadFile: resources[index].fileUrl,
                 );
               },
             ),

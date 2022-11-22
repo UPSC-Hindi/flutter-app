@@ -11,6 +11,7 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
 import 'package:upsc/models/auth/register.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -34,7 +35,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  List<Widget> images = [];
   bool _passwordVisible = true;
   static String? deviceConfig;
   static String? deviceName;
@@ -43,7 +44,28 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     getdevices();
+    callApigetbanner();
     super.initState();
+  }
+
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          print(image);
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+      print(images);
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   Future getdevices() async {
@@ -67,7 +89,7 @@ class _SignUpState extends State<SignUp> {
       // print("Result ${result!.email}");
       // print("Result ${result!.photoUrl}");
       // print("Result ${result!.authentication}");
-      if (result!.email != null) {
+      if (result!.email.isNotEmpty) {
         callApigooglelogin();
         await _googleSignIn.signOut();
         await _googleSignIn.disconnect();
@@ -80,25 +102,25 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CarouselSlider(
-                items: [
-                  Image.network(SvgImages
-                      .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
-                  Image.network(SvgImages
-                      .banner_2), // SvgPicture.asset(SvgImages.banner_2),
-                  Image.network(SvgImages
-                      .banner_3), // SvgPicture.asset(SvgImages.banner_3),
-                  Image.network(SvgImages
-                      .banner_4), // SvgPicture.asset(SvgImages.banner_4),
-                ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: CarouselSlider(
+                items: images,
+                // [
+                //   Image.network(SvgImages
+                //       .banner_1), // SvgPicture.asset(SvgImages.banner_1,),
+                //   Image.network(SvgImages
+                //       .banner_2), // SvgPicture.asset(SvgImages.banner_2),
+                //   Image.network(SvgImages
+                //       .banner_3), // SvgPicture.asset(SvgImages.banner_3),
+                //   Image.network(SvgImages
+                //       .banner_4), // SvgPicture.asset(SvgImages.banner_4),
+                // ],
                 options: CarouselOptions(
-                  height: 250,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.8,
+                  viewportFraction: 1,
                   initialPage: 0,
                   enableInfiniteScroll: true,
                   reverse: false,
@@ -110,204 +132,193 @@ class _SignUpState extends State<SignUp> {
                   scrollDirection: Axis.horizontal,
                 ),
               ),
-              FractionallySizedBox(
-                widthFactor: 0.80,
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Create Account',
-                        style: TextStyle(
-                            color: ColorResources.textblack,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.blueAccent, width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            labelText: 'Email Id',
-                          ),
-                          validator:
-                              ValidationBuilder().required().email().build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.80,
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  children: [
+                    Text(
+                      'Create Account',
+                      style: TextStyle(
+                          color: ColorResources.textblack,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10,),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: 'Email Id',
                         ),
+                        validator:
+                            ValidationBuilder().required().email().build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          controller: _numberController,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 61, 72, 91),
-                                    width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            labelText: 'Mobile No.',
-                          ),
-                          validator: ValidationBuilder()
-                              .required()
-                              .phone()
-                              .maxLength(10)
-                              .minLength(10)
-                              .build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          controller: _nameController,
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.blueAccent, width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            labelText: 'Full name',
-                          ),
-                          validator: ValidationBuilder().required().build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          obscureText: _passwordVisible,
-                          controller: _passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.blueAccent, width: 32.0),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Based on passwordVisible state choose the icon
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: ColorResources.gray,
-                              ),
-                              onPressed: () {
-                                // Update the state i.e. toogle the state of passwordVisible variable
-                                setState(() {
-                                  _passwordVisible = !_passwordVisible;
-                                });
-                              },
-                            ),
-                            labelText: 'Password',
-                          ),
-                          validator: ValidationBuilder()
-                              .required()
-                              .minLength(8)
-                              .regExp(
-                                  RegExp(
-                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
-                                  'valid password ex:Testing@1')
-                              .maxLength(50)
-                              .build(),
-                          onChanged: (value) {
-                            _formkey.currentState!.validate();
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.60,
-                        decoration: BoxDecoration(
-                            color: ColorResources.buttoncolor,
-                            borderRadius: BorderRadius.circular(14)),
-                        child: TextButton(
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              callApiRegister();
-                            } else {
-                              flutterToast('pls enter all required fields');
-                              print("Unsuccessful");
-                            }
-                            //   Navigator.of(context).pushNamed('otpverification');
-                          },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(
-                                color: ColorResources.textWhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: const [
-                          Expanded(
-                              child: Divider(
-                            thickness: 2,
-                          )),
-                          Text("Or Register with"),
-                          Expanded(
-                              child: Divider(
-                            thickness: 2,
-                          )),
+                    ),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
                         ],
+                        controller: _numberController,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 61, 72, 91),
+                                  width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: 'Mobile No.',
+                        ),
+                        validator: ValidationBuilder()
+                            .required()
+                            .phone()
+                            .maxLength(10)
+                            .minLength(10)
+                            .build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
                       ),
-                      const SizedBox(
-                        height: 10,
+                    ),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: _nameController,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          labelText: 'Full name',
+                        ),
+                        validator: ValidationBuilder().required().build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              googleLogin();
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: SvgPicture.network(SvgImages.google),
+                    ),
+                    Container(
+                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        obscureText: _passwordVisible,
+                        controller: _passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: ColorResources.gray,
                             ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
+                          labelText: 'Password',
+                        ),
+                        validator: ValidationBuilder()
+                            .required()
+                            .minLength(8)
+                            .regExp(
+                                RegExp(
+                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                                'valid password ex:Testing@1')
+                            .maxLength(50)
+                            .build(),
+                        onChanged: (value) {
+                          _formkey.currentState!.validate();
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.60,
+                      decoration: BoxDecoration(
+                          color: ColorResources.buttoncolor,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: TextButton(
+                        onPressed: () {
+                          if (_formkey.currentState!.validate()) {
+                            callApiRegister();
+                          } else {
+                            flutterToast('pls enter all required fields');
+                            print("Unsuccessful");
+                          }
+                          //   Navigator.of(context).pushNamed('otpverification');
+                        },
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(
+                              color: ColorResources.textWhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: const [
+                        Expanded(
+                            child: Divider(
+                          thickness: 2,
+                        )),
+                        Text("Or Register with"),
+                        Expanded(
+                            child: Divider(
+                          thickness: 2,
+                        )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            googleLogin();
+                          },
+                          child: Container(
                             height: 50,
                             width: 50,
                             padding: const EdgeInsets.all(5),
@@ -315,34 +326,47 @@ class _SignUpState extends State<SignUp> {
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: SvgPicture.network(SvgImages.apple),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Create an account?'),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).popAndPushNamed('SignIn');
-                              },
-                              child: Text(
-                                ' Login',
-                                style: TextStyle(
-                                    color: ColorResources.buttoncolor),
-                              ))
-                        ],
-                      ),
-                    ],
-                  ),
+                            child: SvgPicture.network(SvgImages.google),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: SvgPicture.network(SvgImages.apple),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Create an account?'),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).popAndPushNamed('SignIn');
+                            },
+                            child: Text(
+                              ' Login',
+                              style: TextStyle(
+                                  color: ColorResources.buttoncolor),
+                            ))
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -408,6 +432,7 @@ class _SignUpState extends State<SignUp> {
     }
     return BaseModel()..data = response;
   }
+
   Future<BaseModel<GoogleSignIn>> callApigooglelogin() async {
     GoogleSignIn response;
     print("*123" * 200);
@@ -418,7 +443,7 @@ class _SignUpState extends State<SignUp> {
       "deviceConfig": deviceConfig,
       "deviceName": deviceName,
     };
-     setState(() {
+    setState(() {
       Preferences.onLoading(context);
     });
     try {
@@ -426,9 +451,9 @@ class _SignUpState extends State<SignUp> {
           await RestClient(RetroApi2().dioData2()).googleSigninRequest(body);
       if (response.status!) {
         setState(() {
-        Preferences.hideDialog(context);
-      });
-        if (response.data!.verified!) {
+          Preferences.hideDialog(context);
+        });
+        if (response.data!.verified) {
           await SharedPreferenceHelper.setString(
               Preferences.access_token, response.data!.accessToken);
           await SharedPreferenceHelper.setBoolean(
@@ -476,9 +501,9 @@ class _SignUpState extends State<SignUp> {
           textColor: ColorResources.textWhite,
         );
       } else {
-         setState(() {
-        Preferences.hideDialog(context);
-      });
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -488,7 +513,7 @@ class _SignUpState extends State<SignUp> {
         );
       }
     } catch (error, stacktrace) {
-       setState(() {
+      setState(() {
         Preferences.hideDialog(context);
       });
       print("Exception occur: $error stackTrace: $stacktrace");

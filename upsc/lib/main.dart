@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,9 +21,11 @@ import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/contactus.dart';
 import 'package:upsc/view/screens/home.dart';
-import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
+import 'package:upsc/view/screens/sidenav/resources/courseIndexResources.dart';
+import 'package:upsc/view/screens/sidenav/aboutus.dart';
+import 'package:upsc/view/screens/sidenav/achievements.dart';
 import 'package:upsc/view/screens/sidenav/cartscreeen.dart';
 import 'package:upsc/view/screens/sidenav/download.dart';
 import 'package:upsc/view/screens/sidenav/helpandsupport.dart';
@@ -31,27 +33,86 @@ import 'package:upsc/view/screens/sidenav/mycourses.dart';
 import 'package:upsc/view/screens/sidenav/myorders.dart';
 import 'package:upsc/view/screens/sidenav/myschedule.dart';
 import 'package:upsc/view/screens/sidenav/myscheduleadd.dart';
+import 'package:upsc/view/screens/sidenav/mytest.dart';
 import 'package:upsc/view/screens/sidenav/resources.dart';
+import 'package:upsc/view/screens/sidenav/resources/airResourcesScreen.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-void main() async{
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('A bg message just showed up :  ${message.messageId}');
+}
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.high,
+    playSound: true);
+
+Future<void> main() async {
   //Orientations
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              color: Colors.blue,
+              playSound: true,
+              icon: '@mipmap/ic_launcher',
+            ),
+          ));
+    }
+  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FlutterDownloader.initialize(
-    debug: true, // optional: set to false to disable printing logs to console (default: true)
-    ignoreSsl: true // option: set to false to disable working with http links (default: false)
+      debug: true,
+      // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );
+  await firebaseMessaging.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
   );
+
   //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
       //Languages.isEnglish = SharedPreferenceHelper.getString(Preferences.language)! == "English" ? false : true;
       await Languages.initState();
+      print(await firebaseMessaging.getToken());
       runApp(const MyApp());
     },
   );
@@ -59,21 +120,22 @@ void main() async{
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ResourceDataSourceImpl resourceDataSourceImpl = ResourceDataSourceImpl();
     return BlocProvider(
       create: (context) => ApiBloc(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'UPSC HINDI',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         //home: const Splash(),
-        initialRoute: '/',
         navigatorKey: navigatorKey,
-
+        initialRoute: '/',
         routes: {
           '/': (context) => const Splash(),
           'home': (context) => const HomeScreen(),
@@ -86,7 +148,7 @@ class MyApp extends StatelessWidget {
                 isLogin: false,
               ),
           'notifications': (context) => const NotificationScreen(),
-          'homescreen': (context) => const HomeScreens(),
+          // 'homescreen': (context) => const HomeScreens(),
           'Coursescreen': (context) => const CourseScreen(),
           'mocktestscreen': (context) => const mocktestscreen(),
           'ProfilScreen': (context) => const ProfilScreen(),
@@ -95,6 +157,8 @@ class MyApp extends StatelessWidget {
           'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
+          'mytestseries': (context) => const MyTestSeries(),
+          'ourachievements': (context) => const OurAchievementsScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),
           'helpandsupport': (context) => const HelpAndSupport(),
           'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
@@ -108,11 +172,24 @@ class MyApp extends StatelessWidget {
           'ncertscreen': (context) => const NcertScreen(),
           'MySchedule': (context) => const MySchedule(),
           'MyScheduleAdd': (context) => const MyScheduleAdd(),
-          'dailynews': (context) => const DailyNewsScreen(),
-          'shortnotes': (context) => const ShortNotesScreen(),
+          'dailynews': (context) => DailyNewsScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
+          'shortnotes': (context) => ShortNotesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
+          'courseIndex': (context) => CoursesIndexResources(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
           'youtubenotes': (context) => const YoutubeNotesScreen(),
-          'samplenotes': (context) => const SampleNotesScreen(),
+          'samplenotes': (context) => SampleNotesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
+          'airResources': (context) => AirResourcesScreen(
+                resourceDataSourceImpl: resourceDataSourceImpl,
+              ),
           'contactus': (context) => const ContactUsScreen(),
+          'aboutusscreen': (context) => const AboutUsScreen(),
 //           'joinstreaming': (context) => const JoinStreamingScreen(
 // lecture: '',
 //                 rtctoken: '',
@@ -127,7 +204,7 @@ class MyApp extends StatelessWidget {
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
-                                                                                                                                                  
+
   @override
   State<Splash> createState() => _SplashState();
 }
@@ -139,7 +216,7 @@ class _SplashState extends State<Splash> {
       navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)
           ? const HomeScreen()
           : const loginscreen(),
-      duration: 30,
+      //duration: 30,
       //imageSize: 130,
       imageSrc: "assets/images/splash.gif",
       backgroundColor: Colors.white,

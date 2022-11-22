@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,7 +22,8 @@ import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/languagescreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final int? index;
+  const HomeScreen({Key? key, this.index}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  static final List _widgetOptions = [
+  final List _widgetOptions = [
     const HomeScreens(),
     const CourseScreen(),
     const mocktestscreen(),
@@ -51,6 +53,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    widget.index != null ? _onItemTapped(widget.index!) : print("back");
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title!),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body!)],
+                  ),
+                ),
+              );
+            });
+      }
+    });
     print('Is english');
     print(Languages.isEnglish);
     name = SharedPreferenceHelper.getString(Preferences.name)!;
@@ -83,386 +106,496 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         actions: [
-          IconButton(
-              onPressed: (() {
-                Navigator.of(context).pushNamed('notifications');
-              }),
-              icon: const Icon(Icons.circle_notifications_outlined))
+          Container(
+            width: 130,
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            decoration: BoxDecoration(
+                color: const Color(0xFFF6CBB4),
+                borderRadius: BorderRadius.circular(20)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'Notification',
+                  style: TextStyle(
+                    color: Color(0xFF783B3B),
+                  ),
+                ),
+                InkWell(
+                  onTap: (() {
+                    Navigator.of(context).pushNamed('notifications');
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 16,
+                      child: Stack(
+                        children: [
+                          const Center(
+                              child: Icon(
+                            Icons.notifications_none_outlined,
+                            color: Color(0xFF783B3B),
+                            size: 20,
+                          )),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              bottom: 11,
+                              left: 17,
+                              top: 9,
+                            ),
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.red,
+                              radius: 3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
-      drawer: Drawer(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 10, left: 10),
-              height: 100,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(30),
+      drawer: SafeArea(
+        child: Drawer(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30),
+                bottomRight: Radius.circular(30)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 10, left: 10),
+                height: 100,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                  ),
+                  color: ColorResources.buttoncolor,
                 ),
-                color: ColorResources.buttoncolor,
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 25.0,
+                      backgroundImage:
+                          CachedNetworkImageProvider(_profileimage!),
+                      backgroundColor: Colors.grey,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        name,
+                        overflow: TextOverflow.clip,
+                        maxLines: 2,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: ColorResources.textWhite),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25.0,
-                    backgroundImage: CachedNetworkImageProvider(_profileimage!),
-                    backgroundColor: Colors.grey,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  SizedBox(
-                    width: 200,
-                    child: Text(
-                      name,
-                      overflow: TextOverflow.clip,
-                      maxLines: 2,
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                          color: ColorResources.textWhite),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.info),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.aboutUs,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed('aboutusscreen');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
                       ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('downloadScreen');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.download_rounded),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.yourDownloads,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('cartscreen');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.shopping_cart),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.myCart,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('myordersscreen');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.list),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.myOrders,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('mycoursesscreen');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.menu_book),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.myCourses,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('MySchedule');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.event_available_rounded),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.mySchedule,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('resourcesscreen');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(CupertinoIcons.layers),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.resources,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).popAndPushNamed('helpandsupport');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.help_outlined),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.helpAndSupport,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Share.share('https://upschindi.in/');
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(CupertinoIcons.reply),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            Languages.shareApp,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LanguageScreen(
-                            isLogin: true,
-                          ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.info),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.aboutUs,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
                         ),
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      primary: ColorResources.textblack, // Text Color
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 30, top: 0, bottom: 0, right: 0),
-                      child: Row(
-                        children: [
-                          const Icon(CupertinoIcons.settings),
-                          const SizedBox(
-                            width: 10,
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('downloadScreen');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.download_rounded),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.yourDownloads,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('cartscreen');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.shopping_cart),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.myCart,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('myordersscreen');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.list),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.myOrders,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .popAndPushNamed('mycoursesscreen');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.menu_book),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.myCourses,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('mytestseries');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.text_snippet),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.myTestseries,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .popAndPushNamed('ourachievements');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.people),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.ourachievements,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('MySchedule');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.event_available_rounded),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.mySchedule,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .popAndPushNamed('resourcesscreen');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(CupertinoIcons.layers),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.resources,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('helpandsupport');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.help_outlined),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.helpAndSupport,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Share.share('https://upschindi.in/');
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(CupertinoIcons.reply),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.shareApp,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LanguageScreen(
+                              isLogin: true,
+                            ),
                           ),
-                          Text(
-                            Languages.setting,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                                color: ColorResources.textblack),
-                          )
-                        ],
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        primary: ColorResources.textblack, // Text Color
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 30, top: 0, bottom: 0, right: 0),
+                        child: Row(
+                          children: [
+                            const Icon(CupertinoIcons.settings),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              Languages.setting,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: ColorResources.textblack),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const Divider(),
-                ]),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                callApilogout();
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 30, top: 0, bottom: 10, right: 30),
-                child: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.logout,
-                        color: Colors.redAccent,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text('Logout',
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                            color: Colors.redAccent,
-                          ))
-                    ],
-                  ),
+                    const Divider(),
+                  ]),
                 ),
               ),
-            )
-          ],
+              GestureDetector(
+                onTap: () {
+                  callApilogout();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 30, top: 0, bottom: 10, right: 30),
+                  child: Container(
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.logout,
+                          color: Colors.redAccent,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text('Logout',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: Colors.redAccent,
+                            ))
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       body: Center(
@@ -477,7 +610,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: const Icon(CupertinoIcons.book), label: Languages.courses),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.book_rounded), label: Languages.mockTest),
+              icon: const Icon(Icons.book_rounded), label: Languages.Test),
           BottomNavigationBarItem(
               icon: const Icon(Icons.person), label: Languages.profile),
         ],

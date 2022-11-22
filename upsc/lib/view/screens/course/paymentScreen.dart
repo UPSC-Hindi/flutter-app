@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/view/screens/sidenav/mycourses.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -12,13 +15,11 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(microseconds: 1500), () {
-      Navigator.pop(context);
-      Navigator.push(
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
         context,
-        CupertinoPageRoute(
-          fullscreenDialog: true,
-          builder: (context) =>const MyCoursesScreen(),
+        MaterialPageRoute(
+          builder: (context) => const MyCoursesScreen(),
         ),
       );
     });
@@ -32,11 +33,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
+            Icon(
+              Icons.verified,
+              size: 200,
+              color: ColorResources.buttoncolor,
+            ),
             Text(
               'Thank You!',
               style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
+                  GoogleFonts.poppins(color: ColorResources.textblack, fontWeight: FontWeight.w900),
             )
           ],
         ),

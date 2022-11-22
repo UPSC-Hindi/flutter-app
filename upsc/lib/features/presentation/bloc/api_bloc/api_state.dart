@@ -42,7 +42,7 @@ class ApiCoursesSuccess extends ApiState{
 }
 
 class ApiResourcesSuccess extends ApiState{
-  final ResourcesModel resources;
+  final BatchNotesModel resources;
   const ApiResourcesSuccess({required this.resources});
   @override
   List<Object?> get props => [resources];
@@ -58,6 +58,13 @@ class ApiGetSchedulerSuccess extends ApiState{
   final List<MySchedulerDataModel> schedulerList;
 
   const ApiGetSchedulerSuccess({required this.schedulerList});
+  @override
+  List<Object?> get props => [];
+
+}
+class ApiGetMyclassSchedulerSucces extends ApiState{
+  final List<classScheduleModel> myclassschedulerList;
+  const ApiGetMyclassSchedulerSucces({required this.myclassschedulerList});
   @override
   List<Object?> get props => [];
 

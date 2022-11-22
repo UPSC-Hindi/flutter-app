@@ -94,9 +94,9 @@ class BatchDetails {
   final String batchName;
   final String category;
   final String examType;
-  final List<String> student;
+  final List<Student> student;
   final String subject;
-  final List<String> teacher;
+  final List<Student> teacher;
   final DateTime startingDate;
   final DateTime endingDate;
   final String mode;
@@ -118,9 +118,9 @@ class BatchDetails {
     batchName: json["batch_name"],
     category: json["category"],
     examType: json["exam_type"],
-    student: List<String>.from(json["student"].map((x) => x)),
+    student: List<Student>.from(json["student"].map((x) => Student.fromJson(x))),
     subject: json["subject"],
-    teacher: List<String>.from(json["teacher"].map((x) => x)),
+    teacher: List<Student>.from(json["teacher"].map((x) => Student.fromJson(x))),
     startingDate: DateTime.parse(json["starting_date"]),
     endingDate: DateTime.parse(json["ending_date"]),
     mode: json["mode"],
@@ -143,9 +143,9 @@ class BatchDetails {
     "batch_name": batchName,
     "category": category,
     "exam_type": examType,
-    "student": List<dynamic>.from(student.map((x) => x)),
+    "student": List<dynamic>.from(student.map((x) => x.toJson())),
     "subject": subject,
-    "teacher": List<dynamic>.from(teacher.map((x) => x)),
+    "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
     "starting_date": "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
     "ending_date": "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
     "mode": mode,
@@ -163,70 +163,90 @@ class BatchDetails {
   };
 }
 
+class Student {
+  Student({
+    required this.id,
+    required this.fullName,
+    required this.profilePhoto,
+  });
+
+  final String id;
+  final String fullName;
+  final String profilePhoto;
+
+  factory Student.fromJson(Map<String, dynamic> json) => Student(
+    id: json["_id"],
+    fullName: json["FullName"],
+    profilePhoto: json["profilePhoto"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "FullName": fullName,
+    "profilePhoto": profilePhoto,
+  };
+}
+
 class LectureDetail {
   LectureDetail({
     required this.id,
-    required this.userAdmin,
-    required this.batch,
     required this.lectureTitle,
     required this.description,
-    required this.teacher,
     required this.subject,
-    required this.link,
-    required this.liveOrRecorded,
     required this.startingDate,
     required this.endingDate,
-    required this.student,
     required this.createdAt,
+    required this.language,
     required this.v,
   });
 
   final String id;
-  final String userAdmin;
-  final String batch;
   final String lectureTitle;
   final String description;
-  final List<String> teacher;
-  final String subject;
-  final String link;
-  final String liveOrRecorded;
+  final Subject subject;
   final String startingDate;
   final String endingDate;
-  final List<dynamic> student;
   final String createdAt;
+  final String language;
   final int v;
 
   factory LectureDetail.fromJson(Map<String, dynamic> json) => LectureDetail(
     id: json["_id"],
-    userAdmin: json["user_admin"],
-    batch: json["batch"],
     lectureTitle: json["lecture_title"],
     description: json["description"],
-    teacher: List<String>.from(json["teacher"].map((x) => x)),
-    subject: json["subject"],
-    link: json["link"],
-    liveOrRecorded: json["LiveOrRecorded"],
+    subject: Subject.fromJson(json["subject"]),
     startingDate: json["starting_date"],
     endingDate: json["ending_date"],
-    student: List<dynamic>.from(json["student"].map((x) => x)),
     createdAt: json["created_at"],
+    language: json["language"],
     v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "user_admin": userAdmin,
-    "batch": batch,
     "lecture_title": lectureTitle,
     "description": description,
-    "teacher": List<dynamic>.from(teacher.map((x) => x)),
-    "subject": subject,
-    "link": link,
-    "LiveOrRecorded": liveOrRecorded,
+    "subject": subject.toJson(),
     "starting_date": startingDate,
     "ending_date": endingDate,
-    "student": List<dynamic>.from(student.map((x) => x)),
     "created_at": createdAt,
+    "language": language,
     "__v": v,
+  };
+}
+
+class Subject {
+  Subject({
+    required this.title,
+  });
+
+  final String title;
+
+  factory Subject.fromJson(Map<String, dynamic> json) => Subject(
+    title: json["title"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "title": title,
   };
 }

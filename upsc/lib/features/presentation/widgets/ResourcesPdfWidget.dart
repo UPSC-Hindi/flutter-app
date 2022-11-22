@@ -6,15 +6,15 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
-  const ResourcesContainerWidget({Key? key, required this.resource})
+  const ResourcesContainerWidget({Key? key, required this.title, required this.uploadFile})
       : super(key: key);
-  final ResourcesDataModel resource;
+  final String title;
+  final String uploadFile;
 
   @override
   State<ResourcesContainerWidget> createState() =>
@@ -22,23 +22,25 @@ class ResourcesContainerWidget extends StatefulWidget {
 }
 
 class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
-  ReceivePort _port = ReceivePort();
+  final ReceivePort _port = ReceivePort();
 
-  Future download(String url) async {
+  Future download(String url, String? name) async {
     final baseStorage = await getExternalStorageDirectory();
 
     print('directory:${baseStorage!.path}');
-      
+    //todo pls chek this variable use
     List files = baseStorage.listSync();
 
     await FlutterDownloader.enqueue(
       url: url,
-      headers: {}, // optional: header send with url (auth token etc)
+      headers: {},
+      // optional: header send with url (auth token etc)
       savedDir: baseStorage.path,
-      showNotification:
-          true, // show download progress in status bar (for Android)
+      showNotification: true,
+      // show download progress in status bar (for Android)
+      fileName: '${name!}.${url.split('.').last}',
       openFileFromNotification:
-          true, // click on notification to open downloaded file (for Android)
+          false, // click on notification to open downloaded file (for Android)
     );
   }
 
@@ -47,6 +49,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
+      //todo pls chek this variable use
       String id = data[0];
       DownloadTaskStatus status = data[1];
       int progress = data[2];
@@ -89,8 +92,8 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               CachedNetworkImage(
                 imageUrl: SvgImages.pdfimage,
                 placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
               const SizedBox(
                 width: 30,
@@ -99,7 +102,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.resource.title,
+                    widget.title,
                     style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -121,26 +124,30 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 Permission.manageExternalStorage,
               ].request();
               if (await Permission.storage.isGranted) {
-                if (widget.resource.resourceType == 'file') {
-                  download(widget.resource.fileUrl);
-                } else {
-                  launchUrl(Uri.parse(widget.resource.fileUrl),
+                if (true) {
+                  download(widget.uploadFile, widget.title);
+                }
+                //todo this dead code pls check onces
+                 else {
+                  launchUrl(Uri.parse(''),
                       mode: LaunchMode.externalApplication);
                 }
               }
             },
             child: Column(
               children: [
+                //todo this dead code pls check onces of link why true always
                 Text(
-                  widget.resource.resourceType == 'file' ? 'PDF' : 'Link',
+                   true ? 'PDF' : 'Link',
                   style: TextStyle(
-                      fontSize: 15,
-                      color: ColorResources.buttoncolor,
-                      fontWeight: FontWeight.w700),
+                    fontSize: 15,
+                    color: ColorResources.buttoncolor,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 Icon(
-                  widget.resource.resourceType == 'file'
-                      ? Icons.file_download_outlined
+                  //todo this dead code pls check onces
+true                      ? Icons.file_download_outlined
                       : Icons.link,
                   size: 25,
                   color: ColorResources.buttoncolor,

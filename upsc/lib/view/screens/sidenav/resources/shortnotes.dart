@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
+import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 
 class ShortNotesScreen extends StatefulWidget {
-  const ShortNotesScreen({Key? key}) : super(key: key);
+  const ShortNotesScreen({Key? key, required this.resourceDataSourceImpl})
+      : super(key: key);
+  final ResourceDataSourceImpl resourceDataSourceImpl;
 
   @override
   State<ShortNotesScreen> createState() => _ShortNotesScreenState();
@@ -36,30 +39,28 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
           style: GoogleFonts.poppins(color: ColorResources.textblack),
         ),
       ),
-      body: BlocBuilder<ApiBloc, ApiState>(
-        builder: (context, state) {
-          if (state is ApiError) {
-            return const Center(
-              child: Text("Unable to get data"),
-            );
-          }
-          if (state is ApiResourcesSuccess) {
-            if (state.resources.data.isEmpty) {
-              return const Center(
-                child: Text('There is no resources'),
-              );
+      body: FutureBuilder<NotesModel>(
+          future: widget.resourceDataSourceImpl.getNotes(),
+          builder: (context, snapshots) {
+            if (ConnectionState.done == snapshots.connectionState) {
+              if (snapshots.hasData) {
+                NotesModel? response = snapshots.data;
+                if (response!.status) {
+                  return _bodyWidget(response.data);
+                } else {
+                  return Text(response.msg);
+                }
+              } else {
+                return const Text('Server Error');
+              }
+            } else {
+              return const Center(child: CircularProgressIndicator());
             }
-            return _bodyWidget(state.resources.data);
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+          }),
     );
   }
 
-  Container _bodyWidget(List<ResourcesDataModel> resources) {
+  Container _bodyWidget(List<NotesDataModel> resources) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -72,7 +73,8 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
-                  resource: resources[index],
+                  title: resources[index].title,
+                  uploadFile: resources[index].fileUrl,
                 );
               },
             ),

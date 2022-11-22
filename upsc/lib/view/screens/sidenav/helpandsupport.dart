@@ -45,9 +45,9 @@ class HelpAndSupport extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Icon(
-                    Icons.email,
-                    size: 30,
+                  Image.network(
+                    SvgImages.email,
+                    height: 40,
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -98,8 +98,8 @@ class HelpAndSupport extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl: SvgImages.whatsapp,
                       placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                   Text(Languages.whatsApp),
@@ -119,10 +119,11 @@ class HelpAndSupport extends StatelessWidget {
                           },
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.facebook,
+                            height: 30,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         ),
                         GestureDetector(
@@ -133,10 +134,11 @@ class HelpAndSupport extends StatelessWidget {
                           },
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.twitter,
+                            height: 30,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         ),
                         GestureDetector(
@@ -148,10 +150,11 @@ class HelpAndSupport extends StatelessWidget {
                           },
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.linkedin,
+                            height: 30,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                         )
                       ],

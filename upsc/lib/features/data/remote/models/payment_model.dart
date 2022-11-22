@@ -9,7 +9,7 @@ class PaymentModel {
   final String Signature;
   final String batchId;
   final String price;
-  final bool success;
+  final String success;
 
   PaymentModel(
       {required this.orderId,
@@ -24,17 +24,17 @@ class PaymentModel {
       required this.price,
       required this.success});
 
-  Map<String,dynamic> toJson()=>{
-  "orderId" : orderId,
-  "userpaymentOrderId" : userpaymentOrderId,
-  "paymentId" : paymentId,
-  "description" : description,
-  "mobileNumber" : mobileNumber,
-  "userName" : userName,
-  "userEmail" : userEmail,
-  "Signature" : Signature,
-  "batchId" : batchId,
-  "price" : price,
-  "success" : success,
-  };
+  Map<String, dynamic> toJson() => {
+        "pay_order_id": orderId,
+        "razorpay_order_id": userpaymentOrderId,
+        "razorpay_payment_id": paymentId,
+        "description": description,
+        "mobileNumber": mobileNumber,
+        "userName": userName,
+        "userEmail": userEmail,
+        "razorpay_signature": Signature,
+        "batchId": batchId,
+        "price": price,
+        "success": success,
+      };
 }

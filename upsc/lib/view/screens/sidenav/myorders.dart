@@ -10,6 +10,7 @@ import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +26,7 @@ class MyOrdersScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text('Something Went Wrong'),
+              child: Text('Pls Refresh (or) Reopen App'),
             );
           }
           if (state is ApiMyCoursesSuccess) {
@@ -80,13 +81,17 @@ class MyOrdersScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    courseData.batchDetails.batchName,
-                    style: TextStyle(fontSize: 24),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.58,
+                    child: Text(
+                      courseData.batchDetails.batchName,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 24),
+                    ),
                   ),
                   Text(
                     "₹ ${courseData.batchDetails.charges}",
-                    style: TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24),
                   ),
                 ],
               ),
@@ -109,13 +114,8 @@ class MyOrdersScreen extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => CourseViewScreen(
-                                  batchTitle: courseData.batchDetails.batchName,
-                                  batchDesc:
-                                      courseData.batchDetails.description,
                                   lecture: courseData.lectureDetails,
-                                  startDate:
-                                      courseData.batchDetails.startingDate,
-                                  endDate: courseData.batchDetails.endingDate,
+                                  batch: courseData.batchDetails,
                                 ),
                               ),
                             );
@@ -148,11 +148,8 @@ class MyOrdersScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => CourseViewScreen(
-                                batchTitle: courseData.batchDetails.batchName,
-                                batchDesc: courseData.batchDetails.description,
                                 lecture: courseData.lectureDetails,
-                                startDate: courseData.batchDetails.startingDate,
-                                endDate: courseData.batchDetails.endingDate,
+                                batch: courseData.batchDetails,
                               ),
                             ),
                           );

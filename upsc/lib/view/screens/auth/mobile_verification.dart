@@ -7,8 +7,8 @@ import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/auth/postUserMobileNumber.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/auth/otpverification.dart';
@@ -22,6 +22,32 @@ class MobileVerification extends StatefulWidget {
 
 class _MobileVerificationState extends State<MobileVerification> {
   final TextEditingController _numberController = TextEditingController();
+   List<Widget> images = [];
+    @override
+  void initState() {
+    callApigetbanner();
+    super.initState();
+  }
+
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          print(image);
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+      print(images);
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +55,19 @@ class _MobileVerificationState extends State<MobileVerification> {
       body: Column(
         children: [
           CarouselSlider(
-            items: [
-              Image.network(
-                SvgImages.banner_1,
-              ), // SvgPicture.asset(SvgImages.banner_1,),
-              Image.network(
-                  SvgImages.banner_2), // SvgPicture.asset(SvgImages.banner_2),
-              Image.network(
-                  SvgImages.banner_3), // SvgPicture.asset(SvgImages.banner_3),
-              Image.network(SvgImages.banner_4),
-              // SvgPicture.asset(SvgImages.banner_4),
-            ],
+            items: images,
+            // [
+            //   Image.network(
+            //     SvgImages.banner_1,
+            //   ), // SvgPicture.asset(SvgImages.banner_1,),
+            //   Image.network(
+            //       SvgImages.banner_2), // SvgPicture.asset(SvgImages.banner_2),
+            //   Image.network(
+            //       SvgImages.banner_3), // SvgPicture.asset(SvgImages.banner_3),
+            //   Image.network(SvgImages.banner_4),
+            //   // SvgPicture.asset(SvgImages.banner_4),
+            // ],
             options: CarouselOptions(
-              height: 250,
-              aspectRatio: 16 / 9,
               viewportFraction: 1,
               initialPage: 0,
               enableInfiniteScroll: true,
@@ -56,14 +81,14 @@ class _MobileVerificationState extends State<MobileVerification> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 25,
           ),
           const Text(
             'Verify Your Phone Number',
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24),
           ),
           const SizedBox(
-            height: 40,
+            height: 45,
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
@@ -83,7 +108,7 @@ class _MobileVerificationState extends State<MobileVerification> {
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.50,
-            margin: const EdgeInsets.symmetric(vertical: 30),
+            margin: const EdgeInsets.symmetric(vertical: 35),
             decoration: BoxDecoration(
                 color: ColorResources.buttoncolor,
                 borderRadius: BorderRadius.circular(14)),

@@ -10,6 +10,7 @@ import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
+import 'package:upsc/view/screens/sidenav/class_schedule.dart';
 
 class MySchedule extends StatefulWidget {
   const MySchedule({Key? key}) : super(key: key);
@@ -44,7 +45,7 @@ class _MyScheduleState extends State<MySchedule> {
         builder: (context, state) {
           if (state is ApiError) {
             return const Center(
-              child: Text('Something went wrong'),
+              child: Text('Pls Refresh (or) Reopen App'),
             );
           }
           if (state is ApiGetSchedulerSuccess) {
@@ -94,6 +95,40 @@ class _MyScheduleState extends State<MySchedule> {
               ),
               const SizedBox(
                 height: 10,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'My Schedule',
+                        style: GoogleFonts.poppins(
+                          shadows: [
+                            Shadow(
+                                color: ColorResources.buttoncolor,
+                                offset: const Offset(0, -10))
+                          ],
+                          color: Colors.transparent,
+                          decoration: TextDecoration.underline,
+                          decorationColor: ColorResources.buttoncolor,
+                          decorationThickness: 4,
+                        ),
+                      )),
+                  TextButton(
+                      onPressed: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ClassSchedule(),
+                            ),
+                          ),
+                      child: Text(
+                        'Class Schedule',
+                        style: GoogleFonts.poppins(
+                            color: ColorResources.textblack),
+                      ))
+                ],
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -200,7 +235,7 @@ class _MyScheduleState extends State<MySchedule> {
             )
           ],
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

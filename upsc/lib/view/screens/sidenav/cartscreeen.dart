@@ -25,10 +25,11 @@ class _CartScreenState extends State<CartScreen> {
   CartDataModel? cartSelectedItem;
 
   @override
-  void initState(){
+  void initState() {
     context.read<ApiBloc>().add(GetCartDetails());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,50 +41,53 @@ class _CartScreenState extends State<CartScreen> {
           style: TextStyle(color: ColorResources.textblack),
         ),
       ),
-      body: BlocBuilder<ApiBloc, ApiState>(
-        builder: (context, state) {
-          if (state is ApiError) {
-            return const Center(
-              child: Text('Something Went Wrong'),
-            );
-          }
-          if (state is ApiCartDetailsSuccess) {
-            if (state.cartData.isEmpty) {
-              return EmptyWidget(
-                text: 'Your Cart is Empty!',
-                image: SvgImages.emptyCard,
+      body: RefreshIndicator(
+        onRefresh: () => Future.delayed(Duration(seconds: 1)),
+        child: BlocBuilder<ApiBloc, ApiState>(
+          builder: (context, state) {
+            if (state is ApiError) {
+              return const Center(
+                child: Text('Pls Refresh (or) Reopen App'),
               );
             }
-            cartSelectedItem = state.cartData[_selectedValue];
-            return Stack(
-              children: [
-                ListView.builder(
-                  itemCount: state.cartData.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) =>RadioListTile(
-                    value: index,
-                    groupValue: _selectedValue,
-                    visualDensity: const VisualDensity(
-                        horizontal: VisualDensity.minimumDensity,
-                        vertical: VisualDensity.minimumDensity),
-                    onChanged: (value) {
-                      setState((){
-                        _selectedValue = value as int;
-                      });
-                    },
-                    title: _cartContainerWidget(
+            if (state is ApiCartDetailsSuccess) {
+              if (state.cartData.isEmpty) {
+                return EmptyWidget(
+                  text: 'Your Cart is Empty!',
+                  image: SvgImages.emptyCard,
+                );
+              }
+              cartSelectedItem = state.cartData[_selectedValue];
+              return Stack(
+                children: [
+                  ListView.builder(
+                    itemCount: state.cartData.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => RadioListTile(
+                      value: index,
+                      groupValue: _selectedValue,
+                      visualDensity: const VisualDensity(
+                          horizontal: VisualDensity.minimumDensity,
+                          vertical: VisualDensity.minimumDensity),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedValue = value as int;
+                        });
+                      },
+                      title: _cartContainerWidget(
                         cartData: state.cartData[index],
                       ),
+                    ),
                   ),
-                ),
-                _bottomButtonWidget(state.cartData.first, context)
-              ],
+                  _bottomButtonWidget(state.cartData.first, context)
+                ],
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          },
+        ),
       ),
     );
   }
@@ -125,32 +129,30 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  void makePayment(){
+  void makePayment() {
     if (cartSelectedItem != null) {
       Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              CoursePaymentScreen(
-                course: cartSelectedItem!,
-              ),
+          builder: (context) => CoursePaymentScreen(
+            course: cartSelectedItem!,
+          ),
         ),
       );
-    }
-    else{
+    } else {
       flutterToast('Select At least on item');
     }
   }
+
   void removeFromCard(CartDataModel cartData) async {
-    RemoteDataSourceImpl remoteDataSourceImpl =
-    RemoteDataSourceImpl();
+    RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     Preferences.onLoading(context);
     try {
-      Response response = await remoteDataSourceImpl
-          .deleteCartCourse(cartData.cartId);
+      Response response =
+          await remoteDataSourceImpl.deleteCartCourse(cartData.cartId);
       if (response.statusCode == 200) {
-        _selectedValue=0;
+        _selectedValue = 0;
         if (!mounted) return;
         context.read<ApiBloc>().add(GetCartDetails());
       } else {
@@ -168,10 +170,7 @@ class _CartScreenState extends State<CartScreen> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
         height: 100,
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.90,
+        width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: ColorResources.textWhite,
@@ -183,8 +182,7 @@ class _CartScreenState extends State<CartScreen> {
           ],
         ),
         child: Padding(
-          padding:
-          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -203,10 +201,7 @@ class _CartScreenState extends State<CartScreen> {
                     height: 10,
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.40,
+                    width: MediaQuery.of(context).size.width * 0.40,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -255,7 +250,7 @@ class _CartScreenState extends State<CartScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       removeFromCard(cartData);
                     },
                     child: Padding(

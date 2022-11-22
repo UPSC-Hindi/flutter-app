@@ -3,13 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/scheduler_remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
+import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
-import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/domain/reused_function.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/classschedule.dart';
 
 part 'api_event.dart';
 part 'api_state.dart';
@@ -25,7 +26,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
         print(response.data);
         if (response.status) {
           emit(ApiCartDetailsSuccess(cartData: response.data));
-        } else {
+        } else{
           loginRoute();
         }
       } catch (error) {
@@ -53,9 +54,27 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       try {
         CoursesModel response =
         await remoteDataSourceImpl.getCourses(event.key,event.value);
-        print(response);
         if (response.status) {
           emit(ApiCoursesSuccess(courseList: response.data));
+        } else {
+          flutterToast(response.msg.toString());
+          loginRoute();
+        }
+      } catch (error) {
+        print(error);
+        flutterToast(error.toString());
+        emit(ApiError());
+      }
+    });
+
+    on<GetmyClassSchedule>((event, emit) async {
+      emit(ApiLoading());
+      try {
+        ClassSchedulermodel response =
+        await remoteDataSourceImpl.getMyClassSchedule();
+        print(response);
+        if (response.status!) {
+          emit(ApiGetMyclassSchedulerSucces(myclassschedulerList: response.data!));
         } else {
           flutterToast(response.msg.toString());
           loginRoute();
@@ -70,7 +89,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
     on<GetResources>((event, emit) async{
       emit(ApiLoading());
       try{
-        ResourcesModel response = await remoteDataSourceImpl.getResources(event.key,event.value);
+        BatchNotesModel response = await remoteDataSourceImpl.getResources(event.key,event.value);
         print(response);
         if(response.status == true){
           emit(ApiResourcesSuccess(resources: response));

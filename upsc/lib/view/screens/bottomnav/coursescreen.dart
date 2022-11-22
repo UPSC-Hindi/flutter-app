@@ -20,9 +20,57 @@ class _CourseScreenState extends State<CourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 4,
+        length: 3,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Container(
+              width: 80,
+              height: 25,
+              margin:const EdgeInsets.only(left: 10),
+              padding:const EdgeInsets.symmetric(horizontal: 13),
+              decoration: BoxDecoration(
+                color: ColorResources.gray.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: PopupMenuButton(
+                onSelected: (value) {
+                  // your logic
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'IAS',
+                      style: TextStyle(
+                        color: ColorResources.textblack.withOpacity(0.9),
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: ColorResources.textblack.withOpacity(0.5),
+                    ),
+                  ],
+                ),
+                itemBuilder: (BuildContext bc) {
+                  return const [
+                    PopupMenuItem(
+                      value: '/hello',
+                      child: Text("Hello"),
+                    ),
+                    PopupMenuItem(
+                      value: '/about',
+                      child: Text("About"),
+                    ),
+                    PopupMenuItem(
+                      value: '/contact',
+                      child: Text("Contact"),
+                    )
+                  ];
+                },
+              ),
+            ),
             Container(
               constraints: const BoxConstraints.expand(height: 50),
               child: TabBar(
@@ -33,7 +81,6 @@ class _CourseScreenState extends State<CourseScreen> {
                     Tab(text: Languages.prelims),
                     Tab(text: Languages.mains),
                     Tab(text: Languages.interview),
-                    Tab(text: Languages.ro),
                   ]),
             ),
             const Expanded(
@@ -43,9 +90,6 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
                 TabCoursesWidget(
                   value: 'Mains',
-                ),
-                Center(
-                  child: Text("Update will come soon......"),
                 ),
                 Center(
                   child: Text("Update will come soon......"),
@@ -86,7 +130,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
       builder: (context, state) {
         if (state is ApiError) {
           return const Center(
-            child: Text('Something went wrong'),
+            child: Text('Pls Refresh (or) Reopen App'),
           );
         }
         if (state is ApiCoursesSuccess) {
@@ -111,14 +155,14 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Courses',
                 style: GoogleFonts.poppins(fontSize: 24),
               ),
             ),
             ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: courseData.length,
                 itemBuilder: (context, index) => _cardWidget(courseData[index]))
@@ -130,7 +174,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
 
   Container _cardWidget(CoursesDataModel data) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite,
@@ -148,8 +192,10 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             data.batchName,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style:
-                GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                color: const Color(0Xff444444)),
           ),
           const SizedBox(
             height: 10,
@@ -211,7 +257,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ElevatedButton(
@@ -220,7 +266,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 shape: const StadiumBorder()),
             onPressed: () {
               Navigator.popUntil(context, (route) => false);
-              Navigator.pushNamed(context, 'homescreen');
+              Navigator.pushNamed(context, 'home');
               Navigator.push(
                 context,
                 CupertinoPageRoute(

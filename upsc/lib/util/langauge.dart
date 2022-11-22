@@ -12,9 +12,9 @@ class Languages {
   static String mains = '';
   static String interview = '';
   static String ro = '';
-  static String courses = 'c';
+  static String courses = '';
   static String home = '';
-  static String mockTest = '';
+  static String Test = '';
 
   //profile
   static String profile = '';
@@ -33,6 +33,8 @@ class Languages {
   static String myCart = '';
   static String myOrders = '';
   static String myCourses = '';
+  static String myTestseries='';
+  static String ourachievements='';
   static String mySchedule = '';
   static String resources = '';
   static String helpAndSupport = '';
@@ -81,10 +83,10 @@ class Languages {
             : false;
 
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
-    ncertBatches = isEnglish ? 'NCERT Batches' : 'NCERT बेच';
+    ncertBatches = isEnglish ? 'Join Us on' : 'को हमारे साथ शामिल हों';
     youTube = isEnglish ? 'On YouTube' : 'यूट्यूब पर ';
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
-    latestNews = isEnglish ? 'On YouTube' : 'नवीनतम खबरें ';
+    latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
 
     //tab bar course
     prelims = isEnglish ? 'Prelims' : 'प्रीलिम्स';
@@ -96,7 +98,7 @@ class Languages {
     courses = isEnglish ? 'Courses' : 'कोर्सेस ';
     home = isEnglish ? 'Home' : 'होम ';
     profile = isEnglish ? 'Profile' : 'प्रोफाइल ';
-    mockTest = isEnglish ? 'Mock Test' : 'मॉक टेस्ट';
+    Test = isEnglish ? 'Test' : 'टेस्ट';
 
     //profile info
     personalInformation =
@@ -118,7 +120,9 @@ class Languages {
     myCart = isEnglish ? 'My Cart' : 'कार्ट ';
     myOrders = isEnglish ? 'My Orders' : 'ऑर्डर्स ';
     myCourses = isEnglish ? 'My Courses' : 'कोर्सेस';
-    mySchedule = isEnglish ? 'My Scheduler' : 'अनुसूची';
+    myTestseries = isEnglish ? 'My Test Series' : 'मेरी टेस्ट सीरीज';
+    ourachievements=isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
+    mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
     resources = isEnglish ? 'Resources' : 'संसाधन ';
     helpAndSupport = isEnglish ? 'Help & Support' : 'सहायता और समर्थन';
     shareApp = isEnglish ? 'Share App' : 'एप शेयर करें ';
@@ -152,7 +156,7 @@ class Languages {
 
     //help and support
     freeMessage = isEnglish ? 'Feel free to message us at' : '+ कार्य जोड़ें';
-    emailText = isEnglish ? 'email' : 'ईमेल ';
-    whatsApp = isEnglish ? 'Whatsapp us' : 'व्हाट्सप्प करें ';
+    emailText = isEnglish ? 'Mail us at' : 'हमें मेल करें';
+    whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सप्प करें ';
   }
 }

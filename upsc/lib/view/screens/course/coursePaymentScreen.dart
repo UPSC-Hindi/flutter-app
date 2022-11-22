@@ -10,9 +10,9 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.d
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/banner.dart';
 import 'package:upsc/models/orderIdgeneration.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/course/paymentScreen.dart';
@@ -34,9 +34,11 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   String? mobileNumber;
   String? userName;
   String? userEmail;
+  List<Widget> images = [];
   @override
   void initState() {
     super.initState();
+    callApigetbanner();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
@@ -55,13 +57,15 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     _razorpay.clear();
   }
 
-  void openCheckout(id) async {
+  void openCheckout(id, razorpaykey) async {
     print('*' * 2000);
     print(id.toString());
     var options = {
       'key': razorPayId,
       "order_id": id,
-      'amount': (100 * int.parse(widget.course.amount)).toString(),
+      'amount': (100 * int.parse(widget.course.amount) +
+              (100 * (int.parse(widget.course.amount) * 0.18)))
+          .toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
       'prefill': {'contact': mobileNumber, 'email': userEmail},
@@ -98,8 +102,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
-        price: widget.course.amount,
-        success: true));
+        price: (int.parse(widget.course.amount) +
+              ((int.parse(widget.course.amount) * 0.18)))
+          .round().toString(),
+        success: true.toString()));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -116,8 +122,27 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: '',
         batchId: widget.course.batchDetails.id,
-        price: widget.course.amount,
-        success: false));
+        price: (int.parse(widget.course.amount) +
+              ((int.parse(widget.course.amount) * 0.18)))
+          .round().toString(),
+        success: false.toString()));
+  }
+  Future<BaseModel<getbannerdetails>> callApigetbanner() async {
+    getbannerdetails response;
+    try {
+      response = await RestClient(RetroApi2().dioData2()).bannerimagesRequest();
+      print(response.msg);
+      for (var entry in response.data!) {
+        for (String image in entry.bannerUrl!) {
+          images.add(Image.network(image));
+        }
+      }
+      setState(() {});
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -134,19 +159,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
-              items: [
-                Image.network(SvgImages.banner_1),
-                // SvgPicture.asset(SvgImages.banner_1,),
-                Image.network(SvgImages.banner_2),
-                // SvgPicture.asset(SvgImages.banner_2),
-                Image.network(SvgImages.banner_3),
-                // SvgPicture.asset(SvgImages.banner_3),
-                Image.network(SvgImages.banner_4),
-                // SvgPicture.asset(SvgImages.banner_4),
-              ],
+              items: images,
               options: CarouselOptions(
-                height: 250,
-                aspectRatio: 16 / 9,
                 viewportFraction: 1,
                 initialPage: 0,
                 enableInfiniteScroll: true,
@@ -197,16 +211,16 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Tax',
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
-                  '120.40',
-                  style: TextStyle(
+                  (int.parse(widget.course.amount) * 0.18).round().toString(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -231,7 +245,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                 ),
                 Text(
-                  widget.course.amount,
+                  (int.parse(widget.course.amount) +
+                          ((int.parse(widget.course.amount) * 0.18)))
+                      .round()
+                      .toString(),
                   style: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),
@@ -273,7 +290,16 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   Future<BaseModel<OrderIdGeneration>> callApiorderid(id) async {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
-      "batch_id": id,
+      "amount": (int.parse(widget.course.amount) +
+              ((int.parse(widget.course.amount) * 0.18)))
+          .round(),
+      // "name": SharedPreferenceHelper.getString(Preferences.name),
+      // "email": SharedPreferenceHelper.getString(Preferences.email),
+      // "mobileNumber": SharedPreferenceHelper.getString(Preferences.phoneNUmber),
+      // "description": "upschindi",
+      // "transactionId": '123',
+      // "transactiondate": DateTime.now().toString(),
+      //"batch_id": id,
     };
     setState(() {
       Preferences.onLoading(context);
@@ -293,7 +319,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           backgroundColor: ColorResources.gray,
           textColor: ColorResources.textWhite,
         );
-        openCheckout(response.data!.orderId.toString());
+        openCheckout(response.id, response.keyId);
       } else {
         setState(() {
           Preferences.hideDialog(context);
@@ -324,6 +350,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       Response response =
           await remoteDataSourceImpl.savePaymentStatus(paymentData);
       if (response.statusCode == 200) {
+        print(response.data);
         flutterToast(response.data['msg']);
         Preferences.hideDialog(context);
         Navigator.pop(context);
@@ -336,7 +363,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       } else {
         print("-----api Payment error -----");
         Preferences.onLoading(context);
-        flutterToast("Something went wrong");
+        flutterToast("Pls Refresh (or) Reopen App");
       }
     } catch (error) {
       print(error);
