@@ -48,7 +48,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         ),
       ),
       body: FutureBuilder<NotesModel>(
-          future: widget.resourceDataSourceImpl.getNotes(),
+          future: widget.resourceDataSourceImpl.getNotes(filter: 'sample'),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
