@@ -7,7 +7,8 @@ import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
 
 class CoursesIndexResources extends StatefulWidget {
-  const CoursesIndexResources({Key? key, required this.resourceDataSourceImpl}) : super(key: key);
+  const CoursesIndexResources({Key? key, required this.resourceDataSourceImpl})
+      : super(key: key);
   final ResourceDataSourceImpl resourceDataSourceImpl;
   @override
   State<CoursesIndexResources> createState() => _CoursesIndexResourcesState();
@@ -20,6 +21,7 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
     super.initState();
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,7 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
         ),
       ),
       body: FutureBuilder<NotesModel>(
-          future: widget.resourceDataSourceImpl.getNotes(),
+          future: widget.resourceDataSourceImpl.getNotes(filter: 'Pathyakram'),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
@@ -53,8 +55,8 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
           }),
     );
   }
-  Container _bodyWidget(
-      BuildContext context, List<NotesDataModel> resources) {
+
+  Container _bodyWidget(BuildContext context, List<NotesDataModel> resources) {
     return Container(
       width: double.infinity,
       child: FractionallySizedBox(

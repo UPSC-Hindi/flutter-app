@@ -159,9 +159,10 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                         CachedNetworkImage(
                                           imageUrl: widget.batch.teacher[index]
                                               .profilePhoto,
-                                          placeholder: (context, url) => const Center(
-                                              child:
-                                                  CircularProgressIndicator()),
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>
                                               const Icon(Icons.error),
                                           height: 70,
@@ -223,12 +224,12 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
           // subtitle:Text('Starts : ${DateFormat("dd-MM-yyyy",'UTC').parse(lecture.startingDate)}'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                '9:00 AM to 12:00 PM',
+                "${lecture.startingDate.split(' ')[1]} to ${lecture.endingDate.split(' ')[1]}",
                 style: TextStyle(fontSize: 15),
               ),
-              Text('Date- 08/10/2022 '),
+              Text(lecture.startingDate),
             ],
           ),
           trailing: ElevatedButton(
@@ -393,7 +394,8 @@ class CoursesVideoWidget extends StatelessWidget {
                       image: SvgImages.emptyCard, text: "There is no video")
                   : ListView.builder(
                       itemCount: videoList!.length,
-                      itemBuilder: (context, index) => _recordedVideoWidget(videoList![index]),
+                      itemBuilder: (context, index) =>
+                          _recordedVideoWidget(videoList![index]),
                     );
             } else {
               return const Center(child: Text("Something Went Wrong"));

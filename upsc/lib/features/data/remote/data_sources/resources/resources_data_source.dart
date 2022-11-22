@@ -6,6 +6,6 @@ abstract class ResourcesDataSource{
   Future<DailyNewsModel> getDailyNews();
   Future<NotesModel> getCourseIndex();
   void getYoutubeNotes();
-  Future<NotesModel> getNotes();
+  Future<NotesModel> getNotes({required String filter});
   Future<AirResourcesModel> getAir();
 }
