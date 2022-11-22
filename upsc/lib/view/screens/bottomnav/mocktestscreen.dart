@@ -49,7 +49,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 children: [
                   Text(
                     'Daily Editorial Based Quiz',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                         fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -103,7 +103,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //   padding: EdgeInsets.symmetric(horizontal: 20),
             //   child: Text(
             //     'Subscribed Tests (1)',
-            //     style: GoogleFonts.poppins(
+            //     style: GoogleFonts.notoSansDevanagari(
             //         fontSize: 24, fontWeight: FontWeight.bold),
             //   ),
             // ),
@@ -133,12 +133,12 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //               children: [
             //                 Text(
             //                   'IAS Test Series',
-            //                   style: GoogleFonts.poppins(
+            //                   style: GoogleFonts.notoSansDevanagari(
             //                       fontSize: 20, fontWeight: FontWeight.bold),
             //                 ),
             //                 Text(
             //                   '6/15 Tests Passed',
-            //                   style: TextStyle(color: ColorResources.gray),
+            //                   style: GoogleFonts.notoSansDevanagari(color: ColorResources.gray),
             //                 )
             //               ],
             //             ),
@@ -153,7 +153,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //               children: [
             //                 Text(
             //                   'Pass all tests before Jan, 2023',
-            //                   style: TextStyle(color: ColorResources.gray),
+            //                   style: GoogleFonts.notoSansDevanagari(color: ColorResources.gray),
             //                 ),
             //                 ElevatedButton(
             //                   style: ElevatedButton.styleFrom(
@@ -188,7 +188,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //   padding: EdgeInsets.symmetric(horizontal: 20),
             //   child: Text(
             //     'Free Mock Tests',
-            //     style: GoogleFonts.poppins(
+            //     style: GoogleFonts.notoSansDevanagari(
             //         fontSize: 25, fontWeight: FontWeight.bold),
             //   ),
             // ),
@@ -217,7 +217,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //         children: [
             //           Text(
             //             'RAS Prelims Test Series',
-            //             style: GoogleFonts.poppins(
+            //             style: GoogleFonts.notoSansDevanagari(
             //                 fontSize: 20, fontWeight: FontWeight.bold),
             //           ),
             //           Row(
@@ -283,7 +283,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //         children: [
             //           Text(
             //             'CSAT Test Series',
-            //             style: GoogleFonts.poppins(
+            //             style: GoogleFonts.notoSansDevanagari(
             //                 fontSize: 20, fontWeight: FontWeight.bold),
             //           ),
             //           Row(
@@ -349,7 +349,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //         children: [
             //           Text(
             //             'General Studies Test Series',
-            //             style: GoogleFonts.poppins(
+            //             style: GoogleFonts.notoSansDevanagari(
             //                 fontSize: 20, fontWeight: FontWeight.bold),
             //           ),
             //           Row(
@@ -415,7 +415,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //         children: [
             //           Text(
             //             'Optional Test Test Series',
-            //             style: GoogleFonts.poppins(
+            //             style: GoogleFonts.notoSansDevanagari(
             //                 fontSize: 20, fontWeight: FontWeight.bold),
             //           ),
             //           Row(
@@ -481,7 +481,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
             //         children: [
             //           Text(
             //             'RAS Prelims Test Series',
-            //             style: GoogleFonts.poppins(
+            //             style: GoogleFonts.notoSansDevanagari(
             //                 fontSize: 20, fontWeight: FontWeight.bold),
             //           ),
             //           Row(

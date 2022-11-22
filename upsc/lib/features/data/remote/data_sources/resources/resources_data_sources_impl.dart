@@ -5,6 +5,7 @@ import 'package:upsc/features/data/remote/data_sources/resources/resources_data_
 import 'package:upsc/features/data/remote/models/air_resource_model.dart';
 import 'package:upsc/features/data/remote/models/daily_news_model.dart';
 import 'package:upsc/features/data/remote/models/notes_model.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
 
 class ResourceDataSourceImpl extends ResourcesDataSource {
   @override
@@ -35,8 +36,8 @@ class ResourceDataSourceImpl extends ResourcesDataSource {
   getCourseIndex() async {
     try {
       Response response = await dioAuthorizationData()
-          .get('${Apis.baseUrl}${Apis.getNotesDetails}');
-      return NotesModel.fromJson(response.data);
+           .get('${Apis.baseUrl}${Apis.getCourseIndex}');
+      return ResourcesModel.fromJson(response.data);
     } catch (error) {
       print(error);
       rethrow;

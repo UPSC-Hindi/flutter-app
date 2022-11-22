@@ -210,7 +210,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     ),
                                     Text(
                                       " Live",
-                                      style: TextStyle(
+                                      style: GoogleFonts.notoSansDevanagari(
                                           color: ColorResources.textWhite),
                                     ),
                                   ],
@@ -249,7 +249,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.lecture.lectureTitle,
-                                style: const TextStyle(fontSize: 30)),
+                                style:  GoogleFonts.notoSansDevanagari(
+                                    fontSize: 30)),
                             Text(widget.lecture.description),
                             //Text('By ${widget.lecture.subject}'),
                             SizedBox(
@@ -283,9 +284,10 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                           children: [
                                             CachedNetworkImage(
                                               imageUrl: SvgImages.pdfimage,
-                                              placeholder: (context, url) => const Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       const Icon(Icons.error),
@@ -299,10 +301,11 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                               children: [
                                                 Text(
                                                   'Class 1 Notes',
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w400),
+                                                  style: GoogleFonts
+                                                      .notoSansDevanagari(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w400),
                                                 ),
                                                 Text(
                                                   '2.5 MB',

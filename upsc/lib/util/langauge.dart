@@ -33,8 +33,8 @@ class Languages {
   static String myCart = '';
   static String myOrders = '';
   static String myCourses = '';
-  static String myTestseries='';
-  static String ourachievements='';
+  static String myTestseries = '';
+  static String ourachievements = '';
   static String mySchedule = '';
   static String resources = '';
   static String helpAndSupport = '';
@@ -83,7 +83,7 @@ class Languages {
             : false;
 
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
-    ncertBatches = isEnglish ? 'Join Us on' : 'को हमारे साथ शामिल हों';
+    ncertBatches = isEnglish ? 'Join Us On' : 'को हमारे साथ शामिल हों';
     youTube = isEnglish ? 'On YouTube' : 'यूट्यूब पर ';
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
     latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
@@ -106,7 +106,7 @@ class Languages {
     yourTestSeries = isEnglish ? 'Your Test Series' : 'टेस्ट सीरीज';
     yourCourses = isEnglish ? 'Your Courses' : 'कोर्सेस';
     editProfile =
-        isEnglish ? 'Edit Phone,Email,Profile Name' : 'फ़ोन ईमेल नाम बदले';
+        isEnglish ? 'Edit Phone, Email, Profile Name' : 'फ़ोन ईमेल नाम बदले';
     seeYourEnrollTest =
         isEnglish ? 'See your enrolled tests' : 'अपने दाखिल टेस्ट देखे';
     seeYourEnrollCourses =
@@ -121,7 +121,7 @@ class Languages {
     myOrders = isEnglish ? 'My Orders' : 'ऑर्डर्स ';
     myCourses = isEnglish ? 'My Courses' : 'कोर्सेस';
     myTestseries = isEnglish ? 'My Test Series' : 'मेरी टेस्ट सीरीज';
-    ourachievements=isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
+    ourachievements = isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
     mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
     resources = isEnglish ? 'Resources' : 'संसाधन ';
     helpAndSupport = isEnglish ? 'Help & Support' : 'सहायता और समर्थन';

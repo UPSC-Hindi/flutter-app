@@ -41,8 +41,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
             ),
             Text(
               'Thank You!',
-              style:
-                  GoogleFonts.poppins(color: ColorResources.textblack, fontWeight: FontWeight.w900),
+              style: GoogleFonts.notoSansDevanagari(
+                  color: ColorResources.textblack, fontWeight: FontWeight.w900),
             )
           ],
         ),

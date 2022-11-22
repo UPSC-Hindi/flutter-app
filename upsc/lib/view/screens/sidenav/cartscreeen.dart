@@ -38,7 +38,8 @@ class _CartScreenState extends State<CartScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           Languages.cart,
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: RefreshIndicator(
@@ -107,7 +108,7 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Text(
                   '₹${cartSelectedItem!.amount}',
-                  style: const TextStyle(
+                  style: GoogleFonts.notoSansDevanagari(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
@@ -119,7 +120,7 @@ class _CartScreenState extends State<CartScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18.0, vertical: 10.0),
                       child: Text('Make Payment',
-                          style: GoogleFonts.poppins(fontSize: 20)),
+                          style: GoogleFonts.notoSansDevanagari(fontSize: 20)),
                     ))
               ],
             ),
@@ -192,7 +193,7 @@ class _CartScreenState extends State<CartScreen> {
                     width: 140,
                     child: Text(
                       cartData.batchDetails.batchName,
-                      style: const TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                           fontSize: 30, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -211,27 +212,30 @@ class _CartScreenState extends State<CartScreen> {
                               Icons.sensors_outlined,
                               color: ColorResources.buttoncolor,
                             ),
-                            const Text(
+                            Text(
                               'Live lectures',
-                              style: TextStyle(fontSize: 8),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         ),
                         Column(
-                          children: const [
+                          children: [
                             Icon(Icons.signal_cellular_alt),
                             Text(
                               '100% Online',
-                              style: TextStyle(fontSize: 8),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         ),
                         Column(
-                          children: const [
+                          children: [
                             Icon(Icons.download),
                             Text(
                               'Downloadable',
-                              style: TextStyle(fontSize: 8),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         )
@@ -261,7 +265,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   Text(
                     '₹ ${cartData.amount}',
-                    style: const TextStyle(
+                    style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],

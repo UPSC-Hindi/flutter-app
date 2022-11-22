@@ -40,7 +40,8 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           widget.course.batchName,
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: SafeArea(
@@ -61,7 +62,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             borderRadius: BorderRadius.circular(90)),
                         child: Text(
                           '  Course Details  ',
-                          style: GoogleFonts.poppins(fontSize: 16),
+                          style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                         ),
                       ),
                     ),
@@ -119,7 +120,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             borderRadius: BorderRadius.circular(90)),
                         child: Text(
                           '  Duration  ',
-                          style: GoogleFonts.poppins(fontSize: 16),
+                          style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                         ),
                       ),
                     ),
@@ -157,7 +158,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             borderRadius: BorderRadius.circular(90)),
                         child: Text(
                           '  Faculty  ',
-                          style: GoogleFonts.poppins(fontSize: 16),
+                          style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                         ),
                       ),
                     ),
@@ -176,7 +177,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                               ),
                               Text(
                                 course.teacher[index].fullName,
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.notoSansDevanagari(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -197,7 +198,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             borderRadius: BorderRadius.circular(90)),
                         child: Text(
                           '  Watch Demos  ',
-                          style: GoogleFonts.poppins(fontSize: 16),
+                          style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                         ),
                       ),
                     ),
@@ -218,7 +219,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                                     size: 80,
                                   ),
                                   Text('Raman Deep',
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.notoSansDevanagari(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold))
                                 ],
@@ -240,7 +241,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                   children: [
                     Text(
                       '₹${course.charges}',
-                      style: const TextStyle(
+                      style:  GoogleFonts.notoSansDevanagari(
                           fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                     ElevatedButton(
@@ -254,7 +255,8 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 18.0, vertical: 5.0),
                           child: Text('Add to Cart',
-                              style: GoogleFonts.poppins(fontSize: 20)),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 20)),
                         ))
                   ],
                 )),

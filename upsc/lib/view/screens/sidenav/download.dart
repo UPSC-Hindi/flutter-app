@@ -97,7 +97,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           Languages.download,
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: DefaultTabController(
@@ -159,8 +160,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                     var _file =
                         _directories.isNotEmpty ? _directories.first : null;
                     return GestureDetector(
-                      onTap: () =>
-                          OpenFile.open("$_savedDirectory/$_filename"),
+                      onTap: () => OpenFile.open("$_savedDirectory/$_filename"),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
@@ -183,14 +183,15 @@ class _DownloadScreenState extends State<DownloadScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         _filename.split('.').first,
-                                        style: GoogleFonts.poppins(
+                                        style: GoogleFonts.notoSansDevanagari(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -281,7 +282,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         },
                       ),
                       GestureDetector(
-                        child: const Icon(Icons.close, size: 30, color: Colors.red),
+                        child: const Icon(Icons.close,
+                            size: 30, color: Colors.red),
                         onTap: () {
                           FlutterDownloader.cancel(taskId: taskid);
                         },
@@ -301,8 +303,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
                             },
                           ),
                           GestureDetector(
-                            child:
-                                const Icon(Icons.close, size: 30, color: Colors.red),
+                            child: const Icon(Icons.close,
+                                size: 30, color: Colors.red),
                             onTap: () {
                               FlutterDownloader.cancel(taskId: taskid);
                             },
@@ -311,8 +313,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
                       )
                     : _status == DownloadTaskStatus.complete
                         ? GestureDetector(
-                            child:
-                                const Icon(Icons.delete, size: 30, color: Colors.red),
+                            child: const Icon(Icons.delete,
+                                size: 30, color: Colors.red),
                             onTap: () {
                               downloadsListMaps.removeAt(index);
                               FlutterDownloader.remove(

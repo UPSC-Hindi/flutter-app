@@ -36,7 +36,8 @@ class _ClassScheduleState extends State<ClassSchedule> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           "Class Schedule",
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
@@ -93,7 +94,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                 datetoshow == DateFormat('dd-MM-yyyy').format(DateTime.now())
                     ? Languages.scheduleForToday
                     : "Schedule for",
-                style: GoogleFonts.poppins(fontSize: 20),
+                style: GoogleFonts.notoSansDevanagari(fontSize: 20),
               ),
               const SizedBox(
                 height: 10,
@@ -123,14 +124,14 @@ class _ClassScheduleState extends State<ClassSchedule> {
                           ),
                       child: Text(
                         'My Schedule',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                             color: ColorResources.textblack),
                       )),
                   TextButton(
                       onPressed: () {},
                       child: Text(
                         'Class Schedule',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                           shadows: [
                             Shadow(
                                 color: ColorResources.buttoncolor,
@@ -175,8 +176,8 @@ class _ClassScheduleState extends State<ClassSchedule> {
                     Text(
                       DateFormat('dd-MMMM-yyyy')
                           .format(DateFormat('dd-MM-yyyy').parse(datetoshow)),
-                      style:
-                          GoogleFonts.poppins(color: ColorResources.textblack),
+                      style: GoogleFonts.notoSansDevanagari(
+                          color: ColorResources.textblack),
                     ),
                     Icon(
                       Icons.arrow_drop_down_outlined,
@@ -236,7 +237,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                 width: MediaQuery.of(context).size.width * 0.70,
                 child: Text(
                   schedulerData.lectureTitle!,
-                  style: GoogleFonts.poppins(fontSize: 20),
+                  style: GoogleFonts.notoSansDevanagari(fontSize: 20),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -256,7 +257,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
                 child: Text(
                   schedulerData.description!,
                   maxLines: 1,
-                  style: GoogleFonts.poppins(fontSize: 14),
+                  style: GoogleFonts.notoSansDevanagari(fontSize: 14),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

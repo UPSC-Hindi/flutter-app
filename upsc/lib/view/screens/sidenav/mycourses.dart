@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
@@ -19,7 +20,8 @@ class MyCoursesScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'My Courses',
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
@@ -80,14 +82,15 @@ class MyCoursesScreen extends StatelessWidget {
             children: [
               Text(
                 courseData.batchDetails.batchName,
-                style: const TextStyle(fontSize: 24),
+                style:  GoogleFonts.notoSansDevanagari(fontSize: 24),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Expires in ${courseData.batchDetails.endingDate.difference(DateTime.now()).inDays} Days',
-                    style: TextStyle(color: ColorResources.gray),
+                    style: GoogleFonts.notoSansDevanagari(
+                        color: ColorResources.gray),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(

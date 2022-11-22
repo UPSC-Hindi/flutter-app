@@ -34,7 +34,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Daily News',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.notoSansDevanagari(
             color: ColorResources.textblack,
             fontWeight: FontWeight.w500,
           ),
@@ -86,82 +86,85 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
       BuildContext context, List<DailyNewsDataModel> resources) {
     return Container(
       width: double.infinity,
-      child: Column(children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Text(
-            datetoshow == DateFormat('dd-MM-yyyy').format(DateTime.now())
-                ? 'News for Today'
-                : "News for",
-            style: GoogleFonts.poppins(
-                color: ColorResources.textblack,
-                fontWeight: FontWeight.w500,
-                fontSize: 20)),
-        const SizedBox(
-          height: 10,
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              primary: ColorResources.buttoncolor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20))),
-          onPressed: () async {
-            DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1950),
-                lastDate: DateTime(2100));
-            if (pickedDate != null) {
-              print(
-                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-              String formattedDate =
-                  DateFormat('dd-MM-yyyy').format(pickedDate);
-              print(
-                  formattedDate); //formatted date output using intl package =>  2021-03-16
-              setState(() {
-                datetoshow =
-                    formattedDate; //set output date to TextField value.
-              });
-            } else {}
-          },
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                DateFormat('dd-MMMM-yyyy')
-                    .format(DateFormat('dd-MM-yyyy').parse(datetoshow!)),
-                style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: ColorResources.textWhite),
-              ),
-              Icon(Icons.arrow_drop_down_outlined,
-                  color: ColorResources.textWhite)
-            ],
+      child: SingleChildScrollView(
+        child: Column(children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        resources.isEmpty
-            ? const Center(
-                child: Text('No news avilable for select date'),
-              )
-            : FractionallySizedBox(
-                widthFactor: 0.90,
-                child: ListView.builder(
-                  itemCount: resources.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ResourcesContainerWidget(
-                      title: resources[index].title,
-                      uploadFile: resources[index].fileUrl,
-                    );
-                  },
+          Text(
+              datetoshow == DateFormat('dd-MM-yyyy').format(DateTime.now())
+                  ? 'News for Today'
+                  : "News for",
+              style: GoogleFonts.notoSansDevanagari(
+                  color: ColorResources.textblack,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20)),
+          const SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: ColorResources.buttoncolor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+            onPressed: () async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1950),
+                  lastDate: DateTime(2100));
+              if (pickedDate != null) {
+                print(
+                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                String formattedDate =
+                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                print(
+                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                setState(() {
+                  datetoshow =
+                      formattedDate; //set output date to TextField value.
+                });
+              } else {}
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  DateFormat('dd-MMMM-yyyy')
+                      .format(DateFormat('dd-MM-yyyy').parse(datetoshow!)),
+                  style: GoogleFonts.notoSansDevanagari(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: ColorResources.textWhite),
                 ),
-              ),
-      ]),
+                Icon(Icons.arrow_drop_down_outlined,
+                    color: ColorResources.textWhite)
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          resources.isEmpty
+              ? const Center(
+                  child: Text('No news avilable for select date'),
+                )
+              : FractionallySizedBox(
+                  widthFactor: 0.90,
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: resources.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ResourcesContainerWidget(
+                        title: resources[index].title,
+                        uploadFile: resources[index].fileUrl,
+                      );
+                    },
+                  ),
+                ),
+        ]),
+      ),
     );
   }
 }

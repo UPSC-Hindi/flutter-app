@@ -44,7 +44,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Sample Notes',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: FutureBuilder<NotesModel>(

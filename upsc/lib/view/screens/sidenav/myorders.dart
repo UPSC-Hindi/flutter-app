@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
@@ -19,7 +20,8 @@ class MyOrdersScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(
           Languages.myOrders,
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
@@ -86,12 +88,12 @@ class MyOrdersScreen extends StatelessWidget {
                     child: Text(
                       courseData.batchDetails.batchName,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 24),
+                      style:  GoogleFonts.notoSansDevanagari(fontSize: 24),
                     ),
                   ),
                   Text(
                     "₹ ${courseData.batchDetails.charges}",
-                    style: const TextStyle(fontSize: 24),
+                    style:  GoogleFonts.notoSansDevanagari(fontSize: 24),
                   ),
                 ],
               ),
@@ -101,7 +103,8 @@ class MyOrdersScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Expires in ${courseData.batchDetails.endingDate.difference(DateTime.now()).inDays} Days',
-                          style: TextStyle(color: ColorResources.gray),
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.gray),
                         ),
                         TextButton(
                           style: ElevatedButton.styleFrom(

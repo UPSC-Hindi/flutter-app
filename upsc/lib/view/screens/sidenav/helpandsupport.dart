@@ -16,7 +16,8 @@ class HelpAndSupport extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(
           Languages.helpAndSupport,
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: Column(
@@ -26,7 +27,7 @@ class HelpAndSupport extends StatelessWidget {
           ),
           Text(
             Languages.freeMessage,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.notoSansDevanagari(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -52,7 +53,7 @@ class HelpAndSupport extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     Languages.emailText,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                       fontSize: 20,
                     ),
                   ),
@@ -66,7 +67,7 @@ class HelpAndSupport extends StatelessWidget {
                     },
                     child: Text(
                       'info@upschindi.online',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20,
                       ),
                     ),
@@ -74,7 +75,7 @@ class HelpAndSupport extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     Languages.phoneText,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                       fontSize: 20,
                     ),
                   ),
@@ -84,7 +85,7 @@ class HelpAndSupport extends StatelessWidget {
                     },
                     child: Text(
                       '+91  951 978 0078',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20,
                       ),
                     ),
@@ -99,7 +100,8 @@ class HelpAndSupport extends StatelessWidget {
                       imageUrl: SvgImages.whatsapp,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                   Text(Languages.whatsApp),
@@ -120,8 +122,8 @@ class HelpAndSupport extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.facebook,
                             height: 30,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),
@@ -135,8 +137,8 @@ class HelpAndSupport extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.twitter,
                             height: 30,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),
@@ -151,8 +153,8 @@ class HelpAndSupport extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.linkedin,
                             height: 30,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),

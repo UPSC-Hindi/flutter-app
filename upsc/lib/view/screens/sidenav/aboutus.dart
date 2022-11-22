@@ -23,26 +23,24 @@ class AboutUsScreen extends StatelessWidget {
               painter: MyPainter(),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.20,
+                height: MediaQuery.of(context).size.height * 0.30,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 60,
-                      child: CachedNetworkImage(
-                        imageUrl: SvgImages.aboutLogo,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
+                    CachedNetworkImage(
+                      height: 110,
+                      imageUrl: SvgImages.aboutLogo,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     Text(
                       'About US',
-                      style: GoogleFonts.poppins(
-                        fontSize: 30,
+                      style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 25,
                         color: ColorResources.textWhite,
                         fontWeight: FontWeight.w700,
                       ),
@@ -54,7 +52,7 @@ class AboutUsScreen extends StatelessWidget {
             Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.20,
+                  height: MediaQuery.of(context).size.height * 0.33,
                 ),
                 Padding(
                   padding:
@@ -62,8 +60,8 @@ class AboutUsScreen extends StatelessWidget {
                   child: Text(
                     'UPSC HINDI एक उत्कृष्ट शैक्षणिक संस्थान है जिसका उद्देश्य विशेष तौर पर सिविल सेवा परीक्षा में क्रांति लाना है। UPSC HINDI अपने ध्येय वाक्य “सिद्धिर्भवति कर्मजा” को श्रीमद्भागवतगीता से ग्रहण करता है एवं इसके सार को छात्रों के मध्य प्रसारित करता है कि “अभ्यास से ही सफलता प्राप्त होती है।”\nUPSC HINDI वर्तमान में संघ लोक सेवा आयोग एवं राज्य लोक सेवा आयोग के क्षेत्र में कार्य कर रहा है। भविष्य में UPSC HINDI अन्य सभी परीक्षाओं के लिए भी विद्यार्थियों को वहनीय, गुणवत्तापूर्ण एवं प्रभावी शिक्षण के साथ मार्गदर्शन उपलब्ध कराने हेतु प्रयासरत है।\n\n#AffordableEducation\nUPSC HINDI टीम बेहद अनुभवी एवं सफल है जिसके साथ अभी तक बहुत से अभ्यर्थियों ने अपने लक्ष्य को प्राप्त किया है। \nसंस्थापक: \nगौरव कुमार त्रिपाठी (02 IAS INTERVIEW, UPPSC 2020 SELECTED, IIT R)\nसत्यप्रकाश त्रिपाठी (MA (हिन्दी), NET)\nरमन दीप (IIT DHN)\nनिशांत त्रिपाठी (PCS विशेषज्ञ)\nपल्लव (MMMUT)',
                     textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
+                    style: GoogleFonts.notoSansDevanagari(
+                      fontSize: 16,
                     ),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/data/remote/models/notes_model.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
@@ -32,15 +33,16 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Course Index',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
-      body: FutureBuilder<NotesModel>(
-          future: widget.resourceDataSourceImpl.getNotes(filter: 'Pathyakram'),
+      body: FutureBuilder<ResourcesModel>(
+          future: widget.resourceDataSourceImpl.getCourseIndex(),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
-                NotesModel? response = snapshots.data;
+                ResourcesModel? response = snapshots.data;
                 if (response!.status) {
                   return _bodyWidget(context, response.data);
                 } else {
@@ -56,7 +58,8 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
     );
   }
 
-  Container _bodyWidget(BuildContext context, List<NotesDataModel> resources) {
+  Container _bodyWidget(
+      BuildContext context, List<ResourcesDataModle> resources) {
     return Container(
       width: double.infinity,
       child: FractionallySizedBox(

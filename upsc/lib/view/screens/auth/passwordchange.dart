@@ -75,7 +75,7 @@ class _PasswordChangeState extends State<PasswordChange> {
                     const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40),
                 child: Text(
                   'Change Password',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.notoSansDevanagari(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -89,7 +89,7 @@ class _PasswordChangeState extends State<PasswordChange> {
   Future<BaseModel<ResetPassword>> callApipasswordverifyotp() async {
     ResetPassword response;
     var userdata =
-         SharedPreferenceHelper.getString(Preferences.password_change_data);
+        SharedPreferenceHelper.getString(Preferences.password_change_data);
     print(userdata);
     Map<String, dynamic> body = {
       "email_phoneNumber": userdata,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
@@ -13,7 +14,7 @@ import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
 class ProfilScreen extends StatefulWidget {
-  const ProfilScreen({Key? key}) : super(key: key);
+  ProfilScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfilScreen> createState() => _ProfilScreenState();
@@ -47,37 +48,35 @@ class _ProfilScreenState extends State<ProfilScreen> {
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 20, left: 40),
-                child: Row(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                ),
+                child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 40.0,
-                        backgroundImage: CachedNetworkImageProvider(_profileimage!),
+                        backgroundImage:
+                            CachedNetworkImageProvider(_profileimage!),
                         backgroundColor: Colors.grey,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          SharedPreferenceHelper.getString(Preferences.name)
-                              .toString(),
-                          style: const TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.w900,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const Text('UPSC Aspirant')
-                      ],
-                    )
+                    Text(
+                      SharedPreferenceHelper.getString(Preferences.name)
+                          .toString(),
+                      style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 27,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Text('UPSC Aspirant')
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 100,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
               ),
               GestureDetector(
                 onTap: () => Navigator.of(context)
@@ -94,8 +93,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: ColorResources.textWhite,
-                    boxShadow: const [
-                      BoxShadow(
+                    boxShadow: [
+                      const BoxShadow(
                         color: Colors.grey,
                         blurRadius: 5.0,
                       ),
@@ -105,19 +104,27 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Icon(Icons.account_circle_outlined),
+                      const Icon(Icons.account_circle_outlined, size: 30),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             Languages.personalInformation,
-                            style: const TextStyle(
+                            style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(Languages.editProfile)
+                          Text(
+                            Languages.editProfile,
+                            style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack.withOpacity(0.5),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
                         ],
                       ),
                       const Icon(Icons.arrow_forward_ios)
@@ -134,8 +141,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: ColorResources.textWhite,
-                  boxShadow: const [
-                    BoxShadow(
+                  boxShadow: [
+                    const BoxShadow(
                       color: Colors.grey,
                       blurRadius: 5.0,
                     ),
@@ -145,19 +152,27 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Icon(Icons.bookmark),
+                    const Icon(Icons.bookmark, size: 30),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           Languages.yourTestSeries,
-                          style: const TextStyle(
+                          style: GoogleFonts.notoSansDevanagari(
+                            color: ColorResources.textblack,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(Languages.seeYourEnrollCourses)
+                        Text(
+                          Languages.seeYourEnrollCourses,
+                          style: GoogleFonts.notoSansDevanagari(
+                            color: ColorResources.textblack.withOpacity(0.5),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
                       ],
                     ),
                     const Icon(Icons.arrow_forward_ios)
@@ -177,8 +192,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: ColorResources.textWhite,
-                    boxShadow: const [
-                      BoxShadow(
+                    boxShadow: [
+                      const BoxShadow(
                         color: Colors.grey,
                         blurRadius: 5.0,
                       ),
@@ -188,19 +203,27 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Icon(Icons.auto_stories),
+                      const Icon(Icons.auto_stories, size: 30),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             Languages.courses,
-                            style: const TextStyle(
+                            style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(Languages.seeYourEnrollCourses)
+                          Text(
+                            Languages.seeYourEnrollCourses,
+                            style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack.withOpacity(0.5),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
                         ],
                       ),
                       const Icon(Icons.arrow_forward_ios)
@@ -219,8 +242,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: ColorResources.textWhite,
-                    boxShadow: const [
-                      BoxShadow(
+                    boxShadow: [
+                      const BoxShadow(
                         color: Colors.grey,
                         blurRadius: 5.0,
                       ),
@@ -229,19 +252,23 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Icon(Icons.logout),
+                    children: [
+                      const Icon(Icons.logout),
                       Text(
                         'Logout',
-                        style: TextStyle(
+                        style: GoogleFonts.notoSansDevanagari(
+                          color: ColorResources.textblack,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Icon(Icons.arrow_forward_ios)
+                      const Icon(Icons.arrow_forward_ios)
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
             ],
           ),
@@ -250,18 +277,18 @@ class _ProfilScreenState extends State<ProfilScreen> {
     );
   }
 
-   Future<BaseModel<Logout>> callApilogout() async {
+  Future<BaseModel<Logout>> callApilogout() async {
     Logout response;
-     setState(() {
-        Preferences.onLoading(context);
-      });
+    setState(() {
+      Preferences.onLoading(context);
+    });
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
       if (response.status!) {
-         setState(() {
-        Preferences.hideDialog(context);
-      });
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -271,7 +298,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         );
         SharedPreferenceHelper.clearPref();
         Navigator.of(context).popAndPushNamed('/');
-      }else{
+      } else {
         Fluttertoast.showToast(
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
@@ -281,7 +308,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         );
       }
     } catch (error, stacktrace) {
-       setState(() {
+      setState(() {
         Preferences.hideDialog(context);
       });
       print("Exception occur: $error stackTrace: $stacktrace");

@@ -27,8 +27,8 @@ class _CourseScreenState extends State<CourseScreen> {
             Container(
               width: 80,
               height: 25,
-              margin:const EdgeInsets.only(left: 10),
-              padding:const EdgeInsets.symmetric(horizontal: 13),
+              margin: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 13),
               decoration: BoxDecoration(
                 color: ColorResources.gray.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(15),
@@ -42,7 +42,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   children: [
                     Text(
                       'IAS',
-                      style: TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textblack.withOpacity(0.9),
                         fontWeight: FontWeight.w900,
                       ),
@@ -158,7 +158,8 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'Courses',
-                style: GoogleFonts.poppins(fontSize: 24),
+                style: GoogleFonts.notoSansDevanagari(
+                    fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
             ListView.builder(
@@ -192,10 +193,10 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             data.batchName,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.notoSansDevanagari(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: const Color(0Xff444444)),
+                color: ColorResources.textblack),
           ),
           const SizedBox(
             height: 10,
@@ -204,32 +205,32 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: const [
+                children: [
                   Icon(
                     Icons.sensors_outlined,
                     color: Colors.redAccent,
                   ),
                   Text(
                     'Live lectures',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 12),
                   )
                 ],
               ),
               Column(
-                children: const [
+                children: [
                   Icon(Icons.signal_cellular_alt),
                   Text(
                     '100% Online',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 12),
                   )
                 ],
               ),
               Column(
-                children: const [
+                children: [
                   Icon(Icons.download),
                   Text(
                     'Downloadable',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 12),
                   )
                 ],
               )
@@ -243,16 +244,20 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
             children: [
               Text(
                 '₹${data.charges}',
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                style: GoogleFonts.notoSansDevanagari(
+                    color: ColorResources.textblack,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900),
               ),
               Container(
                 padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(color: ColorResources.greenshad),
+                decoration: BoxDecoration(
+                    color: ColorResources.greenshad,
+                    borderRadius: BorderRadius.circular(10)),
                 child: Text(
-                  'Aid Available',
-                  style:
-                      TextStyle(fontSize: 8, color: ColorResources.textWhite),
+                  ' Aid Available ',
+                  style: GoogleFonts.notoSansDevanagari(
+                      fontSize: 12, color: ColorResources.textWhite),
                 ),
               )
             ],
@@ -277,19 +282,23 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               );
             },
             child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8),
               width: MediaQuery.of(context).size.width * 0.65,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Learn more'),
+                  Text(
+                    'Learn more',
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 16),
+                  ),
                   Container(
-                    padding: const EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: const Color(0xFfD9D9D9).withOpacity(0.38),
+                        color: ColorResources.textWhite.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(90)),
                     child: const Icon(
                       Icons.arrow_forward_ios,
-                      size: 20,
+                      size: 18,
                     ),
                   )
                 ],

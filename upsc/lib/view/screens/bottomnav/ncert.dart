@@ -9,7 +9,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class NcertScreen extends StatefulWidget {
   final String? from;
-  const NcertScreen({Key? key,this.from}) : super(key: key);
+  const NcertScreen({Key? key, this.from}) : super(key: key);
 
   @override
   State<NcertScreen> createState() => _NcertScreenState();
@@ -28,13 +28,17 @@ class _NcertScreenState extends State<NcertScreen> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: ColorResources.textblack),
         backgroundColor: Colors.white,
-        title:widget.from=='note'?Text(
-          'Youtube Notes',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
-        ):Text(
-          'NCERT Batches',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
-        ),
+        title: widget.from == 'note'
+            ? Text(
+                'Youtube Notes',
+                style: GoogleFonts.notoSansDevanagari(
+                    color: ColorResources.textblack),
+              )
+            : Text(
+                'NCERT Batches',
+                style: GoogleFonts.notoSansDevanagari(
+                    color: ColorResources.textblack),
+              ),
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
         builder: (context, state) {
@@ -61,11 +65,11 @@ class _NcertScreenState extends State<NcertScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
               'Courses',
-              style: TextStyle(fontSize: 24),
+              style: GoogleFonts.notoSansDevanagari(fontSize: 24),
             ),
           ),
           Padding(
@@ -82,7 +86,7 @@ class _NcertScreenState extends State<NcertScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return YouTubeContainerWidget(
                     videoUrl: videData[index].videoUrl,
-                    height: 140,
+                    height: 125,
                   );
                 }),
           )
@@ -137,7 +141,7 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
                   image: NetworkImage(
                     YoutubePlayer.getThumbnail(videoId: videoId, webp: false),
                   ),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Icon(

@@ -43,7 +43,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
       appBar: AppBar(
         title: Text(
           widget.batch.batchName,
-          style: TextStyle(
+          style: GoogleFonts.notoSansDevanagari(
             color: ColorResources.textblack,
           ),
         ),
@@ -90,7 +90,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                             children: [
                               Text(
                                 widget.batch.batchName,
-                                style: const TextStyle(
+                                style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w900,
                                   fontSize: 24,
                                 ),
@@ -111,7 +111,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                     borderRadius: BorderRadius.circular(90)),
                                 child: Text(
                                   'Duration',
-                                  style: GoogleFonts.poppins(fontSize: 16),
+                                  style: GoogleFonts.notoSansDevanagari(
+                                      fontSize: 16),
                                 ),
                               ),
                               const SizedBox(
@@ -143,7 +144,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                     borderRadius: BorderRadius.circular(90)),
                                 child: Text(
                                   'Faculty  ',
-                                  style: GoogleFonts.poppins(fontSize: 16),
+                                  style: GoogleFonts.notoSansDevanagari(
+                                      fontSize: 16),
                                 ),
                               ),
                               Container(
@@ -173,9 +175,11 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                             widget
                                                 .batch.teacher[index].fullName,
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                            style:
+                                                GoogleFonts.notoSansDevanagari(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -226,8 +230,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${lecture.startingDate.split(' ')[1]} to ${lecture.endingDate.split(' ')[1]}",
-                style: TextStyle(fontSize: 15),
+                "${(lecture.startingDate.split(' ')[1])} to ${lecture.endingDate.split(' ')[1]}",
+                style: GoogleFonts.notoSansDevanagari(fontSize: 15),
               ),
               Text(lecture.startingDate),
             ],
@@ -250,7 +254,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Start Now', style: GoogleFonts.poppins()), // <-- Text
+                Text('Start Now',
+                    style: GoogleFonts.notoSansDevanagari()), // <-- Text
                 const SizedBox(
                   width: 5,
                 ),
@@ -414,7 +419,7 @@ class CoursesVideoWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             videosdata.lectureId.lectureTitle,
-            style: GoogleFonts.poppins(fontSize: 24),
+            style: GoogleFonts.notoSansDevanagari(fontSize: 24),
           ),
         ),
         Row(
@@ -435,7 +440,7 @@ class CoursesVideoWidget extends StatelessWidget {
               children: [
                 Text(
                   videosdata.title,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.notoSansDevanagari(
                       fontSize: 20, fontWeight: FontWeight.w400),
                 ),
                 Text(

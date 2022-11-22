@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/auth/auth_data_source_impl.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
@@ -39,9 +40,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
-                    child: const Text(
+                    child:  Text(
                       'Choose your preferred Medium',
-                      style: TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                         fontSize: 30,
                       ),
                       textAlign: TextAlign.center,
@@ -65,9 +66,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
-                    child: const Text(
+                    child:  Text(
                       'Select your stream',
-                      style: TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                         fontSize: 30,
                       ),
                       textAlign: TextAlign.center,
@@ -112,7 +113,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                 selected_course == 3 ? 'IAS' : 'PCS', token);
 
                             if (widget.isLogin) {
-                              Languages.isEnglish = selected == 2 ? false : true;
+                              Languages.isEnglish =
+                                  selected == 2 ? false : true;
                               Languages.initState();
                               Navigator.popUntil(context, (route) => false);
                               Navigator.pushNamed(context, 'home');
@@ -131,7 +133,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           },
                           child: Text(
                             'Save & Continue',
-                            style: TextStyle(
+                            style: GoogleFonts.notoSansDevanagari(
                                 color: ColorResources.textWhite,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
@@ -178,7 +180,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               child: Column(children: [
                 Text(
                   src,
-                  style: const TextStyle(
+                  style:  GoogleFonts.notoSansDevanagari(
                       color: Colors.black,
                       fontSize: 50,
                       fontWeight: FontWeight.w800),
@@ -186,7 +188,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 //SizedBox(height: 60, child: SvgPicture.asset(src)),
                 Text(
                   text,
-                  style: const TextStyle(color: Colors.black),
+                  style:  GoogleFonts.notoSansDevanagari(
+                      color: Colors.black, fontSize: 12),
                 ),
               ]),
             ),
@@ -239,16 +242,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 children: [
                   Text(
                     src,
-                    style: const TextStyle(
+                    style:  GoogleFonts.notoSansDevanagari(
                         color: Colors.black,
                         fontSize: 40,
                         fontWeight: FontWeight.w800),
                   ),
                   //SizedBox(height: 60, child: SvgPicture.asset(src)),
-                  Text(
-                    text,
-                    style: const TextStyle(color: Colors.black),
-                  ),
                 ]),
             selected_course == index
                 ? const Positioned(

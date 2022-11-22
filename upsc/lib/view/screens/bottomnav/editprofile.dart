@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:upsc/features/data/remote/data_sources/auth/auth_data_source_impl.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
@@ -52,7 +53,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
           title: Text(
             Languages.personalInformation,
-            style: TextStyle(color: ColorResources.textblack),
+            style:
+                GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
           ),
         ),
         body: SingleChildScrollView(
@@ -136,7 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none),
-                          style: const TextStyle(
+                          style:  GoogleFonts.notoSansDevanagari(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -240,7 +242,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           },
                           child: Text(
                             Languages.saveChanges,
-                            style: TextStyle(
+                            style: GoogleFonts.notoSansDevanagari(
                                 color: ColorResources.textWhite,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),

@@ -39,7 +39,8 @@ class _MyScheduleState extends State<MySchedule> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(Languages.mySchedule,
-            style: GoogleFonts.poppins(color: ColorResources.textblack)),
+            style: GoogleFonts.notoSansDevanagari(
+                color: ColorResources.textblack)),
       ),
       body: BlocBuilder<ApiBloc, ApiState>(
         builder: (context, state) {
@@ -91,7 +92,7 @@ class _MyScheduleState extends State<MySchedule> {
                 datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
                     ? Languages.scheduleForToday
                     : "Schedule for",
-                style: GoogleFonts.poppins(fontSize: 20),
+                style: GoogleFonts.notoSansDevanagari(fontSize: 20),
               ),
               const SizedBox(
                 height: 10,
@@ -104,7 +105,7 @@ class _MyScheduleState extends State<MySchedule> {
                       onPressed: () {},
                       child: Text(
                         'My Schedule',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                           shadows: [
                             Shadow(
                                 color: ColorResources.buttoncolor,
@@ -125,7 +126,7 @@ class _MyScheduleState extends State<MySchedule> {
                           ),
                       child: Text(
                         'Class Schedule',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                             color: ColorResources.textblack),
                       ))
                 ],
@@ -159,8 +160,8 @@ class _MyScheduleState extends State<MySchedule> {
                   children: [
                     Text(
                       '$datetoshow',
-                      style:
-                          GoogleFonts.poppins(color: ColorResources.textblack),
+                      style: GoogleFonts.notoSansDevanagari(
+                          color: ColorResources.textblack),
                     ),
                     Icon(
                       Icons.arrow_drop_down_outlined,
@@ -206,7 +207,7 @@ class _MyScheduleState extends State<MySchedule> {
                   Text(schedulerData.notifyAt),
                   Text(
                     schedulerData.task,
-                    style: GoogleFonts.poppins(fontSize: 20),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 20),
                     overflow: TextOverflow.ellipsis,
                   )
                 ],
@@ -342,7 +343,8 @@ class _MyScheduleState extends State<MySchedule> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Schdeule details', style: GoogleFonts.poppins()),
+                  Text('Schdeule details',
+                      style: GoogleFonts.notoSansDevanagari()),
                   TextField(
                     onChanged: (value) {
                       task = value.toString();
@@ -413,7 +415,7 @@ class _MyScheduleState extends State<MySchedule> {
                           ),
                           Text(
                             ':   ',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.notoSansDevanagari(
                                 fontWeight: FontWeight.bold),
                           ),
                           DropdownButton(

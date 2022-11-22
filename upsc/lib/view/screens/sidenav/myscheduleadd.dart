@@ -119,14 +119,15 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
           backgroundColor: ColorResources.textWhite,
           iconTheme: IconThemeData(color: ColorResources.textblack),
           title: Text(Languages.mySchedule,
-              style: GoogleFonts.poppins(color: ColorResources.textblack))),
+              style: GoogleFonts.notoSansDevanagari(
+                  color: ColorResources.textblack))),
       body: SingleChildScrollView(
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               Languages.selectDate,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.notoSansDevanagari(
                 fontSize: 24,
               ),
             ),
@@ -144,10 +145,10 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                 firstDay: DateTime.utc(1954, 10, 16),
                 lastDay: DateTime.utc(2159, 10, 16),
                 calendarStyle: CalendarStyle(
-                  weekendTextStyle: const TextStyle(color: Colors.red),
+                  weekendTextStyle:  GoogleFonts.notoSansDevanagari(color: Colors.red),
                   selectedDecoration: const BoxDecoration(
                       color: Colors.blue, shape: BoxShape.circle),
-                  selectedTextStyle: TextStyle(color: ColorResources.textWhite),
+                  selectedTextStyle: GoogleFonts.notoSansDevanagari(color: ColorResources.textWhite),
                 ),
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
@@ -180,7 +181,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                 children: [
                   Text(
                     Languages.scheduleDetails,
-                    style: GoogleFonts.poppins(),
+                    style: GoogleFonts.notoSansDevanagari(),
                   ),
                   TextField(
                     onChanged: (value) {
@@ -214,7 +215,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                       children: [
                         Text(
                           Languages.notifyAt,
-                          style: GoogleFonts.poppins(),
+                          style: GoogleFonts.notoSansDevanagari(),
                         ),
                         Row(
                           children: [
@@ -236,7 +237,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                             ),
                             Text(
                               ':   ',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.bold),
                             ),
                             DropdownButton(
@@ -295,7 +296,7 @@ class _MyScheduleAddState extends State<MyScheduleAdd> {
                   //       },
                   //       child: Text(
                   //         Languages.addTask,
-                  //         style: GoogleFonts.poppins(
+                  //         style: GoogleFonts.notoSansDevanagari(
                   //           color: ColorResources.buttoncolor,
                   //           fontWeight: FontWeight.bold,
                   //         ),

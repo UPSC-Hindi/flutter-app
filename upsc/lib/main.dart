@@ -151,7 +151,7 @@ class MyApp extends StatelessWidget {
           // 'homescreen': (context) => const HomeScreens(),
           'Coursescreen': (context) => const CourseScreen(),
           'mocktestscreen': (context) => const mocktestscreen(),
-          'ProfilScreen': (context) => const ProfilScreen(),
+          'ProfilScreen': (context) => ProfilScreen(),
           'editprofilescreen': (context) => const EditProfileScreen(),
           'downloadScreen': (context) => const DownloadScreen(),
           'resourcesscreen': (context) => const ResourcesScreen(),

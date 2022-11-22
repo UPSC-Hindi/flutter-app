@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -13,7 +14,6 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 32,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(color: ColorResources.borderColor),
@@ -29,7 +29,8 @@ class SearchBarWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: TextField(
         controller: _searchtest,
-        style: TextStyle(fontSize: 16.0, color: ColorResources.gray),
+        style: GoogleFonts.notoSansDevanagari(
+            fontSize: 16.0, color: ColorResources.gray),
         decoration: InputDecoration(
           isDense: true,
           border: InputBorder.none,

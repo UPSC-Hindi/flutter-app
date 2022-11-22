@@ -11,7 +11,8 @@ import 'package:upsc/util/images_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
-  const ResourcesContainerWidget({Key? key, required this.title, required this.uploadFile})
+  const ResourcesContainerWidget(
+      {Key? key, required this.title, required this.uploadFile})
       : super(key: key);
   final String title;
   final String uploadFile;
@@ -103,14 +104,14 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 children: [
                   Text(
                     widget.title,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: ColorResources.gray),
                   ),
                   Text(
                     '2.5 MB',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                         fontSize: 10, color: ColorResources.gray),
                   ),
                 ],
@@ -128,7 +129,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                   download(widget.uploadFile, widget.title);
                 }
                 //todo this dead code pls check onces
-                 else {
+                else {
                   launchUrl(Uri.parse(''),
                       mode: LaunchMode.externalApplication);
                 }
@@ -138,8 +139,8 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               children: [
                 //todo this dead code pls check onces of link why true always
                 Text(
-                   true ? 'PDF' : 'Link',
-                  style: TextStyle(
+                  true ? 'PDF' : 'Link',
+                  style: GoogleFonts.notoSansDevanagari(
                     fontSize: 15,
                     color: ColorResources.buttoncolor,
                     fontWeight: FontWeight.w700,
@@ -147,8 +148,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 ),
                 Icon(
                   //todo this dead code pls check onces
-true                      ? Icons.file_download_outlined
-                      : Icons.link,
+                  true ? Icons.file_download_outlined : Icons.link,
                   size: 25,
                   color: ColorResources.buttoncolor,
                 ),

@@ -32,7 +32,8 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Youtube Notes',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
         elevation: 0,
       ),
@@ -106,14 +107,14 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                     children: [
                       Text(
                         resource.title,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                             color: ColorResources.gray),
                       ),
                       Text(
                         '2.5 MB',
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                             fontSize: 10, color: ColorResources.gray),
                       ),
                     ],
@@ -126,7 +127,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                   children: [
                     Text(
                       'PDF',
-                      style: TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                           fontSize: 15,
                           color: ColorResources.buttoncolor,
                           fontWeight: FontWeight.w700),
@@ -155,7 +156,7 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
                 children: [
                   Text(
                     "Watch on YouTube",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.notoSansDevanagari(
                       color: ColorResources.textblack,
                       fontSize: 10,
                     ),

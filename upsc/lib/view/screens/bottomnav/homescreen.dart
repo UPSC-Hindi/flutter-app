@@ -10,6 +10,7 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.d
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/models/banner.dart';
+import 'package:upsc/util/appString..dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -72,7 +73,7 @@ class _HomeScreensState extends State<HomeScreens> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: CarouselSlider(
                   items: images,
                   options: CarouselOptions(
@@ -93,7 +94,7 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
               Container(
                 margin: const EdgeInsets.only(
-                    left: 15, right: 10, top: 10, bottom: 10),
+                    left: 15, right: 15, top: 10, bottom: 10),
                 padding: const EdgeInsets.all(10),
                 width: MediaQuery.of(context).size.width * 0.90,
                 decoration: BoxDecoration(
@@ -114,14 +115,14 @@ class _HomeScreensState extends State<HomeScreens> {
                       children: [
                         Text(
                           'Daily Current Affairs',
-                          style: TextStyle(
-                              fontSize: 13,
+                          style: GoogleFonts.notoSansDevanagari(
+                              fontSize: 14,
                               color: ColorResources.textblack,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.bold),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
+                              horizontal: 12, vertical: 7),
                           decoration: BoxDecoration(
                             color: ColorResources.buttoncolor,
                             borderRadius: BorderRadius.circular(20),
@@ -131,14 +132,15 @@ class _HomeScreensState extends State<HomeScreens> {
                               Navigator.pushNamed(context, 'dailynews');
                             },
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Explore',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 10,
-                                    color: Colors.white,
-                                  ),
+                                  style: GoogleFonts.notoSansDevanagari(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
                                 ), // <-- Text
                                 const SizedBox(
                                   width: 5,
@@ -151,7 +153,7 @@ class _HomeScreensState extends State<HomeScreens> {
                                   ),
                                   child: const Icon(
                                     Icons.arrow_forward_ios,
-                                    size: 8,
+                                    size: 10,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -166,12 +168,14 @@ class _HomeScreensState extends State<HomeScreens> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Image.network(
+                          height: 21,
                           SvgImages.currentaffer2,
-                          height: MediaQuery.of(context).size.height * 0.021,
+                          width: MediaQuery.of(context).size.height * 0.19,
                         ),
                         Image.network(
+                          height: 21,
                           SvgImages.currentaffer1,
-                          height: MediaQuery.of(context).size.height * 0.021,
+                          width: MediaQuery.of(context).size.height * 0.19,
                         ),
                       ],
                     ),
@@ -182,8 +186,8 @@ class _HomeScreensState extends State<HomeScreens> {
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
                 child: Text(
                   Languages.myCourses,
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
+                  style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.bold,
                       fontSize: 20,
                       color: ColorResources.textblack),
                 ),
@@ -222,7 +226,7 @@ class _HomeScreensState extends State<HomeScreens> {
                                     children: [
                                       Text(
                                         'Do Explore all the courses',
-                                        style: TextStyle(
+                                        style: GoogleFonts.notoSansDevanagari(
                                             color: ColorResources.gray,
                                             fontSize: 25,
                                             fontWeight: FontWeight.w400),
@@ -255,7 +259,8 @@ class _HomeScreensState extends State<HomeScreens> {
                                             children: [
                                               Text(
                                                 'Continue',
-                                                style: GoogleFonts.poppins(
+                                                style: GoogleFonts
+                                                    .notoSansDevanagari(
                                                   fontSize: 13,
                                                   color: Colors.white,
                                                 ),
@@ -309,8 +314,8 @@ class _HomeScreensState extends State<HomeScreens> {
                   children: [
                     Text(
                       Languages.latestNews,
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
+                      style: GoogleFonts.notoSansDevanagari(
+                          fontWeight: FontWeight.bold,
                           fontSize: 20,
                           color: ColorResources.textblack),
                     ),
@@ -335,7 +340,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           children: [
                             Text(
                               ' Explore ',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                 fontSize: 10,
                                 color: Colors.white,
                               ),
@@ -412,8 +417,8 @@ class _HomeScreensState extends State<HomeScreens> {
                 padding: const EdgeInsets.only(left: 20, bottom: 10, top: 15),
                 child: Text(
                   Languages.ncertBatches,
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
+                  style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.bold,
                       fontSize: 20,
                       color: ColorResources.textblack),
                 ),
@@ -513,7 +518,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       children: [
                         Text(
                           'Got a Query?',
-                          style: GoogleFonts.poppins(),
+                          style: GoogleFonts.notoSansDevanagari(),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.70,
@@ -524,7 +529,8 @@ class _HomeScreensState extends State<HomeScreens> {
                           child: TextButton(
                             child: Text(
                               'Contact Us',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
+                                  fontSize: 20,
                                   color: ColorResources.textWhite),
                             ),
                             onPressed: () {
@@ -562,14 +568,18 @@ class _HomeScreensState extends State<HomeScreens> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            data.batchDetails.batchName,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: const Color(0Xff444444)),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              data.batchDetails.batchName,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: GoogleFonts.notoSansDevanagari(
+                fontSize: Fontsize().h3,
+                fontWeight: FontWeight.bold,
+                color: ColorResources.textblack,
+              ),
+            ),
           ),
           const SizedBox(
             height: 2,
@@ -578,32 +588,32 @@ class _HomeScreensState extends State<HomeScreens> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: const [
-                  Icon(
+                children: [
+                  const Icon(
                     Icons.sensors_outlined,
                     color: Colors.redAccent,
                   ),
                   Text(
                     'Live lectures',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: const [
-                  Icon(Icons.signal_cellular_alt),
+                children: [
+                  const Icon(Icons.signal_cellular_alt),
                   Text(
                     '100% Online',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 8),
                   )
                 ],
               ),
               Column(
-                children: const [
-                  Icon(Icons.download),
+                children: [
+                  const Icon(Icons.download),
                   Text(
                     'Downloadable',
-                    style: TextStyle(fontSize: 8),
+                    style: GoogleFonts.notoSansDevanagari(fontSize: 8),
                   )
                 ],
               )
@@ -616,39 +626,43 @@ class _HomeScreensState extends State<HomeScreens> {
             onTap: () {
               Navigator.pushNamed(context, 'mycoursesscreen');
             },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: ColorResources.buttoncolor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Continue',
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: Colors.white,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.28,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: ColorResources.buttoncolor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Continue',
+                      style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ), // <-- Text
+                    const SizedBox(
+                      width: 2,
                     ),
-                  ), // <-- Text
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: ColorResources.gray.withOpacity(0.3),
-                      shape: BoxShape.circle,
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: ColorResources.gray.withOpacity(0.3),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 10,
+                        color: Colors.white,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 10,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -36,7 +36,8 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Short Notes',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: FutureBuilder<NotesModel>(
@@ -63,23 +64,26 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
   Container _bodyWidget(List<NotesDataModel> resources) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          SearchBarWidget(searchtest: _searchtest),
-          FractionallySizedBox(
-            widthFactor: 0.90,
-            child: ListView.builder(
-              itemCount: resources.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return ResourcesContainerWidget(
-                  title: resources[index].title,
-                  uploadFile: resources[index].fileUrl,
-                );
-              },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SearchBarWidget(searchtest: _searchtest),
+            FractionallySizedBox(
+              widthFactor: 0.90,
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: resources.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return ResourcesContainerWidget(
+                    title: resources[index].title,
+                    uploadFile: resources[index].fileUrl,
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
