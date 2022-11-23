@@ -61,14 +61,15 @@ class SvgImages {
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/emptyCard.png";
 
   //resources
-  static String dailyNews =
-      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/dailyNews.png";
+   static String dailyNews =
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/daily+news.png";
   static String courseIndex =
-      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/courseIndex.png";
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/Pathyakram.png";
   static String shortNotes =
-      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/shortNotes.png";
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/ShortNotes.png";
   static String youtubeNotes =
-      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/youtubeNotes.png";
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/Yt.png";
   static String sampleNotes =
-      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/resources/sampleNotes.png";
+      "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/SampleNotes1.png";
+  static String air = 'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/AIR.png';
 }

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           GestureDetector(
             //onTap: () => Navigator.of(context).pushNamed('youtubenotes'),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => NcertScreen(
+              builder: (context) => const NcertScreen(
                 from: 'note',
               ),
             )),
@@ -58,7 +59,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
           GestureDetector(
             onTap: () => Navigator.of(context).pushNamed('airResources'),
-            child: _resourceCardWidget(SvgImages.sampleNotes, 'Air'),
+            child: _resourceCardWidget(SvgImages.air, 'Air'),
           ),
         ],
       ),
@@ -80,7 +81,13 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 color: ColorResources.resourcesCardColor.withOpacity(0.4),
-                child: Image.asset('assets/images/dailyNews.png'),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  placeholder: (context, url) =>
+                  const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
+                ),
               ),
             ),
             Expanded(
