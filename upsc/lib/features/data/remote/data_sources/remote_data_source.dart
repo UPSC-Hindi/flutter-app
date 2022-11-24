@@ -4,6 +4,7 @@ import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
@@ -20,6 +21,7 @@ abstract class RemoteDataSource{
   Future<Response>deleteCartCourse(String id);
   Future<Response>savePaymentStatus(PaymentModel paymentData);
   Future<String>getOrderId(String batchId);
+  Future<MyOrdersModel>getMyOrder();
   Future<List<RecordedVideoDataModel>>getRecordedVideo({required String batchId});
   Future<List<BatchNotesDataModel>>getBatchNotes({required String batchId});
 }

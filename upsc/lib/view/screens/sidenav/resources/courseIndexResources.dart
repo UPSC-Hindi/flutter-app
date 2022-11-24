@@ -4,6 +4,7 @@ import 'package:upsc/features/data/remote/data_sources/resources/resources_data_
 import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
+import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
 
@@ -44,7 +45,7 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
               if (snapshots.hasData) {
                 ResourcesModel? response = snapshots.data;
                 if (response!.status) {
-                  return _bodyWidget(context, response.data);
+                  return CourseIndexBody(resources: response.data);
                 } else {
                   return Text(response.msg);
                 }
@@ -57,23 +58,52 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
           }),
     );
   }
+}
 
-  Container _bodyWidget(
-      BuildContext context, List<ResourcesDataModle> resources) {
+
+
+class CourseIndexBody extends StatefulWidget {
+  const CourseIndexBody({Key? key, required this.resources}) : super(key: key);
+  final List<ResourcesDataModle> resources;
+  @override
+  State<CourseIndexBody> createState() => _CourseIndexBodyState();
+}
+
+class _CourseIndexBodyState extends State<CourseIndexBody> {
+  String filterText = '';
+  late List<ResourcesDataModle> resources = widget.resources;
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      child: FractionallySizedBox(
-        widthFactor: 0.90,
-        child: ListView.builder(
-          itemCount: resources.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return ResourcesContainerWidget(
-              title: resources[index].title,
-              uploadFile: resources[index].fileUrl,
-            );
-          },
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          SearchBarWidget(
+            onChanged: (String value) {
+              setState(() {
+                filterText = value;
+                resources = widget.resources.where(
+                      (element) => element.title.toLowerCase().contains(
+                    filterText.toLowerCase(),
+                  ),
+                ).toList();
+              });
+            },
+          ),
+          FractionallySizedBox(
+            widthFactor: 0.90,
+            child: ListView.builder(
+              itemCount: resources.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ResourcesContainerWidget(
+                  title: resources[index].title,
+                  uploadFile: resources[index].fileUrl,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

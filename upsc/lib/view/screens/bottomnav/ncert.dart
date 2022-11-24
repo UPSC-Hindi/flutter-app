@@ -80,7 +80,7 @@ class _NcertScreenState extends State<NcertScreen> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1 / 0.8,
-                  crossAxisSpacing: 4.0,
+                  crossAxisSpacing: 10
                 ),
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
