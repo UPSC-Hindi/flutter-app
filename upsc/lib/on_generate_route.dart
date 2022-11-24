@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:upsc/app_const.dart';
 import 'package:upsc/view/screens/home.dart';
 
+
+
 class OnGenerateRoute {
   static Route<dynamic> route(RouteSettings settings) {
     final args = settings.arguments;

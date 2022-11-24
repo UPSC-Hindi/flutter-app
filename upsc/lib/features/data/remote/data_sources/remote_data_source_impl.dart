@@ -6,6 +6,7 @@ import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
@@ -171,6 +172,17 @@ Future<ResourcesModel> getResources() async {
         return [];
       }
     } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  getMyOrder() async{
+    try{
+      Response response = await dioAuthorizationData().get(
+          '${Apis.baseUrl}${Apis.getMyOrders}');
+      return MyOrdersModel.fromJson(response.data);
+    }catch(error){
       rethrow;
     }
   }

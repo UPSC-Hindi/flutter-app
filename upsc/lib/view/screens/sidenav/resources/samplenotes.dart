@@ -18,19 +18,9 @@ class SampleNotesScreen extends StatefulWidget {
 }
 
 class _SampleNotesScreenState extends State<SampleNotesScreen> {
-  final TextEditingController _searchtest = TextEditingController();
-
-  @override
-  void initState() {
-    context
-        .read<ApiBloc>()
-        .add(const GetResources(key: 'Category', value: 'Sample Notes'));
-    super.initState();
-  }
 
   @override
   void dispose() {
-    _searchtest.dispose();
     super.dispose();
   }
 
@@ -55,7 +45,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
               if (snapshots.hasData) {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
-                  return _bodyWidget(context, response.data);
+                  return NotesWidget(resources: response.data,);
                 } else {
                   return Text(response.msg);
                 }
@@ -68,13 +58,36 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
           }),
     );
   }
+}
 
-  Container _bodyWidget(BuildContext context, List<NotesDataModel> resources) {
+class NotesWidget extends StatefulWidget {
+  const NotesWidget({Key? key, required this.resources}) : super(key: key);
+  final List<NotesDataModel> resources;
+  @override
+  State<NotesWidget> createState() => _NotesWidgetState();
+}
+
+class _NotesWidgetState extends State<NotesWidget> {
+  String filterText = '';
+  late List<NotesDataModel> resources = widget.resources;
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          SearchBarWidget(searchtest: _searchtest),
+          SearchBarWidget(
+            onChanged: (String value) {
+              setState(() {
+                filterText = value;
+                resources = widget.resources.where(
+                      (element) => element.title.toLowerCase().contains(
+                    filterText.toLowerCase(),
+                  ),
+                ).toList();
+              });
+            },
+          ),
           FractionallySizedBox(
             widthFactor: 0.90,
             child: ListView.builder(

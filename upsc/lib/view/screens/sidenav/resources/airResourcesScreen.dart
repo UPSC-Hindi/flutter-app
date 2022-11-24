@@ -117,7 +117,9 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SearchBarWidget(searchtest: _searchtest),
+            SearchBarWidget(onChanged: (String value) {
+              print(value);
+            },),
             FractionallySizedBox(
               widthFactor: 0.90,
               child: ListView.builder(

@@ -4,12 +4,9 @@ import 'package:upsc/util/color_resources.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
-    Key? key,
-    required TextEditingController searchtest,
-  })  : _searchtest = searchtest,
-        super(key: key);
-
-  final TextEditingController _searchtest;
+    Key? key,required this.onChanged,
+  }) : super(key: key);
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,7 @@ class SearchBarWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: TextField(
-        controller: _searchtest,
+        onChanged: onChanged,
         style: GoogleFonts.notoSansDevanagari(
             fontSize: 16.0, color: ColorResources.gray),
         decoration: InputDecoration(

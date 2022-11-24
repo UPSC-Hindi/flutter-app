@@ -7,6 +7,7 @@ import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 
 class ShortNotesScreen extends StatefulWidget {
   const ShortNotesScreen({Key? key, required this.resourceDataSourceImpl})
@@ -18,16 +19,6 @@ class ShortNotesScreen extends StatefulWidget {
 }
 
 class _ShortNotesScreenState extends State<ShortNotesScreen> {
-  final TextEditingController _searchtest = TextEditingController();
-
-  @override
-  void initState() {
-    context
-        .read<ApiBloc>()
-        .add(const GetResources(key: 'Category', value: 'short Notes'));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +38,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
               if (snapshots.hasData) {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
-                  return _bodyWidget(response.data);
+                  return NotesWidget(resources: response.data);
                 } else {
                   return Text(response.msg);
                 }
@@ -61,30 +52,4 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
     );
   }
 
-  Container _bodyWidget(List<NotesDataModel> resources) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchBarWidget(searchtest: _searchtest),
-            FractionallySizedBox(
-              widthFactor: 0.90,
-              child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: resources.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return ResourcesContainerWidget(
-                    title: resources[index].title,
-                    uploadFile: resources[index].fileUrl,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

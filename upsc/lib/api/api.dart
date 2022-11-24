@@ -38,6 +38,7 @@ class Apis {
   static const String getcartdata = 'adminPanel/getCartDetails';
   static const String mycourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';
+  static const String getMyOrders = 'UPSCPayment/userTransactionDetails';
   static const String removefromCart = "adminPanel/deleteCartDetails/";
   static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
   static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
