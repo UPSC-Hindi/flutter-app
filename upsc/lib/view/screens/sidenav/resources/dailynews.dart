@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/data/remote/models/daily_news_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +12,7 @@ class DailyNewsScreen extends StatefulWidget {
   const DailyNewsScreen({Key? key, required this.resourceDataSourceImpl})
       : super(key: key);
   final ResourceDataSourceImpl resourceDataSourceImpl;
+
   @override
   State<DailyNewsScreen> createState() => _DailyNewsScreenState();
 }
@@ -18,6 +21,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
   String? datetoshow;
 
   List<DailyNewsDataModel> listdata = [];
+
   @override
   void initState() {
     super.initState();
@@ -156,7 +160,8 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                     itemBuilder: (context, index) {
                       return ResourcesContainerWidget(
                         title: resources[index].title,
-                        uploadFile: resources[index].fileUrl,
+                        uploadFile: resources[index].fileUrl.fileLoc,
+                        fileSize: resources[index].fileUrl.fileSize,
                       );
                     },
                   ),

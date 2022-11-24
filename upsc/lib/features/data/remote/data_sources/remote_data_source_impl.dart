@@ -58,7 +58,7 @@ Future<ResourcesModel> getResources() async {
       final queryParameters = <String, dynamic>{key: value};
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
-        queryParameters: queryParameters,
+        // queryParameters: queryParameters,
       );
       return CoursesModel.fromJson(response.data);
     } catch (e) {

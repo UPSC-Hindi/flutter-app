@@ -368,6 +368,7 @@ class BatchNotesWidget extends StatelessWidget {
                       itemBuilder: (context, index) => ResourcesContainerWidget(
                         title: notesList![index].title,
                         uploadFile: notesList![index].uploadFile,
+                        fileSize: '',
                       ),
                     );
             } else {

@@ -1,3 +1,4 @@
+
 class NotesModel {
   NotesModel({
     required this.status,
@@ -25,43 +26,59 @@ class NotesModel {
 class NotesDataModel {
   NotesDataModel({
     required this.id,
-    required this.user,
     required this.title,
     required this.fileUrl,
     required this.notesType,
     required this.isActive,
     required this.language,
-    required this.v,
   });
 
   final String id;
-  final String user;
   final String title;
-  final String fileUrl;
+  final FileUrl fileUrl;
   final String notesType;
   final bool isActive;
   final String language;
-  final int v;
 
   factory NotesDataModel.fromJson(Map<String, dynamic> json) => NotesDataModel(
     id: json["_id"],
-    user: json["user"],
     title: json["title"],
-    fileUrl: json["file_url"],
+    fileUrl: FileUrl.fromJson(json["file_url"]),
     notesType: json["notes_type"],
     isActive: json["is_active"],
     language: json["language"],
-    v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "user": user,
     "title": title,
-    "file_url": fileUrl,
+    "file_url": fileUrl.toJson(),
     "notes_type": notesType,
     "is_active": isActive,
     "language": language,
-    "__v": v,
+  };
+}
+
+class FileUrl {
+  FileUrl({
+    required this.fileLoc,
+    required this.fileName,
+    required this.fileSize,
+  });
+
+  final String fileLoc;
+  final String fileName;
+  final String fileSize;
+
+  factory FileUrl.fromJson(Map<String, dynamic> json) => FileUrl(
+    fileLoc: json["fileLoc"],
+    fileName: json["fileName"],
+    fileSize: json["fileSize"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "fileLoc": fileLoc,
+    "fileName": fileName,
+    "fileSize": fileSize,
   };
 }
