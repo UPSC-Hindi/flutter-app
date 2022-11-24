@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({Key? key}) : super(key: key);
