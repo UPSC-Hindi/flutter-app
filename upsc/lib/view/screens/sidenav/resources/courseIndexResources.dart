@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
+import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
@@ -98,6 +99,7 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
                 return ResourcesContainerWidget(
                   title: resources[index].title,
                   uploadFile: resources[index].fileUrl,
+                  fileSize: resources[index].fileUrl,
                 );
               },
             ),

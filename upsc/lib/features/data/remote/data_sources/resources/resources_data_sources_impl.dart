@@ -24,7 +24,7 @@ class ResourceDataSourceImpl extends ResourcesDataSource {
   getAir() async {
     try {
       Response response = await dioAuthorizationData()
-          .get('${Apis.baseUrl}${Apis.getDailyNews}');
+          .get('${Apis.baseUrl}${Apis.getAirResources}');
       return AirResourcesModel.fromJson(response.data);
     } catch (error) {
       print(error);

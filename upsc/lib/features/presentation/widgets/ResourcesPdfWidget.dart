@@ -12,10 +12,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
   const ResourcesContainerWidget(
-      {Key? key, required this.title, required this.uploadFile})
+      {Key? key,
+      required this.title,
+      required this.uploadFile,
+      required this.fileSize})
       : super(key: key);
   final String title;
   final String uploadFile;
+  final String fileSize;
 
   @override
   State<ResourcesContainerWidget> createState() =>
@@ -110,7 +114,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                         color: ColorResources.gray),
                   ),
                   Text(
-                    '2.5 MB',
+                    widget.fileSize,
                     style: GoogleFonts.notoSansDevanagari(
                         fontSize: 10, color: ColorResources.gray),
                   ),

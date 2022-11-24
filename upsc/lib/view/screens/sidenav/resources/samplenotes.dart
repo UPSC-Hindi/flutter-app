@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/data/remote/models/notes_model.dart';
+import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -16,7 +18,6 @@ class SampleNotesScreen extends StatefulWidget {
 }
 
 class _SampleNotesScreenState extends State<SampleNotesScreen> {
-
   @override
   void dispose() {
     super.dispose();
@@ -43,7 +44,9 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
               if (snapshots.hasData) {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
-                  return NotesWidget(resources: response.data,);
+                  return NotesWidget(
+                    resources: response.data,
+                  );
                 } else {
                   return Text(response.msg);
                 }
@@ -61,6 +64,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 class NotesWidget extends StatefulWidget {
   const NotesWidget({Key? key, required this.resources}) : super(key: key);
   final List<NotesDataModel> resources;
+
   @override
   State<NotesWidget> createState() => _NotesWidgetState();
 }
@@ -68,6 +72,7 @@ class NotesWidget extends StatefulWidget {
 class _NotesWidgetState extends State<NotesWidget> {
   String filterText = '';
   late List<NotesDataModel> resources = widget.resources;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,11 +83,13 @@ class _NotesWidgetState extends State<NotesWidget> {
             onChanged: (String value) {
               setState(() {
                 filterText = value;
-                resources = widget.resources.where(
+                resources = widget.resources
+                    .where(
                       (element) => element.title.toLowerCase().contains(
-                    filterText.toLowerCase(),
-                  ),
-                ).toList();
+                            filterText.toLowerCase(),
+                          ),
+                    )
+                    .toList();
               });
             },
           ),
@@ -94,7 +101,8 @@ class _NotesWidgetState extends State<NotesWidget> {
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
                   title: resources[index].title,
-                  uploadFile: resources[index].fileUrl,
+                  uploadFile: resources[index].fileUrl.fileLoc,
+                  fileSize: resources[index].fileUrl.fileSize,
                 );
               },
             ),

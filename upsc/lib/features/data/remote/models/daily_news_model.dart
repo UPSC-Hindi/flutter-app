@@ -1,5 +1,4 @@
-
-class DailyNewsModel{
+class DailyNewsModel {
   DailyNewsModel({
     required this.status,
     required this.data,
@@ -26,47 +25,59 @@ class DailyNewsModel{
 class DailyNewsDataModel {
   DailyNewsDataModel({
     required this.id,
-    required this.user,
     required this.fileUrl,
     required this.title,
     required this.isActive,
-    required this.category,
     required this.language,
     required this.createdAt,
-    required this.v,
   });
 
   final String id;
-  final String user;
-  final String fileUrl;
+  final FileUrl fileUrl;
   final String title;
   final bool isActive;
-  final String category;
   final String language;
   final String createdAt;
-  final int v;
 
   factory DailyNewsDataModel.fromJson(Map<String, dynamic> json) => DailyNewsDataModel(
     id: json["_id"],
-    user: json["user"],
-    fileUrl: json["file_url"],
+    fileUrl: FileUrl.fromJson(json["file_url"]),
     title: json["title"],
     isActive: json["is_active"],
-    category: json["category"],
     language: json["language"],
     createdAt: json["created_at"],
-    v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "user": user,
-    "file_url": fileUrl,
+    "file_url": fileUrl.toJson(),
     "title": title,
     "is_active": isActive,
-    "category": category,
     "language": language,
     "created_at": createdAt,
-    "__v": v,
+  };
+}
+
+class FileUrl {
+  FileUrl({
+    required this.fileLoc,
+    required this.fileName,
+    required this.fileSize,
+  });
+
+  final String fileLoc;
+  final String fileName;
+  final String fileSize;
+
+  factory FileUrl.fromJson(Map<String, dynamic> json) => FileUrl(
+    fileLoc: json["fileLoc"],
+    fileName: json["fileName"],
+    fileSize: json["fileSize"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "fileLoc": fileLoc,
+    "fileName": fileName,
+    "fileSize": fileSize,
   };
 }
