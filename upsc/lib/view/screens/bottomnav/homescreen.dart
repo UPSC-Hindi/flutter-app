@@ -194,7 +194,7 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10.0),
-                height: 138,
+                height: 140,
                 child: FutureBuilder<MyCoursesModel>(
                     future: myCoursesData,
                     builder: (context, snapshot) {

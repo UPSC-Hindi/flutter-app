@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 10, left: 10),
-                height: 100,
+                height: MediaQuery.of(context).size.height * 0.15,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(

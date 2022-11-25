@@ -12,6 +12,7 @@ import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/banner.dart';
 import 'package:upsc/models/orderIdgeneration.dart';
+import 'package:upsc/util/appString..dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
@@ -64,7 +65,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       'key': razorPayId,
       "order_id": id,
       'amount': (100 * int.parse(widget.course.amount) +
-              (100 * (int.parse(widget.course.amount) * 0.18)))
+              (100 *
+                  (int.parse(widget.course.amount) *
+                      (int.parse(widget.course.batchDetails.discount) / 100))))
           .toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
@@ -103,7 +106,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
         price: (int.parse(widget.course.amount) +
-                ((int.parse(widget.course.amount) * 0.18)))
+                ((int.parse(widget.course.amount) *
+                    (int.parse(widget.course.batchDetails.discount) / 100))))
             .round()
             .toString(),
         success: true.toString()));
@@ -124,7 +128,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Signature: '',
         batchId: widget.course.batchDetails.id,
         price: (int.parse(widget.course.amount) +
-                ((int.parse(widget.course.amount) * 0.18)))
+                ((int.parse(widget.course.amount) *
+                    (int.parse(widget.course.batchDetails.discount) / 100))))
             .round()
             .toString(),
         success: false.toString()));
@@ -179,15 +184,32 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             const SizedBox(
               height: 20,
             ),
-            Text(widget.course.batchDetails.batchName),
+            Text(
+              widget.course.batchDetails.batchName,
+              style: GoogleFonts.notoSansDevanagari(
+                fontSize: Fontsize().h2,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Text(
-              '${widget.course.amount} INR',
-              style:  GoogleFonts.notoSansDevanagari(
-                fontWeight: FontWeight.w900,
-              ),
+            Row(
+              children: [
+                Text(
+                  '${widget.course.amount} INR',
+                  style: GoogleFonts.notoSansDevanagari(
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Text(
+                  ' (include tax)',
+                  style: GoogleFonts.notoSansDevanagari(
+                    fontSize: 8,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 40,
@@ -195,7 +217,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text(
+                Text(
                   'Total Amount',
                   style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
@@ -203,7 +225,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   widget.course.amount,
-                  style:  GoogleFonts.notoSansDevanagari(
+                  style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -212,23 +234,30 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                 Text(
-                  'Tax',
-                  style: GoogleFonts.notoSansDevanagari(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                Text(
-                  (int.parse(widget.course.amount) * 0.18).round().toString(),
-                  style:  GoogleFonts.notoSansDevanagari(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ],
-            ),
+            int.parse(widget.course.batchDetails.discount) != 0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'discount',
+                        style: GoogleFonts.notoSansDevanagari(
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      Text(
+                        (int.parse(widget.course.amount) *
+                                (int.parse(
+                                        widget.course.batchDetails.discount) /
+                                    100))
+                            .round()
+                            .toString(),
+                        style: GoogleFonts.notoSansDevanagari(
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(''),
             const SizedBox(
               height: 20,
             ),
@@ -241,7 +270,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text(
+                Text(
                   'Payable Amount',
                   style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
@@ -249,10 +278,12 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
                 Text(
                   (int.parse(widget.course.amount) +
-                          ((int.parse(widget.course.amount) * 0.18)))
+                          ((int.parse(widget.course.amount) *
+                              (int.parse(widget.course.batchDetails.discount) /
+                                  100))))
                       .round()
                       .toString(),
-                  style:  GoogleFonts.notoSansDevanagari(
+                  style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -294,7 +325,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
       "amount": (int.parse(widget.course.amount) +
-              ((int.parse(widget.course.amount) * 0.18)))
+              ((int.parse(widget.course.amount) *
+                  (int.parse(widget.course.batchDetails.discount) / 100))))
           .round(),
       // "name": SharedPreferenceHelper.getString(Preferences.name),
       // "email": SharedPreferenceHelper.getString(Preferences.email),

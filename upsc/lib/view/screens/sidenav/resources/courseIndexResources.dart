@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
-import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
@@ -44,10 +43,10 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
                 ResourcesModel? response = snapshots.data;
-                if (response!.status) {
-                  return CourseIndexBody(resources: response.data);
+                if (response!.status!) {
+                  return CourseIndexBody(resources: response.data!);
                 } else {
-                  return Text(response.msg);
+                  return Text(response.msg!);
                 }
               } else {
                 return const Text('Server Error');
@@ -59,8 +58,6 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
     );
   }
 }
-
-
 
 class CourseIndexBody extends StatefulWidget {
   const CourseIndexBody({Key? key, required this.resources}) : super(key: key);
@@ -82,11 +79,13 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
             onChanged: (String value) {
               setState(() {
                 filterText = value;
-                resources = widget.resources.where(
-                      (element) => element.title.toLowerCase().contains(
-                    filterText.toLowerCase(),
-                  ),
-                ).toList();
+                resources = widget.resources
+                    .where(
+                      (element) => element.title!.toLowerCase().contains(
+                            filterText.toLowerCase(),
+                          ),
+                    )
+                    .toList();
               });
             },
           ),
@@ -97,9 +96,9 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
-                  title: resources[index].title,
-                  uploadFile: resources[index].fileUrl,
-                  fileSize: resources[index].fileUrl,
+                  title: resources[index].title!,
+                  uploadFile: resources[index].fileUrl!.fileLoc!,
+                  fileSize: resources[index].fileUrl!.fileSize!,
                 );
               },
             ),

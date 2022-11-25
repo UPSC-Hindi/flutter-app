@@ -6,6 +6,7 @@ import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -29,45 +30,43 @@ class MyOrdersScreen extends StatelessWidget {
       ),
       body: FutureBuilder<MyOrdersModel>(
           future: remoteDataSourceImpl.getMyOrder(),
-          builder: (context,snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            if(snapshot.data!.status){
-              List<MyOrderDataModel> ordersList = snapshot.data!.data;
-              if (ordersList.isEmpty) {
-                return EmptyWidget(
-                  text: 'There are no Orders',
-                  image: SvgImages.emptyCard,
-                );
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.status) {
+                  List<MyOrderDataModel> ordersList = snapshot.data!.data;
+                  if (ordersList.isEmpty) {
+                    return EmptyWidget(
+                      text: 'There are no Orders',
+                      image: SvgImages.emptyCard,
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: ordersList.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _myCoursesCardWidget(
+                          context,
+                          ordersList[index],
+                        ),
+                      ),
+                    );
+                  }
+                } else {
+                  return Text(snapshot.data!.msg);
+                }
               } else {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: ordersList.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _myCoursesCardWidget(
-                      context,
-                      ordersList[index],
-                    ),
-                  ),
-                );
+                return const Text('Something went wrong');
               }
-            }else{
-              return Text(snapshot.data!.msg);
+            } else {
+              return const Center(child: CircularProgressIndicator());
             }
-          }else{
-            return Text('Something went wrong');
-          }
-        }
-        else{
-          return CircularProgressIndicator();
-        }
-      }),
+          }),
     );
   }
 
-  Center _myCoursesCardWidget(
-      BuildContext context, MyOrderDataModel myOrders) {
+  Center _myCoursesCardWidget(BuildContext context, MyOrderDataModel myOrders) {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(10.0),
@@ -95,89 +94,85 @@ class MyOrdersScreen extends StatelessWidget {
                     child: Text(
                       myOrders.batchName,
                       overflow: TextOverflow.ellipsis,
-                      style:  GoogleFonts.notoSansDevanagari(fontSize: 22),
+                      style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 22,
+                      ),
                     ),
                   ),
                   Text(
                     "₹ ${myOrders.amount}",
-                    style:  GoogleFonts.notoSansDevanagari(fontSize: 20),
+                    style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 20, color: ColorResources.textblack),
                   ),
                 ],
               ),
-              // courseData.isPaid
-              //     ? Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              //           Text(
-              //             'Expires in ${courseData.batchDetails.endingDate.difference(DateTime.now()).inDays} Days',
-              //             style: GoogleFonts.notoSansDevanagari(
-              //                 color: ColorResources.gray),
-              //           ),
-              //           TextButton(
-              //             style: ElevatedButton.styleFrom(
-              //               primary: ColorResources.textblack.withOpacity(0.6),
-              //               shape: RoundedRectangleBorder(
-              //                 borderRadius: BorderRadius.circular(20),
-              //               ),
-              //             ),
-              //             onPressed: () {
-              //               Navigator.of(context).push(
-              //                 MaterialPageRoute(
-              //                   builder: (context) => CourseViewScreen(
-              //                     lecture: courseData.lectureDetails,
-              //                     batch: courseData.batchDetails,
-              //                   ),
-              //                 ),
-              //               );
-              //             },
-              //             child: Row(
-              //               mainAxisSize: MainAxisSize.min,
-              //               children: const [
-              //                 Text('view'), // <-- Text
-              //                 SizedBox(
-              //                   width: 5,
-              //                 ),
-              //                 Icon(
-              //                   Icons.arrow_forward_ios,
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       )
-              //     : Align(
-              //         alignment: Alignment.centerRight,
-              //         child: ElevatedButton(
-              //           style: ElevatedButton.styleFrom(
-              //             primary: ColorResources.buttoncolor,
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(20),
-              //             ),
-              //           ),
-              //           onPressed: () {
-              //             Navigator.of(context).push(
-              //               MaterialPageRoute(
-              //                 builder: (context) => CourseViewScreen(
-              //                   lecture: courseData.lectureDetails,
-              //                   batch: courseData.batchDetails,
-              //                 ),
-              //               ),
-              //             );
-              //           },
-              //           child: Row(
-              //             mainAxisSize: MainAxisSize.min,
-              //             children: const [
-              //               Text('Re-try'), // <-- Text
-              //               SizedBox(
-              //                 width: 5,
-              //               ),
-              //               Icon(
-              //                 Icons.arrow_forward_ios,
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
+              myOrders.success
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${myOrders.transactionDate}',
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack),
+                        ),
+                        TextButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: ColorResources.buttoncolor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            flutterToast("pls wait downloading invoice");
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'view',
+                                style: GoogleFonts.notoSansDevanagari(
+                                    color: ColorResources.textWhite),
+                              ), // <-- Text
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: ColorResources.textWhite),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorResources.buttoncolor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed("cartscreen");
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Re-try',
+                              style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textWhite),
+                            ), // <-- Text
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Icon(Icons.arrow_forward_ios,
+                                color: ColorResources.textWhite),
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
