@@ -49,7 +49,6 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
               if (snapshots.hasData) {
                 DailyNewsModel? response = snapshots.data;
                 if (response!.status) {
-                  print(response.data[0].createdAt);
                   response.data.sort(
                     (a, b) {
                       return a.createdAt.compareTo(b.createdAt);
@@ -65,8 +64,9 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                               .parse(datetoshow!)
                               .toString()
                               .split(" ")[0]) {
-                        listdata.add(element);
-                        print('------found u---------');
+                        if (element.isActive) {
+                          listdata.add(element);
+                        }
                       }
                     },
                   );
@@ -116,6 +116,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                   firstDate: DateTime(1950),
                   lastDate: DateTime(2100));
               if (pickedDate != null) {
+                listdata.clear();
                 print(
                     pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                 String formattedDate =
