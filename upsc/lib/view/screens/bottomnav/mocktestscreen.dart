@@ -69,7 +69,9 @@ class _mocktestscreenState extends State<mocktestscreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          onPressed: () {},
+                             onPressed: () {
+                            Navigator.pushNamed(context, 'mytestseries');
+                          },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: const [
