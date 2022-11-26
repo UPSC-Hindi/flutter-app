@@ -36,7 +36,6 @@ import 'package:upsc/view/screens/sidenav/myscheduleadd.dart';
 import 'package:upsc/view/screens/sidenav/mytest.dart';
 import 'package:upsc/view/screens/sidenav/resources.dart';
 import 'package:upsc/view/screens/sidenav/resources/airResourcesScreen.dart';
-import 'package:upsc/view/screens/sidenav/resources/courseIndexResources.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
@@ -44,7 +43,6 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -158,7 +156,7 @@ class MyApp extends StatelessWidget {
           'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
-          'mytestseries': (context) => const MyTestSeries(),
+          'mytestseries': (context) => const TestSeries(),
           'ourachievements': (context) => const OurAchievementsScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),
           'helpandsupport': (context) => const HelpAndSupport(),
