@@ -36,7 +36,6 @@ import 'package:upsc/view/screens/sidenav/myscheduleadd.dart';
 import 'package:upsc/view/screens/sidenav/mytest.dart';
 import 'package:upsc/view/screens/sidenav/resources.dart';
 import 'package:upsc/view/screens/sidenav/resources/airResourcesScreen.dart';
-import 'package:upsc/view/screens/sidenav/resources/courseIndexResources.dart';
 import 'package:upsc/view/screens/sidenav/resources/dailynews.dart';
 import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 import 'package:upsc/view/screens/sidenav/resources/shortnotes.dart';
