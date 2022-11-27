@@ -139,59 +139,59 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   ]),
                                 ],
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFfD9D9D9),
-                                    borderRadius: BorderRadius.circular(90)),
-                                child: Text(
-                                  'Faculty  ',
-                                  style: GoogleFonts.notoSansDevanagari(
-                                      fontSize: 16),
-                                ),
-                              ),
-                              Container(
-                                height: 100,
-                                child: ListView.builder(
-                                  itemCount: widget.batch.teacher.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: Column(
-                                      children: [
-                                        CachedNetworkImage(
-                                          imageUrl: widget.batch.teacher[index]
-                                              .profilePhoto,
-                                          placeholder: (context, url) =>
-                                              const Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                          height: 70,
-                                        ),
-                                        SizedBox(
-                                          width: 70,
-                                          child: Text(
-                                            widget
-                                                .batch.teacher[index].fullName,
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                GoogleFonts.notoSansDevanagari(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   margin:
+                              //       const EdgeInsets.symmetric(vertical: 10),
+                              //   padding: const EdgeInsets.all(5),
+                              //   decoration: BoxDecoration(
+                              //       color: const Color(0xFfD9D9D9),
+                              //       borderRadius: BorderRadius.circular(90)),
+                              //   child: Text(
+                              //     'Faculty  ',
+                              //     style: GoogleFonts.notoSansDevanagari(
+                              //         fontSize: 16),
+                              //   ),
+                              // ),
+                              // Container(
+                              //   height: 100,
+                              //   child: ListView.builder(
+                              //     itemCount: widget.batch.teacher.length,
+                              //     scrollDirection: Axis.horizontal,
+                              //     itemBuilder: (context, index) => Padding(
+                              //       padding: const EdgeInsets.symmetric(
+                              //           horizontal: 5.0),
+                              //       child: Column(
+                              //         children: [
+                              //           CachedNetworkImage(
+                              //             imageUrl: widget.batch.teacher[index]
+                              //                 .profilePhoto,
+                              //             placeholder: (context, url) =>
+                              //                 const Center(
+                              //                     child:
+                              //                         CircularProgressIndicator()),
+                              //             errorWidget: (context, url, error) =>
+                              //                 const Icon(Icons.error),
+                              //             height: 70,
+                              //           ),
+                              //           SizedBox(
+                              //             width: 70,
+                              //             child: Text(
+                              //               widget
+                              //                   .batch.teacher[index].fullName,
+                              //               textAlign: TextAlign.center,
+                              //               style:
+                              //                   GoogleFonts.notoSansDevanagari(
+                              //                       fontSize: 16,
+                              //                       fontWeight:
+                              //                           FontWeight.bold),
+                              //               overflow: TextOverflow.ellipsis,
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
