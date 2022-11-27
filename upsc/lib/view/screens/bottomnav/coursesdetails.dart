@@ -1,12 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
+import 'package:upsc/api/api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -17,6 +20,7 @@ import 'package:upsc/util/preference.dart';
 
 class CoursesDetailsScreens extends StatefulWidget {
   final CoursesDataModel course;
+
   CoursesDetailsScreens({Key? key, required this.course}) : super(key: key);
 
   @override
@@ -25,6 +29,7 @@ class CoursesDetailsScreens extends StatefulWidget {
 
 class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
   List<Widget> image = [];
+
   @override
   void initState() {
     widget.course.banner.forEach((element) {
@@ -312,7 +317,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
     );
   }
 
-  Future<BaseModel<AddToCart>> callApiaddtocart(CoursesDataModel course) async {
+  Future<void> callApiaddtocart(CoursesDataModel course) async {
     AddToCart response;
     Map<String, dynamic> body = {
       "batch_id": widget.course.id,
@@ -323,15 +328,17 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       });
       var token =
           SharedPreferenceHelper.getString(Preferences.access_token).toString();
-      response =
-          await RestClient(RetroApi().dioData(token)).addtocartRequest(body);
-      if (response.status!) {
+     Response response =  await dioAuthorizationData().post(
+        '${Apis.baseUrl}${Apis.addtocart}',
+        data: body,
+      );
+      if (response.data['status']) {
         setState(() {
           Preferences.hideDialog(context);
         });
         Navigator.of(context).popAndPushNamed('cartscreen');
         Fluttertoast.showToast(
-          msg: '${response.msg}',
+          msg: '${response.data['msg']}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: ColorResources.gray,
@@ -339,7 +346,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
         );
       } else {
         Fluttertoast.showToast(
-          msg: '${response.msg}',
+          msg: '${response.data['msg']}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: ColorResources.gray,
@@ -350,9 +357,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       setState(() {
         Preferences.hideDialog(context);
       });
-      print("Exception occur: $error stackTrace: $stacktrace");
-      return BaseModel()..setException(ServerError.withError(error: error));
+
     }
-    return BaseModel()..data = response;
   }
 }

@@ -46,7 +46,7 @@ class BatchNotesDataModel {
   final String createdAt;
   final bool isActive;
   final String language;
-  final String uploadFile;
+  final UploadFile uploadFile;
   final bool isVerified;
   final int v;
 
@@ -59,7 +59,7 @@ class BatchNotesDataModel {
     createdAt: json["created_at"],
     isActive: json["is_active"],
     language: json["language"],
-    uploadFile: json["upload_file"],
+    uploadFile: UploadFile.fromJson(json["upload_file"]),
     isVerified: json["is_Verified"],
     v: json["__v"],
   );
@@ -73,8 +73,32 @@ class BatchNotesDataModel {
     "created_at": createdAt,
     "is_active": isActive,
     "language": language,
-    "upload_file": uploadFile,
+    "upload_file": uploadFile.toJson(),
     "is_Verified": isVerified,
     "__v": v,
+  };
+}
+
+class UploadFile {
+  UploadFile({
+    required this.fileLoc,
+    required this.fileName,
+    required this.fileSize,
+  });
+
+  final String fileLoc;
+  final String fileName;
+  final String fileSize;
+
+  factory UploadFile.fromJson(Map<String, dynamic> json) => UploadFile(
+    fileLoc: json["fileLoc"],
+    fileName: json["fileName"],
+    fileSize: json["fileSize"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "fileLoc": fileLoc,
+    "fileName": fileName,
+    "fileSize": fileSize,
   };
 }
