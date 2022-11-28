@@ -64,7 +64,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     var options = {
       'key': razorPayId,
       "order_id": id,
-      'amount': (100 * int.parse(widget.course.amount) +
+      'amount': (100 * int.parse(widget.course.amount) -
               (100 *
                   (int.parse(widget.course.amount) *
                       (int.parse(widget.course.batchDetails.discount) / 100))))
@@ -105,7 +105,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: response.signature!,
         batchId: widget.course.batchDetails.id,
-        price: (int.parse(widget.course.amount) +
+        price: (int.parse(widget.course.amount) -
                 ((int.parse(widget.course.amount) *
                     (int.parse(widget.course.batchDetails.discount) / 100))))
             .round()
@@ -127,7 +127,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         userEmail: userEmail!,
         Signature: '',
         batchId: widget.course.batchDetails.id,
-        price: (int.parse(widget.course.amount) +
+        price: (int.parse(widget.course.amount) -
                 ((int.parse(widget.course.amount) *
                     (int.parse(widget.course.batchDetails.discount) / 100))))
             .round()
@@ -277,7 +277,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                 ),
                 Text(
-                  (int.parse(widget.course.amount) +
+                  (int.parse(widget.course.amount) -
                           ((int.parse(widget.course.amount) *
                               (int.parse(widget.course.batchDetails.discount) /
                                   100))))
@@ -324,7 +324,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   Future<BaseModel<OrderIdGeneration>> callApiorderid(id) async {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
-      "amount": (int.parse(widget.course.amount) +
+      "amount": (int.parse(widget.course.amount) -
               ((int.parse(widget.course.amount) *
                   (int.parse(widget.course.batchDetails.discount) / 100))))
           .round(),
