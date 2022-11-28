@@ -256,79 +256,79 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
-                            const Align(
-                                alignment: Alignment.center,
-                                child: Text('Documents Shared with you')),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.04,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: ColorResources.gray.withOpacity(0.5),
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageUrl: SvgImages.pdfimage,
-                                              placeholder: (context, url) =>
-                                                  const Center(
-                                                      child:
-                                                          CircularProgressIndicator()),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Class 1 Notes',
-                                                  style: GoogleFonts
-                                                      .notoSansDevanagari(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                ),
-                                                Text(
-                                                  '2.5 MB',
-                                                  style: GoogleFonts.lato(
-                                                      fontSize: 16,
-                                                      color:
-                                                          ColorResources.gray),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Icon(
-                                          Icons.file_download_outlined,
-                                          size: 40,
-                                          color: ColorResources.buttoncolor,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // const Align(
+                            //     alignment: Alignment.center,
+                            //     child: Text('Documents Shared with you')),
+                            // SizedBox(
+                            //   height: MediaQuery.of(context).size.height * 0.04,
+                            // ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.symmetric(vertical: 10.0),
+                            //   child: Container(
+                            //     padding: const EdgeInsets.all(10),
+                            //     width: double.infinity,
+                            //     decoration: BoxDecoration(
+                            //       border: Border.all(
+                            //         color: ColorResources.gray.withOpacity(0.5),
+                            //       ),
+                            //       borderRadius: BorderRadius.circular(20),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: [
+                            //             Row(
+                            //               children: [
+                            //                 CachedNetworkImage(
+                            //                   imageUrl: SvgImages.pdfimage,
+                            //                   placeholder: (context, url) =>
+                            //                       const Center(
+                            //                           child:
+                            //                               CircularProgressIndicator()),
+                            //                   errorWidget:
+                            //                       (context, url, error) =>
+                            //                           const Icon(Icons.error),
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   width: 20,
+                            //                 ),
+                            //                 Column(
+                            //                   crossAxisAlignment:
+                            //                       CrossAxisAlignment.start,
+                            //                   children: [
+                            //                     Text(
+                            //                       'Class 1 Notes',
+                            //                       style: GoogleFonts
+                            //                           .notoSansDevanagari(
+                            //                               fontSize: 20,
+                            //                               fontWeight:
+                            //                                   FontWeight.w400),
+                            //                     ),
+                            //                     Text(
+                            //                       '2.5 MB',
+                            //                       style: GoogleFonts.lato(
+                            //                           fontSize: 16,
+                            //                           color:
+                            //                               ColorResources.gray),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //             Icon(
+                            //               Icons.file_download_outlined,
+                            //               size: 40,
+                            //               color: ColorResources.buttoncolor,
+                            //             )
+                            //           ],
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ))
                   ],
