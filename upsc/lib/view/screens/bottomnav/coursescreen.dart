@@ -57,15 +57,15 @@ class _CourseScreenState extends State<CourseScreen> {
                   return const [
                     PopupMenuItem(
                       value: '/hello',
-                      child: Text("Hello"),
+                      child: Text("IAS"),
                     ),
                     PopupMenuItem(
                       value: '/about',
-                      child: Text("About"),
+                      child: Text("IPS"),
                     ),
                     PopupMenuItem(
                       value: '/contact',
-                      child: Text("Contact"),
+                      child: Text("PCS"),
                     )
                   ];
                 },
