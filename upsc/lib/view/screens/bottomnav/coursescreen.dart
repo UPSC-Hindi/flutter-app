@@ -257,7 +257,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                           color: ColorResources.greenshad,
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        ' ${data.discount} % ',
+                        ' ${data.discount} % discount',
                         style: GoogleFonts.notoSansDevanagari(
                             fontSize: 12, color: ColorResources.textWhite),
                       ),
