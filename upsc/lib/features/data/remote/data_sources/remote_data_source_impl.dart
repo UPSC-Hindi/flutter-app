@@ -165,9 +165,9 @@ Future<ResourcesModel> getResources() async {
           '${Apis.baseUrl}${Apis.getRecordedVideo}',
           queryParameters: {'batchId': batchId});
       RecordedVideoModel data = RecordedVideoModel.fromJson(response.data);
-      if (data.status) {
+      if (data.status!) {
         print(data);
-        return data.data;
+        return data.data!;
       } else {
         return [];
       }

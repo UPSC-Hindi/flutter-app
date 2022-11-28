@@ -457,10 +457,17 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
                   ? EmptyWidget(
                       image: SvgImages.emptyCard, text: "There is no video")
                   : ListView.builder(
+                      shrinkWrap: true,
                       itemCount: videoList!.length,
-                      itemBuilder: (context, index) =>
-                          _recordedVideoWidget(videoList![index]),
+                      itemBuilder: (BuildContext context, int index) {
+                        return _recordedvideobody(videoList![index]);
+                      },
                     );
+              //  ListView.builder(
+              //     itemCount: videoList!.length,
+              //     itemBuilder: (context, index) =>
+              //         _recordedVideoWidget(videoList![index]),
+              //   );
             } else {
               return const Center(child: Text("Something Went Wrong"));
             }
@@ -470,21 +477,38 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
         });
   }
 
-  Widget _recordedVideoWidget(RecordedVideoDataModel videosdata) {
+  Widget _recordedvideobody(RecordedVideoDataModel lectureName) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Text(
+              lectureName.lectureName!,
+              style: GoogleFonts.notoSansDevanagari(fontSize: 24),
+            ),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: lectureName.listofvideos!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _recordedVideoWidget(lectureName.listofvideos![index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _recordedVideoWidget(Listofvideos videosdata) {
     return InkWell(
       onTap: () {
-        download(videosdata.fileUrl, videosdata.title);
+        download(videosdata.fileUrl!.fileLoc!, videosdata.title);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(
-              videosdata.lectureId.lectureTitle,
-              style: GoogleFonts.notoSansDevanagari(fontSize: 24),
-            ),
-          ),
           Row(
             children: [
               Container(
@@ -502,15 +526,15 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    videosdata.title,
+                    videosdata.title!,
                     style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20, fontWeight: FontWeight.w400),
                   ),
-                  Text(
-                    '1hr 2mins',
-                    style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 16, color: ColorResources.gray),
-                  ),
+                  // Text(
+                  //   '1hr 2mins',
+                  //   style: GoogleFonts.notoSansDevanagari(
+                  //       fontSize: 16, color: ColorResources.gray),
+                  // ),
                 ],
               ),
             ],

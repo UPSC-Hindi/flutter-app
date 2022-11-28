@@ -1,244 +1,152 @@
-
 class RecordedVideoModel {
-  RecordedVideoModel({
-    required this.status,
-    required this.data,
-    required this.msg,
-  });
+  bool? status;
+  List<RecordedVideoDataModel>? data;
+  String? msg;
 
-  final bool status;
-  final List<RecordedVideoDataModel> data;
-  final String msg;
+  RecordedVideoModel({this.status, this.data, this.msg});
 
-  factory RecordedVideoModel.fromJson(Map<String, dynamic> json) => RecordedVideoModel(
-    status: json["status"],
-    data: List<RecordedVideoDataModel>.from(json["data"].map((x) => RecordedVideoDataModel.fromJson(x))),
-    msg: json["msg"],
-  );
+  RecordedVideoModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <RecordedVideoDataModel>[];
+      json['data'].forEach((v) {
+        data!.add(new RecordedVideoDataModel.fromJson(v));
+      });
+    }
+    msg = json['msg'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "msg": msg,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data['msg'] = this.msg;
+    return data;
+  }
 }
 
 class RecordedVideoDataModel {
-  RecordedVideoDataModel({
-    required this.id,
-    required this.user,
-    required this.title,
-    required this.fileUrl,
-    required this.batchId,
-    required this.language,
-    required this.lectureId,
-    required this.isActive,
-    required this.createdAt,
-    required this.isVerfied,
-    required this.v,
-  });
+  String? lectureName;
+  List<Listofvideos>? listofvideos;
 
-  final String id;
-  final String user;
-  final String title;
-  final String fileUrl;
-  final BatchId batchId;
-  final String language;
-  final LectureId lectureId;
-  final bool isActive;
-  final String createdAt;
-  final bool isVerfied;
-  final int v;
+  RecordedVideoDataModel({this.lectureName, this.listofvideos});
 
-  factory RecordedVideoDataModel.fromJson(Map<String, dynamic> json) => RecordedVideoDataModel(
-    id: json["_id"],
-    user: json["user"],
-    title: json["title"],
-    fileUrl: json["file_url"],
-    batchId: BatchId.fromJson(json["batch_id"]),
-    language: json["language"],
-    lectureId: LectureId.fromJson(json["lecture_id"]),
-    isActive: json["is_active"],
-    createdAt: json["created_at"],
-    isVerfied: json["is_verfied"],
-    v: json["__v"],
-  );
+  RecordedVideoDataModel.fromJson(Map<String, dynamic> json) {
+    lectureName = json['LectureName'];
+    if (json['Listofvideos'] != null) {
+      listofvideos = <Listofvideos>[];
+      json['Listofvideos'].forEach((v) {
+        listofvideos!.add(new Listofvideos.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user": user,
-    "title": title,
-    "file_url": fileUrl,
-    "batch_id": batchId.toJson(),
-    "language": language,
-    "lecture_id": lectureId.toJson(),
-    "is_active": isActive,
-    "created_at": createdAt,
-    "is_verfied": isVerfied,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['LectureName'] = this.lectureName;
+    if (this.listofvideos != null) {
+      data['Listofvideos'] = this.listofvideos!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class BatchId {
-  BatchId({
-    required this.id,
-    required this.user,
-    required this.batchName,
-    required this.category,
-    required this.examType,
-    required this.student,
-    required this.subject,
-    required this.teacher,
-    required this.startingDate,
-    required this.endingDate,
-    required this.mode,
-    required this.materials,
-    required this.language,
-    required this.charges,
-    required this.discount,
-    required this.description,
-    required this.remark,
-    required this.validity,
-    required this.isActive,
-    required this.courseReview,
-    required this.createdAt,
-    required this.v,
-  });
+class Listofvideos {
+  String? sId;
+  String? title;
+  FileUrl? fileUrl;
+  String? batchId;
+  String? language;
+  LectureId? lectureId;
+  bool? isActive;
+  String? createdAt;
+  bool? isVerfied;
 
-  final String id;
-  final String user;
-  final String batchName;
-  final String category;
-  final String examType;
-  final List<String> student;
-  final String subject;
-  final List<String> teacher;
-  final DateTime startingDate;
-  final DateTime endingDate;
-  final String mode;
-  final String materials;
-  final String language;
-  final String charges;
-  final String discount;
-  final String description;
-  final String remark;
-  final String validity;
-  final bool isActive;
-  final String courseReview;
-  final String createdAt;
-  final int v;
+  Listofvideos(
+      {this.sId,
+      this.title,
+      this.fileUrl,
+      this.batchId,
+      this.language,
+      this.lectureId,
+      this.isActive,
+      this.createdAt,
+      this.isVerfied});
 
-  factory BatchId.fromJson(Map<String, dynamic> json) => BatchId(
-    id: json["_id"],
-    user: json["user"],
-    batchName: json["batch_name"],
-    category: json["category"],
-    examType: json["exam_type"],
-    student: List<String>.from(json["student"].map((x) => x)),
-    subject: json["subject"],
-    teacher: List<String>.from(json["teacher"].map((x) => x)),
-    startingDate: DateTime.parse(json["starting_date"]),
-    endingDate: DateTime.parse(json["ending_date"]),
-    mode: json["mode"],
-    materials: json["materials"],
-    language: json["language"],
-    charges: json["charges"],
-    discount: json["discount"],
-    description: json["description"],
-    remark: json["remark"],
-    validity: json["validity"],
-    isActive: json["is_active"],
-    courseReview: json["course_review"],
-    createdAt: json["created_at"],
-    v: json["__v"],
-  );
+  Listofvideos.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    title = json['title'];
+    fileUrl = json['file_url'] != null
+        ? new FileUrl.fromJson(json['file_url'])
+        : null;
+    batchId = json['batch_id'];
+    language = json['language'];
+    lectureId = json['lecture_id'] != null
+        ? new LectureId.fromJson(json['lecture_id'])
+        : null;
+    isActive = json['is_active'];
+    createdAt = json['created_at'];
+    isVerfied = json['is_verfied'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user": user,
-    "batch_name": batchName,
-    "category": category,
-    "exam_type": examType,
-    "student": List<dynamic>.from(student.map((x) => x)),
-    "subject": subject,
-    "teacher": List<dynamic>.from(teacher.map((x) => x)),
-    "starting_date": "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
-    "ending_date": "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
-    "mode": mode,
-    "materials": materials,
-    "language": language,
-    "charges": charges,
-    "discount": discount,
-    "description": description,
-    "remark": remark,
-    "validity": validity,
-    "is_active": isActive,
-    "course_review": courseReview,
-    "created_at": createdAt,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['title'] = this.title;
+    if (this.fileUrl != null) {
+      data['file_url'] = this.fileUrl!.toJson();
+    }
+    data['batch_id'] = this.batchId;
+    data['language'] = this.language;
+    if (this.lectureId != null) {
+      data['lecture_id'] = this.lectureId!.toJson();
+    }
+    data['is_active'] = this.isActive;
+    data['created_at'] = this.createdAt;
+    data['is_verfied'] = this.isVerfied;
+    return data;
+  }
+}
+
+class FileUrl {
+  String? fileLoc;
+  String? fileName;
+  String? fileSize;
+
+  FileUrl({this.fileLoc, this.fileName, this.fileSize});
+
+  FileUrl.fromJson(Map<String, dynamic> json) {
+    fileLoc = json['fileLoc'];
+    fileName = json['fileName'];
+    fileSize = json['fileSize'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['fileLoc'] = this.fileLoc;
+    data['fileName'] = this.fileName;
+    data['fileSize'] = this.fileSize;
+    return data;
+  }
 }
 
 class LectureId {
-  LectureId({
-    required this.id,
-    required this.userAdmin,
-    required this.batch,
-    required this.lectureTitle,
-    required this.description,
-    required this.subject,
-    required this.link,
-    required this.liveOrRecorded,
-    required this.startingDate,
-    required this.endingDate,
-    required this.createdAt,
-    required this.language,
-    required this.v,
-  });
+  String? sId;
+  String? lectureTitle;
 
-  final String id;
-  final String userAdmin;
-  final String batch;
-  final String lectureTitle;
-  final String description;
-  final String subject;
-  final String link;
-  final String liveOrRecorded;
-  final String startingDate;
-  final String endingDate;
-  final String createdAt;
-  final String language;
-  final int v;
+  LectureId({this.sId, this.lectureTitle});
 
-  factory LectureId.fromJson(Map<String, dynamic> json) => LectureId(
-    id: json["_id"],
-    userAdmin: json["user_admin"],
-    batch: json["batch"],
-    lectureTitle: json["lecture_title"],
-    description: json["description"],
-    subject: json["subject"],
-    link: json["link"],
-    liveOrRecorded: json["LiveOrRecorded"],
-    startingDate: json["starting_date"],
-    endingDate: json["ending_date"],
-    createdAt: json["created_at"],
-    language: json["language"],
-    v: json["__v"],
-  );
+  LectureId.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    lectureTitle = json['lecture_title'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user_admin": userAdmin,
-    "batch": batch,
-    "lecture_title": lectureTitle,
-    "description": description,
-    "subject": subject,
-    "link": link,
-    "LiveOrRecorded": liveOrRecorded,
-    "starting_date": startingDate,
-    "ending_date": endingDate,
-    "created_at": createdAt,
-    "language": language,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['lecture_title'] = this.lectureTitle;
+    return data;
+  }
 }
