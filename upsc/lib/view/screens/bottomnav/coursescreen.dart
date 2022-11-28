@@ -249,17 +249,20 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                     fontSize: 16,
                     fontWeight: FontWeight.w900),
               ),
-              Container(
-                padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                    color: ColorResources.greenshad,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Text(
-                  ' Aid Available ',
-                  style: GoogleFonts.notoSansDevanagari(
-                      fontSize: 12, color: ColorResources.textWhite),
-                ),
-              )
+              int.parse(data.discount) > 0
+                  ? Container(
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      padding: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                          color: ColorResources.greenshad,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Text(
+                        ' ${data.discount} % ',
+                        style: GoogleFonts.notoSansDevanagari(
+                            fontSize: 12, color: ColorResources.textWhite),
+                      ),
+                    )
+                  : Text('')
             ],
           ),
           const SizedBox(
