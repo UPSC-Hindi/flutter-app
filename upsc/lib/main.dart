@@ -188,7 +188,7 @@ class MyApp extends StatelessWidget {
                 resourceDataSourceImpl: resourceDataSourceImpl,
               ),
           'contactus': (context) => const ContactUsScreen(),
-          'aboutusscreen': (context) => const AboutUsScreen(),
+          'aboutusscreen': (context) =>  AboutUsScreen(),
 //           'joinstreaming': (context) => const JoinStreamingScreen(
 // lecture: '',
 //                 rtctoken: '',

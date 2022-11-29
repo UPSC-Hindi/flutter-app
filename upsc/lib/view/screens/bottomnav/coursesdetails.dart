@@ -84,35 +84,6 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      widget.course.remark.isNotEmpty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 5.0, horizontal: 15),
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFfD9D9D9),
-                                      borderRadius: BorderRadius.circular(90)),
-                                  child: Text(
-                                    '  remark  ',
-                                    style: GoogleFonts.notoSansDevanagari(
-                                        fontSize: 16),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5.0, horizontal: 15),
-                                  child: Text(
-                                    course.remark,
-                                    style: GoogleFonts.lato(fontSize: 16),
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                )
-                              ],
-                            )
-                          : Text(''),
                       Container(
                         margin: const EdgeInsets.all(10),
                         padding: const EdgeInsets.all(5),
@@ -132,6 +103,39 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                           textAlign: TextAlign.justify,
                         ),
                       ),
+                      widget.course.remark.isNotEmpty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5.0, horizontal: 15),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Note: ",
+                                        style: GoogleFonts.notoSansDevanagari(
+                                            fontSize: 20,
+                                            color: ColorResources.buttoncolor),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.70,
+                                        child: Text(
+                                          course.remark,
+                                          style: GoogleFonts.lato(fontSize: 16),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )
+                          : Text(''),
                       GridView.count(
                         physics: const NeverScrollableScrollPhysics(),
                         padding: const EdgeInsets.all(8),
@@ -164,7 +168,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                             const Icon(
                               Icons.people,
                             ),
-                            Text(' ${widget.course.student.length} Student')
+                            Text(' Best Recommended')
                           ]),
                         ],
                       ),
@@ -254,31 +258,15 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                           style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                         ),
                       ),
-                      SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Container(
-                                color: ColorResources.gray,
-                                child: Column(
-                                  children: [
-                                    const Icon(
-                                      Icons.account_circle_rounded,
-                                      size: 80,
-                                    ),
-                                    Text('Raman Deep',
-                                        style: GoogleFonts.notoSansDevanagari(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold))
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                      SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: widget.course.demoVideo.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return videolist(course.demoVideo[index]);
+                          },
                         ),
                       ),
                     ]),
@@ -317,6 +305,27 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
     );
   }
 
+  Widget videolist(demoVideo) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Container(
+        color: ColorResources.gray,
+        child: Column(
+          children: [
+            const Icon(
+              Icons.play_circle,
+              size: 40,
+            ),
+            // Text('Raman Deep',
+            //     style: GoogleFonts.notoSansDevanagari(
+            //         fontSize: 16, fontWeight: FontWeight.bold)
+            // )
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> callApiaddtocart(CoursesDataModel course) async {
     AddToCart response;
     Map<String, dynamic> body = {
@@ -328,7 +337,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       });
       var token =
           SharedPreferenceHelper.getString(Preferences.access_token).toString();
-     Response response =  await dioAuthorizationData().post(
+      Response response = await dioAuthorizationData().post(
         '${Apis.baseUrl}${Apis.addtocart}',
         data: body,
       );
@@ -357,7 +366,6 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       setState(() {
         Preferences.hideDialog(context);
       });
-
     }
   }
 }
