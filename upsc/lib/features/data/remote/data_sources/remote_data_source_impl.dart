@@ -13,6 +13,7 @@ import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/classschedule.dart';
+import 'package:upsc/features/data/remote/models/course_details_model.dart';
 
 class RemoteDataSourceImpl extends RemoteDataSource {
   @override
@@ -185,6 +186,17 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       Response response = await dioAuthorizationData()
           .get('${Apis.baseUrl}${Apis.getMyOrders}');
       return MyOrdersModel.fromJson(response.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  getCoursesDetails(String batchId) async{
+    try {
+      Response response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.getCoursesDetails}$batchId');
+      return CoursesDetailsModel.fromJson(response.data);
     } catch (error) {
       rethrow;
     }

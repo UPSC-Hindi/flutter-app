@@ -9,6 +9,7 @@ import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/models/classschedule.dart';
+import 'package:upsc/features/data/remote/models/course_details_model.dart';
 
 abstract class RemoteDataSource{
   Future<VideoModel> getYouTubeVideo();
@@ -20,6 +21,7 @@ abstract class RemoteDataSource{
   Future<Response>addMyCourses(String batchId,bool isPaid);
   Future<Response>deleteCartCourse(String id);
   Future<Response>savePaymentStatus(PaymentModel paymentData);
+  Future<CoursesDetailsModel>getCoursesDetails(String batchId);
   Future<String>getOrderId(String batchId);
   Future<MyOrdersModel>getMyOrder();
   Future<List<RecordedVideoDataModel>>getRecordedVideo({required String batchId});
