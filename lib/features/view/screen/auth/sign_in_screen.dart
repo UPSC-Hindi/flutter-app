@@ -1,14 +1,43 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart' as googleauth;
 import 'package:upsc_web/app_const.dart';
 import 'package:upsc_web/features/controller/global_controller.dart';
 import 'package:upsc_web/features/view/widget/auth_button.dart';
 import 'package:upsc_web/features/view/widget/custom_text_field.dart';
 import 'package:upsc_web/utils.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  googleauth.GoogleSignInAccount? result;
+  googleLogin() async {
+    try {
+      print("googleLogin method Called");
+      final _googleSignIn = googleauth.GoogleSignIn();
+      result = await _googleSignIn.signIn();
+      print("Result $result");
+      print("Result ${result!.authHeaders}");
+      print("Result ${result!.displayName}");
+      print("Result ${result!.email}");
+      print("Result ${result!.photoUrl}");
+      print("Result ${result!.authentication}");
+      if (result!.email.isNotEmpty) {
+        //callApigooglelogin();
+        print("--Email found---");
+        print(result!.email);
+        //await _googleSignIn.signOut();
+        await _googleSignIn.disconnect();
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,53 +52,40 @@ class SignInScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: FutureBuilder<List<Widget>>(
                     future: GlobalController.getBanner(),
-                    builder: (context,snapshots){
-                  if(snapshots.connectionState == ConnectionState.done){
-                    if(snapshots.hasData){
-                      return CarouselSlider(
-                        items: snapshots.data,
-                        options: CarouselOptions(
-                          viewportFraction: 1,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 3),
-                          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enlargeCenterPage: true,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                      );
-                    }else if(snapshots.hasError){
-                      print(snapshots.error);
-                      Util.toastMessage(snapshots.error.toString());
-                    }
-                    return Text('fgdfg');
-                    // CarouselSlider(
-                    //   items: images,
-                    //   options: CarouselOptions(
-                    //     viewportFraction: 1,
-                    //     initialPage: 0,
-                    //     enableInfiniteScroll: true,
-                    //     reverse: false,
-                    //     autoPlay: true,
-                    //     autoPlayInterval: const Duration(seconds: 3),
-                    //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                    //     autoPlayCurve: Curves.fastOutSlowIn,
-                    //     enlargeCenterPage: true,
-                    //     scrollDirection: Axis.horizontal,
-                    //   ),
-                    // );
-                  }else{
-                    return Center();
-                  }
-                }),
+                    builder: (context, snapshots) {
+                      if (snapshots.connectionState == ConnectionState.done) {
+                        if (snapshots.hasData) {
+                          return CarouselSlider(
+                            items: snapshots.data,
+                            options: CarouselOptions(
+                              viewportFraction: 1,
+                              initialPage: 0,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                              const Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              enlargeCenterPage: true,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          );
+                        } else if (snapshots.hasError) {
+
+                        }
+                        return Text('Something went wrong');
+                      } else {
+                        return Center();
+                      }
+                    }),
               ),
-              Text('Login',style: Theme.of(context).textTheme.headlineMedium),
+              Text('Login', style: Theme.of(context).textTheme.headlineMedium),
               CustomTextFilled(hintText: 'Email Id'),
               PasswordTextFilled(),
-              AuthButton(text: 'Login', onPressed: (){}),
+              AuthButton(text: 'Login', onPressed: () {
+                Util.snackBarMessage('message', context);
+              }),
               Row(
                 children: [
                   const Expanded(
@@ -90,6 +106,8 @@ class SignInScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      print("hello");
+                      googleLogin();
                     },
                     child: Container(
                       height: 50,
@@ -124,8 +142,7 @@ class SignInScreen extends StatelessWidget {
                     'Create an account?',
                   ),
                   TextButton(
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       child: Text(
                         ' Register',
                         style: TextStyle(

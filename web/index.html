@@ -24,6 +24,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="upsc_web">
+  <meta name="google-signin-client_id" content="425379162235-up5ima35bq5oc2cfkh4bgapam7ga0msr.apps.googleusercontent.com">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
@@ -40,7 +41,10 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
-  <script>
+<script type="text/javascript">
+      window.flutterWebRenderer="html";
+</script>
+<script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
