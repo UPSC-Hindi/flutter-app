@@ -22,6 +22,7 @@ class Apis {
       "authentication/UpdateUserProfilePhoto";
 
   static const String getCoursesFilter = "adminPanel/getBatchesDetails";
+  static const String getCoursesDetails = 'adminPanel/getBatchDetailswithid/';
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
 
   static const String joinmeeting = "Streaming/JoinMeetingRTCAndRTMToken";

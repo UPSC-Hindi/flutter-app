@@ -277,8 +277,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => CoursesDetailsScreens(
-                    course: data,
+                  builder: (context) => CoursesDetailsScreens(courseId: data.id, courseName: data.batchName,
                   ),
                 ),
               );
