@@ -118,7 +118,7 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
   @override
   void initState() {
     context.read<ApiBloc>().add(
-          GetCourses(key: 'Category', value: widget.value),
+          GetCourses(key: 'exam_type', value: widget.value),
         );
     super.initState();
   }
@@ -239,32 +239,31 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                '₹${data.charges}',
-                style: GoogleFonts.notoSansDevanagari(
-                    color: ColorResources.textblack,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900),
-              ),
-              int.parse(data.discount) > 0
-                  ? Container(
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      padding: const EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                          color: ColorResources.greenshad,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Text(
-                        ' ${data.discount} % discount',
-                        style: GoogleFonts.notoSansDevanagari(
-                            fontSize: 12, color: ColorResources.textWhite),
-                      ),
-                    )
-                  : Text('')
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: [
+          //     Text(
+          //       '₹${data.charges}',
+          //       style: GoogleFonts.notoSansDevanagari(
+          //           color: ColorResources.textblack,
+          //           fontSize: 16,
+          //           fontWeight: FontWeight.w900),
+          //     ),
+          //     int.parse(data.discount) > 0
+          //         ? Container(
+          //             padding: const EdgeInsets.all(5.0),
+          //             decoration: BoxDecoration(
+          //                 color: ColorResources.greenshad,
+          //                 borderRadius: BorderRadius.circular(10)),
+          //             child: Text(
+          //               ' ${data.discount} % discount',
+          //               style: GoogleFonts.notoSansDevanagari(
+          //                   fontSize: 12, color: ColorResources.textWhite),
+          //             ),
+          //           )
+          //         : Text('')
+          //   ],
+          // ),
           const SizedBox(
             height: 10,
           ),

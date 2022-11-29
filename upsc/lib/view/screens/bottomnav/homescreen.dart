@@ -121,26 +121,26 @@ class _HomeScreensState extends State<HomeScreens> {
                               fontWeight: FontWeight.bold),
                         ),
                         Container(
+                          width: MediaQuery.of(context).size.width * 0.25,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 7),
+                              horizontal: 10, vertical: 3),
                           decoration: BoxDecoration(
                             color: ColorResources.buttoncolor,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                           child: InkWell(
                             onTap: () {
                               Navigator.pushNamed(context, 'dailynews');
                             },
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Explore',
+                                  ' Explore ',
                                   style: GoogleFonts.notoSansDevanagari(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                  ),
                                 ), // <-- Text
                                 const SizedBox(
                                   width: 5,

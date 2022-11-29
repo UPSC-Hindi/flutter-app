@@ -27,8 +27,8 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-Future<ResourcesModel> getResources() async {
-      try {
+  Future<ResourcesModel> getResources() async {
+    try {
       Response response = await dioAuthorizationData().get(
           '${Apis.baseUrl}${Apis.getResources}',
           queryParameters: {'Category': 'Pathyakram'});
@@ -55,10 +55,13 @@ Future<ResourcesModel> getResources() async {
   @override
   Future<CoursesModel> getCourses(String key, String value) async {
     try {
-      final queryParameters = <String, dynamic>{key: value};
+      final queryParameters = <String, dynamic>{
+        key: value,
+        "stream": ["IAS", ""]
+      };
       var response = await dioAuthorizationData().get(
-        '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
-        // queryParameters: queryParameters,
+        '${Apis.baseUrl}${Apis.getCoursesFilter}',
+        queryParameters: queryParameters,
       );
       return CoursesModel.fromJson(response.data);
     } catch (e) {
@@ -177,12 +180,12 @@ Future<ResourcesModel> getResources() async {
   }
 
   @override
-  getMyOrder() async{
-    try{
-      Response response = await dioAuthorizationData().get(
-          '${Apis.baseUrl}${Apis.getMyOrders}');
+  getMyOrder() async {
+    try {
+      Response response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.getMyOrders}');
       return MyOrdersModel.fromJson(response.data);
-    }catch(error){
+    } catch (error) {
       rethrow;
     }
   }

@@ -171,60 +171,72 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 5),
-                                  child: Icon(
-                                    Icons.picture_as_pdf,
-                                    size: 30,
-                                    color: ColorResources.buttoncolor,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.80,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 5),
+                                    child: Icon(
+                                      Icons.picture_as_pdf,
+                                      size: 30,
+                                      color: ColorResources.buttoncolor,
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _filename.split('.').first,
-                                        style: GoogleFonts.notoSansDevanagari(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _status == DownloadTaskStatus.complete
-                                          ? const Text('')
-                                          : Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text('$_progress%'),
-                                                  Row(
-                                                    children: <Widget>[
-                                                      Expanded(
-                                                        child:
-                                                            LinearProgressIndicator(
-                                                          value:
-                                                              _progress / 100,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.60,
+                                          child: Text(
+                                            _filename.split('.').first,
+                                            style:
+                                                GoogleFonts.notoSansDevanagari(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                    ],
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        _status == DownloadTaskStatus.complete
+                                            ? const Text('')
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    Text('$_progress%'),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child:
+                                                              LinearProgressIndicator(
+                                                            value:
+                                                                _progress / 100,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
