@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "425379162235",
+    "project_id": "upsc-hindi-365808",
+    "storage_bucket": "upsc-hindi-365808.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425379162235:android:f863eac69cbbd6fe7e1ade",
+        "android_client_info": {
+          "package_name": "com.upschindi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425379162235-cu0as1ioijap6tdqenl45drv1ec70nuh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZlgq8R34SRMigO8hMUDkh5diF9vzFEto"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425379162235-cu0as1ioijap6tdqenl45drv1ec70nuh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
