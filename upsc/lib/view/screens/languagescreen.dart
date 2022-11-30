@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,10 +21,59 @@ class _LanguageScreenState extends State<LanguageScreen> {
   int selected_course = 0;
   int Lcount = 0;
   int Ccount = 0;
-
+  List streamlist = ["IAS", "PCS"];
+  List SelectedStream = [];
+  bool isSelectedChip = false;
   @override
   void initState() {
     super.initState();
+  }
+
+  _buildChoiceList() {
+    List<Widget> choices = [];
+    streamlist.forEach((element) {
+      choices.add(Container(
+        padding: const EdgeInsets.all(2.0),
+        child: ChoiceChip(
+          backgroundColor: Colors.transparent,
+          selectedColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                color: SelectedStream.contains(element)
+                    ? ColorResources.buttoncolor
+                    : ColorResources.gray.withOpacity(0.5),
+              )),
+          labelStyle: GoogleFonts.notoSansDevanagari(fontSize: 30),
+          label: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SelectedStream.contains(element)
+                  ? Icon(Icons.check_circle, color: ColorResources.buttoncolor)
+                  : const Text(''),
+              const SizedBox(
+                width: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(element),
+              ),
+            ],
+          ),
+          selected: SelectedStream.contains(element),
+          onSelected: (value) {
+            setState(() {
+              SelectedStream.contains(element)
+                  ? SelectedStream.remove(element)
+                  : SelectedStream.add(element);
+              SelectedStream.length > 0 ? Ccount = Ccount + 1 : Ccount = 0;
+              print(SelectedStream);
+            });
+          },
+        ),
+      ));
+    });
+    return choices;
   }
 
   @override
@@ -40,7 +91,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
-                    child:  Text(
+                    child: Text(
                       'Choose your preferred Medium',
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 30,
@@ -55,8 +106,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    customRadio('English', 'A', 1, true),
-                    customRadio('Hindi', 'अ', 2, true),
+                    customRadio('English', 'A', 1, true, context),
+                    customRadio('Hindi', 'अ', 2, true, context),
                   ],
                 ),
                 const SizedBox(
@@ -66,7 +117,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
-                    child:  Text(
+                    child: Text(
                       'Select your stream',
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 30,
@@ -84,6 +135,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     customRadio_course('', 'IAS', 3, true),
                     customRadio_course('', 'PCS', 4, true),
                   ],
+                ),
+                Wrap(
+                  children: _buildChoiceList(),
                 ),
                 const SizedBox(
                   height: 100,
@@ -149,18 +203,19 @@ class _LanguageScreenState extends State<LanguageScreen> {
     );
   }
 
-  Widget customRadio(String text, String src, int index, bool tick) {
+  Widget customRadio(
+      String text, String src, int index, bool tick, BuildContext context) {
     return OutlinedButton(
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: const BorderSide(
-              width: 2,
-              style: BorderStyle.solid,
-              color: Colors.white,
-            ),
-          ),
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        side: BorderSide(
+          width: 2,
+          style: BorderStyle.solid,
+          color: selected == index
+              ? ColorResources.buttoncolor
+              : ColorResources.gray.withOpacity(0.5),
         ),
       ),
       onPressed: () {
@@ -170,33 +225,33 @@ class _LanguageScreenState extends State<LanguageScreen> {
         });
       },
       child: Container(
-        width: 90,
-        height: 130,
+        width: MediaQuery.of(context).size.width * 0.30,
         alignment: Alignment.center,
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.30,
+              height: MediaQuery.of(context).size.width * 0.22,
               child: Column(children: [
                 Text(
                   src,
-                  style:  GoogleFonts.notoSansDevanagari(
+                  style: GoogleFonts.notoSansDevanagari(
                       color: Colors.black,
-                      fontSize: 50,
+                      fontSize: 40,
                       fontWeight: FontWeight.w800),
                 ),
                 //SizedBox(height: 60, child: SvgPicture.asset(src)),
                 Text(
                   text,
-                  style:  GoogleFonts.notoSansDevanagari(
+                  style: GoogleFonts.notoSansDevanagari(
                       color: Colors.black, fontSize: 12),
                 ),
               ]),
             ),
             selected == index
                 ? const Positioned(
-                    top: 3,
-                    left: -1,
+                    top: 5,
+                    left: 0,
                     child: Icon(
                       Icons.check_circle,
                       color: Color(0xFFF05266),
@@ -242,7 +297,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 children: [
                   Text(
                     src,
-                    style:  GoogleFonts.notoSansDevanagari(
+                    style: GoogleFonts.notoSansDevanagari(
                         color: Colors.black,
                         fontSize: 40,
                         fontWeight: FontWeight.w800),
