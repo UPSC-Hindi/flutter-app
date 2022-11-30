@@ -34,6 +34,7 @@ class Apis {
 
   static const String putUserStream = 'authentication/updateUserStream';
   static const String putUserLanguage = 'authentication/updateUserLanguage';
+  static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
 
   static const String addtocart = 'adminPanel/addtocart';
   static const String getcartdata = 'adminPanel/getCartDetails';

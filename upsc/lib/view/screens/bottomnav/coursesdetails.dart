@@ -8,8 +8,10 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/api.dart';
 import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source.dart';
-import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
+import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart'
+    as rdsi;
 import 'package:upsc/features/data/remote/models/course_details_model.dart';
+import 'package:upsc/features/presentation/widgets/videopaler.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +34,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
 
   late Future<CoursesDetailsModel> _getCourseDetails;
 
-  RemoteDataSource remoteDataSource = RemoteDataSourceImpl();
+  RemoteDataSource remoteDataSource = rdsi.RemoteDataSourceImpl();
   @override
   void initState() {
     _getCourseDetails = remoteDataSource.getCoursesDetails(widget.courseId);
@@ -313,28 +315,42 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
     );
   }
 
-  Widget videolist(demoVideo) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Container(
-        width: 100,
-        height: 50,
-        decoration: BoxDecoration(
-          color: ColorResources.gray.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(
-              Icons.play_circle,
-              size: 40,
+  Widget videolist(Banners demoVideo) {
+    return GestureDetector(
+      onTap: () {
+        print("he");
+        print(demoVideo.fileLoc);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayVideoFromNetwork(
+              Videourl: demoVideo.fileLoc,
             ),
-            // Text('Raman Deep',
-            //     style: GoogleFonts.notoSansDevanagari(
-            //         fontSize: 16, fontWeight: FontWeight.bold)
-            // )
-          ],
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        child: Container(
+          width: 100,
+          height: 50,
+          decoration: BoxDecoration(
+            color: ColorResources.gray.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.play_circle,
+                size: 40,
+              ),
+              // Text('Raman Deep',
+              //     style: GoogleFonts.notoSansDevanagari(
+              //         fontSize: 16, fontWeight: FontWeight.bold)
+              // )
+            ],
+          ),
         ),
       ),
     );

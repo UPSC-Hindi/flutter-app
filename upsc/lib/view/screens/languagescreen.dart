@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,12 +19,22 @@ class _LanguageScreenState extends State<LanguageScreen> {
   int selected_course = 0;
   int Lcount = 0;
   int Ccount = 0;
-  List streamlist = ["IAS", "PCS"];
-  List SelectedStream = [];
+  List streamlist = [];
+  List<String> SelectedStream = [];
   bool isSelectedChip = false;
+  AuthDataSourceImpl authDataSourceImpl = AuthDataSourceImpl();
+
   @override
   void initState() {
+    getStream();
     super.initState();
+  }
+
+  void getStream() async {
+    streamlist = await authDataSourceImpl.getStream();
+    setState(() {
+      streamlist;
+    });
   }
 
   _buildChoiceList() {
@@ -94,8 +102,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     child: Text(
                       'Choose your preferred Medium',
                       style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 30,
-                      ),
+                          fontSize: 30, color: ColorResources.textblack),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -104,7 +111,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     customRadio('English', 'A', 1, true, context),
                     customRadio('Hindi', 'अ', 2, true, context),
@@ -120,8 +127,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     child: Text(
                       'Select your stream',
                       style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 30,
-                      ),
+                          fontSize: 30, color: ColorResources.textblack),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -129,13 +135,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    customRadio_course('', 'IAS', 3, true),
-                    customRadio_course('', 'PCS', 4, true),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     customRadio_course('', 'IAS', 3, true),
+                //     customRadio_course('', 'PCS', 4, true),
+                //   ],
+                // ),
                 Wrap(
                   children: _buildChoiceList(),
                 ),
@@ -149,22 +155,19 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             color: ColorResources.buttoncolor,
                             borderRadius: BorderRadius.circular(14)),
                         child: TextButton(
-                          onPressed: () {
-                            AuthDataSourceImpl authDataSourceImpl =
-                                AuthDataSourceImpl();
-
+                          onPressed: () async {
                             SharedPreferenceHelper.setString(
                                 Preferences.language,
                                 selected == 2 ? 'Hindi' : 'English');
-                            SharedPreferenceHelper.setString(Preferences.course,
-                                selected_course == 3 ? 'IAS' : 'PCS');
+                            SharedPreferenceHelper.setStringList(
+                                Preferences.course, SelectedStream);
+                            // List<String>? dummy = await SharedPreferenceHelper.getStringList(Preferences.course);
 
                             var token = SharedPreferenceHelper.getString(
                                 Preferences.auth_token);
                             authDataSourceImpl.updateLanguage(
                                 selected == 2 ? 'hi' : 'en', token!);
-                            authDataSourceImpl.updateStream(
-                                selected_course == 3 ? 'IAS' : 'PCS', token);
+                            authDataSourceImpl.updateStream(SelectedStream);
 
                             if (widget.isLogin) {
                               Languages.isEnglish =
@@ -236,7 +239,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 Text(
                   src,
                   style: GoogleFonts.notoSansDevanagari(
-                      color: Colors.black,
+                      color: ColorResources.textblack,
                       fontSize: 40,
                       fontWeight: FontWeight.w800),
                 ),

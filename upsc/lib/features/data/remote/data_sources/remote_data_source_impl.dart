@@ -10,6 +10,7 @@ import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/data/remote/models/stream_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/classschedule.dart';
@@ -58,7 +59,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     try {
       final queryParameters = <String, dynamic>{
         key: value,
-        "stream": ["IAS", ""]
       };
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.getCoursesFilter}',

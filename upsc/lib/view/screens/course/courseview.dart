@@ -504,7 +504,8 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
   Widget _recordedVideoWidget(Listofvideos videosdata) {
     return InkWell(
       onTap: () {
-        download(videosdata.fileUrl!.fileLoc!, videosdata.title);
+        
+        //download(videosdata.fileUrl!.fileLoc!, videosdata.title);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),

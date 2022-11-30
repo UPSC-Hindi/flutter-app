@@ -25,53 +25,6 @@ class _CourseScreenState extends State<CourseScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              width: 80,
-              height: 25,
-              margin: const EdgeInsets.only(left: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 13),
-              decoration: BoxDecoration(
-                color: ColorResources.gray.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: PopupMenuButton(
-                onSelected: (value) {
-                  // your logic
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'IAS',
-                      style: GoogleFonts.notoSansDevanagari(
-                        color: ColorResources.textblack.withOpacity(0.9),
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: ColorResources.textblack.withOpacity(0.5),
-                    ),
-                  ],
-                ),
-                itemBuilder: (BuildContext bc) {
-                  return const [
-                    PopupMenuItem(
-                      value: '/hello',
-                      child: Text("IAS"),
-                    ),
-                    PopupMenuItem(
-                      value: '/about',
-                      child: Text("IPS"),
-                    ),
-                    PopupMenuItem(
-                      value: '/contact',
-                      child: Text("PCS"),
-                    )
-                  ];
-                },
-              ),
-            ),
-            Container(
               constraints: const BoxConstraints.expand(height: 50),
               child: TabBar(
                   indicatorColor: ColorResources.buttoncolor,
@@ -277,7 +230,9 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => CoursesDetailsScreens(courseId: data.id, courseName: data.batchName,
+                  builder: (context) => CoursesDetailsScreens(
+                    courseId: data.id,
+                    courseName: data.batchName,
                   ),
                 ),
               );

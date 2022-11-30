@@ -63,6 +63,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.3.57
   table_calendar: ^3.0.7
   url_launcher: ^6.1.6
+  video_player: ^2.4.8
   youtube_player_flutter: ^8.1.0
 
 dev_dependencies:

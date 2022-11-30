@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
@@ -6,6 +7,7 @@ import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/notificationget.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
@@ -27,39 +29,144 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: ColorResources.textblack),
-        backgroundColor: Colors.white,
-        title: Text(
-          'NotificationScreen',
-          style:
-              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
-        ),
-      ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: notificationData.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      notificationData[index].title!,
-                      style: GoogleFonts.notoSansDevanagari(fontSize: 24),
-                    ),
-                    Text(notificationData[index].message!),
-                  ],
-                ),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Image.asset('assets/images/notification_bg1.png'),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image.asset(
+                'assets/images/notification-bg2.png',
+                color: Colors.pinkAccent.withOpacity(0.3),
               ),
             ),
-          );
-        },
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Text(
+                        'NotificationScreen',
+                        style: GoogleFonts.notoSansDevanagari(
+                            color: ColorResources.textblack,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 1.5,
+                ),
+                true
+                    ? Container(
+                        height: 130,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage(
+                              'assets/images/notificationCurve.png',
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 8,
+                              spreadRadius: 1,
+                              offset: Offset(0, 9),
+                            ),
+                          ],
+                        ),
+                        width: double.maxFinite,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.pinkAccent.withOpacity(0.2),
+                              child: Icon(
+                                Icons.notifications_none_outlined,
+                                color: ColorResources.resourcesCardColor,
+                                size: 35,
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                            Text(
+                              'No New Notification',
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: notificationData.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage(
+                                    'assets/images/notificationCurve.png'),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                  spreadRadius: 1,
+                                  offset: Offset(0, 9),
+                                ),
+                              ],
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 8),
+                            child: ListTile(
+                              leading: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.network(
+                                  SvgImages.avatar,
+                                  height: 45,
+                                ),
+                              ),
+                              horizontalTitleGap: 4,
+                              title: Text(
+                                notificationData[index].message!,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '1m ago',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                              trailing: Icon(Icons.more_vert_outlined),
+                            ),
+                          );
+                        },
+                      ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
