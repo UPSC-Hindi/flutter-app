@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart' as googleauth;
 import 'package:upsc_web/app_const.dart';
+import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/global_controller.dart';
 import 'package:upsc_web/features/view/widget/auth_button.dart';
 import 'package:upsc_web/features/view/widget/custom_text_field.dart';
@@ -156,7 +157,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     'Create an account?',
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoute.signupScreen);
+                      },
                       child: Text(
                         ' Register',
                         style: TextStyle(
