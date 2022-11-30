@@ -37,9 +37,9 @@ class ErrorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("error"),
+        title: const Text("error"),
       ),
-      body: Center(
+      body: const Center(
         child: Text("error"),
       ),
     );

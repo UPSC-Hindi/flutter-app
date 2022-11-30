@@ -8,7 +8,7 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: 250,minWidth: 250,minHeight: 44),
+      constraints: const BoxConstraints(maxWidth: 250,minWidth: 250,minHeight: 44),
       margin: const EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
           color: Util.buttonColor,

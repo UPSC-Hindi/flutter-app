@@ -75,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           print(snapshots.error);
                           Util.toastMessage(snapshots.error.toString());
                         }
-                        return Text('fgdfg');
+                        return const Text('fgdfg');
                         // CarouselSlider(
                         //   items: images,
                         //   options: CarouselOptions(
@@ -92,26 +92,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         //   ),
                         // );
                       } else {
-                        return Center();
+                        return const Center();
                       }
                     }),
               ),
               Text('Create Account', style: Theme.of(context).textTheme.headlineMedium),
-              CustomTextFilled(hintText: 'Email Id'),
-              CustomTextFilled(hintText: 'Mobile No.'),
-              CustomTextFilled(hintText: 'Full name'),
-              PasswordTextFilled(),
+              const CustomTextFilled(hintText: 'Email Id'),
+              const CustomTextFilled(hintText: 'Mobile No.'),
+              const CustomTextFilled(hintText: 'Full name'),
+              const PasswordTextFilled(),
               AuthButton(text: 'Sign up', onPressed: () {}),
               Row(
-                children: [
-                  const Expanded(
+                children: const [
+                  Expanded(
                       child: Divider(
                     thickness: 2,
                   )),
                   Text(
                     "Or Register with",
                   ),
-                  const Expanded(
+                  Expanded(
                       child: Divider(
                     thickness: 2,
                   )),
@@ -154,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'I have an account. ',
                   ),
                   TextButton(

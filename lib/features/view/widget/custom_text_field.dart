@@ -12,7 +12,7 @@ class CustomTextFilled extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           hintText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -37,14 +37,14 @@ class _PasswordTextFilledState extends State<PasswordTextFilled> {
         obscureText: _isVisible,
         decoration: InputDecoration(
           hintText: 'Password',
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           suffixIcon: GestureDetector(
             onTap: (){
               setState(() {
                 _isVisible = !_isVisible;
               });
             },
-              child: _isVisible?Icon(Icons.visibility_off):Icon(Icons.visibility)),
+              child: _isVisible?const Icon(Icons.visibility_off):const Icon(Icons.visibility)),
         ),
       ),
     );

@@ -76,7 +76,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           print(snapshots.error);
                           Util.toastMessage(snapshots.error.toString());
                         }
-                        return Text('fgdfg');
+                        return const Text('fgdfg');
                         // CarouselSlider(
                         //   items: images,
                         //   options: CarouselOptions(
@@ -93,24 +93,24 @@ class _SignInScreenState extends State<SignInScreen> {
                         //   ),
                         // );
                       } else {
-                        return Center();
+                        return const Center();
                       }
                     }),
               ),
               Text('Login', style: Theme.of(context).textTheme.headlineMedium),
-              CustomTextFilled(hintText: 'Email Id'),
-              PasswordTextFilled(),
+              const CustomTextFilled(hintText: 'Email Id'),
+              const PasswordTextFilled(),
               AuthButton(text: 'Login', onPressed: () {}),
               Row(
-                children: [
-                  const Expanded(
+                children: const [
+                  Expanded(
                       child: Divider(
                     thickness: 2,
                   )),
                   Text(
                     "Or Sign in with",
                   ),
-                  const Expanded(
+                  Expanded(
                       child: Divider(
                     thickness: 2,
                   )),
@@ -153,7 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Create an account?',
                   ),
                   TextButton(
