@@ -5,5 +5,6 @@ class Api{
 
   //LOGIN
   static const String login = 'authentication/login';
+  static const String register = 'authentication/userRegister';
 
 }

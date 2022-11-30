@@ -1,6 +1,3 @@
-
-
-
 class SvgImages {
   // slider
   static String banner_1 =
@@ -17,7 +14,7 @@ class SvgImages {
 
   static String logo = 'assets/images/logo_Splash.jpg';
 
-  static String aboutLogo = 'https://storage-upschindi.s3.ap-south-1.amazonaws.com/app_final.png';
+  static String aboutLogo = 'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/logo/app_final.png';
   static String currentaffer1 =
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/Image.png";
   static String currentaffer2 = "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/currentAffairs/thehindu.png";
@@ -64,7 +61,7 @@ class SvgImages {
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/emptyCard.png";
 
   //resources
-  static String dailyNews =
+   static String dailyNews =
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/daily+news.png";
   static String courseIndex =
       "https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/NCERT/Pathyakram.png";

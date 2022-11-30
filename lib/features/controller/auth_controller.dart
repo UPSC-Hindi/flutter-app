@@ -1,29 +1,37 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:upsc_web/features/model/auth/register_model.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
+import 'package:upsc_web/utils.dart';
 
 class AuthController{
-  final AuthServices authServices;
-  AuthController(this.authServices);
+  AuthServices authServices = AuthServices();
 
-  Future<void>login()async{
-    await authServices.loginServices('').then((value) async{
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-      // final deviceName = androidInfo.brand;
-      // final deviceConfig = androidInfo.id;
-      print('web info');
-      print(webBrowserInfo.appName);
-      print(webBrowserInfo.appCodeName);
-      print(webBrowserInfo.appVersion);
-      print(webBrowserInfo.browserName);
-      print(webBrowserInfo.deviceMemory);
-      print(webBrowserInfo.platform);
-      print(webBrowserInfo.product);
-      print(webBrowserInfo.data);
-      print(webBrowserInfo.userAgent);
+  Future<bool>login(dynamic data)async{
+    await authServices.loginServices(data).then((value) async{
       // write your code
+
     }).onError((error, stackTrace) {
       throw error!;
     });
+    return true;
+  }
+
+  Future<bool>register(dynamic data)async{
+    try{
+      dynamic response = await authServices.registerServices(data);
+      RegisterModel user = RegisterModel.fromJson(response);
+      if(user.status){
+        //TODO: add preferences code here
+
+        Util.toastMessage(user.msg);
+        return true;
+      }else{
+        Util.toastMessage(user.msg);
+        return user.status;
+      }
+    }catch(error){
+      Util.toastMessage(error.toString());
+      rethrow;
+    }
   }
 }

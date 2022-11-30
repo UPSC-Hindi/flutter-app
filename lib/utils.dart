@@ -12,7 +12,8 @@ class Util {
       backgroundColor: Colors.white,
       textColor: Colors.white,
       webShowClose: true,
-      webPosition: 'center'
+      webPosition: 'center',
+        timeInSecForIosWeb: 2
     );
   }
 

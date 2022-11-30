@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFilled extends StatelessWidget {
-  const CustomTextFilled({Key? key, required this.hintText}) : super(key: key);
+  const CustomTextFilled({Key? key, required this.hintText, required this.textController}) : super(key: key);
   final String hintText;
+  final TextEditingController textController;
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
+        controller: textController,
         decoration: InputDecoration(
           hintText: hintText,
           border: OutlineInputBorder(),
@@ -21,8 +23,8 @@ class CustomTextFilled extends StatelessWidget {
 
 
 class PasswordTextFilled extends StatefulWidget {
-  const PasswordTextFilled({Key? key}) : super(key: key);
-
+  const PasswordTextFilled({Key? key, required this.textEditingController}) : super(key: key);
+  final TextEditingController textEditingController;
   @override
   State<PasswordTextFilled> createState() => _PasswordTextFilledState();
 }
@@ -34,6 +36,7 @@ class _PasswordTextFilledState extends State<PasswordTextFilled> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
+        controller: widget.textEditingController,
         obscureText: _isVisible,
         decoration: InputDecoration(
           hintText: 'Password',
