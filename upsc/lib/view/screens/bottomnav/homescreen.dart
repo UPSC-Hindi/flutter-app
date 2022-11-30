@@ -228,7 +228,7 @@ class _HomeScreensState extends State<HomeScreens> {
                                         'Do Explore all the courses',
                                         style: GoogleFonts.notoSansDevanagari(
                                             color: ColorResources.gray,
-                                            fontSize: 25,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.w400),
                                       ),
                                       GestureDetector(
@@ -622,32 +622,31 @@ class _HomeScreensState extends State<HomeScreens> {
           const SizedBox(
             height: 8,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, 'mycoursesscreen');
-            },
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.28,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: ColorResources.buttoncolor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.25,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              decoration: BoxDecoration(
+                color: ColorResources.buttoncolor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, 'mycoursesscreen');
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Continue',
+                      ' Continue ',
                       style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Colors.white,
                       ),
                     ), // <-- Text
                     const SizedBox(
-                      width: 2,
+                      width: 5,
                     ),
                     Container(
                       padding: const EdgeInsets.all(5),
@@ -666,6 +665,50 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
             ),
           ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, 'mycoursesscreen');
+          //   },
+          //   child: Align(
+          //     alignment: Alignment.centerRight,
+          //     child: Container(
+          //       width: MediaQuery.of(context).size.width * 0.28,
+          //       padding:
+          //           const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          //       decoration: BoxDecoration(
+          //         color: ColorResources.buttoncolor,
+          //         borderRadius: BorderRadius.circular(15),
+          //       ),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Text(
+          //             'Continue',
+          //             style: GoogleFonts.notoSansDevanagari(
+          //               fontSize: 12,
+          //               color: Colors.white,
+          //             ),
+          //           ), // <-- Text
+          //           const SizedBox(
+          //             width: 2,
+          //           ),
+          //           Container(
+          //             padding: const EdgeInsets.all(5),
+          //             decoration: BoxDecoration(
+          //               color: ColorResources.gray.withOpacity(0.3),
+          //               shape: BoxShape.circle,
+          //             ),
+          //             child: const Icon(
+          //               Icons.arrow_forward_ios,
+          //               size: 10,
+          //               color: Colors.white,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
