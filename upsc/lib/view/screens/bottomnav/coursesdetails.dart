@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/api.dart';
 import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source.dart';
@@ -12,11 +10,13 @@ import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.d
     as rdsi;
 import 'package:upsc/features/data/remote/models/course_details_model.dart';
 import 'package:upsc/features/presentation/widgets/videopaler.dart';
+import 'package:upsc/features/presentation/widgets/youtube_player_widget.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class CoursesDetailsScreens extends StatefulWidget {
   final String courseId;
@@ -320,14 +320,25 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       onTap: () {
         print("he");
         print(demoVideo.fileLoc);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PlayVideoFromNetwork(
-              Videourl: demoVideo.fileLoc,
-            ),
-          ),
-        );
+        String videoId = YoutubePlayer.convertUrlToId(demoVideo.fileLoc)!;
+        print(videoId);
+        demoVideo.fileLoc != null
+            ? demoVideo.fileLoc.contains("https://yout")
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => YoutubePlayerWidget(
+                              videoId: videoId,
+                            )))
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlayVideoFromNetwork(
+                        Videourl: demoVideo.fileLoc,
+                      ),
+                    ),
+                  )
+            : print("null");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
