@@ -6,7 +6,7 @@ class Util {
   static const Color blackColor = Colors.black;
   static Color buttonColor = const Color(0xFFED5067);
 
-  static void toastMessage(String message) {
+  static void flutterToast(String message) {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: Colors.white,
@@ -14,6 +14,18 @@ class Util {
       webShowClose: true,
       webPosition: 'center',
         timeInSecForIosWeb: 2
+    );
+  }
+
+  static void toastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        backgroundColor: Colors.white,
+        textColor: Colors.white,
+        webShowClose: true,
+        webPosition: 'center',
+        timeInSecForIosWeb: 3,
+      gravity: ToastGravity.TOP,
     );
   }
 

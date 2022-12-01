@@ -1,14 +1,21 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:upsc_web/features/model/baneer_model.dart';
 import 'package:upsc_web/services/remote_services/remote_services.dart';
+import 'package:upsc_web/utils.dart';
 
 class GlobalController{
   static Future<List<Widget>>getBanner()async{
     List<Widget>imageList = [];
     await RemoteServices.getBannerApi().then((value) {
-      for (var entry in value['data']) {
-        imageList.add(Image.network(entry['banner_url'][0]));
+      BannerModel response = BannerModel.fromJson(value);
+      if(response.status){
+        for (var entry in response.data) {
+          imageList.add(Image.network(entry.bannerUrl.first));
+        }
+      }else{
+        Util.toastMessage(response.msg);
       }
     }).onError((error, stackTrace) {
       throw error!;

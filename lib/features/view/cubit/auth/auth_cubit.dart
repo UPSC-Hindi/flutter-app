@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:upsc_web/features/controller/auth_controller.dart';
+import 'package:upsc_web/features/model/auth/register_model.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
 
 part 'auth_state.dart';
@@ -12,8 +13,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void>registerUser(dynamic data)async{
     emit(LoadingAuth());
     try{
-      if(await authController.register(data)){
-        emit(RegisterSuccess());
+      RegisterModel user = await authController.register(data);
+      if(user.status){
+        emit(RegisterSuccess(user: user.data));
       }else{
         emit(ErrorAuth());
       }
@@ -27,6 +29,32 @@ class AuthCubit extends Cubit<AuthState> {
     try{
       if(await authController.login(data)){
         emit(LoginSuccess());
+      }else{
+        emit(ErrorAuth());
+      }
+    }catch(error){
+      emit(ErrorAuth());
+    }
+  }
+
+  Future<void>verifyOtp(String otp,String token)async{
+    emit(LoadingAuth());
+    try{
+      if(await authController.verifyPhoneNumber({'otp' : otp},token)){
+        emit(VerificationOtpSuccess());
+      }else{
+        emit(ErrorAuth());
+      }
+    }catch(error){
+      emit(ErrorAuth());
+    }
+  }
+
+  Future<void>resendOtp({required String token})async{
+    emit(LoadingAuth());
+    try{
+      if(await authController.resendOtp(token)){
+        emit(ResendOtpSuccess());
       }else{
         emit(ErrorAuth());
       }

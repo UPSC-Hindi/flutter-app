@@ -6,5 +6,7 @@ class Api{
   //LOGIN
   static const String login = 'authentication/login';
   static const String register = 'authentication/userRegister';
+  static const String resendMobileVerificationOtp = 'authentication/resendmobileverificationotp';
+  static const String verifyMobileNumber = 'authentication/verifyMobileNumber';
 
 }

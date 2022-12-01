@@ -23,6 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  List<Widget> bannerList = [];
   @override
   void dispose() {
     emailController.dispose();
@@ -53,6 +54,12 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  late Future<List<Widget>>getBanner;
+  @override
+  void initState() {
+    getBanner = GlobalController.getBanner();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,11 +82,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: FutureBuilder<List<Widget>>(
-                          future: GlobalController.getBanner(),
+                          future: getBanner,
                           builder: (context, snapshots) {
                             if (snapshots.connectionState ==
                                 ConnectionState.done) {
                               if (snapshots.hasData) {
+                                bannerList = snapshots.data!;
                                 return CarouselSlider(
                                   items: snapshots.data,
                                   options: CarouselOptions(
@@ -170,8 +178,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.popAndPushNamed(
-                                  context, AppRoute.signupScreen);
+                              Navigator.pushNamed(
+                                  context, AppRoute.signupScreen,
+                                arguments: bannerList
+                              ).then((value) =>{
+                                emailController.clear(),
+                                passwordController.clear(),
+                              });
                             },
                             child: Text(
                               ' Register',
