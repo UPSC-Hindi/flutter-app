@@ -7,7 +7,7 @@ class Resendotp {
 
   Resendotp.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     msg = json['msg'];
   }
 
@@ -15,7 +15,7 @@ class Resendotp {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
     if (this.data != null) {
-      data['Data'] = this.data!.toJson();
+      data['data'] = this.data!.toJson();
     }
     data['msg'] = msg;
     return data;
