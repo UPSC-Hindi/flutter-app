@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
@@ -54,6 +55,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   List<Data>? userdetails;
 
   static bool blockchat = false;
+
+  bool view = false;
 
   @override
   void initState() {
@@ -240,6 +243,18 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                               enabledButtons: const [BuiltInButtons.callEnd],
                             ),
                           ),
+                          Positioned(
+                              bottom: 5,
+                              right: 5,
+                              child: GestureDetector(
+                                  onTap: () {
+                                    view = true;
+                                    SystemChrome.setPreferredOrientations([
+                                      DeviceOrientation.landscapeLeft,
+                                      DeviceOrientation.landscapeRight
+                                    ]);
+                                  },
+                                  child: Icon(Icons.fullscreen)))
                         ],
                       ),
                     ),
@@ -249,7 +264,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.lecture.lectureTitle,
-                                style:  GoogleFonts.notoSansDevanagari(
+                                style: GoogleFonts.notoSansDevanagari(
                                     fontSize: 30)),
                             Text(widget.lecture.description),
                             //Text('By ${widget.lecture.subject}'),

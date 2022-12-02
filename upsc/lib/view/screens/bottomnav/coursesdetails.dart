@@ -315,30 +315,31 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
     );
   }
 
+  youtubevideo(url) {
+    String videoId = YoutubePlayer.convertUrlToId(url)!;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => YoutubePlayerWidget(
+                  videoId: videoId,
+                )));
+  }
+
   Widget videolist(Banners demoVideo) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         print("he");
         print(demoVideo.fileLoc);
-        String videoId = YoutubePlayer.convertUrlToId(demoVideo.fileLoc)!;
-        print(videoId);
-        demoVideo.fileLoc != null
-            ? demoVideo.fileLoc.contains("https://yout")
-                ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => YoutubePlayerWidget(
-                              videoId: videoId,
-                            )))
-                : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PlayVideoFromNetwork(
-                        Videourl: demoVideo.fileLoc,
-                      ),
-                    ),
-                  )
-            : print("null");
+        demoVideo.demoVideofileType == "Video"
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlayVideoFromNetwork(
+                    Videourl: demoVideo.fileLoc,
+                  ),
+                ),
+              )
+            : youtubevideo(demoVideo.fileLoc);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
