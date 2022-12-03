@@ -98,12 +98,12 @@ class Languages {
     courses = isEnglish ? 'Courses' : 'कोर्सेस ';
     home = isEnglish ? 'Home' : 'होम ';
     profile = isEnglish ? 'Profile' : 'प्रोफाइल ';
-    Test = isEnglish ? 'Test' : 'टेस्ट';
+    Test = isEnglish ? 'Tests' : 'टेस्ट';
 
     //profile info
     personalInformation =
         isEnglish ? 'Personal Information' : 'व्यक्तिगत जानकारी';
-    yourTestSeries = isEnglish ? 'Your Test Series' : 'टेस्ट सीरीज';
+    yourTestSeries = isEnglish ? 'My Test Series' : 'टेस्ट सीरीज';
     yourCourses = isEnglish ? 'Your Courses' : 'कोर्सेस';
     editProfile =
         isEnglish ? 'Edit Phone, Email, Profile Name' : 'फ़ोन ईमेल नाम बदले';

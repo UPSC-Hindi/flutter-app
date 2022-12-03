@@ -52,7 +52,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     ? ColorResources.buttoncolor
                     : ColorResources.gray.withOpacity(0.5),
               )),
-          labelStyle: GoogleFonts.notoSansDevanagari(fontSize: 30),
+          labelStyle: GoogleFonts.notoSansDevanagari(
+              fontSize: 30, fontWeight: FontWeight.bold),
           label: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -93,14 +94,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
             Column(
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 40,
                 ),
                 Align(
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
                     child: Text(
-                      'Choose your preferred Medium',
+                      'Choose Your Medium',
                       style: GoogleFonts.notoSansDevanagari(
                           fontSize: 30, color: ColorResources.textblack),
                       textAlign: TextAlign.center,
@@ -125,7 +126,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
                     child: Text(
-                      'Select your stream',
+                      'Select Your Stream',
                       style: GoogleFonts.notoSansDevanagari(
                           fontSize: 30, color: ColorResources.textblack),
                       textAlign: TextAlign.center,
@@ -236,13 +237,27 @@ class _LanguageScreenState extends State<LanguageScreen> {
               width: MediaQuery.of(context).size.width * 0.30,
               height: MediaQuery.of(context).size.width * 0.22,
               child: Column(children: [
-                Text(
-                  src,
-                  style: GoogleFonts.notoSansDevanagari(
-                      color: ColorResources.textblack,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w800),
-                ),
+                index == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(),
+                        child: Text(
+                          src,
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 7),
+                        child: Text(
+                          src,
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
                 //SizedBox(height: 60, child: SvgPicture.asset(src)),
                 Text(
                   text,

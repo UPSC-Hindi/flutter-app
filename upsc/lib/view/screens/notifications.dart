@@ -60,7 +60,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         width: 30,
                       ),
                       Text(
-                        'NotificationScreen',
+                        'Notification',
                         style: GoogleFonts.notoSansDevanagari(
                             color: ColorResources.textblack,
                             fontSize: 20,
@@ -72,7 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Divider(
                   thickness: 1.5,
                 ),
-                true
+                notificationData.isEmpty
                     ? Container(
                         height: 130,
                         decoration: const BoxDecoration(
@@ -98,16 +98,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              backgroundColor: Colors.pinkAccent.withOpacity(0.2),
+                              backgroundColor:
+                                  Colors.pinkAccent.withOpacity(0.2),
                               child: Icon(
                                 Icons.notifications_none_outlined,
                                 color: ColorResources.resourcesCardColor,
                                 size: 35,
                               ),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
-                              'No New Notification',
+                              'No notification',
                               style: TextStyle(fontSize: 16),
                             )
                           ],
@@ -136,15 +139,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 8),
                             child: ListTile(
-                              leading: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  SvgImages.avatar,
-                                  height: 45,
-                                ),
-                              ),
+                              // leading: Container(
+                              //   decoration: BoxDecoration(
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              //   child: Image.network(
+                              //     SvgImages.avatar,
+                              //     height: 45,
+                              //   ),
+                              // ),
                               horizontalTitleGap: 4,
                               title: Text(
                                 notificationData[index].message!,
@@ -153,12 +156,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 ),
                               ),
                               subtitle: Text(
-                                '1m ago',
+                                (notificationData[index].createdAt!),
                                 style: TextStyle(
                                   fontSize: 12,
                                 ),
                               ),
-                              trailing: Icon(Icons.more_vert_outlined),
                             ),
                           );
                         },

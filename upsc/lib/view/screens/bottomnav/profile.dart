@@ -166,7 +166,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                           ),
                         ),
                         Text(
-                          Languages.seeYourEnrollCourses,
+                          Languages.seeYourEnrollTest,
                           style: GoogleFonts.notoSansDevanagari(
                             color: ColorResources.textblack.withOpacity(0.5),
                             fontSize: 12,

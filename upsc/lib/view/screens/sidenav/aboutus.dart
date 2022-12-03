@@ -11,7 +11,7 @@ class AboutUsScreen extends StatelessWidget {
   final List name = [
     "गौरव कुमार त्रिपाठी (02 IAS INTERVIEW, UPPSC 2020 SELECTED, IIT R)",
     "सत्यप्रकाश त्रिपाठी (MA (हिन्दी), NET)",
-    "मन दीप (IIT DHN)",
+    "रमन दीप (IIT DHN)",
     "पल्लव (MMMUT)",
     "निशांत त्रिपाठी (PCS विशेषज्ञ)"
   ];
