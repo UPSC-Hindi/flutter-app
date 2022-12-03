@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:upsc_web/features/model/baneer_model.dart';
 import 'package:upsc_web/services/remote_services/remote_services.dart';
-import 'package:upsc_web/utils.dart';
+import 'package:upsc_web/utils/utils.dart';
 
 class GlobalController{
   static Future<List<Widget>>getBanner()async{
@@ -15,7 +15,7 @@ class GlobalController{
           imageList.add(Image.network(entry.bannerUrl.first));
         }
       }else{
-        Util.toastMessage(response.msg);
+        Utils.toastMessage(response.msg);
       }
     }).onError((error, stackTrace) {
       throw error!;

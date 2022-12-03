@@ -47,7 +47,7 @@ class OnGenerateRoute {
         return cupertinoBuilder(
           widget: OtpVerificationScreen(
             bannerList: bannerList,
-            userNumber: userNumber, authToken: token,
+            userNumber: userNumber,
           ),
         );
 

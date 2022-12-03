@@ -15,7 +15,7 @@ class AuthCubit extends Cubit<AuthState> {
     try{
       RegisterModel user = await authController.register(data);
       if(user.status){
-        emit(RegisterSuccess(user: user.data));
+        emit(RegisterSuccess());
       }else{
         emit(ErrorAuth());
       }
@@ -37,10 +37,10 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void>verifyOtp(String otp,String token)async{
+  Future<void>verifyOtp(String otp)async{
     emit(LoadingAuth());
     try{
-      if(await authController.verifyPhoneNumber({'otp' : otp},token)){
+      if(await authController.verifyPhoneNumber({'otp' : otp})){
         emit(VerificationOtpSuccess());
       }else{
         emit(ErrorAuth());
@@ -50,10 +50,10 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void>resendOtp({required String token})async{
+  Future<void>resendOtp()async{
     emit(LoadingAuth());
     try{
-      if(await authController.resendOtp(token)){
+      if(await authController.resendOtp()){
         emit(ResendOtpSuccess());
       }else{
         emit(ErrorAuth());

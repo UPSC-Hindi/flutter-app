@@ -13,11 +13,9 @@ class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({
     Key? key,
     required this.bannerList,
-    required this.authToken,
     required this.userNumber,
   }) : super(key: key);
   final List<Widget> bannerList;
-  final String authToken;
   final String userNumber;
 
   @override
@@ -192,10 +190,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void _verifyButton() {
-    BlocProvider.of<AuthCubit>(context).verifyOtp(otp,widget.authToken);
+    BlocProvider.of<AuthCubit>(context).verifyOtp(otp);
   }
 
   void _resendOtp() {
-    BlocProvider.of<AuthCubit>(context).resendOtp(token: widget.authToken);
+    BlocProvider.of<AuthCubit>(context).resendOtp();
   }
 }

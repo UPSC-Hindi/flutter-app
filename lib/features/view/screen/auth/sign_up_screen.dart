@@ -7,7 +7,7 @@ import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
 import 'package:upsc_web/features/view/widget/auth_button.dart';
 import 'package:upsc_web/features/view/widget/custom_text_field.dart';
 import 'package:google_sign_in/google_sign_in.dart' as googleauth;
-import 'package:upsc_web/utils.dart';
+import 'package:upsc_web/utils/utils.dart';
 import 'package:upsc_web/utils/images_file.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -66,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
           if (state is RegisterSuccess) {
             Navigator.popAndPushNamed(context, AppRoute.otpVerificationScreen,
-                arguments: [widget.bannerList,numberController.text,state.user.token]);
+                arguments: [widget.bannerList,numberController.text]);
           }
         }, builder: (context, state) {
           if (state is LoadingAuth) {
@@ -180,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(
                           'Login',
                           style: TextStyle(
-                            color: Util.buttonColor,
+                            color: Utils.buttonColor,
                           ),
                         ))
                   ],

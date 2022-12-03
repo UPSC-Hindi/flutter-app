@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class CustomTextFilled extends StatelessWidget {
@@ -14,7 +12,7 @@ class CustomTextFilled extends StatelessWidget {
         controller: textController,
         decoration: InputDecoration(
           hintText: hintText,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -38,6 +36,7 @@ class _PasswordTextFilledState extends State<PasswordTextFilled> {
       child: TextFormField(
         controller: widget.textEditingController,
         obscureText: _isVisible,
+
         decoration: InputDecoration(
           hintText: 'Password',
           border: OutlineInputBorder(),

@@ -8,7 +8,7 @@ import 'package:upsc_web/features/controller/global_controller.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
 import 'package:upsc_web/features/view/widget/auth_button.dart';
 import 'package:upsc_web/features/view/widget/custom_text_field.dart';
-import 'package:upsc_web/utils.dart';
+import 'package:upsc_web/utils/utils.dart';
 import 'package:upsc_web/utils/images_file.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -189,7 +189,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: Text(
                               ' Register',
                               style: TextStyle(
-                                color: Util.buttonColor,
+                                color: Utils.buttonColor,
                               ),
                             ))
                       ],
