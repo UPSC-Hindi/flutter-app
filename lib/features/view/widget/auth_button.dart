@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:upsc_web/utils.dart';
+import 'package:upsc_web/utils/utils.dart';
 
 class AuthButton extends StatelessWidget {
   const AuthButton({Key? key, required this.text, required this.onPressed}) : super(key: key);
@@ -8,17 +8,17 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(maxWidth: 250,minWidth: 250,minHeight: 44),
+      constraints: BoxConstraints(maxWidth: 250,minWidth: 250,minHeight: 44),
       margin: const EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
-          color: Util.buttonColor,
+          color: Utils.buttonColor,
           borderRadius: BorderRadius.circular(14)),
       child: TextButton(
         onPressed: onPressed,
         child: Text(
           text,
           style: const TextStyle(
-              color: Util.whiteColor,
+              color: Utils.whiteColor,
               fontWeight: FontWeight.w800,
               fontSize: 20
           ),

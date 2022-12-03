@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Util {
+class Utils{
   static const Color whiteColor = Colors.white;
   static const Color blackColor = Colors.black;
   static Color buttonColor = const Color(0xFFED5067);
+
+  static hideDialog(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  static showLoading(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("PleaseWait"),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   static void flutterToast(String message) {
     Fluttertoast.showToast(
