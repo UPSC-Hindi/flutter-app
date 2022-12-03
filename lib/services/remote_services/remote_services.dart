@@ -11,4 +11,13 @@ class RemoteServices{
       rethrow;
     }
   }
+  static Future<dynamic> getStreamService() async{
+    try{
+      dynamic response = await BaseClient.get(url : Api.baseUrl+Api.getCategoryStream);
+      return response;
+    }catch(error){
+      rethrow;
+    }
+  }
+
 }

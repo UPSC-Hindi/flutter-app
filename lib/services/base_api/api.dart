@@ -12,4 +12,7 @@ class Api{
   static const String resendMobileVerificationOtp = 'authentication/resendmobileverificationotp';
   static const String verifyMobileNumber = 'authentication/verifyMobileNumber';
   static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
+  static const String updateUserStream = 'authentication/updateUserStream';
+  static const String updateUserLanguage = 'authentication/updateUserLanguage';
+
 }

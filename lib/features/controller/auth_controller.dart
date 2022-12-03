@@ -1,11 +1,7 @@
+import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/auth/register_model.dart';
-import 'package:upsc_web/features/model/auth/stream_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
-import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
 import 'package:upsc_web/utils/utils.dart';
@@ -13,13 +9,16 @@ import 'package:upsc_web/utils/utils.dart';
 class AuthController {
   AuthServices authServices = AuthServices();
 
-  Future<bool> login(dynamic data) async {
-    await authServices.loginServices(data).then((value) async {
-      // write your code
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
-    return true;
+  Future<LoginModel> login(dynamic data) async {
+    try {
+
+      var response = await authServices.loginServices(data);
+      var user = LoginModel.fromJson(response);
+      Utils.flutterToast(user.msg);
+      return user;
+    } catch (error) {
+      rethrow;
+    }
   }
 
   Future<RegisterModel> register(dynamic data) async {
@@ -46,7 +45,8 @@ class AuthController {
       dynamic responseJson = await authServices.resendOtpService();
       BaseModel response = BaseModel.fromJson(responseJson);
       if (response.status) {
-        Utils.toastMessage(response.data['mobileNumberVerificationOTP'].toString());
+        Utils.toastMessage(
+            response.data['mobileNumberVerificationOTP'].toString());
       }
       Utils.flutterToast(response.msg);
       return response.status;
@@ -58,8 +58,7 @@ class AuthController {
 
   Future<bool> verifyPhoneNumber(dynamic data) async {
     try {
-      dynamic responseJson =
-          await authServices.verifyPhoneNumberService(data);
+      dynamic responseJson = await authServices.verifyPhoneNumberService(data);
       BaseModel response = BaseModel.fromJson(responseJson);
       await PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
       PreferencesHelper.setString(
@@ -72,16 +71,19 @@ class AuthController {
     }
   }
 
-  Future<List<String>> getStream() async {
+  Future<bool> updateStreamLanguage({dynamic language, dynamic stream}) async {
     try {
-      List<String> stream = [];
-      dynamic response = await authServices.getStreamService();
-      StreamModel jsonResponse = StreamModel.fromJson(response.data);
-      for (StreamDataModel data in jsonResponse.data) {
-        stream.add(data.title);
-      }
-      return stream;
+      dynamic responseLanguageJson =
+          await authServices.updateLanguage(language);
+      BaseModel responseLanguage = BaseModel.fromJson(responseLanguageJson);
+
+      dynamic responseStreamJson = await authServices.updateStream(stream);
+      BaseModel responseStream = BaseModel.fromJson(responseStreamJson);
+
+      Utils.flutterToast("${responseStream.msg} ${responseLanguage.msg}");
+      return responseStream.status && responseLanguage.status;
     } catch (error) {
+      Utils.toastMessage(error.toString());
       rethrow;
     }
   }

@@ -67,7 +67,15 @@ class _SignInScreenState extends State<SignInScreen> {
         child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if(state is LoginSuccess){
+                Utils.hideLoading(context);
                 Navigator.popAndPushNamed(context, AppRoute.homeScreen);
+              }
+              if(state is UnVerifiedNumber){
+                Utils.hideLoading(context);
+                Navigator.popAndPushNamed(context, AppRoute.otpVerificationScreen,arguments: [bannerList,state.phoneNumber]);
+              }
+              if(state is ErrorAuth){
+                Utils.hideLoading(context);
               }
             },
             builder: (context, state) {
@@ -203,17 +211,11 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _loginButton() async{
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-
-    print(webBrowserInfo.userAgent);
-    print(webBrowserInfo.appName);
     var body = {
-      "email": emailController.text,
+      "email_phoneNumber": emailController.text,
       "password": passwordController.text,
-      "deviceConfig": webBrowserInfo.userAgent,
-      "deviceName": webBrowserInfo.appName
     };
+    Utils.showLoading(context);
     BlocProvider.of<AuthCubit>(context).loginUser(body);
   }
 }

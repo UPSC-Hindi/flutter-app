@@ -6,7 +6,7 @@ class Utils{
   static const Color blackColor = Colors.black;
   static Color buttonColor = const Color(0xFFED5067);
 
-  static hideDialog(BuildContext context) {
+  static hideLoading(BuildContext context) {
     Navigator.pop(context);
   }
 

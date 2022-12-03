@@ -2,19 +2,20 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:upsc_web/features/model/base_model.dart';
+import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
+import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 
 import 'app_exception.dart';
 
 Dio dioAuthorizationData({String? token}) {
-  // var token = SharedPreferenceHelper.getString(Preferences.access_token);
-  var localToken = '';
+  var localToken = PreferencesHelper.getString(Preferences.accessToken);
   final dio = Dio();
   dio.options.headers["Accept"] =
       "application/json"; // config your dio headers globally
   dio.options.followRedirects = false;
   dio.options.connectTimeout = 75000; //5s
   dio.options.receiveTimeout = 3000;
-  print('token in = $token');
+  print('token in = ${token ?? localToken}');
   dio.options.headers["Authorization"] = "Bearer ${token ?? localToken}";
   return dio;
 }
@@ -39,7 +40,20 @@ class BaseClient {
           .timeout(const Duration(seconds: 10));
       return response.data;
     } on DioError catch (error) {
-      print(error.response);
+      print(error.type.toString());
+      throw dioError(error.type,error);
+    }
+  }
+
+  static Future<dynamic> put(
+      {required String url, dynamic data}) async {
+    try {
+      final response = await dioAuthorizationData()
+          .put(url, data: data)
+          .timeout(const Duration(seconds: 10));
+      return response.data;
+    } on DioError catch (error) {
+      print(error.type.toString());
       throw dioError(error.type,error);
     }
   }

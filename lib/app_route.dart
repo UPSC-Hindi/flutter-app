@@ -42,8 +42,7 @@ class OnGenerateRoute {
       case AppRoute.otpVerificationScreen:
         List data = args as List;
         List<Widget> bannerList = data.first;
-        String userNumber = data[1];
-        String token = data.last;
+        String userNumber = data.last;
         return cupertinoBuilder(
           widget: OtpVerificationScreen(
             bannerList: bannerList,

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:upsc_web/features/model/auth/stream_model.dart';
 import 'package:upsc_web/features/model/baneer_model.dart';
 import 'package:upsc_web/services/remote_services/remote_services.dart';
 import 'package:upsc_web/utils/utils.dart';
@@ -21,5 +22,19 @@ class GlobalController{
       throw error!;
     });
     return imageList;
+  }
+
+  static Future<List<String>> getStream() async {
+    try {
+      List<String> stream = [];
+      dynamic response = await RemoteServices.getStreamService();
+      var jsonResponse = StreamModel.fromJson(response);
+      for (StreamDataModel data in jsonResponse.data) {
+        stream.add(data.title);
+      }
+      return stream;
+    } catch (error) {
+      rethrow;
+    }
   }
 }
