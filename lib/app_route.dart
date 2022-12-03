@@ -26,7 +26,7 @@ class OnGenerateRoute {
       case AppRoute.splashScreen:
         return cupertinoBuilder(widget: const SplashScreen());
 
-      case AppRoute.languageScreen:
+      case AppRoute.signInScreen:
         return cupertinoBuilder(widget: const SignInScreen());
 
       case AppRoute.signupScreen:
@@ -51,7 +51,7 @@ class OnGenerateRoute {
           ),
         );
 
-      case AppRoute.signInScreen:
+      case AppRoute.languageScreen:
         return CupertinoPageRoute(builder: (context) => LanguageScreen());
       default:
         return cupertinoBuilder(
