@@ -9,6 +9,7 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List _widgetOptions = [
     const HomeScreens(),
     const CourseScreen(),
-    const mocktestscreen(),
+    mocktestscreen(remoteDataSourceImpl: RemoteDataSourceImpl()),
     ProfilScreen()
   ];
 
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'Notification',
                   style: GoogleFonts.notoSansDevanagari(
-                      color: Color(0xFF783B3B), fontSize: 12),
+                      color: const Color(0xFF783B3B), fontSize: 12),
                 ),
                 InkWell(
                   onTap: (() {

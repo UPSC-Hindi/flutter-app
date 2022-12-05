@@ -1,15 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/banner.dart';
 import 'package:upsc/models/orderIdgeneration.dart';
 import 'package:upsc/util/appString..dart';
@@ -17,20 +19,17 @@ import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/course/paymentScreen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-const String razorPayId = 'rzp_test_CWt1qviQEvI8wW';
-
-class CoursePaymentScreen extends StatefulWidget {
-  const CoursePaymentScreen({Key? key, required this.course}) : super(key: key);
-  final CartDataModel course;
+class TestPaymentScreen extends StatefulWidget {
+  final TestSeriesData testseries;
+  const TestPaymentScreen({Key? key, required this.testseries})
+      : super(key: key);
 
   @override
-  State<CoursePaymentScreen> createState() => _CoursePaymentScreenState();
+  State<TestPaymentScreen> createState() => _TestPaymentScreenState();
 }
 
-class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
+class _TestPaymentScreenState extends State<TestPaymentScreen> {
   final Razorpay _razorpay = Razorpay();
   String? mobileNumber;
   String? userName;
@@ -52,90 +51,6 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     userEmail = SharedPreferenceHelper.getString(Preferences.email)!;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _razorpay.clear();
-  }
-
-  void openCheckout(id, razorpaykey) async {
-    print('*' * 2000);
-    print(razorpaykey);
-    print(id.toString());
-    var options = {
-      'key': razorPayId,
-      "order_id": id,
-      'amount': (100 * int.parse(widget.course.amount) -
-              (100 *
-                  (int.parse(widget.course.amount) *
-                      (int.parse(widget.course.batchDetails.discount) / 100))))
-          .toString(),
-      'name': widget.course.batchDetails.batchName,
-      'description': "upschindi",
-      'prefill': {'contact': mobileNumber, 'email': userEmail},
-      "notify": {"sms": true, "email": true},
-      'timeout': 180,
-      "currency": "INR",
-      "external": {
-        "wallets": ["paytm"]
-      }
-    };
-
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    print("-----Payment Success-----");
-    print(response.paymentId);
-    print(response.orderId);
-    print(response.signature);
-    Fluttertoast.showToast(
-        msg:
-            "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
-    _savePaymentStatus(PaymentModel(
-        orderId: '',
-        userpaymentOrderId: response.orderId!,
-        paymentId: response.paymentId!.toString(),
-        description: "upschindi",
-        mobileNumber: mobileNumber!,
-        userName: userName!,
-        userEmail: userEmail!,
-        Signature: response.signature!,
-        batchId: widget.course.batchDetails.id,
-        price: (int.parse(widget.course.amount) -
-                ((int.parse(widget.course.amount) *
-                    (int.parse(widget.course.batchDetails.discount) / 100))))
-            .round()
-            .toString(),
-        success: true.toString()));
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    print("-----Payment error-----");
-    Fluttertoast.showToast(
-        msg: "ERROR: ${response.code} - ${response.message!}");
-    _savePaymentStatus(PaymentModel(
-        orderId: '',
-        userpaymentOrderId: '',
-        paymentId: '',
-        description: "",
-        mobileNumber: mobileNumber!,
-        userName: userName!,
-        userEmail: userEmail!,
-        Signature: '',
-        batchId: widget.course.batchDetails.id,
-        price: (int.parse(widget.course.amount) -
-                ((int.parse(widget.course.amount) *
-                    (int.parse(widget.course.batchDetails.discount) / 100))))
-            .round()
-            .toString(),
-        success: false.toString()));
-  }
-
   Future<BaseModel<getbannerdetails>> callApigetbanner() async {
     getbannerdetails response;
     try {
@@ -154,9 +69,67 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     return BaseModel()..data = response;
   }
 
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print("-----Payment Success-----");
+    print(response.paymentId);
+    print(response.orderId);
+    print(response.signature);
+    Fluttertoast.showToast(
+        msg:
+            "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
+    Map<String, dynamic> body = {
+      "orderId": '',
+      "userpaymentOrderId": response.orderId!,
+      "paymentId": response.paymentId!.toString(),
+      "description": "upschindi",
+      "mobileNumber": mobileNumber!,
+      "userName": userName!,
+      "userEmail": userEmail!,
+      "Signature": response.signature!,
+      "TestSeriesId": widget.testseries.sId!,
+      "price": (int.parse(widget.testseries.charges!) -
+              ((int.parse(widget.testseries.charges!) *
+                  (int.parse(widget.testseries.discount!) / 100))))
+          .round()
+          .toString(),
+      "success": true.toString()
+    };
+    _savePaymentStatus(body);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print("-----Payment error-----");
+    Fluttertoast.showToast(
+        msg: "ERROR: ${response.code} - ${response.message!}");
+    Map<String, dynamic> body = {
+       "orderId": '',
+        "userpaymentOrderId": '',
+        "paymentId": '',
+        "description": "",
+        "mobileNumber": mobileNumber!,
+        "userName": userName!,
+        "userEmail": userEmail!,
+        "Signature": '',
+        "TestSeriesId": widget.testseries.sId!,
+        "price": (int.parse(widget.testseries.charges!) -
+                ((int.parse(widget.testseries.charges!) *
+                    (int.parse(widget.testseries.discount!) / 100))))
+            .round()
+            .toString(),
+        "success": false.toString()
+    };
+    _savePaymentStatus(body);
+  }
+
   void _handleExternalWallet(ExternalWalletResponse response) {
     print("-----Payment Success W-----");
     Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
   }
 
   @override
@@ -186,7 +159,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
               height: 20,
             ),
             Text(
-              widget.course.batchDetails.batchName,
+              widget.testseries.testseriesName!,
               style: GoogleFonts.notoSansDevanagari(
                 fontSize: Fontsize().h2,
                 fontWeight: FontWeight.w900,
@@ -198,7 +171,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             Row(
               children: [
                 Text(
-                  '${widget.course.amount} INR',
+                  '${widget.testseries.charges!} INR',
                   style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
@@ -225,7 +198,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                 ),
                 Text(
-                  widget.course.amount,
+                  widget.testseries.charges!,
                   style: GoogleFonts.notoSansDevanagari(
                     fontWeight: FontWeight.w900,
                   ),
@@ -235,7 +208,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
             const SizedBox(
               height: 20,
             ),
-            int.parse(widget.course.batchDetails.discount) != 0
+            int.parse(widget.testseries.discount!) != 0
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -246,10 +219,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                         ),
                       ),
                       Text(
-                        (int.parse(widget.course.amount) *
-                                (int.parse(
-                                        widget.course.batchDetails.discount) /
-                                    100))
+                        (int.parse(widget.testseries.charges!) *
+                                (int.parse(widget.testseries.discount!) / 100))
                             .round()
                             .toString(),
                         style: GoogleFonts.notoSansDevanagari(
@@ -278,10 +249,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                 ),
                 Text(
-                  (int.parse(widget.course.amount) -
-                          ((int.parse(widget.course.amount) *
-                              (int.parse(widget.course.batchDetails.discount) /
-                                  100))))
+                  (int.parse(widget.testseries.charges!) -
+                          ((int.parse(widget.testseries.charges!) *
+                              (int.parse(widget.testseries.discount!) / 100))))
                       .round()
                       .toString(),
                   style: GoogleFonts.notoSansDevanagari(
@@ -302,7 +272,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                     borderRadius: BorderRadius.circular(14)),
                 child: TextButton(
                   onPressed: () {
-                    callApiorderid(widget.course.batchDetails.id);
+                    callApiorderid(widget.testseries.sId);
                     //openCheckout(widget.course.batchDetails.id);
                     //checkOutButton(context);
                   },
@@ -325,9 +295,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   Future<BaseModel<OrderIdGeneration>> callApiorderid(id) async {
     OrderIdGeneration response;
     Map<String, dynamic> body = {
-      "amount": (int.parse(widget.course.amount) -
-              ((int.parse(widget.course.amount) *
-                  (int.parse(widget.course.batchDetails.discount) / 100))))
+      "amount": (int.parse(widget.testseries.charges!) -
+              ((int.parse(widget.testseries.charges!) *
+                  (int.parse(widget.testseries.discount!) / 100))))
           .round(),
       // "name": SharedPreferenceHelper.getString(Preferences.name),
       // "email": SharedPreferenceHelper.getString(Preferences.email),
@@ -378,17 +348,55 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     return BaseModel()..data = response;
   }
 
-  void _savePaymentStatus(PaymentModel paymentData) async {
+  void openCheckout(id, razorpaykey) async {
+    print('*' * 2000);
+    print(razorpaykey);
+    print(id.toString());
+    var options = {
+      'key': razorpaykey,
+      "order_id": id,
+      'amount': (100 * int.parse(widget.testseries.charges!) -
+              (100 *
+                  (int.parse(widget.testseries.charges!) *
+                      (int.parse(widget.testseries.discount!) / 100))))
+          .toString(),
+      'name': widget.testseries.testseriesName,
+      'description': "upschindi",
+      'prefill': {'contact': mobileNumber, 'email': userEmail},
+      "notify": {"sms": true, "email": true},
+      'timeout': 180,
+      "currency": "INR",
+      "external": {
+        "wallets": ["paytm"]
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void _savePaymentStatus( Map<String, dynamic> paymentData) async {
     print("----Saving Payment Details -----");
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
-    Preferences.onLoading(context);
+    Map<String, dynamic> body = paymentData;
+    setState(() {
+      Preferences.onLoading(context);
+    });
     try {
+      print("----Saving Payment Details -----");
       Response response =
-          await remoteDataSourceImpl.savePaymentStatus(paymentData);
+          await remoteDataSourceImpl.savetestPaymentStatus(body);
+      print("----Saving Payment Details -----");
       if (response.statusCode == 200) {
+        print("----Saving Payment Details -----");
         print(response.data);
         flutterToast(response.data['msg']);
-        Preferences.hideDialog(context);
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         Navigator.pop(context);
         Navigator.push(
           context,
@@ -398,11 +406,16 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         );
       } else {
         print("-----api Payment error -----");
-        Preferences.onLoading(context);
+        setState(() {
+          Preferences.hideDialog(context);
+        });
         flutterToast("Pls Refresh (or) Reopen App");
       }
     } catch (error) {
       print(error);
+      setState(() {
+        Preferences.hideDialog(context);
+      });
       flutterToast(error.toString());
     }
   }

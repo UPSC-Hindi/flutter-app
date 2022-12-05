@@ -13,6 +13,8 @@ import 'package:upsc/features/data/remote/models/resources_model.dart';
 import 'package:upsc/features/data/remote/models/stream_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/Test_series/MyTests.dart';
+import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/features/data/remote/models/course_details_model.dart';
 
@@ -71,11 +73,36 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
+  Future<TestSeries> getTestSeries() async {
+    try {
+      final queryParameters = <String, dynamic>{};
+      var response = await dioAuthorizationData().get(
+        '${Apis.baseUrl}${Apis.gettestseries}',
+        queryParameters: queryParameters,
+      );
+      return TestSeries.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<MyCoursesModel> getMyCourses() async {
     try {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.mycourses}');
       return MyCoursesModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MyTestsModel> getMyTests() async {
+    try {
+      var response =
+          await dioAuthorizationData().get('${Apis.baseUrl}${Apis.myTests}');
+      return MyTestsModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -129,6 +156,21 @@ class RemoteDataSourceImpl extends RemoteDataSource {
         '${Apis.baseUrl}${Apis.savePaymentStatus}',
         data: paymentData.toJson(),
       );
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> savetestPaymentStatus(
+      Map<String, dynamic> paymentData) async {
+    try {
+      Response response = await dioAuthorizationData().post(
+        '${Apis.baseUrl}${Apis.savetestPaymentStatus}',
+        data: paymentData,
+      );
+      print(response);
       return response;
     } catch (error) {
       rethrow;
@@ -192,7 +234,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  getCoursesDetails(String batchId) async{
+  getCoursesDetails(String batchId) async {
     try {
       Response response = await dioAuthorizationData()
           .get('${Apis.baseUrl}${Apis.getCoursesDetails}$batchId');

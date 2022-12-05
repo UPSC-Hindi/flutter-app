@@ -37,17 +37,19 @@ class _CourseScreenState extends State<CourseScreen> {
                   ]),
             ),
             const Expanded(
-              child: TabBarView(children: [
-                TabCoursesWidget(
-                  value: 'Prelims',
-                ),
-                TabCoursesWidget(
-                  value: 'Mains',
-                ),
-                Center(
-                  child: Text("Update will come soon......"),
-                ),
-              ]),
+              child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    TabCoursesWidget(
+                      value: 'Prelims',
+                    ),
+                    TabCoursesWidget(
+                      value: 'Mains',
+                    ),
+                    Center(
+                      child: Text("Update will come soon......"),
+                    ),
+                  ]),
             )
           ],
         ),

@@ -8,12 +8,14 @@ import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
+import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/features/data/remote/models/course_details_model.dart';
 
 abstract class RemoteDataSource{
   Future<VideoModel> getYouTubeVideo();
   Future<CoursesModel> getCourses(String filter,String type);
+  Future<TestSeries> getTestSeries();
   Future<ClassSchedulermodel> getMyClassSchedule();
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();

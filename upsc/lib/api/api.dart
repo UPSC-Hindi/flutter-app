@@ -56,6 +56,7 @@ class Apis {
 
   //Payment
   static const String savePaymentStatus = 'UPSCPayment/verifyUserPayment';
+  static const String savetestPaymentStatus = 'UPSCPayment/verifyUserPaymentForTestSeries';
   static const String getOrderId = 'UPSCPayment/orders';
 
   //Scheduler
@@ -66,4 +67,7 @@ class Apis {
   static const String classScheduler = 'adminPanel/getMySchedular';
 
   static const String getnotification="Notification/getNotifications";
+  //TestSeries
+  static const String gettestseries="adminPanel/getTestSeriesdetails";
+  static const String myTests = 'adminPanel/getMyTestSeries';
 }

@@ -60,8 +60,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 }
 
 class NotesWidget extends StatefulWidget {
-  const NotesWidget({Key? key, required this.resources}) : super(key: key);
   final List<NotesDataModel> resources;
+  const NotesWidget({Key? key, required this.resources}) : super(key: key);
 
   @override
   State<NotesWidget> createState() => _NotesWidgetState();

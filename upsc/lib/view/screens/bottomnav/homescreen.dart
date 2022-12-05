@@ -66,7 +66,10 @@ class _HomeScreensState extends State<HomeScreens> {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(const Duration(seconds: 5)),
+        onRefresh: () => Future.delayed(const Duration(seconds: 5), () {
+          callApigetbanner();
+          myCoursesData = remoteDataSourceImpl.getMyCourses();
+        }),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(

@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
@@ -23,57 +24,19 @@ class AirResourcesScreen extends StatefulWidget {
 
 class _AirResourcesScreenState extends State<AirResourcesScreen> {
   final TextEditingController _searchtest = TextEditingController();
+  final player = AudioPlayer();
 
-  final ReceivePort _port = ReceivePort();
-
-  Future download(String url, String? name) async {
-    final baseStorage = await getExternalStorageDirectory();
-
-    print('directory:${baseStorage!.path}');
-    //todo pls chek this variable use
-    List files = baseStorage.listSync();
-
-    await FlutterDownloader.enqueue(
-      url: url,
-      headers: {},
-      // optional: header send with url (auth token etc)
-      savedDir: baseStorage.path,
-      showNotification: true,
-      // show download progress in status bar (for Android)
-      fileName: '${name!}.${url.split('.').last}',
-      openFileFromNotification:
-          false, // click on notification to open downloaded file (for Android)
-    );
-  }
+  Duration? duration;
 
   @override
   void initState() {
-    IsolateNameServer.registerPortWithName(
-        _port.sendPort, 'downloader_send_port');
-    _port.listen((dynamic data) {
-      //todo pls chek this variable use
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-      setState(() {});
-    });
-
-    FlutterDownloader.registerCallback(downloadCallback);
     super.initState();
   }
 
   @override
   void dispose() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    player.stop();
     super.dispose();
-  }
-
-  @pragma('vm:entry-point')
-  static void downloadCallback(
-      String id, DownloadTaskStatus status, int progress) {
-    final SendPort? send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
-    send!.send([id, status, progress]);
   }
 
   @override
@@ -97,7 +60,7 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
               if (snapshots.hasData) {
                 AirResourcesModel? response = snapshots.data;
                 if (response!.status) {
-                  return _bodyWidget(response.data);
+                  return _bodyWidget(response.data, context);
                 } else {
                   return Text(response.msg);
                 }
@@ -111,15 +74,18 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
     );
   }
 
-  Container _bodyWidget(List<AirResourcesDataModel> resources) {
+  Widget _bodyWidget(
+      List<AirResourcesDataModel> resources, BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SearchBarWidget(onChanged: (String value) {
-              print(value);
-            },),
+            SearchBarWidget(
+              onChanged: (String value) {
+                print(value);
+              },
+            ),
             FractionallySizedBox(
               widthFactor: 0.90,
               child: ListView.builder(
@@ -154,14 +120,14 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Title is not provided ',
+                                  resources[index].data,
                                   style: GoogleFonts.notoSansDevanagari(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       color: ColorResources.gray),
                                 ),
                                 Text(
-                                  '2.5 MB',
+                                  resources[index].audioFile.fileSize,
                                   style: GoogleFonts.notoSansDevanagari(
                                       fontSize: 10, color: ColorResources.gray),
                                 ),
@@ -171,41 +137,33 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                         ),
                         InkWell(
                           onTap: () async {
-                            Map<Permission, PermissionStatus> status = await [
-                              Permission.storage,
-                              Permission.manageExternalStorage,
-                            ].request();
-                            if (await Permission.storage.isGranted) {
-                              if (true) {
-                                download(resources[index].audioFile.fileName,
-                                    resources[index].data);
-                              }
-                              //todo this dead code pls check onces
-                              // else {
-                              //   launchUrl(Uri.parse(''),
-                              //       mode: LaunchMode.externalApplication);
-                              // }
-                            }
+                            // duration = await player
+                            //     .setUrl(resources[index].audioFile.fileLoc);
+                            // player.playing ? player.stop() : player.play();
                           },
                           child: Column(
                             children: [
-                              //todo this dead code pls check onces of link why true always
-                              Text(
-                                true ? 'Audio' : 'Link',
-                                style: GoogleFonts.notoSansDevanagari(
-                                  fontSize: 15,
-                                  color: ColorResources.buttoncolor,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
                               Icon(
                                 //todo this dead code pls check onces
-                                true
-                                    ? Icons.file_download_outlined
-                                    : Icons.link,
+                                player.playing ? Icons.pause : Icons.play_arrow,
                                 size: 25,
                                 color: ColorResources.buttoncolor,
                               ),
+                              player.playing
+                                  ? Text('pause',
+                                      style: GoogleFonts.notoSansDevanagari(
+                                        fontSize: 8,
+                                        color: ColorResources.buttoncolor,
+                                        fontWeight: FontWeight.w700,
+                                      ))
+                                  : Text(
+                                      'Audio Play',
+                                      style: GoogleFonts.notoSansDevanagari(
+                                        fontSize: 8,
+                                        color: ColorResources.buttoncolor,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                             ],
                           ),
                         )
