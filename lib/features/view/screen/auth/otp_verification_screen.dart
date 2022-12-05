@@ -183,6 +183,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
             ),
           ),
+          tab: const Text('Tab Ui Not completed'),
           web: const Text('Web Ui Not completed'),
         );
       },

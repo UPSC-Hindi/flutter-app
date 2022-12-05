@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/global_controller.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
+import 'package:upsc_web/features/view/screen/bottom_navigation/course_tab.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 
 class LanguageScreen extends StatefulWidget {

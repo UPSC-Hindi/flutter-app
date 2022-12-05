@@ -8,12 +8,12 @@ import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/langauge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeTab extends StatelessWidget {
+  const HomeTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(mobile: Scaffold(
+    return Scaffold(
       body: RefreshIndicator(
         onRefresh: () => Future.delayed(const Duration(seconds: 5)),
         child: SingleChildScrollView(
@@ -349,6 +349,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-    ), web: Text('Web not completed'));
+    );
   }
 }

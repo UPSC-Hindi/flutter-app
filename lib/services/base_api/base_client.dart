@@ -21,10 +21,10 @@ Dio dioAuthorizationData({String? token}) {
 }
 
 class BaseClient {
-  static Future<dynamic> get({required String url, String? token}) async {
+  static Future<dynamic> get({required String url, String? token,dynamic queryParameters}) async {
     try {
       final response = await dioAuthorizationData(token: token)
-          .get(url)
+          .get(url,queryParameters: queryParameters)
           .timeout(const Duration(seconds: 10));
       return response.data;
     } on DioError catch (error) {
@@ -83,8 +83,8 @@ class BaseClient {
 
   //User defined error
   static dynamic returnResponse(dynamic response) {
-    print("Return Response function");
-    print(response);
+    print("------- Return response http base client -------");
+    print(response.data);
     BaseModel responseBody = BaseModel.fromJson(response.data);
     switch (response.statusCode) {
       case 400:

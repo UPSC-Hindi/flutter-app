@@ -1,12 +1,10 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:upsc_web/features/view/home_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/language_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
+import 'package:upsc_web/features/view/screen/home_screen.dart';
 import 'features/view/splash_screen.dart';
 
 class AppRoute {
