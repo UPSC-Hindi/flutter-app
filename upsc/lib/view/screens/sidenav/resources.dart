@@ -80,6 +80,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             Expanded(
               flex: 6,
               child: Container(
+                width: double.infinity,
                 padding: const EdgeInsets.all(10),
                 color: ColorResources.resourcesCardColor.withOpacity(0.4),
                 child: CachedNetworkImage(
