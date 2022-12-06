@@ -17,7 +17,8 @@ class Api{
 
   //COURSES
   static const String getCourses = "adminPanel/getBatchesDetails";
-  static const String addToCart = 'adminPanel/addtocart';
+  static const String getCoursesDetails = 'adminPanel/getBatchDetailswithid/';
+  static const String addCoursesToCart = 'adminPanel/addtocart';
   static const String getCartCourses = 'adminPanel/getCartDetails';
   static const String getMyCourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';

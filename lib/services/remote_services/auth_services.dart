@@ -8,7 +8,7 @@ class AuthServices {
     try {
       dynamic response =
           await BaseClient.post(url: Api.baseUrl + Api.login, data: data);
-      return response;
+      print(response);
     } catch (error) {
       rethrow;
     }

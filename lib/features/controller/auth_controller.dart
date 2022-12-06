@@ -36,6 +36,7 @@ class AuthController {
       Utils.flutterToast(user.msg);
       return user;
     } catch (error) {
+      Utils.toastMessage(error.toString());
       rethrow;
     }
   }
@@ -49,9 +50,7 @@ class AuthController {
       await PreferencesHelper.setString(Preferences.authToken, user.data.token);
 
       Utils.flutterToast(user.msg);
-
       Utils.toastMessage(user.data.mobileNumberVerificationOtp.toString());
-
       return user;
     } catch (error) {
       Utils.toastMessage(error.toString());

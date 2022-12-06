@@ -13,4 +13,27 @@ class CourseServices {
       rethrow;
     }
   }
+  Future<dynamic> getCoursesDetails(dynamic queryParameters) async {
+    try {
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getCoursesDetails,
+        queryParameters: queryParameters,
+      );
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> addCoursesToCart(dynamic data) async {
+    try {
+      dynamic response = await BaseClient.post(
+        url: Api.baseUrl + Api.addCoursesToCart,
+        data: data,
+      );
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }
