@@ -82,6 +82,7 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
         child: Column(
           children: [
             SearchBarWidget(
+              searchText: 'Search Air',
               onChanged: (String value) {
                 print(value);
               },

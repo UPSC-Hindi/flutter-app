@@ -522,10 +522,10 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
             child: Text(
               lectureName.lectureName!,
-              style: GoogleFonts.notoSansDevanagari(fontSize: 24),
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
           ListView.builder(

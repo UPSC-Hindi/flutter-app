@@ -61,6 +61,8 @@ class MyCoursesScreen extends StatelessWidget {
 
   Center _myCoursesCardWidget(
       BuildContext context, MyCoursesDataModel courseData) {
+    print("courses status");
+    print(courseData.batchDetails.isActive);
     return Center(
       child: Container(
         padding: const EdgeInsets.all(10.0),
@@ -100,23 +102,25 @@ class MyCoursesScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CourseViewScreen(
-                            lecture: courseData.lectureDetails,
-                            batch: courseData.batchDetails,
+                      if(courseData.batchDetails.isActive){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CourseViewScreen(
+                              lecture: courseData.lectureDetails,
+                              batch: courseData.batchDetails,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Text('Continue'), // <-- Text
-                        SizedBox(
+                      children: [
+                        Text(courseData.batchDetails.isActive?'Continue':'Expired'), // <-- Text
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                         ),
                       ],

@@ -60,7 +60,6 @@ class _HomeScreensState extends State<HomeScreens> {
     myCoursesData = remoteDataSourceImpl.getMyCourses();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
@@ -204,7 +203,13 @@ class _HomeScreensState extends State<HomeScreens> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           MyCoursesModel? myCourses = snapshot.data;
-                          return myCourses!.data.isEmpty
+                          List<MyCoursesDataModel>activeCoursesList = [];
+                          for(var course in myCourses!.data){
+                            if(course.batchDetails.isActive){
+                              activeCoursesList.add(course);
+                            }
+                          }
+                          return activeCoursesList.isEmpty
                               ? Container(
                                   margin: const EdgeInsets.only(
                                       left: 8, right: 20, top: 10, bottom: 10),
@@ -296,11 +301,11 @@ class _HomeScreensState extends State<HomeScreens> {
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: myCourses.data.length,
+                                  itemCount: activeCoursesList.length,
                                   itemBuilder: (context, index) =>
                                       _myCoursesCardWidget(
-                                    myCourses.data[index],
-                                  ),
+                                    activeCoursesList[index],
+                                      ),
                                 );
                         } else {
                           return const Text("There is no internet Connection");

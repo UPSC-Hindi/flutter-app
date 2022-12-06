@@ -76,6 +76,7 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
       child: Column(
         children: [
           SearchBarWidget(
+            searchText: 'Course Index',
             onChanged: (String value) {
               setState(() {
                 filterText = value;

@@ -30,7 +30,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Sample Notes',
+            'Sample Notes',
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -43,7 +43,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
                   return NotesWidget(
-                    resources: response.data,
+                    resources: response.data, heading: 'Sample Notes',
                   );
                 } else {
                   return Text(response.msg);
@@ -61,8 +61,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 
 class NotesWidget extends StatefulWidget {
   final List<NotesDataModel> resources;
-  const NotesWidget({Key? key, required this.resources}) : super(key: key);
-
+  final String heading;
+  const NotesWidget({Key? key, required this.resources, required this.heading}) : super(key: key);
   @override
   State<NotesWidget> createState() => _NotesWidgetState();
 }
@@ -78,6 +78,7 @@ class _NotesWidgetState extends State<NotesWidget> {
       child: Column(
         children: [
           SearchBarWidget(
+            searchText: widget.heading,
             onChanged: (String value) {
               setState(() {
                 filterText = value;

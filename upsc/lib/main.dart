@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
+import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -133,6 +135,22 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: TextTheme(
+            headline1: GoogleFonts.notoSansDevanagari(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: ColorResources.textblack,),
+            headline2: GoogleFonts.notoSansDevanagari(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              color: ColorResources.textblack,
+            ),
+            headline3: GoogleFonts.notoSansDevanagari(
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+              color: ColorResources.textblack,
+            ),
+          ),
         ),
         //home: const Splash(),
         navigatorKey: navigatorKey,

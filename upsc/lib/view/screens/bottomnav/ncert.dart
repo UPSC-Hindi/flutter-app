@@ -108,10 +108,9 @@ class YouTubeContainerWidget extends StatefulWidget {
 
 class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
   String videoId = '';
-
   @override
   void initState() {
-    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
+    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)??'';
     super.initState();
   }
 

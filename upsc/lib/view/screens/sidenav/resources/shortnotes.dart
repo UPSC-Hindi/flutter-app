@@ -34,7 +34,7 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
               if (snapshots.hasData) {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
-                  return NotesWidget(resources: response.data);
+                  return NotesWidget(resources: response.data, heading: "Short Notes",);
                 } else {
                   return Text(response.msg);
                 }
