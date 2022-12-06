@@ -31,10 +31,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void changeScreen() {
+    print("Changing the screen");
     Future.delayed(const Duration(seconds: 3), () {
       isLogin = PreferencesHelper.getBoolean(Preferences.isLoggedIn);
       isLogin?Navigator.popAndPushNamed(context, AppRoute.homeScreen):
       Navigator.popAndPushNamed(context, AppRoute.signInScreen);
+    print("Success change the screen");
     });
   }
 }
