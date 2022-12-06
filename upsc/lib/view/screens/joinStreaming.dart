@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:agora_uikit/controllers/session_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
@@ -54,6 +55,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
   List<Data>? userdetails;
 
   static bool blockchat = false;
+
+  bool view = false;
 
   @override
   void initState() {
@@ -210,7 +213,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                     ),
                                     Text(
                                       " Live",
-                                      style: TextStyle(
+                                      style: GoogleFonts.notoSansDevanagari(
                                           color: ColorResources.textWhite),
                                     ),
                                   ],
@@ -240,6 +243,18 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                               enabledButtons: const [BuiltInButtons.callEnd],
                             ),
                           ),
+                          Positioned(
+                              bottom: 5,
+                              right: 5,
+                              child: GestureDetector(
+                                  onTap: () {
+                                    view = true;
+                                    SystemChrome.setPreferredOrientations([
+                                      DeviceOrientation.landscapeLeft,
+                                      DeviceOrientation.landscapeRight
+                                    ]);
+                                  },
+                                  child: Icon(Icons.fullscreen)))
                         ],
                       ),
                     ),
@@ -249,83 +264,86 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(widget.lecture.lectureTitle,
-                                style: const TextStyle(fontSize: 30)),
+                                style: GoogleFonts.notoSansDevanagari(
+                                    fontSize: 30)),
                             Text(widget.lecture.description),
                             //Text('By ${widget.lecture.subject}'),
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
                             ),
-                            const Align(
-                                alignment: Alignment.center,
-                                child: Text('Documents Shared with you')),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.04,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: ColorResources.gray.withOpacity(0.5),
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageUrl: SvgImages.pdfimage,
-                                              placeholder: (context, url) => const Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Class 1 Notes',
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                                Text(
-                                                  '2.5 MB',
-                                                  style: GoogleFonts.lato(
-                                                      fontSize: 16,
-                                                      color:
-                                                          ColorResources.gray),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Icon(
-                                          Icons.file_download_outlined,
-                                          size: 40,
-                                          color: ColorResources.buttoncolor,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // const Align(
+                            //     alignment: Alignment.center,
+                            //     child: Text('Documents Shared with you')),
+                            // SizedBox(
+                            //   height: MediaQuery.of(context).size.height * 0.04,
+                            // ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.symmetric(vertical: 10.0),
+                            //   child: Container(
+                            //     padding: const EdgeInsets.all(10),
+                            //     width: double.infinity,
+                            //     decoration: BoxDecoration(
+                            //       border: Border.all(
+                            //         color: ColorResources.gray.withOpacity(0.5),
+                            //       ),
+                            //       borderRadius: BorderRadius.circular(20),
+                            //     ),
+                            //     child: Column(
+                            //       children: [
+                            //         Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: [
+                            //             Row(
+                            //               children: [
+                            //                 CachedNetworkImage(
+                            //                   imageUrl: SvgImages.pdfimage,
+                            //                   placeholder: (context, url) =>
+                            //                       const Center(
+                            //                           child:
+                            //                               CircularProgressIndicator()),
+                            //                   errorWidget:
+                            //                       (context, url, error) =>
+                            //                           const Icon(Icons.error),
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   width: 20,
+                            //                 ),
+                            //                 Column(
+                            //                   crossAxisAlignment:
+                            //                       CrossAxisAlignment.start,
+                            //                   children: [
+                            //                     Text(
+                            //                       'Class 1 Notes',
+                            //                       style: GoogleFonts
+                            //                           .notoSansDevanagari(
+                            //                               fontSize: 20,
+                            //                               fontWeight:
+                            //                                   FontWeight.w400),
+                            //                     ),
+                            //                     Text(
+                            //                       '2.5 MB',
+                            //                       style: GoogleFonts.lato(
+                            //                           fontSize: 16,
+                            //                           color:
+                            //                               ColorResources.gray),
+                            //                     ),
+                            //                   ],
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //             Icon(
+                            //               Icons.file_download_outlined,
+                            //               size: 40,
+                            //               color: ColorResources.buttoncolor,
+                            //             )
+                            //           ],
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ))
                   ],

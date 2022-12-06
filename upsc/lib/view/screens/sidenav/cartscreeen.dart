@@ -38,7 +38,8 @@ class _CartScreenState extends State<CartScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           Languages.cart,
-          style: TextStyle(color: ColorResources.textblack),
+          style: GoogleFonts.notoSansDevanagari(
+              color: ColorResources.textblack, fontWeight: FontWeight.bold),
         ),
       ),
       body: RefreshIndicator(
@@ -64,6 +65,7 @@ class _CartScreenState extends State<CartScreen> {
                     itemCount: state.cartData.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) => RadioListTile(
+                      contentPadding: EdgeInsets.only(right: 5.0),
                       value: index,
                       groupValue: _selectedValue,
                       visualDensity: const VisualDensity(
@@ -107,7 +109,7 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Text(
                   '₹${cartSelectedItem!.amount}',
-                  style: const TextStyle(
+                  style: GoogleFonts.notoSansDevanagari(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
@@ -119,7 +121,7 @@ class _CartScreenState extends State<CartScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18.0, vertical: 10.0),
                       child: Text('Make Payment',
-                          style: GoogleFonts.poppins(fontSize: 20)),
+                          style: GoogleFonts.notoSansDevanagari(fontSize: 20)),
                     ))
               ],
             ),
@@ -168,9 +170,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget _cartContainerWidget({required CartDataModel cartData}) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        height: 100,
-        width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: ColorResources.textWhite,
@@ -182,28 +181,30 @@ class _CartScreenState extends State<CartScreen> {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
                   SizedBox(
-                    width: 140,
+                    width: MediaQuery.of(context).size.width * 0.50,
                     child: Text(
                       cartData.batchDetails.batchName,
-                      style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.notoSansDevanagari(
+                          color: ColorResources.textblack,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.40,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.50,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
                           children: [
@@ -211,27 +212,30 @@ class _CartScreenState extends State<CartScreen> {
                               Icons.sensors_outlined,
                               color: ColorResources.buttoncolor,
                             ),
-                            const Text(
+                            Text(
                               'Live lectures',
-                              style: TextStyle(fontSize: 8),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         ),
                         Column(
-                          children: const [
+                          children: [
                             Icon(Icons.signal_cellular_alt),
                             Text(
                               '100% Online',
-                              style: TextStyle(fontSize: 8),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         ),
                         Column(
-                          children: const [
+                          children: [
                             Icon(Icons.download),
                             Text(
                               'Downloadable',
-                              style: TextStyle(fontSize: 8),
+                              style:
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         )
@@ -241,7 +245,7 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -261,7 +265,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   Text(
                     '₹ ${cartData.amount}',
-                    style: const TextStyle(
+                    style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],

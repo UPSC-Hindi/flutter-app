@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/data/remote/models/notes_model.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -18,19 +16,8 @@ class SampleNotesScreen extends StatefulWidget {
 }
 
 class _SampleNotesScreenState extends State<SampleNotesScreen> {
-  final TextEditingController _searchtest = TextEditingController();
-
-  @override
-  void initState() {
-    context
-        .read<ApiBloc>()
-        .add(const GetResources(key: 'Category', value: 'Sample Notes'));
-    super.initState();
-  }
-
   @override
   void dispose() {
-    _searchtest.dispose();
     super.dispose();
   }
 
@@ -44,17 +31,20 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           'Sample Notes',
-          style: GoogleFonts.poppins(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: FutureBuilder<NotesModel>(
-          future: widget.resourceDataSourceImpl.getNotes(),
+          future: widget.resourceDataSourceImpl.getNotes(filter: 'sample'),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
-                  return _bodyWidget(context, response.data);
+                  return NotesWidget(
+                    resources: response.data,
+                  );
                 } else {
                   return Text(response.msg);
                 }
@@ -67,13 +57,40 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
           }),
     );
   }
+}
 
-  Container _bodyWidget(BuildContext context, List<NotesDataModel> resources) {
+class NotesWidget extends StatefulWidget {
+  final List<NotesDataModel> resources;
+  const NotesWidget({Key? key, required this.resources}) : super(key: key);
+
+  @override
+  State<NotesWidget> createState() => _NotesWidgetState();
+}
+
+class _NotesWidgetState extends State<NotesWidget> {
+  String filterText = '';
+  late List<NotesDataModel> resources = widget.resources;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          SearchBarWidget(searchtest: _searchtest),
+          SearchBarWidget(
+            onChanged: (String value) {
+              setState(() {
+                filterText = value;
+                resources = widget.resources
+                    .where(
+                      (element) => element.title.toLowerCase().contains(
+                            filterText.toLowerCase(),
+                          ),
+                    )
+                    .toList();
+              });
+            },
+          ),
           FractionallySizedBox(
             widthFactor: 0.90,
             child: ListView.builder(
@@ -82,7 +99,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
                   title: resources[index].title,
-                  uploadFile: resources[index].fileUrl,
+                  uploadFile: resources[index].fileUrl.fileLoc,
+                  fileSize: resources[index].fileUrl.fileSize,
                 );
               },
             ),

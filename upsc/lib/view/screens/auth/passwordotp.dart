@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
@@ -49,7 +50,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 60,
-    textStyle: const TextStyle(
+    textStyle:  GoogleFonts.notoSansDevanagari(
       fontSize: 22,
       color: Color.fromRGBO(30, 60, 87, 1),
     ),
@@ -74,7 +75,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
               ),
               Text(
                 'OTP sent on',
-                style: TextStyle(
+                style: GoogleFonts.notoSansDevanagari(
                     color: ColorResources.textblack,
                     fontSize: 30,
                     fontWeight: FontWeight.bold),
@@ -88,7 +89,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                 },
                 child: Text(
                   ' $otpdatafor  Change',
-                  style: const TextStyle(fontSize: 20),
+                  style:  GoogleFonts.notoSansDevanagari(fontSize: 20),
                 ),
               ),
               const SizedBox(
@@ -131,7 +132,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                   },
                   child: Text(
                     'Verify',
-                    style: TextStyle(
+                    style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textWhite,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
@@ -152,7 +153,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                     },
                     child: Text(
                       ' Try again',
-                      style: TextStyle(color: ColorResources.buttoncolor),
+                      style: GoogleFonts.notoSansDevanagari(color: ColorResources.buttoncolor),
                     ),
                   ),
                 ],

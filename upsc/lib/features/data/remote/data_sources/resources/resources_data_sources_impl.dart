@@ -5,48 +5,53 @@ import 'package:upsc/features/data/remote/data_sources/resources/resources_data_
 import 'package:upsc/features/data/remote/models/air_resource_model.dart';
 import 'package:upsc/features/data/remote/models/daily_news_model.dart';
 import 'package:upsc/features/data/remote/models/notes_model.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
 
-class ResourceDataSourceImpl extends ResourcesDataSource{
+class ResourceDataSourceImpl extends ResourcesDataSource {
   @override
-  getDailyNews() async{
-    try{
-      Response response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getDailyNews}');
+  getDailyNews() async {
+    try {
+      Response response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.getDailyNews}');
       return DailyNewsModel.fromJson(response.data);
-    }catch(error){
+    } catch (error) {
       print(error);
       rethrow;
     }
   }
 
   @override
-  getAir() async{
-    try{
-      Response response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getDailyNews}');
+  getAir() async {
+    try {
+      Response response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.getAirResources}');
       return AirResourcesModel.fromJson(response.data);
-    }catch(error){
+    } catch (error) {
       print(error);
       rethrow;
     }
   }
 
   @override
-  getCourseIndex() async{
-    try{
-      Response response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getNotesDetails}');
-      return NotesModel.fromJson(response.data);
-    }catch(error){
+  getCourseIndex() async {
+    try {
+      Response response = await dioAuthorizationData()
+           .get('${Apis.baseUrl}${Apis.getCourseIndex}');
+      return ResourcesModel.fromJson(response.data);
+    } catch (error) {
       print(error);
       rethrow;
     }
   }
 
-
   @override
-  Future<NotesModel> getNotes() async{
-    try{
-      Response response = await dioAuthorizationData().get('${Apis.baseUrl}${Apis.getNotesDetails}');
+  Future<NotesModel> getNotes({required String filter}) async {
+    try {
+      Response response = await dioAuthorizationData().get(
+          '${Apis.baseUrl}${Apis.getNotesDetails}',
+          queryParameters: {"Notes_type": filter});
       return NotesModel.fromJson(response.data);
-    }catch(error){
+    } catch (error) {
       print(error);
       rethrow;
     }
@@ -56,5 +61,4 @@ class ResourceDataSourceImpl extends ResourcesDataSource{
   void getYoutubeNotes() {
     // TODO: implement getYoutubeNotes
   }
-
 }

@@ -97,7 +97,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
           Languages.download,
-          style: TextStyle(color: ColorResources.textblack),
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
       ),
       body: DefaultTabController(
@@ -159,8 +160,7 @@ class _DownloadScreenState extends State<DownloadScreen> {
                     var _file =
                         _directories.isNotEmpty ? _directories.first : null;
                     return GestureDetector(
-                      onTap: () =>
-                          OpenFile.open("$_savedDirectory/$_filename"),
+                      onTap: () => OpenFile.open("$_savedDirectory/$_filename"),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
@@ -171,59 +171,72 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 5),
-                                  child: Icon(
-                                    Icons.picture_as_pdf,
-                                    size: 30,
-                                    color: ColorResources.buttoncolor,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.80,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 5),
+                                    child: Icon(
+                                      Icons.picture_as_pdf,
+                                      size: 30,
+                                      color: ColorResources.buttoncolor,
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _filename.split('.').first,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _status == DownloadTaskStatus.complete
-                                          ? const Text('')
-                                          : Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Text('$_progress%'),
-                                                  Row(
-                                                    children: <Widget>[
-                                                      Expanded(
-                                                        child:
-                                                            LinearProgressIndicator(
-                                                          value:
-                                                              _progress / 100,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.60,
+                                          child: Text(
+                                            _filename.split('.').first,
+                                            style:
+                                                GoogleFonts.notoSansDevanagari(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                    ],
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        _status == DownloadTaskStatus.complete
+                                            ? const Text('')
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    Text('$_progress%'),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child:
+                                                              LinearProgressIndicator(
+                                                            value:
+                                                                _progress / 100,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -281,7 +294,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
                         },
                       ),
                       GestureDetector(
-                        child: const Icon(Icons.close, size: 30, color: Colors.red),
+                        child: const Icon(Icons.close,
+                            size: 30, color: Colors.red),
                         onTap: () {
                           FlutterDownloader.cancel(taskId: taskid);
                         },
@@ -301,8 +315,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
                             },
                           ),
                           GestureDetector(
-                            child:
-                                const Icon(Icons.close, size: 30, color: Colors.red),
+                            child: const Icon(Icons.close,
+                                size: 30, color: Colors.red),
                             onTap: () {
                               FlutterDownloader.cancel(taskId: taskid);
                             },
@@ -311,8 +325,8 @@ class _DownloadScreenState extends State<DownloadScreen> {
                       )
                     : _status == DownloadTaskStatus.complete
                         ? GestureDetector(
-                            child:
-                                const Icon(Icons.delete, size: 30, color: Colors.red),
+                            child: const Icon(Icons.delete,
+                                size: 30, color: Colors.red),
                             onTap: () {
                               downloadsListMaps.removeAt(index);
                               FlutterDownloader.remove(

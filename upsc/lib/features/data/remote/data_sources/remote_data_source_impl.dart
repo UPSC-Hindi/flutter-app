@@ -6,11 +6,17 @@ import 'package:upsc/features/data/remote/models/CoursesModel.dart';
 import 'package:upsc/features/data/remote/models/batch_notes_model.dart';
 import 'package:upsc/features/data/remote/models/cart_model.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
+import 'package:upsc/features/data/remote/models/resources_model.dart';
+import 'package:upsc/features/data/remote/models/stream_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/Test_series/MyTests.dart';
+import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/classschedule.dart';
+import 'package:upsc/features/data/remote/models/course_details_model.dart';
 
 class RemoteDataSourceImpl extends RemoteDataSource {
   @override
@@ -25,13 +31,13 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<BatchNotesModel> getResources(String key, String value) async {
+  Future<ResourcesModel> getResources() async {
     try {
       Response response = await dioAuthorizationData().get(
           '${Apis.baseUrl}${Apis.getResources}',
-          queryParameters: {key: value});
+          queryParameters: {'Category': 'Pathyakram'});
 
-      return BatchNotesModel.fromJson(response.data);
+      return ResourcesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -53,12 +59,28 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<CoursesModel> getCourses(String key, String value) async {
     try {
-      final queryParameters = <String, dynamic>{key: value};
+      final queryParameters = <String, dynamic>{
+        key: value,
+      };
       var response = await dioAuthorizationData().get(
-        '${Apis.baseUrl}${Apis.getCoursesFilter}?sizesView = true',
+        '${Apis.baseUrl}${Apis.getCoursesFilter}',
         queryParameters: queryParameters,
       );
       return CoursesModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<TestSeries> getTestSeries() async {
+    try {
+      final queryParameters = <String, dynamic>{};
+      var response = await dioAuthorizationData().get(
+        '${Apis.baseUrl}${Apis.gettestseries}',
+        queryParameters: queryParameters,
+      );
+      return TestSeries.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -70,6 +92,17 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.mycourses}');
       return MyCoursesModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MyTestsModel> getMyTests() async {
+    try {
+      var response =
+          await dioAuthorizationData().get('${Apis.baseUrl}${Apis.myTests}');
+      return MyTestsModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -130,6 +163,21 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
+  Future<Response> savetestPaymentStatus(
+      Map<String, dynamic> paymentData) async {
+    try {
+      Response response = await dioAuthorizationData().post(
+        '${Apis.baseUrl}${Apis.savetestPaymentStatus}',
+        data: paymentData,
+      );
+      print(response);
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<String> getOrderId(String batchId) async {
     try {
       return '12345';
@@ -163,12 +211,34 @@ class RemoteDataSourceImpl extends RemoteDataSource {
           '${Apis.baseUrl}${Apis.getRecordedVideo}',
           queryParameters: {'batchId': batchId});
       RecordedVideoModel data = RecordedVideoModel.fromJson(response.data);
-      if (data.status) {
+      if (data.status!) {
         print(data);
-        return data.data;
+        return data.data!;
       } else {
         return [];
       }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  getMyOrder() async {
+    try {
+      Response response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.getMyOrders}');
+      return MyOrdersModel.fromJson(response.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  getCoursesDetails(String batchId) async {
+    try {
+      Response response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.getCoursesDetails}$batchId');
+      return CoursesDetailsModel.fromJson(response.data);
     } catch (error) {
       rethrow;
     }

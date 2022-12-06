@@ -9,6 +9,7 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
+import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
@@ -45,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final List _widgetOptions = [
     const HomeScreens(),
     const CourseScreen(),
-    const mocktestscreen(),
-    const ProfilScreen()
+    mocktestscreen(remoteDataSourceImpl: RemoteDataSourceImpl()),
+    ProfilScreen()
   ];
 
   String name = "temp";
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Builder(
           builder: (BuildContext context) {
             return Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+              padding: const EdgeInsets.only(left: 1.0),
               child: IconButton(
                 icon: const ImageIcon(
                   AssetImage('assets/images/menuIcon.png'),
@@ -107,19 +108,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Container(
-            width: 130,
-            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            width: MediaQuery.of(context).size.width * 0.35,
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
                 color: const Color(0xFFF6CBB4),
-                borderRadius: BorderRadius.circular(20)),
+                borderRadius: BorderRadius.circular(25)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
+                Text(
                   'Notification',
-                  style: TextStyle(
-                    color: Color(0xFF783B3B),
-                  ),
+                  style: GoogleFonts.notoSansDevanagari(
+                      color: const Color(0xFF783B3B), fontSize: 12),
                 ),
                 InkWell(
                   onTap: (() {
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Icon(
                             Icons.notifications_none_outlined,
                             color: Color(0xFF783B3B),
-                            size: 20,
+                            size: 18,
                           )),
                           Container(
                             margin: const EdgeInsets.only(
@@ -161,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: SafeArea(
         child: Drawer(
+          width: MediaQuery.of(context).size.width * 0.80,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30),
@@ -172,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 10, left: 10),
-                height: 100,
+                height: MediaQuery.of(context).size.height * 0.15,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -188,16 +189,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           CachedNetworkImageProvider(_profileimage!),
                       backgroundColor: Colors.grey,
                     ),
-                    const SizedBox(
-                      width: 10,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.02,
                     ),
                     SizedBox(
-                      width: 200,
+                      width: MediaQuery.of(context).size.width * 0.60,
                       child: Text(
                         name,
                         overflow: TextOverflow.clip,
                         maxLines: 2,
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.notoSansDevanagari(
                             fontWeight: FontWeight.w600,
                             fontSize: 20,
                             color: ColorResources.textWhite),
@@ -219,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.info),
@@ -228,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.aboutUs,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -247,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.download_rounded),
@@ -256,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.yourDownloads,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -275,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.shopping_cart),
@@ -284,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.myCart,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -303,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.list),
@@ -312,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.myOrders,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -332,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.menu_book),
@@ -341,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.myCourses,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -360,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.text_snippet),
@@ -369,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.myTestseries,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -389,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.people),
@@ -398,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.ourachievements,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -417,7 +418,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.event_available_rounded),
@@ -426,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.mySchedule,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -446,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(CupertinoIcons.layers),
@@ -455,7 +456,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.resources,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -474,7 +475,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(Icons.help_outlined),
@@ -483,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.helpAndSupport,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -503,7 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(CupertinoIcons.reply),
@@ -512,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.shareApp,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -539,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 30, top: 0, bottom: 0, right: 0),
+                            left: 16, top: 0, bottom: 0, right: 0),
                         child: Row(
                           children: [
                             const Icon(CupertinoIcons.settings),
@@ -548,7 +549,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               Languages.setting,
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
                                   color: ColorResources.textblack),
@@ -567,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 30, top: 0, bottom: 10, right: 30),
+                      left: 16, top: 0, bottom: 10, right: 30),
                   child: Container(
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
@@ -584,7 +585,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 10,
                         ),
                         Text('Logout',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.notoSansDevanagari(
                               fontWeight: FontWeight.w500,
                               fontSize: 15,
                               color: Colors.redAccent,

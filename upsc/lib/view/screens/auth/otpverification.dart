@@ -27,7 +27,7 @@ class _OtpverificationState extends State<Otpverification> {
   final controller = TextEditingController();
   final focusNode = FocusNode();
   String? phonenumber, otp;
-    List<Widget> images = [];
+  List<Widget> images = [];
 
   var token;
 
@@ -75,7 +75,7 @@ class _OtpverificationState extends State<Otpverification> {
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 60,
-    textStyle: const TextStyle(
+    textStyle: GoogleFonts.notoSansDevanagari(
       fontSize: 22,
       color: Color.fromRGBO(30, 60, 87, 1),
     ),
@@ -121,7 +121,7 @@ class _OtpverificationState extends State<Otpverification> {
                     ),
                     Text(
                       'OTP sent on',
-                      style: TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                           color: ColorResources.textblack,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
@@ -135,7 +135,7 @@ class _OtpverificationState extends State<Otpverification> {
                       },
                       child: Text(
                         '+91 $phonenumber Change',
-                        style: GoogleFonts.poppins(fontSize: 20),
+                        style: GoogleFonts.notoSansDevanagari(fontSize: 20),
                       ),
                     ),
                     const SizedBox(
@@ -180,7 +180,7 @@ class _OtpverificationState extends State<Otpverification> {
                         },
                         child: Text(
                           'Verify',
-                          style: TextStyle(
+                          style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textWhite,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -201,7 +201,7 @@ class _OtpverificationState extends State<Otpverification> {
                           },
                           child: Text(
                             ' Try again',
-                            style: TextStyle(color: ColorResources.buttoncolor),
+                            style: GoogleFonts.notoSansDevanagari(color: ColorResources.buttoncolor),
                           ),
                         ),
                       ],
@@ -241,12 +241,13 @@ class _OtpverificationState extends State<Otpverification> {
         );
       });
       if (response.status!) {
-         await SharedPreferenceHelper.setBoolean(
-              Preferences.is_logged_in, true);
+        await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
         await SharedPreferenceHelper.setString(
-              Preferences.phoneNUmber, widget.number);
-         SharedPreferenceHelper.setString(Preferences.access_token,response.data!.accessToken!);
-        Navigator.of(context).push(MaterialPageRoute(
+            Preferences.phoneNUmber, widget.number);
+        SharedPreferenceHelper.setString(
+            Preferences.access_token, response.data!.accessToken!);
+        Navigator.of(context).push(
+          MaterialPageRoute(
             builder: (context) => const LanguageScreen(isLogin: false),
           ),
         );

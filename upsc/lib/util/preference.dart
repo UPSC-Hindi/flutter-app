@@ -23,6 +23,12 @@ class SharedPreferenceHelper {
     return await _preferences!.setInt(key, value);
   }
 
+  static Future setStringList(String key,List<String>value)async{
+    return await _preferences!.setStringList(key, value);
+  }
+  static Future<List<String>?> getStringList(String key)async{
+    return _preferences!.getStringList(key);
+  }
   static void clearPref() {
     _preferences!.clear();
   }

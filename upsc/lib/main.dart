@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/util/langauge.dart';
@@ -43,7 +44,6 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:upsc/view/screens/sidenav/resources/youtubenotes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -125,6 +125,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ResourceDataSourceImpl resourceDataSourceImpl = ResourceDataSourceImpl();
+    RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     return BlocProvider(
       create: (context) => ApiBloc(),
       child: MaterialApp(
@@ -150,14 +151,14 @@ class MyApp extends StatelessWidget {
           'notifications': (context) => const NotificationScreen(),
           // 'homescreen': (context) => const HomeScreens(),
           'Coursescreen': (context) => const CourseScreen(),
-          'mocktestscreen': (context) => const mocktestscreen(),
-          'ProfilScreen': (context) => const ProfilScreen(),
+          'mocktestscreen': (context) => mocktestscreen(remoteDataSourceImpl: remoteDataSourceImpl,),
+          'ProfilScreen': (context) => ProfilScreen(),
           'editprofilescreen': (context) => const EditProfileScreen(),
           'downloadScreen': (context) => const DownloadScreen(),
           'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
-          'mytestseries': (context) => const MyTestSeries(),
+          'mytestseries': (context) =>  TestSeries(),
           'ourachievements': (context) => const OurAchievementsScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),
           'helpandsupport': (context) => const HelpAndSupport(),
@@ -189,7 +190,7 @@ class MyApp extends StatelessWidget {
                 resourceDataSourceImpl: resourceDataSourceImpl,
               ),
           'contactus': (context) => const ContactUsScreen(),
-          'aboutusscreen': (context) => const AboutUsScreen(),
+          'aboutusscreen': (context) => AboutUsScreen(),
 //           'joinstreaming': (context) => const JoinStreamingScreen(
 // lecture: '',
 //                 rtctoken: '',

@@ -1,8 +1,12 @@
+import 'dart:isolate';
 import 'dart:math';
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
@@ -111,7 +115,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                     borderRadius: BorderRadius.circular(90)),
                                 child: Text(
                                   'Duration',
-                                  style: GoogleFonts.poppins(fontSize: 16),
+                                  style: GoogleFonts.notoSansDevanagari(
+                                      fontSize: 16),
                                 ),
                               ),
                               const SizedBox(
@@ -134,55 +139,59 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                                   ]),
                                 ],
                               ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFfD9D9D9),
-                                    borderRadius: BorderRadius.circular(90)),
-                                child: Text(
-                                  'Faculty  ',
-                                  style: GoogleFonts.poppins(fontSize: 16),
-                                ),
-                              ),
-                              Container(
-                                height: 100,
-                                child: ListView.builder(
-                                  itemCount: widget.batch.teacher.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: Column(
-                                      children: [
-                                        CachedNetworkImage(
-                                          imageUrl: widget.batch.teacher[index]
-                                              .profilePhoto,
-                                          placeholder: (context, url) => const Center(
-                                              child:
-                                                  CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                          height: 70,
-                                        ),
-                                        SizedBox(
-                                          width: 70,
-                                          child: Text(
-                                            widget
-                                                .batch.teacher[index].fullName,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   margin:
+                              //       const EdgeInsets.symmetric(vertical: 10),
+                              //   padding: const EdgeInsets.all(5),
+                              //   decoration: BoxDecoration(
+                              //       color: const Color(0xFfD9D9D9),
+                              //       borderRadius: BorderRadius.circular(90)),
+                              //   child: Text(
+                              //     'Faculty  ',
+                              //     style: GoogleFonts.notoSansDevanagari(
+                              //         fontSize: 16),
+                              //   ),
+                              // ),
+                              // Container(
+                              //   height: 100,
+                              //   child: ListView.builder(
+                              //     itemCount: widget.batch.teacher.length,
+                              //     scrollDirection: Axis.horizontal,
+                              //     itemBuilder: (context, index) => Padding(
+                              //       padding: const EdgeInsets.symmetric(
+                              //           horizontal: 5.0),
+                              //       child: Column(
+                              //         children: [
+                              //           CachedNetworkImage(
+                              //             imageUrl: widget.batch.teacher[index]
+                              //                 .profilePhoto,
+                              //             placeholder: (context, url) =>
+                              //                 const Center(
+                              //                     child:
+                              //                         CircularProgressIndicator()),
+                              //             errorWidget: (context, url, error) =>
+                              //                 const Icon(Icons.error),
+                              //             height: 70,
+                              //           ),
+                              //           SizedBox(
+                              //             width: 70,
+                              //             child: Text(
+                              //               widget
+                              //                   .batch.teacher[index].fullName,
+                              //               textAlign: TextAlign.center,
+                              //               style:
+                              //                   GoogleFonts.notoSansDevanagari(
+                              //                       fontSize: 16,
+                              //                       fontWeight:
+                              //                           FontWeight.bold),
+                              //               overflow: TextOverflow.ellipsis,
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -249,7 +258,8 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Start Now', style: GoogleFonts.poppins()), // <-- Text
+                Text('Start Now',
+                    style: GoogleFonts.notoSansDevanagari()), // <-- Text
                 const SizedBox(
                   width: 5,
                 ),
@@ -357,7 +367,8 @@ class BatchNotesWidget extends StatelessWidget {
                       itemCount: notesList!.length,
                       itemBuilder: (context, index) => ResourcesContainerWidget(
                         title: notesList![index].title,
-                        uploadFile: notesList![index].uploadFile,
+                        uploadFile: notesList![index].uploadFile.fileLoc,
+                        fileSize: notesList![index].uploadFile.fileSize,
                       ),
                     );
             } else {
@@ -370,7 +381,7 @@ class BatchNotesWidget extends StatelessWidget {
   }
 }
 
-class CoursesVideoWidget extends StatelessWidget {
+class CoursesVideoWidget extends StatefulWidget {
   const CoursesVideoWidget({
     Key? key,
     required this.batchId,
@@ -378,12 +389,66 @@ class CoursesVideoWidget extends StatelessWidget {
   final String batchId;
 
   @override
+  State<CoursesVideoWidget> createState() => _CoursesVideoWidgetState();
+}
+
+class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
+  final ReceivePort _port = ReceivePort();
+
+  Future download(String url, String? name) async {
+    final baseStorage = await getExternalStorageDirectory();
+
+    print('directory:${baseStorage!.path}');
+    //todo pls chek this variable use
+    List files = baseStorage.listSync();
+    await FlutterDownloader.enqueue(
+      url: url,
+      headers: {},
+      // optional: header send with url (auth token etc)
+      savedDir: baseStorage.path,
+      showNotification: true,
+      // show download progress in status bar (for Android)
+      fileName: '${name!}.${url.split('.').last}',
+      openFileFromNotification:
+          false, // click on notification to open downloaded file (for Android)
+    );
+  }
+
+  @override
+  void initState() {
+    IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
+    _port.listen((dynamic data) {
+      DownloadTaskStatus status = data[1];
+      int progress = data[2];
+      setState(() {});
+    });
+
+    FlutterDownloader.registerCallback(downloadCallback);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
+  }
+
+  @pragma('vm:entry-point')
+  static void downloadCallback(
+      String id, DownloadTaskStatus status, int progress) {
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send!.send([id, status, progress]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     List<RecordedVideoDataModel>? videoList;
     return FutureBuilder<List<RecordedVideoDataModel>>(
         initialData: videoList,
-        future: remoteDataSourceImpl.getRecordedVideo(batchId: batchId),
+        future: remoteDataSourceImpl.getRecordedVideo(batchId: widget.batchId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
@@ -392,9 +457,17 @@ class CoursesVideoWidget extends StatelessWidget {
                   ? EmptyWidget(
                       image: SvgImages.emptyCard, text: "There is no video")
                   : ListView.builder(
+                      shrinkWrap: true,
                       itemCount: videoList!.length,
-                      itemBuilder: (context, index) => _recordedVideoWidget(videoList![index]),
+                      itemBuilder: (BuildContext context, int index) {
+                        return _recordedvideobody(videoList![index]);
+                      },
                     );
+              //  ListView.builder(
+              //     itemCount: videoList!.length,
+              //     itemBuilder: (context, index) =>
+              //         _recordedVideoWidget(videoList![index]),
+              //   );
             } else {
               return const Center(child: Text("Something Went Wrong"));
             }
@@ -404,49 +477,72 @@ class CoursesVideoWidget extends StatelessWidget {
         });
   }
 
-  Container _recordedVideoWidget(RecordedVideoDataModel videosdata) {
+  Widget _recordedvideobody(RecordedVideoDataModel lectureName) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(
-            videosdata.lectureId.lectureTitle,
-            style: GoogleFonts.poppins(fontSize: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Text(
+              lectureName.lectureName!,
+              style: GoogleFonts.notoSansDevanagari(fontSize: 24),
+            ),
           ),
-        ),
-        Row(
-          children: [
-            Container(
-              height: 60,
-              width: 90,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: ColorResources.gray),
-              child: Icon(Icons.play_circle, color: ColorResources.textWhite),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  videosdata.title,
-                  style: GoogleFonts.poppins(
-                      fontSize: 20, fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  '1hr 2mins',
-                  style: GoogleFonts.lato(
-                      fontSize: 16, color: ColorResources.gray),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const Divider(),
-      ]),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: lectureName.listofvideos!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _recordedVideoWidget(lectureName.listofvideos![index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _recordedVideoWidget(Listofvideos videosdata) {
+    return InkWell(
+      onTap: () {
+        
+        //download(videosdata.fileUrl!.fileLoc!, videosdata.title);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            children: [
+              Container(
+                height: 60,
+                width: 90,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorResources.gray),
+                child: Icon(Icons.play_circle, color: ColorResources.textWhite),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    videosdata.title!,
+                    style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 20, fontWeight: FontWeight.w400),
+                  ),
+                  // Text(
+                  //   '1hr 2mins',
+                  //   style: GoogleFonts.notoSansDevanagari(
+                  //       fontSize: 16, color: ColorResources.gray),
+                  // ),
+                ],
+              ),
+            ],
+          ),
+          const Divider(),
+        ]),
+      ),
     );
   }
 }

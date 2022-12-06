@@ -22,6 +22,7 @@ class Apis {
       "authentication/UpdateUserProfilePhoto";
 
   static const String getCoursesFilter = "adminPanel/getBatchesDetails";
+  static const String getCoursesDetails = 'adminPanel/getBatchDetailswithid/';
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
 
   static const String joinmeeting = "Streaming/JoinMeetingRTCAndRTMToken";
@@ -33,14 +34,17 @@ class Apis {
 
   static const String putUserStream = 'authentication/updateUserStream';
   static const String putUserLanguage = 'authentication/updateUserLanguage';
+  static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
 
   static const String addtocart = 'adminPanel/addtocart';
   static const String getcartdata = 'adminPanel/getCartDetails';
   static const String mycourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';
+  static const String getMyOrders = 'UPSCPayment/userTransactionDetails';
   static const String removefromCart = "adminPanel/deleteCartDetails/";
   static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
   static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
+  static const String getCourseIndex = 'adminPanel/ResourceDetails';
 
   //Resources
   static const String getDailyNews = 'adminPanel/getNewsClips';
@@ -52,6 +56,7 @@ class Apis {
 
   //Payment
   static const String savePaymentStatus = 'UPSCPayment/verifyUserPayment';
+  static const String savetestPaymentStatus = 'UPSCPayment/verifyUserPaymentForTestSeries';
   static const String getOrderId = 'UPSCPayment/orders';
 
   //Scheduler
@@ -62,4 +67,7 @@ class Apis {
   static const String classScheduler = 'adminPanel/getMySchedular';
 
   static const String getnotification="Notification/getNotifications";
+  //TestSeries
+  static const String gettestseries="adminPanel/getTestSeriesdetails";
+  static const String myTests = 'adminPanel/getMyTestSeries';
 }

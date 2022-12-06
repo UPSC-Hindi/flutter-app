@@ -1,116 +1,126 @@
-
 class ResourcesModel {
-  ResourcesModel({
-    required this.status,
-    required this.data,
-    required this.msg,
-  });
+  bool? status;
+  List<ResourcesDataModle>? data;
+  String? msg;
 
-  final bool status;
-  final List<ResourcesDataModel> data;
-  final String msg;
+  ResourcesModel({this.status, this.data, this.msg});
 
-  factory ResourcesModel.fromJson(Map<String, dynamic> json) => ResourcesModel(
-    status: json["status"],
-    data: List<ResourcesDataModel>.from(json["data"].map((x) => ResourcesDataModel.fromJson(x))),
-    msg: json["msg"],
-  );
+  ResourcesModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <ResourcesDataModle>[];
+      json['data'].forEach((v) {
+        data!.add(ResourcesDataModle.fromJson(v));
+      });
+    }
+    msg = json['msg'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "msg": msg,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data['msg'] = msg;
+    return data;
+  }
 }
 
-class ResourcesDataModel {
-  ResourcesDataModel({
-    required this.id,
-    required this.user,
-    required this.category,
-    required this.subject,
-    required this.title,
-    required this.fileUrl,
-    required this.language,
-    required this.createdAt,
-    required this.resourceType,
-    required this.v,
-  });
+class ResourcesDataModle {
+  String? sId;
+  Category? category;
+  String? title;
+  FileUrl? fileUrl;
+  String? language;
+  String? createdAt;
+  String? resourceType;
+  bool? isActive;
 
-  final String id;
-  final String user;
-  final Category category;
-  final String subject;
-  final String title;
-  final String fileUrl;
-  final String language;
-  final String createdAt;
-  final String resourceType;
-  final int v;
+  ResourcesDataModle(
+      {this.sId,
+      this.category,
+      this.title,
+      this.fileUrl,
+      this.language,
+      this.createdAt,
+      this.resourceType,
+      this.isActive});
 
-  factory ResourcesDataModel.fromJson(Map<String, dynamic> json) => ResourcesDataModel(
-    id: json["_id"],
-    user: json["user"],
-    category: Category.fromJson(json["category"]),
-    subject: json["subject"],
-    title: json["title"],
-    fileUrl: json["file_url"],
-    language: json["language"],
-    createdAt: json["Created_At"],
-    resourceType: json["resource_type"],
-    v: json["__v"],
-  );
+  ResourcesDataModle.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
+    title = json['title'];
+    fileUrl =
+        json['file_url'] != null ? FileUrl.fromJson(json['file_url']) : null;
+    language = json['language'];
+    createdAt = json['Created_At'];
+    resourceType = json['resource_type'];
+    isActive = json['is_active'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user": user,
-    "category": category.toJson(),
-    "subject": subject,
-    "title": title,
-    "file_url": fileUrl,
-    "language": language,
-    "Created_At": createdAt,
-    "resource_type": resourceType,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    if (category != null) {
+      data['category'] = category!.toJson();
+    }
+    data['title'] = title;
+    if (fileUrl != null) {
+      data['file_url'] = fileUrl!.toJson();
+    }
+    data['language'] = language;
+    data['Created_At'] = createdAt;
+    data['resource_type'] = resourceType;
+    data['is_active'] = isActive;
+    return data;
+  }
 }
 
 class Category {
-  Category({
-    required this.id,
-    required this.title,
-    required this.isActive,
-    required this.createdAt,
-    required this.type,
-    required this.user,
-    required this.v,
-  });
+  String? sId;
+  String? title;
+  bool? isActive;
+  String? createdAt;
 
-  final String id;
-  final String title;
-  final bool isActive;
-  final String createdAt;
-  final String type;
-  final String user;
-  final int v;
+  Category({this.sId, this.title, this.isActive, this.createdAt});
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["_id"],
-    title: json["title"],
-    isActive: json["is_active"],
-    createdAt: json["created_at"],
-    type: json["type"],
-    user: json["user"],
-    v: json["__v"],
-  );
+  Category.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    title = json['title'];
+    isActive = json['is_active'];
+    createdAt = json['created_at'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "title": title,
-    "is_active": isActive,
-    "created_at": createdAt,
-    "type": type,
-    "user": user,
-    "__v": v,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['title'] = title;
+    data['is_active'] = isActive;
+    data['created_at'] = createdAt;
+    return data;
+  }
+}
+
+class FileUrl {
+  String? fileLoc;
+  String? fileName;
+  String? fileSize;
+
+  FileUrl({this.fileLoc, this.fileName, this.fileSize});
+
+  FileUrl.fromJson(Map<String, dynamic> json) {
+    fileLoc = json['fileLoc'];
+    fileName = json['fileName'];
+    fileSize = json['fileSize'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['fileLoc'] = fileLoc;
+    data['fileName'] = fileName;
+    data['fileSize'] = fileSize;
+    return data;
+  }
 }

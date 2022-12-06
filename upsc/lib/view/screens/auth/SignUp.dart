@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
@@ -141,14 +142,16 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Text(
                       'Create Account',
-                      style: TextStyle(
+                      style: GoogleFonts.notoSansDevanagari(
                           color: ColorResources.textblack,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Container(
-                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      margin: const EdgeInsets.symmetric(vertical: 3),
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
                         controller: _emailController,
@@ -170,7 +173,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     Container(
-                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      margin: const EdgeInsets.symmetric(vertical: 3),
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
                         inputFormatters: [
@@ -200,7 +203,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     Container(
-                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      margin: const EdgeInsets.symmetric(vertical: 3),
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
                         controller: _nameController,
@@ -221,7 +224,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     Container(
-                      margin:const EdgeInsets.symmetric(vertical: 3),
+                      margin: const EdgeInsets.symmetric(vertical: 3),
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
                         obscureText: _passwordVisible,
@@ -285,7 +288,7 @@ class _SignUpState extends State<SignUp> {
                         },
                         child: Text(
                           'Sign up',
-                          style: TextStyle(
+                          style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textWhite,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -357,7 +360,7 @@ class _SignUpState extends State<SignUp> {
                             },
                             child: Text(
                               ' Login',
-                              style: TextStyle(
+                              style: GoogleFonts.notoSansDevanagari(
                                   color: ColorResources.buttoncolor),
                             ))
                       ],

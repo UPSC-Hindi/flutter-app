@@ -48,7 +48,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       imageUrl: SvgImages.aboutLogo,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                       height: 80,
                     ),
                     const SizedBox(
@@ -56,7 +57,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     ),
                     Text(
                       'We’re here to Solve',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.notoSansDevanagari(
                         fontSize: 30,
                         color: ColorResources.textWhite,
                         fontWeight: FontWeight.w700,
@@ -73,7 +74,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 ),
                 Text(
                   'Feel free to reach us on',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.notoSansDevanagari(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -99,7 +100,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         const SizedBox(height: 10),
                         Text(
                           'Mail us at',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.notoSansDevanagari(
                             fontSize: 20,
                           ),
                         ),
@@ -115,7 +116,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           },
                           child: Text(
                             'info@upschindi.online',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.notoSansDevanagari(
                               fontSize: 20,
                             ),
                           ),
@@ -123,7 +124,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         const SizedBox(height: 10),
                         Text(
                           Languages.phoneText,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.notoSansDevanagari(
                             fontSize: 20,
                           ),
                         ),
@@ -133,7 +134,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           },
                           child: Text(
                             '+91  951 978 0078',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.notoSansDevanagari(
                               fontSize: 20,
                             ),
                           ),
@@ -145,8 +146,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                               mode: LaunchMode.externalApplication),
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.whatsapp,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),

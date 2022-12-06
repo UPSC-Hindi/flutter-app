@@ -86,21 +86,6 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
       }
     });
 
-    on<GetResources>((event, emit) async{
-      emit(ApiLoading());
-      try{
-        BatchNotesModel response = await remoteDataSourceImpl.getResources(event.key,event.value);
-        print(response);
-        if(response.status == true){
-          emit(ApiResourcesSuccess(resources: response));
-        }
-        else{
-          loginRoute();
-        }
-      }catch(error){
-        emit(ApiError());
-      }
-    });
     on<GetYouTubeVideo>((event, emit) async{
       emit(ApiLoading());
       try{

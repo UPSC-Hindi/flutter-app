@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/auth/auth_data_source_impl.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
@@ -18,10 +19,70 @@ class _LanguageScreenState extends State<LanguageScreen> {
   int selected_course = 0;
   int Lcount = 0;
   int Ccount = 0;
+  List streamlist = [];
+  List<String> SelectedStream = [];
+  bool isSelectedChip = false;
+  AuthDataSourceImpl authDataSourceImpl = AuthDataSourceImpl();
 
   @override
   void initState() {
+    getStream();
     super.initState();
+  }
+
+  void getStream() async {
+    streamlist = await authDataSourceImpl.getStream();
+    setState(() {
+      streamlist;
+    });
+  }
+
+  _buildChoiceList() {
+    List<Widget> choices = [];
+    streamlist.forEach((element) {
+      choices.add(Container(
+        padding: const EdgeInsets.all(2.0),
+        child: ChoiceChip(
+          backgroundColor: Colors.transparent,
+          selectedColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(
+                color: SelectedStream.contains(element)
+                    ? ColorResources.buttoncolor
+                    : ColorResources.gray.withOpacity(0.5),
+              )),
+          labelStyle: GoogleFonts.notoSansDevanagari(
+              fontSize: 30, fontWeight: FontWeight.bold),
+          label: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SelectedStream.contains(element)
+                  ? Icon(Icons.check_circle, color: ColorResources.buttoncolor)
+                  : const Text(''),
+              const SizedBox(
+                width: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(element),
+              ),
+            ],
+          ),
+          selected: SelectedStream.contains(element),
+          onSelected: (value) {
+            setState(() {
+              SelectedStream.contains(element)
+                  ? SelectedStream.remove(element)
+                  : SelectedStream.add(element);
+              SelectedStream.length > 0 ? Ccount = Ccount + 1 : Ccount = 0;
+              print(SelectedStream);
+            });
+          },
+        ),
+      ));
+    });
+    return choices;
   }
 
   @override
@@ -33,17 +94,16 @@ class _LanguageScreenState extends State<LanguageScreen> {
             Column(
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 40,
                 ),
                 Align(
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
-                    child: const Text(
-                      'Choose your preferred Medium',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
+                    child: Text(
+                      'Choose Your Medium',
+                      style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 30, color: ColorResources.textblack),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -52,10 +112,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    customRadio('English', 'A', 1, true),
-                    customRadio('Hindi', 'अ', 2, true),
+                    customRadio('English', 'A', 1, true, context),
+                    customRadio('Hindi', 'अ', 2, true, context),
                   ],
                 ),
                 const SizedBox(
@@ -65,11 +125,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.80,
-                    child: const Text(
-                      'Select your stream',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
+                    child: Text(
+                      'Select Your Stream',
+                      style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 30, color: ColorResources.textblack),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -77,12 +136,15 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    customRadio_course('', 'IAS', 3, true),
-                    customRadio_course('', 'PCS', 4, true),
-                  ],
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     customRadio_course('', 'IAS', 3, true),
+                //     customRadio_course('', 'PCS', 4, true),
+                //   ],
+                // ),
+                Wrap(
+                  children: _buildChoiceList(),
                 ),
                 const SizedBox(
                   height: 100,
@@ -94,25 +156,23 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             color: ColorResources.buttoncolor,
                             borderRadius: BorderRadius.circular(14)),
                         child: TextButton(
-                          onPressed: () {
-                            AuthDataSourceImpl authDataSourceImpl =
-                                AuthDataSourceImpl();
-
+                          onPressed: () async {
                             SharedPreferenceHelper.setString(
                                 Preferences.language,
                                 selected == 2 ? 'Hindi' : 'English');
-                            SharedPreferenceHelper.setString(Preferences.course,
-                                selected_course == 3 ? 'IAS' : 'PCS');
+                            SharedPreferenceHelper.setStringList(
+                                Preferences.course, SelectedStream);
+                            // List<String>? dummy = await SharedPreferenceHelper.getStringList(Preferences.course);
 
                             var token = SharedPreferenceHelper.getString(
                                 Preferences.auth_token);
                             authDataSourceImpl.updateLanguage(
                                 selected == 2 ? 'hi' : 'en', token!);
-                            authDataSourceImpl.updateStream(
-                                selected_course == 3 ? 'IAS' : 'PCS', token);
+                            authDataSourceImpl.updateStream(SelectedStream);
 
                             if (widget.isLogin) {
-                              Languages.isEnglish = selected == 2 ? false : true;
+                              Languages.isEnglish =
+                                  selected == 2 ? false : true;
                               Languages.initState();
                               Navigator.popUntil(context, (route) => false);
                               Navigator.pushNamed(context, 'home');
@@ -131,7 +191,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           },
                           child: Text(
                             'Save & Continue',
-                            style: TextStyle(
+                            style: GoogleFonts.notoSansDevanagari(
                                 color: ColorResources.textWhite,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
@@ -147,18 +207,19 @@ class _LanguageScreenState extends State<LanguageScreen> {
     );
   }
 
-  Widget customRadio(String text, String src, int index, bool tick) {
+  Widget customRadio(
+      String text, String src, int index, bool tick, BuildContext context) {
     return OutlinedButton(
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: const BorderSide(
-              width: 2,
-              style: BorderStyle.solid,
-              color: Colors.white,
-            ),
-          ),
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        side: BorderSide(
+          width: 2,
+          style: BorderStyle.solid,
+          color: selected == index
+              ? ColorResources.buttoncolor
+              : ColorResources.gray.withOpacity(0.5),
         ),
       ),
       onPressed: () {
@@ -168,32 +229,47 @@ class _LanguageScreenState extends State<LanguageScreen> {
         });
       },
       child: Container(
-        width: 90,
-        height: 130,
+        width: MediaQuery.of(context).size.width * 0.30,
         alignment: Alignment.center,
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.30,
+              height: MediaQuery.of(context).size.width * 0.22,
               child: Column(children: [
-                Text(
-                  src,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w800),
-                ),
+                index == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(),
+                        child: Text(
+                          src,
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 7),
+                        child: Text(
+                          src,
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
                 //SizedBox(height: 60, child: SvgPicture.asset(src)),
                 Text(
                   text,
-                  style: const TextStyle(color: Colors.black),
+                  style: GoogleFonts.notoSansDevanagari(
+                      color: Colors.black, fontSize: 12),
                 ),
               ]),
             ),
             selected == index
                 ? const Positioned(
-                    top: 3,
-                    left: -1,
+                    top: 5,
+                    left: 0,
                     child: Icon(
                       Icons.check_circle,
                       color: Color(0xFFF05266),
@@ -239,16 +315,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 children: [
                   Text(
                     src,
-                    style: const TextStyle(
+                    style: GoogleFonts.notoSansDevanagari(
                         color: Colors.black,
                         fontSize: 40,
                         fontWeight: FontWeight.w800),
                   ),
                   //SizedBox(height: 60, child: SvgPicture.asset(src)),
-                  Text(
-                    text,
-                    style: const TextStyle(color: Colors.black),
-                  ),
                 ]),
             selected_course == index
                 ? const Positioned(

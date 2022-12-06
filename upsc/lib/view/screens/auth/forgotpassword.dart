@@ -43,7 +43,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               alignment: Alignment.center,
               child: Text(
                 'Reset Password',
-                style: GoogleFonts.poppins(fontSize: 30),
+                style: GoogleFonts.notoSansDevanagari(fontSize: 30),
               ),
             ),
             const SizedBox(
@@ -94,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             vertical: 10.0, horizontal: 40),
                         child: Text(
                           'Send OTP',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.notoSansDevanagari(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),

@@ -135,7 +135,7 @@ class _loginscreenState extends State<loginscreen> {
                   children: [
                     Text(
                       'Login',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.notoSansDevanagari(
                           color: ColorResources.textblack,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
@@ -147,7 +147,8 @@ class _loginscreenState extends State<loginscreen> {
                         validator:
                             ValidationBuilder().required().email().build(),
                         controller: emailController,
-                        style: const TextStyle(fontSize: 20),
+                        style:
+                             GoogleFonts.notoSansDevanagari(fontSize: 20),
                         onChanged: ((value) {
                           _form.currentState!.validate();
                         }),
@@ -168,7 +169,7 @@ class _loginscreenState extends State<loginscreen> {
                         validator: ValidationBuilder()
                             .required()
                             .minLength(8)
-                             .regExp(
+                            .regExp(
                                 RegExp(
                                     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
                                 'valid password ex:Testing@1')
@@ -179,7 +180,8 @@ class _loginscreenState extends State<loginscreen> {
                         }),
                         obscureText: _passwordVisible,
                         controller: passwordController,
-                        style: const TextStyle(fontSize: 20),
+                        style:
+                             GoogleFonts.notoSansDevanagari(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
@@ -211,7 +213,7 @@ class _loginscreenState extends State<loginscreen> {
                       child: TextButton(
                         child: Text(
                           "Forgot password?",
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.buttoncolor),
                         ),
                         onPressed: () {
@@ -237,7 +239,7 @@ class _loginscreenState extends State<loginscreen> {
                         },
                         child: Text(
                           'Login',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textWhite,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
@@ -307,7 +309,7 @@ class _loginscreenState extends State<loginscreen> {
                       children: [
                         Text(
                           'Create an account?',
-                          style: GoogleFonts.poppins(),
+                          style: GoogleFonts.notoSansDevanagari(),
                         ),
                         TextButton(
                             onPressed: () {
@@ -315,7 +317,7 @@ class _loginscreenState extends State<loginscreen> {
                             },
                             child: Text(
                               ' Register',
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.notoSansDevanagari(
                                 color: ColorResources.buttoncolor,
                               ),
                             ))
