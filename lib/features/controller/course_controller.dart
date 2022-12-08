@@ -57,9 +57,9 @@ class CoursesController {
   Future<MyCoursesModel> getMyCourses() async {
     try {
       dynamic response = await courseServices.getMyCoursesServices();
-      print(response);
       return MyCoursesModel.fromJson(response);
     } catch (error) {
+      print(error.toString());
       Utils.toastMessage(error.toString());
       rethrow;
     }

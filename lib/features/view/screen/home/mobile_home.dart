@@ -30,9 +30,6 @@ class _MobileHomeState extends State<MobileHome> {
     const CoursesScreen(),
     Container(),
     Container(),
-    //   const CourseScreen(),
-    //   const mocktestscreen(),
-    //   ProfilScreen()
   ];
 
   @override
