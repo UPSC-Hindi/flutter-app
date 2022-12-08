@@ -5,6 +5,8 @@ import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart'
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
 import 'package:upsc_web/features/view/screen/home_screen.dart';
+import 'package:upsc_web/features/view/screen/side_bar/my_cart_screen.dart';
+import 'package:upsc_web/features/view/screen/side_bar/my_courses_screen.dart';
 import 'features/view/splash_screen.dart';
 
 class AppRoute {
@@ -14,6 +16,8 @@ class AppRoute {
   static const String homeScreen = 'homeScreen';
   static const String otpVerificationScreen = 'otpVerificationScreen';
   static const String languageScreen = 'languageScreen';
+  static const String myCartScreen = 'myCartScreen';
+  static const String myCoursesScreen = 'myCoursesScreen';
 }
 
 class OnGenerateRoute {
@@ -29,15 +33,18 @@ class OnGenerateRoute {
 
       case AppRoute.signupScreen:
         List<Widget> bannerList = args as List<Widget>;
-        return cupertinoBuilder(
-            widget: SignUpScreen(
-          bannerList: bannerList,
-        ));
+        return cupertinoBuilder(widget: SignUpScreen(bannerList: bannerList));
 
       case AppRoute.homeScreen:
         return cupertinoBuilder(widget: const HomeScreen());
 
-      case AppRoute.otpVerificationScreen:
+      case AppRoute.myCartScreen:
+        return cupertinoBuilder(widget: const MyCartScreen());
+
+        case AppRoute.myCoursesScreen:
+        return cupertinoBuilder(widget: const MyCoursesScreen());
+
+        case AppRoute.otpVerificationScreen:
         List data = args as List;
         List<Widget> bannerList = data.first;
         String userNumber = data.last;
@@ -49,7 +56,7 @@ class OnGenerateRoute {
         );
 
       case AppRoute.languageScreen:
-        return CupertinoPageRoute(builder: (context)=>LanguageScreen());
+        return CupertinoPageRoute(builder: (context) => LanguageScreen());
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),

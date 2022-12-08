@@ -35,4 +35,25 @@ class CourseServices {
       rethrow;
     }
   }
+
+  Future<dynamic> getMyCartCoursesServices() async{
+    try{
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getCartCourses,
+      );
+      return response;
+    }catch(error){
+      rethrow;
+    }
+  }
+  Future<dynamic> getMyCoursesServices() async{
+    try{
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getMyCourses,
+      );
+      return response;
+    }catch(error){
+      rethrow;
+    }
+  }
 }
