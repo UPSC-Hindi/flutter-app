@@ -1,6 +1,8 @@
 import 'package:upsc_web/features/model/base_model.dart';
+import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/model/courses_model/CoursesModel.dart';
-import 'package:upsc_web/features/model/courses_model/course_detailsModel.dart';
+import 'package:upsc_web/features/model/courses_model/MyCoursesModel.dart';
+import 'package:upsc_web/features/model/courses_model/course_details_Model.dart';
 import 'package:upsc_web/services/remote_services/course_services.dart';
 import 'package:upsc_web/utils/utils.dart';
 
@@ -19,13 +21,12 @@ class CoursesController {
 
   Future<CoursesDetailsModel>getCoursesDetails(String courseId) async {
     try {
-
+      print(courseId);
       dynamic response =
-          await courseServices.getCoursesDetails(courseId);
+          await courseServices.getCoursesDetailsService(courseId);
       CoursesDetailsModel temp = CoursesDetailsModel.fromJson(response);
       return temp;
     } catch (error) {
-      print("hello saurabh details error");
       print(error.toString());
       rethrow;
     }
@@ -41,6 +42,26 @@ class CoursesController {
     } catch (error) {
       Utils.flutterToast(error.toString());
       return false;
+    }
+  }
+
+  Future<MyCartCoursesModel> getMyCartCourses() async {
+    try {
+      dynamic response = await courseServices.getMyCartCoursesServices();
+      return MyCartCoursesModel.fromJson(response);
+    } catch (error) {
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
+  }
+  Future<MyCoursesModel> getMyCourses() async {
+    try {
+      dynamic response = await courseServices.getMyCoursesServices();
+      return MyCoursesModel.fromJson(response);
+    } catch (error) {
+      print(error.toString());
+      Utils.toastMessage(error.toString());
+      rethrow;
     }
   }
 }

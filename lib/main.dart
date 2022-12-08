@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
+import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/utils.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(),
         ),
+        BlocProvider<DrawerCubit>(
+          create: (context) => DrawerCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -31,11 +35,16 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
-            headlineMedium: TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 20,
-              color: Utils.blackColor,
-            ),
+            headline1: GoogleFonts.notoSansDevanagari(
+                color: ColorResources.textblack,
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
+            headline2: GoogleFonts.notoSansDevanagari(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: ColorResources.textblack),
+            headlineLarge: GoogleFonts.notoSansDevanagari(
+                fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ),
         onGenerateRoute: OnGenerateRoute.route,

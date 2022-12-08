@@ -42,19 +42,13 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 indicatorColor: ColorResources.buttoncolor,
                 labelColor: ColorResources.buttoncolor,
                 unselectedLabelColor: Colors.black,
-                tabs: const [
-                  Tab(
-                    text: 'Main',
-                  ),
-                  Tab(
-                    text: 'Prelims',
-                  ),
+                tabs: [
+                  Tab(text: 'Main',),
+                  Tab(text: 'Prelims',),
                   // Tab(text: Languages.prelims),
                   // Tab(text: Languages.mains),
                   // Tab(text: Languages.interview)
-                  Tab(
-                    text: "Interview",
-                  ),
+                  Tab(text: "Interview",),
                 ],
               ),
             ),
@@ -68,7 +62,6 @@ class _CoursesScreenState extends State<CoursesScreen> {
                           return ListView.builder(
                               itemCount: snapshot.data!.data.length,
                               itemBuilder: (context, index) {
-                                print(snapshot.data!.msg);
                                 return snapshot.data!.data.isEmpty
                                     ? EmptyWidget(
                                         image: SvgImages.emptyCard,
@@ -90,13 +83,13 @@ class _CoursesScreenState extends State<CoursesScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           return ListView.builder(
-                              itemCount: snapshot.data!.data.length,
+                              itemCount: snapshot.data!.data!.length,
                               itemBuilder: (context, index) {
-                                return snapshot.data!.data.isEmpty
+                                return snapshot.data!.data!.isEmpty
                                     ? EmptyWidget(
-                                        image: SvgImages.emptyCard,
-                                        text: "No Courses")
-                                    : _cardWidget(snapshot.data!.data[index]);
+                                    image: SvgImages.emptyCard,
+                                    text: "No Courses")
+                                    : _cardWidget(snapshot.data!.data![index]);
                               });
                         } else {
                           return const Text("Unable to get data");
@@ -107,7 +100,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                         );
                       }
                     }),
-                const Center(
+                Center(
                   child: Text("Update will come soon......"),
                 ),
               ]),
@@ -135,7 +128,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
       child: Column(
         children: [
           Text(
-            data.batchName,
+            data.batchName! ?? '',
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: GoogleFonts.notoSansDevanagari(
@@ -151,7 +144,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
             children: [
               Column(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.sensors_outlined,
                     color: Colors.redAccent,
                   ),
@@ -163,7 +156,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
               ),
               Column(
                 children: [
-                  const Icon(Icons.signal_cellular_alt),
+                  Icon(Icons.signal_cellular_alt),
                   Text(
                     '100% Online',
                     style: GoogleFonts.notoSansDevanagari(fontSize: 12),
@@ -172,7 +165,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
               ),
               Column(
                 children: [
-                  const Icon(Icons.download),
+                  Icon(Icons.download),
                   Text(
                     'Downloadable',
                     style: GoogleFonts.notoSansDevanagari(fontSize: 12),
@@ -196,15 +189,13 @@ class _CoursesScreenState extends State<CoursesScreen> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => CoursesDetailsScreens(
-                    courseId: data.id,
-                    courseName: data.batchName,
+                  builder: (context) => CoursesDetailsScreens(courseId: data.id, courseName: data.batchName,
                   ),
                 ),
               );
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: EdgeInsets.symmetric(vertical: 8),
               width: MediaQuery.of(context).size.width * 0.65,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -17,22 +17,22 @@ class AuthController {
         LoginModel user = LoginModel.fromJson(response);
         await PreferencesHelper.setString(
             Preferences.accessToken, user.data.accessToken);
-        if(user.data.mobileVerified){
+        if(user.data!.mobileVerified){
           await PreferencesHelper.setBoolean(
               Preferences.isLoggedIn, true);
           await PreferencesHelper.setString(
-              Preferences.name, user.data.fullName);
+              Preferences.name, user.data!.fullName);
           await PreferencesHelper.setString(
-              Preferences.email, user.data.email);
+              Preferences.email, user.data!.email);
           await PreferencesHelper.setString(
-              Preferences.phoneNUmber, user.data.phoneNumber);
+              Preferences.phoneNUmber, user.data!.phoneNumber);
           await PreferencesHelper.setString(Preferences.language,
-              user.data.language);
-          Languages.isEnglish = user.data.language == "hi" ? false : true;
+              user.data!.language);
+          Languages.isEnglish = user.data!.language == "hi" ? false : true;
           await PreferencesHelper.setString(
-              Preferences.profileImage, user.data.profilePhoto);
+              Preferences.profileImage, user.data!.profilePhoto);
           await PreferencesHelper.setString(
-              Preferences.address, user.data.address);
+              Preferences.address, user.data!.address);
         }
         Utils.flutterToast(user.msg);
       }else{

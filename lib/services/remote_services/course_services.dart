@@ -13,7 +13,7 @@ class CourseServices {
       rethrow;
     }
   }
-  Future<dynamic> getCoursesDetails(dynamic queryParameters) async {
+  Future<dynamic> getCoursesDetailsService(dynamic queryParameters) async {
     try {
       dynamic response = await BaseClient.get(
         url: Api.baseUrl + Api.getCoursesDetails +queryParameters,
@@ -32,6 +32,27 @@ class CourseServices {
       );
       return response;
     } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getMyCartCoursesServices() async{
+    try{
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getCartCourses,
+      );
+      return response;
+    }catch(error){
+      rethrow;
+    }
+  }
+  Future<dynamic> getMyCoursesServices() async{
+    try{
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getMyCourses,
+      );
+      return response;
+    }catch(error){
       rethrow;
     }
   }

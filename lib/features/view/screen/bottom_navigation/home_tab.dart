@@ -161,7 +161,7 @@ class HomeTab extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      Languages.latestNews,
+                      'Languages.latestNews',
                       style: GoogleFonts.notoSansDevanagari(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
