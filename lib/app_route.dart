@@ -1,12 +1,10 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:upsc_web/features/view/home_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/language_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
+import 'package:upsc_web/features/view/screen/home_screen.dart';
 import 'features/view/splash_screen.dart';
 
 class AppRoute {
@@ -42,8 +40,7 @@ class OnGenerateRoute {
       case AppRoute.otpVerificationScreen:
         List data = args as List;
         List<Widget> bannerList = data.first;
-        String userNumber = data[1];
-        String token = data.last;
+        String userNumber = data.last;
         return cupertinoBuilder(
           widget: OtpVerificationScreen(
             bannerList: bannerList,
@@ -52,7 +49,7 @@ class OnGenerateRoute {
         );
 
       case AppRoute.languageScreen:
-        return CupertinoPageRoute(builder: (context) => LanguageScreen());
+        return CupertinoPageRoute(builder: (context)=>LanguageScreen());
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),

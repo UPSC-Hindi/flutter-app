@@ -15,4 +15,10 @@ class BaseModel {
     data: json["data"],
     msg: json["msg"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "data": data,
+    "msg": msg,
+  };
 }

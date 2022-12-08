@@ -1,116 +1,145 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
+import 'package:upsc_web/app_route.dart';
+import 'package:upsc_web/features/controller/global_controller.dart';
+import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
+import 'package:upsc_web/features/view/screen/bottom_navigation/course_tab.dart';
 import 'package:upsc_web/utils/color_resources.dart';
-import 'package:upsc_web/utils/langauge.dart';
 
-class LanguageScreen extends StatelessWidget {
-  LanguageScreen({Key? key}) : super(key: key);
-  int selected = 0;
-  int selected_course = 0;
-  int Lcount = 0;
-  int Ccount = 0;
-  List streamlist = [];
-  List<String> SelectedStream = [];
+class LanguageScreen extends StatefulWidget {
+  const LanguageScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LanguageScreen> createState() => _LanguageScreenState();
+}
+
+class _LanguageScreenState extends State<LanguageScreen> {
+  int selected = 5;
+  List streamList = [];
+  List<String> selectedStream = [];
   bool isSelectedChip = false;
+  late Future<List<String>> getStream;
+
+  @override
+  void initState() {
+    getStream = GlobalController.getStream();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Container(
-        constraints: const BoxConstraints(maxWidth: 375),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.80,
-                child: Text(
-                  'Choose Your Medium',
-                  style: GoogleFonts.notoSansDevanagari(
-                      fontSize: 30, color: ColorResources.textblack),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                customRadio('English', 'A', 1, true, context),
-                customRadio('Hindi', 'अ', 2, true, context),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.80,
-                child: Text(
-                  'Select Your Stream',
-                  style: GoogleFonts.notoSansDevanagari(
-                      fontSize: 30, color: ColorResources.textblack),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Wrap(
-              children: _buildChoiceList(),
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-            Lcount > 0 && Ccount > 0
-                ? Container(
-                    width: MediaQuery.of(context).size.width * 0.60,
+    return BlocConsumer<AuthCubit,AuthState>(
+        listener: (context, state) {
+          if(state is UpdateLanguageStreamSuccess){
+            Navigator.popUntil(context, (route) => false);
+            Navigator.pushNamed(context, AppRoute.homeScreen);
+          }
+        }, builder: (context, state) {
+          if(state is LoadingAuth){
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator(),),
+            );
+          }
+          return Scaffold(
+        body: Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 375),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.80,
+                      child: Text(
+                        'Choose Your Medium',
+                        style: GoogleFonts.notoSansDevanagari(
+                            fontSize: 30, color: ColorResources.textblack),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      customRadio(
+                        'en',
+                        'A',
+                        0,
+                        true,
+                      ),
+                      customRadio(
+                        'hi',
+                        'अ',
+                        1,
+                        true,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.80,
+                      child: Text(
+                        'Select Your Stream',
+                        style: GoogleFonts.notoSansDevanagari(
+                            fontSize: 30, color: ColorResources.textblack),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  FutureBuilder<List<String>>(
+                      future: getStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasData) {
+                            streamList = snapshot.data!;
+                            return Wrap(
+                              children: _buildChoiceList(),
+                            );
+                          } else {
+                            return const Text("Refresh Screen or check Internet");
+                          }
+                        } else {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                      }),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  selectedStream.isNotEmpty && selected < 2
+                      ? Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.60,
                     decoration: BoxDecoration(
                         color: ColorResources.buttoncolor,
                         borderRadius: BorderRadius.circular(14)),
                     child: TextButton(
-                      onPressed: () async {
-                        PreferencesHelper.setString(Preferences.language,
-                            selected == 2 ? 'Hindi' : 'English');
-                        PreferencesHelper.setStringList(
-                            Preferences.course, SelectedStream);
-                        // List<String>? dummy = await SharedPreferenceHelper.getStringList(Preferences.course);
-
-                        var token =
-                            PreferencesHelper.getString(Preferences.authToken);
-                        //todo:add the route as u need
-                        // PreferencesHelper.updateLanguage(
-                        //     selected == 2 ? 'hi' : 'en', token!);
-                        // PreferencesHelper.updateStream(SelectedStream);
-
-                        // if (widget.isLogin) {
-                        //   Languages.isEnglish =
-                        //       selected == 2 ? false : true;
-                        //   Languages.initState();
-                        //   Navigator.popUntil(context, (route) => false);
-                        //   Navigator.pushNamed(context, 'home');
-                        // } else {
-                        //   Fluttertoast.showToast(
-                        //     msg: 'Successful Register',
-                        //     toastLength: Toast.LENGTH_SHORT,
-                        //     gravity: ToastGravity.BOTTOM,
-                        //     backgroundColor: ColorResources.gray,
-                        //     textColor: ColorResources.textWhite,
-                        //   );
-                        //   Navigator.popUntil(
-                        //       context, ModalRoute.withName('SignIn'));
-                        //   Navigator.pushNamed(context, 'home');
-                        // }
+                      onPressed: () {
+                        BlocProvider.of<AuthCubit>(context)
+                            .updateStreamLanguage(
+                            language: selected == 0 ? 'en' : 'hi',
+                            stream: selectedStream);
                       },
                       child: Text(
                         'Save & Continue',
@@ -121,16 +150,18 @@ class LanguageScreen extends StatelessWidget {
                       ),
                     ),
                   )
-                : const Text(''),
-          ],
-        ),
-      )),
-    );
+                      : const Text(''),
+                ],
+              ),
+            )),
+      );
+    },);
+    
   }
 
   _buildChoiceList() {
     List<Widget> choices = [];
-    streamlist.forEach((element) {
+    streamList.forEach((element) {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
@@ -139,7 +170,7 @@ class LanguageScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(
-                color: SelectedStream.contains(element)
+                color: selectedStream.contains(element)
                     ? ColorResources.buttoncolor
                     : ColorResources.gray.withOpacity(0.5),
               )),
@@ -148,7 +179,7 @@ class LanguageScreen extends StatelessWidget {
           label: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SelectedStream.contains(element)
+              selectedStream.contains(element)
                   ? Icon(Icons.check_circle, color: ColorResources.buttoncolor)
                   : const Text(''),
               const SizedBox(
@@ -160,13 +191,14 @@ class LanguageScreen extends StatelessWidget {
               ),
             ],
           ),
-          selected: SelectedStream.contains(element),
+          selected: selectedStream.contains(element),
           onSelected: (value) {
-            SelectedStream.contains(element)
-                ? SelectedStream.remove(element)
-                : SelectedStream.add(element);
-            SelectedStream.length > 0 ? Ccount = Ccount + 1 : Ccount = 0;
-            print(SelectedStream);
+            selectedStream.contains(element)
+                ? selectedStream.remove(element)
+                : selectedStream.add(element);
+            setState(() {
+              selectedStream;
+            });
           },
         ),
       ));
@@ -174,8 +206,7 @@ class LanguageScreen extends StatelessWidget {
     return choices;
   }
 
-  Widget customRadio(
-      String text, String src, int index, bool tick, BuildContext context) {
+  Widget customRadio(String text, String src, int index, bool tick) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -184,17 +215,15 @@ class LanguageScreen extends StatelessWidget {
         side: BorderSide(
           width: 2,
           style: BorderStyle.solid,
-          color: true
+          color: selected == index
               ? ColorResources.buttoncolor
               : ColorResources.gray.withOpacity(0.5),
         ),
       ),
       onPressed: () {
-        // TODO : dinesh create this thing using cubit
-        // setState(() {
-        //   selected = index;
-        //   Lcount = Lcount + 1;
-        // });
+        setState(() {
+          selected = index;
+        });
       },
       child: Container(
         alignment: Alignment.center,
@@ -218,15 +247,14 @@ class LanguageScreen extends StatelessWidget {
                 ),
               ]),
             ),
-            // selected == index
-            true
+            selected == index
                 ? const Positioned(
-                    top: 5,
-                    left: 0,
-                    child: Icon(
-                      Icons.check_circle,
-                      color: Color(0xFFF05266),
-                    ))
+                top: 5,
+                left: 0,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Color(0xFFF05266),
+                ))
                 : const Text('')
           ],
         ),

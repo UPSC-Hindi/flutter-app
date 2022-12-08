@@ -1,39 +1,61 @@
-import 'package:upsc_web/features/model/auth/register_model.dart';
-import 'package:upsc_web/features/model/auth/stream_model.dart';
+import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
-import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
+import 'package:upsc_web/utils/langauge.dart';
 import 'package:upsc_web/utils/utils.dart';
 
 class AuthController {
   AuthServices authServices = AuthServices();
 
-  Future<bool> login(dynamic data) async {
-    await authServices.loginServices(data).then((value) async {
-      // write your code
-    }).onError((error, stackTrace) {
-      throw error!;
-    });
-    return true;
+  Future<BaseModel> login(dynamic data) async {
+    try {
+      var response = await authServices.loginServices(data);
+      BaseModel baseResponse = BaseModel.fromJson(response);
+      if(baseResponse.status){
+        LoginModel user = LoginModel.fromJson(response);
+        await PreferencesHelper.setString(
+            Preferences.accessToken, user.data.accessToken);
+        if(user.data.mobileVerified){
+          await PreferencesHelper.setBoolean(
+              Preferences.isLoggedIn, true);
+          await PreferencesHelper.setString(
+              Preferences.name, user.data.fullName);
+          await PreferencesHelper.setString(
+              Preferences.email, user.data.email);
+          await PreferencesHelper.setString(
+              Preferences.phoneNUmber, user.data.phoneNumber);
+          await PreferencesHelper.setString(Preferences.language,
+              user.data.language);
+          Languages.isEnglish = user.data.language == "hi" ? false : true;
+          await PreferencesHelper.setString(
+              Preferences.profileImage, user.data.profilePhoto);
+          await PreferencesHelper.setString(
+              Preferences.address, user.data.address);
+        }
+        Utils.flutterToast(user.msg);
+      }else{
+        Utils.toastMessage(baseResponse.msg);
+      }
+      return baseResponse;
+    } catch (error) {
+      print(error);
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
   }
 
-  Future<RegisterModel> register(dynamic data) async {
+  Future<BaseModel> register(dynamic data) async {
     try {
       dynamic response = await authServices.registerServices(data);
-      RegisterModel user = RegisterModel.fromJson(response);
-
-      await PreferencesHelper.setString(Preferences.email, user.data.email);
-      await PreferencesHelper.setString(Preferences.authToken, user.data.token);
-
+      BaseModel user = BaseModel.fromJson(response);
+      if(user.status){
+        await PreferencesHelper.setString(Preferences.email, user.data['email']);
+        await PreferencesHelper.setString(Preferences.authToken, user.data['token']);
+        Utils.toastMessage(user.data['mobileNumberVerificationOTP'].toString());
+      }
       Utils.flutterToast(user.msg);
-
-      Utils.toastMessage(user.data.mobileNumberVerificationOtp.toString());
-
       return user;
     } catch (error) {
       Utils.toastMessage(error.toString());
@@ -46,7 +68,8 @@ class AuthController {
       dynamic responseJson = await authServices.resendOtpService();
       BaseModel response = BaseModel.fromJson(responseJson);
       if (response.status) {
-        Utils.toastMessage(response.data['mobileNumberVerificationOTP'].toString());
+        Utils.toastMessage(
+            response.data['mobileNumberVerificationOTP'].toString());
       }
       Utils.flutterToast(response.msg);
       return response.status;
@@ -58,12 +81,15 @@ class AuthController {
 
   Future<bool> verifyPhoneNumber(dynamic data) async {
     try {
-      dynamic responseJson =
-          await authServices.verifyPhoneNumberService(data);
+      dynamic responseJson = await authServices.verifyPhoneNumberService(data);
+      print(responseJson);
       BaseModel response = BaseModel.fromJson(responseJson);
-      await PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
-      PreferencesHelper.setString(
-          Preferences.accessToken, response.data['access_token']);
+      print("Successfully verify otp done from base model");
+      if(response.status){
+        await PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
+        PreferencesHelper.setString(
+            Preferences.accessToken, response.data['access_token']);
+      }
       Utils.flutterToast(response.msg);
       return response.status;
     } catch (error) {
@@ -72,16 +98,19 @@ class AuthController {
     }
   }
 
-  Future<List<String>> getStream() async {
+  Future<bool> updateStreamLanguage({dynamic language, dynamic stream}) async {
     try {
-      List<String> stream = [];
-      dynamic response = await authServices.getStreamService();
-      StreamModel jsonResponse = StreamModel.fromJson(response.data);
-      for (StreamDataModel data in jsonResponse.data) {
-        stream.add(data.title);
-      }
-      return stream;
+      dynamic responseLanguageJson =
+          await authServices.updateLanguage(language);
+      BaseModel responseLanguage = BaseModel.fromJson(responseLanguageJson);
+
+      dynamic responseStreamJson = await authServices.updateStream(stream);
+      BaseModel responseStream = BaseModel.fromJson(responseStreamJson);
+
+      Utils.flutterToast("${responseStream.msg} ${responseLanguage.msg}");
+      return responseStream.status && responseLanguage.status;
     } catch (error) {
+      Utils.toastMessage(error.toString());
       rethrow;
     }
   }
