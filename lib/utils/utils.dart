@@ -32,7 +32,6 @@ class Utils{
     );
   }
 
-
   static void flutterToast(String message) {
     Fluttertoast.showToast(
       msg: message,

@@ -8,6 +8,7 @@ import 'package:upsc_web/services/local_services/share_preferences/preferences_h
 import 'app_exception.dart';
 
 Dio dioAuthorizationData({String? token}) {
+  if(token=='N/A')token = null;
   var localToken = PreferencesHelper.getString(Preferences.accessToken);
   final dio = Dio();
   dio.options.headers["Accept"] =
@@ -38,7 +39,7 @@ class BaseClient {
       final response = await dioAuthorizationData(token: token)
           .post(url, data: data)
           .timeout(const Duration(seconds: 10));
-      return response.data;
+      return response;
     } on DioError catch (error) {
       print(error.type.toString());
       throw dioError(error.type,error);

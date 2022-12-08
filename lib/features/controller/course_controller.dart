@@ -19,10 +19,14 @@ class CoursesController {
 
   Future<CoursesDetailsModel>getCoursesDetails(String courseId) async {
     try {
+
       dynamic response =
-          await courseServices.getCoursesDetails({'batch_id': courseId});
-      return CoursesDetailsModel.fromJson(response);
+          await courseServices.getCoursesDetails(courseId);
+      CoursesDetailsModel temp = CoursesDetailsModel.fromJson(response);
+      return temp;
     } catch (error) {
+      print("hello saurabh details error");
+      print(error.toString());
       rethrow;
     }
   }

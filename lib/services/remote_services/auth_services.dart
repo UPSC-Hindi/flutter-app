@@ -8,7 +8,7 @@ class AuthServices {
     try {
       dynamic response =
           await BaseClient.post(url: Api.baseUrl + Api.login, data: data);
-      print(response);
+      return response.data;
     } catch (error) {
       rethrow;
     }
@@ -18,7 +18,7 @@ class AuthServices {
     try {
       dynamic response =
           await BaseClient.post(url: Api.baseUrl + Api.register, data: data);
-      return response;
+      return response.data;
     } catch (error) {
       print(error);
       rethrow;
@@ -43,7 +43,7 @@ class AuthServices {
       String? authToken = PreferencesHelper.getString(Preferences.authToken);
       dynamic response = await BaseClient.post(
           url: Api.baseUrl + Api.verifyMobileNumber, data: data,token: authToken);
-      return response;
+      return response.data;
     } catch (error) {
       print(error);
       rethrow;

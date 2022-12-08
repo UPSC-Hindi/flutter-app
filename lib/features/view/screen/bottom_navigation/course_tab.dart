@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CoursesModel.dart';
+import 'package:upsc_web/features/view/screen/bottom_navigation/course_details_screen.dart';
 import 'package:upsc_web/features/view/widget/empty_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
@@ -183,15 +185,14 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 primary: ColorResources.buttoncolor,
                 shape: const StadiumBorder()),
             onPressed: () {
-              // Navigator.popUntil(context, (route) => false);
-              // Navigator.pushNamed(context, 'home');
-              // Navigator.push(
-              //   context,
-              //   CupertinoPageRoute(
-              //     builder: (context) => CoursesDetailsScreens(courseId: data.id, courseName: data.batchName,
-              //     ),
-              //   ),
-              // );
+              //NOTE: This route use single time so no need to create app route
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => CoursesDetailsScreens(courseId: data.id, courseName: data.batchName,
+                  ),
+                ),
+              );
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 8),

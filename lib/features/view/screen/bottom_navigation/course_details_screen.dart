@@ -13,7 +13,7 @@ import 'package:upsc_web/utils/color_resources.dart';
 class CoursesDetailsScreens extends StatefulWidget {
   final String courseId;
   final String courseName;
-  CoursesDetailsScreens(
+  const CoursesDetailsScreens(
       {Key? key, required this.courseId, required this.courseName})
       : super(key: key);
 
