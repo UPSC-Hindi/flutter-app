@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-import 'dart:convert';
 
 class CoursesDetailsModel {
   CoursesDetailsModel({
@@ -20,10 +18,10 @@ class CoursesDetailsModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": data.toJson(),
-        "msg": msg,
-      };
+    "status": status,
+    "data": data.toJson(),
+    "msg": msg,
+  };
 }
 
 class CoursesDetailsDataModel {
@@ -46,10 +44,10 @@ class CoursesDetailsDataModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "batchDetails": batchDetails.toJson(),
-        "NoOfVideos": noOfVideos,
-        "NoofNotes": noofNotes,
-      };
+    "batchDetails": batchDetails.toJson(),
+    "NoOfVideos": noOfVideos,
+    "NoofNotes": noofNotes,
+  };
 }
 
 class BatchDetails {
@@ -111,9 +109,9 @@ class BatchDetails {
       examType: json["exam_type"],
       student: List<String>.from(json["student"].map((x) => x)),
       subject:
-          List<Category>.from(json["subject"].map((x) => Category.fromJson(x))),
+      List<Category>.from(json["subject"].map((x) => Category.fromJson(x))),
       teacher:
-          List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
+      List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
       startingDate: DateTime.parse(json["starting_date"]),
       endingDate: DateTime.parse(json["ending_date"]),
       mode: json["mode"],
@@ -123,11 +121,11 @@ class BatchDetails {
       discount: json["discount"],
       description: json["description"],
       banner:
-          List<Banners>.from(json["banner"].map((x) => Banners.fromJson(x))),
+      List<Banners>.from(json["banner"].map((x) => Banners.fromJson(x))),
       stream: json["stream"],
       remark: json["remark"],
       demoVideo:
-          List<Banners>.from(json["demoVideo"].map((x) => Banners.fromJson(x))),
+      List<Banners>.from(json["demoVideo"].map((x) => Banners.fromJson(x))),
       validity: json["validity"],
       isActive: json["is_active"],
       courseReview: json["course_review"],
@@ -136,32 +134,32 @@ class BatchDetails {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "batch_name": batchName,
-        "category": category.toJson(),
-        "exam_type": examType,
-        "student": List<dynamic>.from(student.map((x) => x)),
-        "subject": List<dynamic>.from(subject.map((x) => x.toJson())),
-        "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
-        "starting_date":
-            "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
-        "ending_date":
-            "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
-        "mode": mode,
-        "materials": materials,
-        "language": language,
-        "charges": charges,
-        "discount": discount,
-        "description": description,
-        "banner": List<dynamic>.from(banner.map((x) => x.toJson())),
-        "stream": stream,
-        "remark": remark,
-        "demoVideo": List<dynamic>.from(demoVideo.map((x) => x.toJson())),
-        "validity": validity,
-        "is_active": isActive,
-        "course_review": courseReview,
-        "created_at": createdAt,
-      };
+    "_id": id,
+    "batch_name": batchName,
+    "category": category.toJson(),
+    "exam_type": examType,
+    "student": List<dynamic>.from(student.map((x) => x)),
+    "subject": List<dynamic>.from(subject.map((x) => x.toJson())),
+    "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
+    "starting_date":
+    "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
+    "ending_date":
+    "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
+    "mode": mode,
+    "materials": materials,
+    "language": language,
+    "charges": charges,
+    "discount": discount,
+    "description": description,
+    "banner": List<dynamic>.from(banner.map((x) => x.toJson())),
+    "stream": stream,
+    "remark": remark,
+    "demoVideo": List<dynamic>.from(demoVideo.map((x) => x.toJson())),
+    "validity": validity,
+    "is_active": isActive,
+    "course_review": courseReview,
+    "created_at": createdAt,
+  };
 }
 
 class Banners {
@@ -185,20 +183,20 @@ class Banners {
       fileName: json["fileName"],
       fileSize: json["fileSize"],
       bannerfileType:
-          json["bannerfileType"] == null ? null : json["bannerfileType"],
+      json["bannerfileType"] == null ? null : json["bannerfileType"],
       demoVideofileType:
-          json["DemoVideofileType"] == null ? null : json["DemoVideofileType"],
+      json["DemoVideofileType"] == null ? null : json["DemoVideofileType"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "fileLoc": fileLoc,
-        "fileName": fileName,
-        "fileSize": fileSize,
-        "bannerfileType": bannerfileType == null ? null : bannerfileType,
-        "DemoVideofileType":
-            demoVideofileType == null ? null : demoVideofileType,
-      };
+    "fileLoc": fileLoc,
+    "fileName": fileName,
+    "fileSize": fileSize,
+    "bannerfileType": bannerfileType == null ? null : bannerfileType,
+    "DemoVideofileType":
+    demoVideofileType == null ? null : demoVideofileType,
+  };
 }
 
 class Category {
@@ -218,9 +216,9 @@ class Category {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "title": title,
-      };
+    "_id": id,
+    "title": title,
+  };
 }
 
 class Teacher {
@@ -244,8 +242,8 @@ class Teacher {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "FullName": fullName,
-        "profilePhoto": profilePhoto,
-      };
+    "_id": id,
+    "FullName": fullName,
+    "profilePhoto": profilePhoto,
+  };
 }

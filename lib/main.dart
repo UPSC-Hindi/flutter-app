@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         title: 'UPSC HINDI',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          textTheme: TextTheme(
+          textTheme:const TextTheme(
             headlineMedium: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 20,

@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc_web/features/controller/course_controller.dart';
-import 'package:upsc_web/features/model/courses_model/course_detailsModel.dart';
+import 'package:upsc_web/features/model/courses_model/course_details_Model.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 
@@ -53,7 +53,9 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                     image.add(Image.network(element.fileLoc));
                   });
                   return _bodyWidget(snapshot.data!);
-                } else {
+                }else if(snapshot.hasError){
+                  return Text(snapshot.error.toString());
+                } else{
                   return const Text('Check Your internet');
                 }
               } else {

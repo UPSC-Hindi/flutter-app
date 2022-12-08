@@ -13,7 +13,7 @@ class CourseServices {
       rethrow;
     }
   }
-  Future<dynamic> getCoursesDetails(dynamic queryParameters) async {
+  Future<dynamic> getCoursesDetailsService(dynamic queryParameters) async {
     try {
       dynamic response = await BaseClient.get(
         url: Api.baseUrl + Api.getCoursesDetails +queryParameters,

@@ -1,6 +1,6 @@
 import 'package:upsc_web/features/model/base_model.dart';
 import 'package:upsc_web/features/model/courses_model/CoursesModel.dart';
-import 'package:upsc_web/features/model/courses_model/course_detailsModel.dart';
+import 'package:upsc_web/features/model/courses_model/course_details_Model.dart';
 import 'package:upsc_web/services/remote_services/course_services.dart';
 import 'package:upsc_web/utils/utils.dart';
 
@@ -21,8 +21,11 @@ class CoursesController {
     try {
 
       dynamic response =
-          await courseServices.getCoursesDetails(courseId);
+          await courseServices.getCoursesDetailsService(courseId);
+      print(response);
+      print("dinesh sdfasdfasd");
       CoursesDetailsModel temp = CoursesDetailsModel.fromJson(response);
+      print("saurabh dfsdfsdfsdf");
       return temp;
     } catch (error) {
       print("hello saurabh details error");
