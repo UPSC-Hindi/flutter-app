@@ -15,7 +15,7 @@ import 'package:upsc/features/data/remote/models/course_details_model.dart';
 abstract class RemoteDataSource{
   Future<VideoModel> getYouTubeVideo();
   Future<CoursesModel> getCourses(String filter,String type);
-  Future<TestSeries> getTestSeries();
+  Future<TestSeriesModel> getTestSeries();
   Future<ClassSchedulermodel> getMyClassSchedule();
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();

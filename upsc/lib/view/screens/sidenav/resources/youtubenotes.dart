@@ -65,7 +65,9 @@ class _YoutubeNotesScreenState extends State<YoutubeNotesScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(children: [
-        SearchBarWidget(onChanged: (String value) {
+        SearchBarWidget(
+          searchText: 'Youtube Notes',
+          onChanged: (String value) {
           print(value);
         },),
         FractionallySizedBox(

@@ -4,9 +4,10 @@ import 'package:upsc/util/color_resources.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
-    Key? key,required this.onChanged,
+    Key? key,required this.onChanged, required this.searchText,
   }) : super(key: key);
   final ValueChanged<String> onChanged;
+  final String searchText;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +28,11 @@ class SearchBarWidget extends StatelessWidget {
       child: TextField(
         onChanged: onChanged,
         style: GoogleFonts.notoSansDevanagari(
-            fontSize: 16.0, color: ColorResources.gray),
+            fontSize: 16.0, color: ColorResources.gray,
+        ),
         decoration: InputDecoration(
-          isDense: true,
           border: InputBorder.none,
-          hintText: "Search Notes",
+          hintText: searchText,
           suffixIcon: Icon(
             Icons.search,
             size: 22,

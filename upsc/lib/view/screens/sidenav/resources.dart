@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/localfiles.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -14,6 +15,12 @@ class ResourcesScreen extends StatefulWidget {
 }
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
+  @override
+  void initState() {
+    Localfilesfind.initState();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,14 +87,14 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             Expanded(
               flex: 6,
               child: Container(
+                width: double.infinity,
                 padding: const EdgeInsets.all(10),
                 color: ColorResources.resourcesCardColor.withOpacity(0.4),
                 child: CachedNetworkImage(
                   imageUrl: image,
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) =>
-                  const Icon(Icons.error),
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

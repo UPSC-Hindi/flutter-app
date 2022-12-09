@@ -14,6 +14,7 @@ import 'package:upsc/features/data/remote/models/stream_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/MyTests.dart';
+import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/features/data/remote/models/course_details_model.dart';
@@ -73,14 +74,14 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<TestSeries> getTestSeries() async {
+  Future<TestSeriesModel> getTestSeries() async {
     try {
       final queryParameters = <String, dynamic>{};
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.gettestseries}',
         queryParameters: queryParameters,
       );
-      return TestSeries.fromJson(response.data);
+      return TestSeriesModel.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
@@ -103,6 +104,20 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       var response =
           await dioAuthorizationData().get('${Apis.baseUrl}${Apis.myTests}');
       return MyTestsModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<TestSeriesDetails> getMyTestsdetails(String id) async {
+    try {
+      final queryParameters = <String, dynamic>{"TestSeries_id":id};
+      var response = await dioAuthorizationData().get(
+        '${Apis.baseUrl}${Apis.myTestsoftest}',
+        queryParameters: queryParameters,
+      );
+      return TestSeriesDetails.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
