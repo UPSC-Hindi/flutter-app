@@ -13,7 +13,6 @@ import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/models/DeleteUserDetailsFromStream.dart';
 import 'package:upsc/models/StreamingUserDetails.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
@@ -559,7 +558,6 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 
   Future<BaseModel<StreamingUserDetails>> callApigetuserdetails() async {
     StreamingUserDetails response;
-
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))

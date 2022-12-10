@@ -1,7 +1,6 @@
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,15 +16,17 @@ import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
+import 'package:upsc/features/presentation/widgets/videopaler.dart';
+import 'package:upsc/features/presentation/widgets/youtube_player_widget.dart';
 import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
-import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/joinStreaming.dart';
 import 'package:intl/intl.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class CourseViewScreen extends StatefulWidget {
   const CourseViewScreen({
@@ -222,18 +223,12 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                           ),
                           padding: const EdgeInsets.all(10),
                           child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             itemCount: widget.batch.demoVideo.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Container(
-                              margin: const EdgeInsets.all(5),
-                              width: 130,
-                              height: 90,
-                              child: YouTubeContainerWidget(
-                                videoUrl: widget.batch.demoVideo[index].fileLoc,
-                                height: 90,
-                              ),
-                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              return videolist(widget.batch.demoVideo[index]);
+                            },
                           ),
                         ),
                         ListView.builder(
@@ -255,6 +250,60 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             ),
           ),
         ]),
+      ),
+    );
+  }
+  youtubevideo(url) {
+    String videoId = YoutubePlayer.convertUrlToId(url)!;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => YoutubePlayerWidget(
+          videoId: videoId,
+        ),
+      ),
+    );
+  }
+
+  Widget videolist(MyCoursesBanner demoVideo) {
+    return InkWell(
+      onTap: () {
+        print("he");
+        print(demoVideo.fileLoc);
+        demoVideo.bannerfileType == "Video"
+            ? Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlayVideoFromNetwork(
+              Videourl: demoVideo.fileLoc,
+            ),
+          ),
+        )
+            : youtubevideo(demoVideo.fileLoc);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        child: Container(
+          width: 100,
+          height: 50,
+          decoration: BoxDecoration(
+            color: ColorResources.gray.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.play_circle,
+                size: 40,
+              ),
+              // Text('Raman Deep',
+              //     style: GoogleFonts.notoSansDevanagari(
+              //         fontSize: 16, fontWeight: FontWeight.bold)
+              // )
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -87,9 +87,9 @@ class BatchDetails {
   final String materials;
   final String language;
   final String description;
-  final List<Banner> banner;
+  final List<MyCoursesBanner> banner;
   final String remark;
-  final List<Banner> demoVideo;
+  final List<MyCoursesBanner> demoVideo;
   final String validity;
   final bool isActive;
   final String courseReview;
@@ -108,9 +108,9 @@ class BatchDetails {
     materials: json["materials"],
     language: json["language"],
     description: json["description"],
-    banner: List<Banner>.from(json["banner"].map((x) => Banner.fromJson(x))),
+    banner: List<MyCoursesBanner>.from(json["banner"].map((x) => MyCoursesBanner.fromJson(x))),
     remark: json["remark"],
-    demoVideo: List<Banner>.from(json["demoVideo"].map((x) => Banner.fromJson(x))),
+    demoVideo: List<MyCoursesBanner>.from(json["demoVideo"].map((x) => MyCoursesBanner.fromJson(x))),
     validity: json["validity"],
     isActive: json["is_active"],
     courseReview: json["course_review"],
@@ -139,8 +139,8 @@ class BatchDetails {
   };
 }
 
-class Banner {
-  Banner({
+class MyCoursesBanner {
+  MyCoursesBanner({
     required this.fileLoc,
     required this.fileName,
     required this.fileSize,
@@ -152,7 +152,7 @@ class Banner {
   final String fileSize;
   final String bannerfileType;
 
-  factory Banner.fromJson(Map<String, dynamic> json) => Banner(
+  factory MyCoursesBanner.fromJson(Map<String, dynamic> json) => MyCoursesBanner(
     fileLoc: json["fileLoc"],
     fileName: json["fileName"],
     fileSize: json["fileSize"],
@@ -231,7 +231,7 @@ class LectureDetail {
   final Subject subject;
   final String startingDate;
   final String endingDate;
-  final Banner material;
+  final MyCoursesBanner material;
   final String language;
 
   factory LectureDetail.fromJson(Map<String, dynamic> json) => LectureDetail(
@@ -242,7 +242,7 @@ class LectureDetail {
     subject: Subject.fromJson(json["subject"]),
     startingDate: json["starting_date"],
     endingDate: json["ending_date"],
-    material: Banner.fromJson(json["material"]),
+    material: MyCoursesBanner.fromJson(json["material"]),
     language: json["language"],
   );
 

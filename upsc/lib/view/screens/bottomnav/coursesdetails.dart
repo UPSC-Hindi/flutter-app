@@ -21,6 +21,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class CoursesDetailsScreens extends StatefulWidget {
   final String courseId;
   final String courseName;
+
   CoursesDetailsScreens(
       {Key? key, required this.courseId, required this.courseName})
       : super(key: key);
@@ -35,6 +36,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
   late Future<CoursesDetailsModel> _getCourseDetails;
 
   RemoteDataSource remoteDataSource = rdsi.RemoteDataSourceImpl();
+
   @override
   void initState() {
     _getCourseDetails = remoteDataSource.getCoursesDetails(widget.courseId);
@@ -318,11 +320,13 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
   youtubevideo(url) {
     String videoId = YoutubePlayer.convertUrlToId(url)!;
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => YoutubePlayerWidget(
-                  videoId: videoId,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => YoutubePlayerWidget(
+          videoId: videoId,
+        ),
+      ),
+    );
   }
 
   Widget videolist(Banners demoVideo) {
