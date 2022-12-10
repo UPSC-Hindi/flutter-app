@@ -37,26 +37,26 @@ class Data {
   String? phoneNumber;
   bool? userMobileNumberVerified;
   String? language;
-  String? stream;
+  List? stream;
   late bool verified;
 
   Data(
       {this.accessToken,
-        this.verificationToken,
-        this.id,
-        this.username,
-        this.fullName,
-        this.email,
-        this.createdAt,
-        this.profilePhoto,
-        this.userEmailVerified,
-        this.address,
-        this.signinType,
-        this.phoneNumber,
-        this.userMobileNumberVerified,
-        this.language,
-        this.stream,
-        required this.verified});
+      this.verificationToken,
+      this.id,
+      this.username,
+      this.fullName,
+      this.email,
+      this.createdAt,
+      this.profilePhoto,
+      this.userEmailVerified,
+      this.address,
+      this.signinType,
+      this.phoneNumber,
+      this.userMobileNumberVerified,
+      this.language,
+      this.stream,
+      required this.verified});
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];

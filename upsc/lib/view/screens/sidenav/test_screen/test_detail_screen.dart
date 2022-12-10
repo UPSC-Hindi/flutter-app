@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
+import 'package:upsc/view/screens/sidenav/test_screen/test_submit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TestDetailsScreen extends StatefulWidget {
@@ -193,23 +194,32 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                height: 45,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.50,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: ColorResources.buttoncolor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Start Test',
-                    style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => TestSubmitScreen(
+                      id: widget.data.sId!,
+                    ),
+                  ));
+                },
+                child: SizedBox(
+                  height: 45,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.50,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: ColorResources.buttoncolor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Start Test',
+                      style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),

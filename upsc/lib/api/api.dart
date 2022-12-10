@@ -71,4 +71,5 @@ class Apis {
   static const String gettestseries="adminPanel/getTestSeriesdetails";
   static const String myTests = 'adminPanel/getMyTestSeries';
   static const String myTestsoftest = 'adminPanel/getTestForTestSeriesDetails';
+  static const String submittest = 'adminPanel/addAttemptedTest';
 }

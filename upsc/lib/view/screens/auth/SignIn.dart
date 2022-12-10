@@ -147,8 +147,7 @@ class _loginscreenState extends State<loginscreen> {
                         validator:
                             ValidationBuilder().required().email().build(),
                         controller: emailController,
-                        style:
-                             GoogleFonts.notoSansDevanagari(fontSize: 20),
+                        style: GoogleFonts.notoSansDevanagari(fontSize: 20),
                         onChanged: ((value) {
                           _form.currentState!.validate();
                         }),
@@ -180,8 +179,7 @@ class _loginscreenState extends State<loginscreen> {
                         }),
                         obscureText: _passwordVisible,
                         controller: passwordController,
-                        style:
-                             GoogleFonts.notoSansDevanagari(fontSize: 20),
+                        style: GoogleFonts.notoSansDevanagari(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 10),
@@ -438,7 +436,7 @@ class _loginscreenState extends State<loginscreen> {
             textColor: ColorResources.textWhite,
           );
         } else {
-          if (response.data!.verified) {
+          if (response.data!.userMobileNumberVerified!) {
             await SharedPreferenceHelper.setString(
                 Preferences.access_token, response.data!.accessToken);
             await SharedPreferenceHelper.setBoolean(
@@ -471,12 +469,12 @@ class _loginscreenState extends State<loginscreen> {
             await SharedPreferenceHelper.setString(
                 Preferences.email, response.data!.email);
             await SharedPreferenceHelper.setString(
-                Preferences.auth_token, response.data!.verificationToken);
+                Preferences.access_token, response.data!.accessToken);
             await SharedPreferenceHelper.setString(
                 Preferences.profileImage, response.data!.profilePhoto);
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => MobileVerification(),
+                builder: (context) => const MobileVerification(),
               ),
             );
             print(SharedPreferenceHelper.getString(Preferences.access_token));

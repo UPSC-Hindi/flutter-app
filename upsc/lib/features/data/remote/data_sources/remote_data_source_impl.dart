@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:upsc/api/api.dart';
 import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source.dart';
@@ -88,6 +91,24 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
+  Future<Response> submit_answer(PlatformFile file, String id) async {
+    try {
+      FormData data = FormData.fromMap({
+        "test_id": id,
+        "file": await MultipartFile.fromFile(
+          file.path!,
+          filename: file.name,
+        ),
+      });
+      Response response = await dioAuthorizationData()
+          .post("${Apis.baseUrl}${Apis.submittest}", data: data);
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<MyCoursesModel> getMyCourses() async {
     try {
       var response =
@@ -112,7 +133,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<TestSeriesDetails> getMyTestsdetails(String id) async {
     try {
-      final queryParameters = <String, dynamic>{"TestSeries_id":id};
+      final queryParameters = <String, dynamic>{"TestSeries_id": id};
       var response = await dioAuthorizationData().get(
         '${Apis.baseUrl}${Apis.myTestsoftest}',
         queryParameters: queryParameters,
