@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/localfiles.dart';
 import 'package:upsc/view/screens/sidenav/resources/samplenotes.dart';
 
 class ShortNotesScreen extends StatefulWidget {
@@ -15,6 +16,12 @@ class ShortNotesScreen extends StatefulWidget {
 }
 
 class _ShortNotesScreenState extends State<ShortNotesScreen> {
+  @override
+  void initState() {
+    Localfilesfind.initState();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +41,10 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
               if (snapshots.hasData) {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
-                  return NotesWidget(resources: response.data, heading: "Short Notes",);
+                  return NotesWidget(
+                    resources: response.data,
+                    heading: "Short Notes",
+                  );
                 } else {
                   return Text(response.msg);
                 }
@@ -47,5 +57,4 @@ class _ShortNotesScreenState extends State<ShortNotesScreen> {
           }),
     );
   }
-
 }

@@ -176,7 +176,7 @@ class MyApp extends StatelessWidget {
           'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
-          'mytestseries': (context) =>  TestSeries(),
+          'mytestseries': (context) =>  const TestSeries(id: "",name: "",),
           'ourachievements': (context) => const OurAchievementsScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),
           'helpandsupport': (context) => const HelpAndSupport(),

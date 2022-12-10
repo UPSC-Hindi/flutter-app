@@ -15,6 +15,7 @@ import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
+import 'package:upsc/view/screens/course/courseview.dart';
 import 'package:upsc/view/screens/home.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -60,6 +61,7 @@ class _HomeScreensState extends State<HomeScreens> {
     myCoursesData = remoteDataSourceImpl.getMyCourses();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
@@ -203,9 +205,9 @@ class _HomeScreensState extends State<HomeScreens> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           MyCoursesModel? myCourses = snapshot.data;
-                          List<MyCoursesDataModel>activeCoursesList = [];
-                          for(var course in myCourses!.data){
-                            if(course.batchDetails.isActive){
+                          List<MyCoursesDataModel> activeCoursesList = [];
+                          for (var course in myCourses!.data) {
+                            if (course.batchDetails.isActive) {
                               activeCoursesList.add(course);
                             }
                           }
@@ -305,7 +307,7 @@ class _HomeScreensState extends State<HomeScreens> {
                                   itemBuilder: (context, index) =>
                                       _myCoursesCardWidget(
                                     activeCoursesList[index],
-                                      ),
+                                  ),
                                 );
                         } else {
                           return const Text("There is no internet Connection");
@@ -641,7 +643,11 @@ class _HomeScreensState extends State<HomeScreens> {
               ),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, 'mycoursesscreen');
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CourseViewScreen(
+                        lecture: data.lectureDetails, batch: data.batchDetails),
+                  ));
+                  //Navigator.pushNamed(context, 'mycoursesscreen');
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

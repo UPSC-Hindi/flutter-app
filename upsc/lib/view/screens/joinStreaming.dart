@@ -73,8 +73,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
 // Instantiate the client
   late AgoraClient client = AgoraClient(
     agoraChannelData: AgoraChannelData(
-      clientRole: ClientRole.Audience,
-      channelProfile: ChannelProfile.LiveBroadcasting,
+      clientRoleType: ClientRoleType.clientRoleAudience,
+      channelProfileType: ChannelProfileType.channelProfileLiveBroadcasting,
     ),
     agoraConnectionData: AgoraConnectionData(
       username: name,
@@ -171,7 +171,7 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
       await sessionController.value.agoraRtmChannel?.leave();
       await sessionController.value.agoraRtmClient?.logout();
     }
-    await sessionController.value.engine?.destroy();
+    await sessionController.value.engine?.release();
   }
 
   void initAgora() async {

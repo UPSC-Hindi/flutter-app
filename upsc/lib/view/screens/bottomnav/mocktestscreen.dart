@@ -6,6 +6,7 @@ import 'package:upsc/models/Test_series/MyTests.dart';
 import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/view/screens/sidenav/mytest.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/test_detail_screen.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/testsdetails.dart';
 
@@ -33,12 +34,12 @@ class _mocktestscreenState extends State<mocktestscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<TestSeries>(
+      body: FutureBuilder<TestSeriesModel>(
           future: widget.remoteDataSourceImpl.getTestSeries(),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {
-                TestSeries? response = snapshots.data;
+                TestSeriesModel? response = snapshots.data;
                 if (response!.status!) {
                   return testscreenbody(
                     response.data,
@@ -63,23 +64,23 @@ class _mocktestscreenState extends State<mocktestscreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Center(
-            //   child: Container(
-            //     margin: const EdgeInsets.all(10),
-            //     width: MediaQuery.of(context).size.width * 0.90,
-            //     child: TextField(
-            //       controller: searchtest,
-            //       decoration: const InputDecoration(
-            //         border: OutlineInputBorder(),
-            //         labelText: "Search Mock Tests, Quizzes",
-            //         suffixIcon: Icon(
-            //           Icons.search,
-            //           size: 30,
-            //         ), //icon at tail of input
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Center(
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                width: MediaQuery.of(context).size.width * 0.90,
+                child: TextField(
+                  controller: searchtest,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Search Mock Tests, Quizzes",
+                    suffixIcon: Icon(
+                      Icons.search,
+                      size: 30,
+                    ), //icon at tail of input
+                  ),
+                ),
+              ),
+            ),
             Container(
               padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.90,
@@ -116,9 +117,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, 'mytestseries');
-                        },
+                        onPressed: () {},
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: const [
@@ -151,8 +150,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                     return myTestsModel!.data!.isNotEmpty
                         ? myTestsbody(myTestsModel)
                         : Container(
-                        padding: const EdgeInsets.all(20),
-                        child: EmptyWidget(image: SvgImages.emptyCard, text: "No Test Series"));
+                            padding: const EdgeInsets.all(20),
+                            child: EmptyWidget(
+                                image: SvgImages.emptyCard,
+                                text: "No Test Series"));
                   } else {
                     return const Text("There is no internet Connection");
                   }
@@ -161,10 +162,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 }
               },
             ),
-            Text(
-              'Mock Tests',
-              style: Theme.of(context).textTheme.headline1
-            ),
+            Text('Mock Tests', style: Theme.of(context).textTheme.headline1),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -232,6 +230,20 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   )
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.80,
+                  child: LinearProgressIndicator(
+                    value: 0.45,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        ColorResources.buttoncolor),
+                    backgroundColor: ColorResources.gray.withOpacity(0.5),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -250,7 +262,16 @@ class _mocktestscreenState extends State<mocktestscreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TestSeries(
+                            id: response.testseriesId!.sId!,
+                            name: response.testseriesId!.testseriesName!,
+                          ),
+                        ),
+                      );
+                    },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: const [

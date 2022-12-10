@@ -196,7 +196,9 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           "Demo Video",
                           style: GoogleFonts.notoSansDevanagari(
@@ -522,7 +524,7 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
             child: Text(
               lectureName.lectureName!,
               style: Theme.of(context).textTheme.headline1,
@@ -543,7 +545,6 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
   Widget _recordedVideoWidget(Listofvideos videosdata) {
     return InkWell(
       onTap: () {
-        
         //download(videosdata.fileUrl!.fileLoc!, videosdata.title);
       },
       child: Container(

@@ -5,6 +5,7 @@ import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/localfiles.dart';
 
 class SampleNotesScreen extends StatefulWidget {
   const SampleNotesScreen({Key? key, required this.resourceDataSourceImpl})
@@ -16,6 +17,12 @@ class SampleNotesScreen extends StatefulWidget {
 }
 
 class _SampleNotesScreenState extends State<SampleNotesScreen> {
+  @override
+  void initState() {
+    Localfilesfind.initState();
+    super.initState();
+    
+  }
   @override
   void dispose() {
     super.dispose();

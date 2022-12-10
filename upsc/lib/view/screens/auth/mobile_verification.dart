@@ -142,7 +142,7 @@ class _MobileVerificationState extends State<MobileVerification> {
     });
 
     try {
-      String? token = SharedPreferenceHelper.getString(Preferences.auth_token);
+      String? token = SharedPreferenceHelper.getString(Preferences.access_token);
       response = await RestClient(RetroApi().dioData(token!))
           .postUserMobileNumberRequest(body);
       setState(() {

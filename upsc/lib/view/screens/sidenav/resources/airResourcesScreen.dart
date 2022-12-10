@@ -1,13 +1,9 @@
-import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/data/remote/models/air_resource_model.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
@@ -138,9 +134,9 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                         ),
                         InkWell(
                           onTap: () async {
-                            // duration = await player
-                            //     .setUrl(resources[index].audioFile.fileLoc);
-                            // player.playing ? player.stop() : player.play();
+                            duration = await player
+                                .setUrl(resources[index].audioFile.fileLoc);
+                            player.playing ? player.stop() : player.play();
                           },
                           child: Column(
                             children: [

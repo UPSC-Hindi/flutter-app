@@ -6,6 +6,7 @@ import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc/util/localfiles.dart';
 
 class CoursesIndexResources extends StatefulWidget {
   const CoursesIndexResources({Key? key, required this.resourceDataSourceImpl})
@@ -19,8 +20,9 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
   String? datetoshow;
   @override
   void initState() {
-    super.initState();
+    Localfilesfind.initState();
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
+    super.initState();
   }
 
   @override
