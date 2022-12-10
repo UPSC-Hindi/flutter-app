@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
+import 'package:upsc_web/features/view/cubit/courses/courses_cubit.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<DrawerCubit>(
           create: (context) => DrawerCubit(),
+        ),
+        BlocProvider<CoursesCubit>(
+          create: (context) => CoursesCubit(),
         ),
       ],
       child: MaterialApp(

@@ -13,29 +13,27 @@ class AuthController {
     try {
       var response = await authServices.loginServices(data);
       BaseModel baseResponse = BaseModel.fromJson(response);
-      if(baseResponse.status){
+      if (baseResponse.status) {
         LoginModel user = LoginModel.fromJson(response);
         await PreferencesHelper.setString(
             Preferences.accessToken, user.data.accessToken);
-        if(user.data!.mobileVerified){
-          await PreferencesHelper.setBoolean(
-              Preferences.isLoggedIn, true);
+        if (user.data.mobileVerified) {
+          await PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
           await PreferencesHelper.setString(
-              Preferences.name, user.data!.fullName);
+              Preferences.name, user.data.fullName);
+          await PreferencesHelper.setString(Preferences.email, user.data.email);
           await PreferencesHelper.setString(
-              Preferences.email, user.data!.email);
+              Preferences.phoneNUmber, user.data.phoneNumber);
           await PreferencesHelper.setString(
-              Preferences.phoneNUmber, user.data!.phoneNumber);
-          await PreferencesHelper.setString(Preferences.language,
-              user.data!.language);
-          Languages.isEnglish = user.data!.language == "hi" ? false : true;
+              Preferences.language, user.data.language);
+          Languages.isEnglish = user.data.language == "hi" ? false : true;
           await PreferencesHelper.setString(
-              Preferences.profileImage, user.data!.profilePhoto);
+              Preferences.profileImage, user.data.profilePhoto);
           await PreferencesHelper.setString(
-              Preferences.address, user.data!.address);
+              Preferences.address, user.data.address);
         }
         Utils.flutterToast(user.msg);
-      }else{
+      } else {
         Utils.toastMessage(baseResponse.msg);
       }
       return baseResponse;
@@ -50,9 +48,11 @@ class AuthController {
     try {
       dynamic response = await authServices.registerServices(data);
       BaseModel user = BaseModel.fromJson(response);
-      if(user.status){
-        await PreferencesHelper.setString(Preferences.email, user.data['email']);
-        await PreferencesHelper.setString(Preferences.authToken, user.data['token']);
+      if (user.status) {
+        await PreferencesHelper.setString(
+            Preferences.email, user.data['email']);
+        await PreferencesHelper.setString(
+            Preferences.authToken, user.data['token']);
         Utils.toastMessage(user.data['mobileNumberVerificationOTP'].toString());
       }
       Utils.flutterToast(user.msg);
@@ -85,7 +85,7 @@ class AuthController {
       print(responseJson);
       BaseModel response = BaseModel.fromJson(responseJson);
       print("Successfully verify otp done from base model");
-      if(response.status){
+      if (response.status) {
         await PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
         PreferencesHelper.setString(
             Preferences.accessToken, response.data['access_token']);

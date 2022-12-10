@@ -43,12 +43,18 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 labelColor: ColorResources.buttoncolor,
                 unselectedLabelColor: Colors.black,
                 tabs: [
-                  Tab(text: 'Main',),
-                  Tab(text: 'Prelims',),
+                  Tab(
+                    text: 'Main',
+                  ),
+                  Tab(
+                    text: 'Prelims',
+                  ),
                   // Tab(text: Languages.prelims),
                   // Tab(text: Languages.mains),
                   // Tab(text: Languages.interview)
-                  Tab(text: "Interview",),
+                  Tab(
+                    text: "Interview",
+                  ),
                 ],
               ),
             ),
@@ -83,13 +89,13 @@ class _CoursesScreenState extends State<CoursesScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           return ListView.builder(
-                              itemCount: snapshot.data!.data!.length,
+                              itemCount: snapshot.data!.data.length,
                               itemBuilder: (context, index) {
-                                return snapshot.data!.data!.isEmpty
+                                return snapshot.data!.data.isEmpty
                                     ? EmptyWidget(
-                                    image: SvgImages.emptyCard,
-                                    text: "No Courses")
-                                    : _cardWidget(snapshot.data!.data![index]);
+                                        image: SvgImages.emptyCard,
+                                        text: "No Courses")
+                                    : _cardWidget(snapshot.data!.data[index]);
                               });
                         } else {
                           return const Text("Unable to get data");
@@ -128,7 +134,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
       child: Column(
         children: [
           Text(
-            data.batchName! ?? '',
+            data.batchName,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: GoogleFonts.notoSansDevanagari(
@@ -189,7 +195,9 @@ class _CoursesScreenState extends State<CoursesScreen> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => CoursesDetailsScreens(courseId: data.id, courseName: data.batchName,
+                  builder: (context) => CoursesDetailsScreens(
+                    courseId: data.id,
+                    courseName: data.batchName,
                   ),
                 ),
               );

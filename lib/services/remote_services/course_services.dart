@@ -13,10 +13,11 @@ class CourseServices {
       rethrow;
     }
   }
+
   Future<dynamic> getCoursesDetailsService(dynamic queryParameters) async {
     try {
       dynamic response = await BaseClient.get(
-        url: Api.baseUrl + Api.getCoursesDetails +queryParameters,
+        url: Api.baseUrl + Api.getCoursesDetails + queryParameters,
       );
       return response;
     } catch (error) {
@@ -24,7 +25,7 @@ class CourseServices {
     }
   }
 
-  Future<dynamic> addCoursesToCart(dynamic data) async {
+  Future<dynamic> addCoursesToCartServices(dynamic data) async {
     try {
       dynamic response = await BaseClient.post(
         url: Api.baseUrl + Api.addCoursesToCart,
@@ -36,23 +37,34 @@ class CourseServices {
     }
   }
 
-  Future<dynamic> getMyCartCoursesServices() async{
-    try{
+  Future<dynamic> getMyCartCoursesServices() async {
+    try {
       dynamic response = await BaseClient.get(
         url: Api.baseUrl + Api.getCartCourses,
       );
       return response;
-    }catch(error){
+    } catch (error) {
       rethrow;
     }
   }
-  Future<dynamic> getMyCoursesServices() async{
-    try{
+
+  Future<dynamic> getMyCoursesServices() async {
+    try {
       dynamic response = await BaseClient.get(
         url: Api.baseUrl + Api.getMyCourses,
       );
       return response;
-    }catch(error){
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> deleteMyCartCoursesService(String cartId) async {
+    try {
+      dynamic response = await BaseClient.delete(
+          url: Api.baseUrl + Api.deleteFromCart + cartId);
+      return response;
+    } catch (error) {
       rethrow;
     }
   }

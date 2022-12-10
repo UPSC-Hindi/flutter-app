@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
+import 'package:upsc_web/features/view/cubit/courses/courses_cubit.dart';
 import 'package:upsc_web/features/view/widget/empty_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
@@ -20,74 +22,87 @@ class _MyCartScreenState extends State<MyCartScreen> {
   MyCartCoursesDataModel? cartSelectedItem;
   CoursesController coursesController = CoursesController();
 
-  late Future<MyCartCoursesModel>getCartCourses;
+  late Future<MyCartCoursesModel> getCartCourses;
 
   @override
   void initState() {
     getCartCourses = coursesController.getMyCartCourses();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorResources.textWhite,
-        iconTheme: IconThemeData(color: ColorResources.textblack),
-        title: Text(
-          'Languages.cart',
-          style: Theme.of(context).textTheme.headline1,
-      ),),
-      body: RefreshIndicator(
-        onRefresh: () => Future.delayed(Duration(seconds: 1)),
-        child: FutureBuilder<MyCartCoursesModel>(
-            future: getCartCourses,
-            builder: (context,snapshots){
-          if(snapshots.connectionState == ConnectionState.done){
-            if(snapshots.hasData){
-              if (snapshots.data!.data.isEmpty) {
-                return EmptyWidget(
-                  text: 'Your Cart is Empty!',
-                  image: SvgImages.emptyCard,
-                );
-              }
-              cartSelectedItem = snapshots.data!.data[_selectedValue];
-              return Stack(
-                children: [
-                  ListView.builder(
-                    itemCount: snapshots.data!.data.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => RadioListTile(
-                      contentPadding: EdgeInsets.only(right: 5.0),
-                      value: index,
-                      groupValue: _selectedValue,
-                      visualDensity: const VisualDensity(
-                          horizontal: VisualDensity.minimumDensity,
-                          vertical: VisualDensity.minimumDensity),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedValue = value as int;
-                        });
-                      },
-                      title: _cartContainerWidget(
-                        cartData: snapshots.data!.data[index],
-                      ),
-                    ),
-                  ),
-                  _bottomButtonWidget(snapshots.data!.data.first, context)
-                ],
-              );
-            }else{
-              return const Text('Unable to get cart courses');
-            }
-          }else{
-            return Center(child: CircularProgressIndicator(),);
-          }
-        }),
-      ),
-    );
+    return BlocConsumer<CoursesCubit, CoursesState>(listener: (context, state) {
+      if (state is DeleteCartCourses) {
+        setState(() {
+          getCartCourses = coursesController.getMyCartCourses();
+        });
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: ColorResources.textWhite,
+          iconTheme: IconThemeData(color: ColorResources.textblack),
+          title: Text(
+            'Languages.cart',
+            style: Theme.of(context).textTheme.headline1,
+          ),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () => Future.delayed(Duration(seconds: 1)),
+          child: FutureBuilder<MyCartCoursesModel>(
+              future: getCartCourses,
+              builder: (context, snapshots) {
+                if (snapshots.connectionState == ConnectionState.done) {
+                  if (snapshots.hasData) {
+                    if (snapshots.data!.data.isEmpty) {
+                      return EmptyWidget(
+                        text: 'Your Cart is Empty!',
+                        image: SvgImages.emptyCard,
+                      );
+                    }
+                    cartSelectedItem = snapshots.data!.data[_selectedValue];
+                    return Stack(
+                      children: [
+                        ListView.builder(
+                          itemCount: snapshots.data!.data.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => RadioListTile(
+                            contentPadding: EdgeInsets.only(right: 5.0),
+                            value: index,
+                            groupValue: _selectedValue,
+                            visualDensity: const VisualDensity(
+                                horizontal: VisualDensity.minimumDensity,
+                                vertical: VisualDensity.minimumDensity),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedValue = value as int;
+                              });
+                            },
+                            title: _cartContainerWidget(
+                              cartData: snapshots.data!.data[index],
+                            ),
+                          ),
+                        ),
+                        _bottomButtonWidget(snapshots.data!.data.first, context)
+                      ],
+                    );
+                  } else {
+                    return const Text('Unable to get cart courses');
+                  }
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ),
+      );
+    });
   }
 
-  Stack _bottomButtonWidget(MyCartCoursesDataModel? cartData, BuildContext context) {
+  Stack _bottomButtonWidget(
+      MyCartCoursesDataModel? cartData, BuildContext context) {
     return Stack(
       children: [
         Align(
@@ -205,7 +220,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             Text(
                               'Live lectures',
                               style:
-                              GoogleFonts.notoSansDevanagari(fontSize: 8),
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         ),
@@ -215,7 +230,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             Text(
                               '100% Online',
                               style:
-                              GoogleFonts.notoSansDevanagari(fontSize: 8),
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         ),
@@ -225,7 +240,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             Text(
                               'Downloadable',
                               style:
-                              GoogleFonts.notoSansDevanagari(fontSize: 8),
+                                  GoogleFonts.notoSansDevanagari(fontSize: 8),
                             )
                           ],
                         )
@@ -245,7 +260,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       ),
                     ),
                     onPressed: () {
-                      // removeFromCard(cartData);
+                      BlocProvider.of<CoursesCubit>(context).deleteCartCourse(
+                          cartId: cartData.cartId, context: context);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

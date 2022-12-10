@@ -5,6 +5,10 @@ abstract class CoursesState {}
 
 class CoursesInitial extends CoursesState {}
 
-class CoursesError extends CoursesController {}
-class CoursesLoading extends CoursesController {}
-class CartCourseAddSuccess extends CoursesController {}
+class CoursesError extends CoursesState {}
+
+class CoursesLoading extends CoursesState {}
+
+class CartCourseAddSuccess extends CoursesState {}
+
+class DeleteCartCourses extends CoursesState {}

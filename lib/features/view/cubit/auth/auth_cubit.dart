@@ -14,78 +14,78 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
   AuthController authController = AuthController();
 
-  Future<void>registerUser(Map<String,dynamic> data)async{
+  Future<void> registerUser(Map<String, dynamic> data) async {
     emit(LoadingAuth());
-    try{
+    try {
       BaseModel user = await authController.register(data);
-      if(user.status){
+      if (user.status) {
         emit(RegisterSuccess());
-      }else{
+      } else {
         emit(ErrorAuth());
       }
-    }catch(error){
+    } catch (error) {
       emit(ErrorAuth());
     }
   }
 
-  Future<void>loginUser(dynamic data)async{
-    try{
+  Future<void> loginUser(dynamic data) async {
+    try {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
       data["deviceConfig"] = webBrowserInfo.userAgent;
       data["deviceName"] = webBrowserInfo.appName;
       BaseModel user = await authController.login(data);
-      if(user.data['mobileVerified']=='true'){
-          emit(LoginSuccess());
-      }else{
+
+      if (user.data['mobileVerified']) {
+        emit(LoginSuccess());
+      } else {
         emit(UnVerifiedNumber(phoneNumber: user.data['phoneNumber']));
       }
-    }catch(error){
+    } catch (error) {
       emit(ErrorAuth());
     }
   }
 
-  Future<void>verifyOtp(String otp)async{
+  Future<void> verifyOtp(String otp) async {
     emit(LoadingAuth());
-    try{
-      if(await authController.verifyPhoneNumber({'otp' : otp})){
+    try {
+      if (await authController.verifyPhoneNumber({'otp': otp})) {
         emit(VerificationOtpSuccess());
-      }else{
+      } else {
         emit(ErrorAuth());
       }
-    }catch(error){
+    } catch (error) {
       emit(ErrorAuth());
     }
   }
 
-  Future<void>resendOtp()async{
+  Future<void> resendOtp() async {
     emit(LoadingAuth());
-    try{
-      if(await authController.resendOtp()){
+    try {
+      if (await authController.resendOtp()) {
         emit(ResendOtpSuccess());
-      }else{
+      } else {
         emit(ErrorAuth());
       }
-    }catch(error){
+    } catch (error) {
       emit(ErrorAuth());
     }
   }
 
-  Future<void>updateStreamLanguage(
-      {required String language, required List<String> stream})async{
+  Future<void> updateStreamLanguage(
+      {required String language, required List<String> stream}) async {
     emit(LoadingAuth());
-    try{
-      if(await authController.updateStreamLanguage(language: language,stream: stream)){
-        PreferencesHelper.setString(Preferences.language,
-            language);
-        PreferencesHelper.setStringList(
-            Preferences.course, stream);
+    try {
+      if (await authController.updateStreamLanguage(
+          language: language, stream: stream)) {
+        PreferencesHelper.setString(Preferences.language, language);
+        PreferencesHelper.setStringList(Preferences.course, stream);
         PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
         emit(UpdateLanguageStreamSuccess());
-      }else{
+      } else {
         emit(ErrorAuth());
       }
-    }catch(error){
+    } catch (error) {
       emit(ErrorAuth());
     }
   }
