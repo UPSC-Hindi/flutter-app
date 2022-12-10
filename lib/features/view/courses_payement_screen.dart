@@ -1,7 +1,9 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:razorpay_flutter_customui/razorpay_flutter_customui.dart';
 import 'package:flutter/material.dart';
+import 'package:upsc_web/features/controller/global_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
+import 'package:upsc_web/features/model/payment_model/order_id_model.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
@@ -34,13 +36,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     _razorpay.clear();
   }
 
-  void openCheckout(id) async {
+  void openCheckout(String key, String orderId) async {
     print('*' * 2000);
     print(razorPayId);
-    print(id.toString());
+    print(key.toString());
     var options = {
-      'key': razorPayId,
-      "order_id": '123153',
+      'key': key,
+      "order_id": orderId,
       'amount': (100 * int.parse(widget.course.amount) -
               (100 *
                   (int.parse(widget.course.amount) *
@@ -216,11 +218,15 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   width: MediaQuery.of(context).size.width * 0.50,
                   margin: const EdgeInsets.symmetric(vertical: 30),
                   decoration: BoxDecoration(
-                      color: ColorResources.buttoncolor,
-                      borderRadius: BorderRadius.circular(14)),
+                    color: ColorResources.buttoncolor,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                   child: TextButton(
-                    onPressed: () {
-                      openCheckout(widget.course.batchDetails.id);
+                    onPressed: () async {
+                      OrderIdModel orderInfo =
+                          await GlobalController.getOrderId(
+                              {'amount': widget.course.amount});
+                      openCheckout(orderInfo.keyId!, orderInfo.id!);
                     },
                     child: Text(
                       'Checkout',
