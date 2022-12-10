@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/view/cubit/courses/courses_cubit.dart';
@@ -44,7 +45,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
           backgroundColor: ColorResources.textWhite,
           iconTheme: IconThemeData(color: ColorResources.textblack),
           title: Text(
-            'Languages.cart',
+            Languages.cart,
             style: Theme.of(context).textTheme.headline1,
           ),
         ),
@@ -62,6 +63,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       );
                     }
                     cartSelectedItem = snapshots.data!.data[_selectedValue];
+
                     return Stack(
                       children: [
                         ListView.builder(
@@ -121,16 +123,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: ColorResources.buttoncolor,
-                        shape: const StadiumBorder()),
-                    onPressed: makePayment,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 18.0, vertical: 10.0),
-                      child: Text('Make Payment',
-                          style: Theme.of(context).textTheme.headline2),
-                    ))
+                  style: ElevatedButton.styleFrom(
+                      primary: ColorResources.buttoncolor,
+                      shape: const StadiumBorder()),
+                  onPressed: makePayment,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18.0, vertical: 10.0),
+                    child: Text('Make Payment',
+                        style: Theme.of(context).textTheme.headline2),
+                  ),
+                ),
               ],
             ),
           ),
@@ -141,39 +144,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   void makePayment() {
     if (cartSelectedItem != null) {
-      // Navigator.pop(context);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => CoursePaymentScreen(
-      //       course: cartSelectedItem!,
-      //     ),
-      //   ),
-      // );
+      Navigator.popAndPushNamed(context, AppRoute.coursePaymentScreen,
+          arguments: cartSelectedItem);
     } else {
       Utils.flutterToast('Select At least on item');
     }
   }
-
-  // void removeFromCard(MyCartCoursesDataModel cartData) async {
-  //   RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
-  //   Preferences.onLoading(context);
-  //   try {
-  //     Response response =
-  //     await remoteDataSourceImpl.deleteCartCourse(cartData.cartId);
-  //     if (response.statusCode == 200) {
-  //       _selectedValue = 0;
-  //       if (!mounted) return;
-  //       context.read<ApiBloc>().add(GetCartDetails());
-  //     } else {
-  //       flutterToast(response.data['msg']);
-  //     }
-  //   } catch (e) {
-  //     flutterToast(e.toString());
-  //   }
-  //   if (!mounted) return;
-  //   Preferences.hideDialog(context);
-  // }
 
   Widget _cartContainerWidget({required MyCartCoursesDataModel cartData}) {
     return Center(

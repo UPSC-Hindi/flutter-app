@@ -1,3 +1,5 @@
+import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
+import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 
 class Languages {
   static bool isEnglish = true;
@@ -76,9 +78,7 @@ class Languages {
 
   static initState() {
     Languages.isEnglish = true;
-        // SharedPreferenceHelper.getString(Preferences.language)! == "English"
-        //     ? true
-        //     : false;
+    PreferencesHelper.getString(Preferences.language)! == "en" ? true : false;
 
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
     ncertBatches = isEnglish ? 'Join Us On' : 'को हमारे साथ शामिल हों';

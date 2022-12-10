@@ -1,5 +1,9 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
+import 'package:upsc_web/features/view/courses_payement_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/language_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
@@ -18,6 +22,7 @@ class AppRoute {
   static const String languageScreen = 'languageScreen';
   static const String myCartScreen = 'myCartScreen';
   static const String myCoursesScreen = 'myCoursesScreen';
+  static const String coursePaymentScreen = 'coursePaymentScreen';
 }
 
 class OnGenerateRoute {
@@ -41,10 +46,10 @@ class OnGenerateRoute {
       case AppRoute.myCartScreen:
         return cupertinoBuilder(widget: const MyCartScreen());
 
-        case AppRoute.myCoursesScreen:
+      case AppRoute.myCoursesScreen:
         return cupertinoBuilder(widget: const MyCoursesScreen());
 
-        case AppRoute.otpVerificationScreen:
+      case AppRoute.otpVerificationScreen:
         List data = args as List;
         List<Widget> bannerList = data.first;
         String userNumber = data.last;
@@ -56,7 +61,13 @@ class OnGenerateRoute {
         );
 
       case AppRoute.languageScreen:
-        return CupertinoPageRoute(builder: (context) => LanguageScreen());
+        return cupertinoBuilder(widget: const LanguageScreen());
+
+      case AppRoute.coursePaymentScreen:
+        MyCartCoursesDataModel courseData = args as MyCartCoursesDataModel;
+        return CupertinoPageRoute(
+          builder: (context) => CoursePaymentScreen(course: courseData),
+        );
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),
