@@ -39,11 +39,14 @@ class TestSeriesDetailsData {
   int? noOfQuestions;
   QuestionPaper? questionPaper;
   QuestionPaper? answerTemplate;
+  String? totalMarks;
   String? questionPaperType;
   String? updatedAt;
   bool? negativemarking;
   String? duration;
   int? iV;
+  Attempted? attempted;
+  bool? isAttempted;
 
   TestSeriesDetailsData(
       {this.sId,
@@ -57,11 +60,14 @@ class TestSeriesDetailsData {
       this.noOfQuestions,
       this.questionPaper,
       this.answerTemplate,
+      this.totalMarks,
       this.questionPaperType,
       this.updatedAt,
       this.negativemarking,
       this.duration,
-      this.iV});
+      this.iV,
+      this.attempted,
+      this.isAttempted});
 
   TestSeriesDetailsData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -79,11 +85,16 @@ class TestSeriesDetailsData {
     answerTemplate = json['answer_template'] != null
         ? QuestionPaper.fromJson(json['answer_template'])
         : null;
+    totalMarks = json['totalMarks'];
     questionPaperType = json['question_paper_type'];
     updatedAt = json['updated_at'];
     negativemarking = json['negativemarking'];
     duration = json['duration'];
     iV = json['__v'];
+    attempted = json['attempted'] != null
+        ? Attempted.fromJson(json['attempted'])
+        : null;
+    isAttempted = json['is_attempted'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,11 +114,16 @@ class TestSeriesDetailsData {
     if (answerTemplate != null) {
       data['answer_template'] = answerTemplate!.toJson();
     }
+    data['totalMarks'] = totalMarks;
     data['question_paper_type'] = questionPaperType;
     data['updated_at'] = updatedAt;
     data['negativemarking'] = negativemarking;
     data['duration'] = duration;
     data['__v'] = iV;
+    if (attempted != null) {
+      data['attempted'] = attempted!.toJson();
+    }
+    data['is_attempted'] = isAttempted;
     return data;
   }
 }
@@ -130,6 +146,29 @@ class QuestionPaper {
     data['fileLoc'] = fileLoc;
     data['fileName'] = fileName;
     data['fileSize'] = fileSize;
+    return data;
+  }
+}
+
+class Attempted {
+  String? score;
+  QuestionPaper? answerSheet;
+
+  Attempted({this.score, this.answerSheet});
+
+  Attempted.fromJson(Map<String, dynamic> json) {
+    score = json['Score'];
+    answerSheet = json['answer_sheet'] != null
+        ? QuestionPaper.fromJson(json['answer_sheet'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['Score'] = score;
+    if (answerSheet != null) {
+      data['answer_sheet'] = answerSheet!.toJson();
+    }
     return data;
   }
 }

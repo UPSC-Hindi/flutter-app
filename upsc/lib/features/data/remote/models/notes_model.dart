@@ -29,6 +29,7 @@ class NotesDataModel {
     required this.title,
     required this.fileUrl,
     required this.notesType,
+    required this.resourcetype,
     required this.isActive,
     required this.language,
   });
@@ -37,6 +38,7 @@ class NotesDataModel {
   final String title;
   final FileUrl fileUrl;
   final String notesType;
+  final String resourcetype;
   final bool isActive;
   final String language;
 
@@ -46,6 +48,7 @@ class NotesDataModel {
     fileUrl: FileUrl.fromJson(json["file_url"]),
     notesType: json["notes_type"],
     isActive: json["is_active"],
+    resourcetype: json["resource_type"],
     language: json["language"],
   );
 
@@ -54,6 +57,7 @@ class NotesDataModel {
     "title": title,
     "file_url": fileUrl.toJson(),
     "notes_type": notesType,
+    "resource_type":resourcetype,
     "is_active": isActive,
     "language": language,
   };
@@ -67,8 +71,8 @@ class FileUrl {
   });
 
   final String fileLoc;
-  final String fileName;
-  final String fileSize;
+  final String? fileName;
+  final String? fileSize;
 
   factory FileUrl.fromJson(Map<String, dynamic> json) => FileUrl(
     fileLoc: json["fileLoc"],

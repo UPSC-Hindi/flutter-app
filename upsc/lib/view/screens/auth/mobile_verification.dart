@@ -83,7 +83,7 @@ class _MobileVerificationState extends State<MobileVerification> {
           const SizedBox(
             height: 25,
           ),
-           Text(
+          Text(
             'Verify Your Phone Number',
             style: GoogleFonts.notoSansDevanagari(
                 fontWeight: FontWeight.w900, fontSize: 24),
@@ -95,7 +95,7 @@ class _MobileVerificationState extends State<MobileVerification> {
             margin: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
             child: TextField(
               controller: _numberController,
-              style:  GoogleFonts.notoSansDevanagari(fontSize: 20),
+              style: GoogleFonts.notoSansDevanagari(fontSize: 20),
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -142,7 +142,7 @@ class _MobileVerificationState extends State<MobileVerification> {
     });
 
     try {
-      String? token = SharedPreferenceHelper.getString(Preferences.access_token);
+      String? token = SharedPreferenceHelper.getString(Preferences.auth_token);
       response = await RestClient(RetroApi().dioData(token!))
           .postUserMobileNumberRequest(body);
       setState(() {

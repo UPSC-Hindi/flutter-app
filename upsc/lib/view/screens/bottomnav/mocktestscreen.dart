@@ -7,7 +7,6 @@ import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/view/screens/sidenav/mytest.dart';
-import 'package:upsc/view/screens/sidenav/test_screen/test_detail_screen.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/testsdetails.dart';
 
 class mocktestscreen extends StatefulWidget {
@@ -66,8 +65,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
           children: [
             Center(
               child: Container(
-                margin: const EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width * 0.90,
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: searchtest,
                   decoration: const InputDecoration(
@@ -83,7 +81,6 @@ class _mocktestscreenState extends State<mocktestscreen> {
             ),
             Container(
               padding: const EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width * 0.90,
               decoration: BoxDecoration(
                 border: Border.all(color: ColorResources.gray),
                 borderRadius: BorderRadius.circular(20),
@@ -153,7 +150,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                             padding: const EdgeInsets.all(20),
                             child: EmptyWidget(
                                 image: SvgImages.emptyCard,
-                                text: "No Test Series"));
+                                text: "No Test Series purchase"));
                   } else {
                     return const Text("There is no internet Connection");
                   }
@@ -224,7 +221,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                     ),
                   ),
                   Text(
-                    '6/15 Tests Passed',
+                    response.progress!.value!,
                     style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.gray),
                   )
@@ -237,7 +234,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.80,
                   child: LinearProgressIndicator(
-                    value: 0.45,
+                    value: double.parse(response.progress!.percentage!),
                     valueColor: AlwaysStoppedAnimation<Color>(
                         ColorResources.buttoncolor),
                     backgroundColor: ColorResources.gray.withOpacity(0.5),

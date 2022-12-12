@@ -456,7 +456,7 @@ class _SignUpState extends State<SignUp> {
         setState(() {
           Preferences.hideDialog(context);
         });
-        if (response.data!.verified) {
+        if (response.data!.userMobileNumberVerified!) {
           await SharedPreferenceHelper.setString(
               Preferences.access_token, response.data!.accessToken);
           await SharedPreferenceHelper.setBoolean(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/test_submit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -89,48 +88,83 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                         color: ColorResources.textblack,
                       ),
                     ),
-                    trailing: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            launchUrl(
-                                Uri.parse(widget.data.questionPaper!.fileLoc!),
-                                mode: LaunchMode.externalApplication);
-                          },
-                          child: CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: ColorResources.buttoncolor,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'PDF',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: ColorResources.textWhite,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.download_outlined,
-                                  size: 18,
-                                  color: ColorResources.textWhite,
-                                )
-                              ],
+                    trailing: GestureDetector(
+                      onTap: () {
+                        launchUrl(
+                            Uri.parse(widget.data.questionPaper!.fileLoc!),
+                            mode: LaunchMode.externalApplication);
+                      },
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: ColorResources.buttoncolor,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'PDF',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: ColorResources.textWhite,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
+                            Icon(
+                              Icons.download_outlined,
+                              size: 18,
+                              color: ColorResources.textWhite,
+                            )
+                          ],
                         ),
-                        // Text(
-                        //   'View ORM >',
-                        //   style: TextStyle(
-                        //     fontSize: 12,
-                        //     fontWeight: FontWeight.w600,
-                        //   ),
-                        //)
-                      ],
+                      ),
                     ),
                   ),
                 ),
+                widget.data.isAttempted!
+                    ? Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        color: const Color(0xFFD9D9D9).withOpacity(0.3),
+                        child: ListTile(
+                          title: Text(
+                            "Your Checked Answer Sheet",
+                            style: GoogleFonts.notoSansDevanagari(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                              color: ColorResources.textblack,
+                            ),
+                          ),
+                          trailing: GestureDetector(
+                            onTap: () {
+                              launchUrl(
+                                  Uri.parse(widget
+                                      .data.attempted!.answerSheet!.fileLoc!),
+                                  mode: LaunchMode.externalApplication);
+                            },
+                            child: CircleAvatar(
+                              radius: 20.0,
+                              backgroundColor: ColorResources.buttoncolor,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'PDF',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: ColorResources.textWhite,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.download_outlined,
+                                    size: 18,
+                                    color: ColorResources.textWhite,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Text(""),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   color: const Color(0xFFD9D9D9).withOpacity(0.3),
@@ -143,45 +177,34 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                         color: ColorResources.textblack,
                       ),
                     ),
-                    trailing: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            launchUrl(
-                                Uri.parse(widget.data.answerTemplate!.fileLoc!),
-                                mode: LaunchMode.externalApplication);
-                          },
-                          child: CircleAvatar(
-                            radius: 20.0,
-                            backgroundColor: ColorResources.buttoncolor,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'PDF',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: ColorResources.textWhite,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.download_outlined,
-                                  size: 18,
-                                  color: ColorResources.textWhite,
-                                )
-                              ],
+                    trailing: GestureDetector(
+                      onTap: () {
+                        launchUrl(
+                            Uri.parse(widget.data.answerTemplate!.fileLoc!),
+                            mode: LaunchMode.externalApplication);
+                      },
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: ColorResources.buttoncolor,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'PDF',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: ColorResources.textWhite,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
+                            Icon(
+                              Icons.download_outlined,
+                              size: 18,
+                              color: ColorResources.textWhite,
+                            )
+                          ],
                         ),
-                        // Text(
-                        // 'View ORM >',
-                        // style: TextStyle(
-                        // fontSize: 12,
-                        // fontWeight: FontWeight.w600,
-                        // ),
-                        // )
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -198,8 +221,9 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => TestSubmitScreen(
-                      id: widget.data.sId!,
-                    ),
+                        name: widget.data.testTitle!,
+                        id: widget.data.sId!,
+                        examtype: widget.data.questionPaperType!),
                   ));
                 },
                 child: SizedBox(
@@ -214,7 +238,7 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      'Start Test',
+                      widget.data.isAttempted! ? "Start Again " : 'Start Test',
                       style: GoogleFonts.notoSansDevanagari(
                           fontSize: 18,
                           color: Colors.white,

@@ -17,6 +17,7 @@ import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
+import 'package:upsc/features/presentation/widgets/videopaler.dart';
 import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -406,7 +407,9 @@ class BatchNotesWidget extends StatelessWidget {
                       image: SvgImages.emptyCard, text: "There is no Notes")
                   : ListView.builder(
                       itemCount: notesList!.length,
+                      //todo
                       itemBuilder: (context, index) => ResourcesContainerWidget(
+                        resourcetype: "file",
                         title: notesList![index].title,
                         uploadFile: notesList![index].uploadFile.fileLoc,
                         fileSize: notesList![index].uploadFile.fileSize,
@@ -545,6 +548,13 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
   Widget _recordedVideoWidget(Listofvideos videosdata) {
     return InkWell(
       onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PlayVideoFromNetwork(Videourl: videosdata.fileUrl!.fileLoc!),
+          ),
+        );
         //download(videosdata.fileUrl!.fileLoc!, videosdata.title);
       },
       child: Container(

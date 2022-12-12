@@ -54,7 +54,8 @@ class ServerError implements Exception {
             return;
           } else {
             Fluttertoast.showToast(
-                msg: error.response!.data['message'].toString(),
+                //msg: error.response!.data['message'].toString(),
+                msg:"something went wrong",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM);
             return;
@@ -62,7 +63,8 @@ class ServerError implements Exception {
         } catch (error1, stacktrace) {
           if (error.response!.data['msg'] != null) {
             Fluttertoast.showToast(
-                msg: '${error.response!.data['msg']}',
+               msg:"something went wrong",
+                //msg: '${error.response!.data['msg']}',
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM);
             return;

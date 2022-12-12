@@ -4,15 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
+import 'package:upsc/util/appString..dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
-import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/test_detail_screen.dart';
 
 class TestSeries extends StatefulWidget {
   final String id;
   final String name;
-  const TestSeries({Key? key, required this.id,required this.name}) : super(key: key);
+  const TestSeries({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
   State<TestSeries> createState() => _TestSeriesState();
@@ -23,6 +24,7 @@ class _TestSeriesState extends State<TestSeries> {
   RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
   @override
   void initState() {
+    print(widget.id);
     mytestsData = remoteDataSourceImpl.getMyTestsdetails(widget.id);
     super.initState();
   }
@@ -99,7 +101,8 @@ class _TestSeriesState extends State<TestSeries> {
                           '${carddata.noOfQuestions} Questions', Icons.menu),
                       Row(
                         children: [
-                          _iconTextWidget('100 Marks', Icons.verified_outlined),
+                          _iconTextWidget('${carddata.totalMarks} Marks',
+                              Icons.verified_outlined),
                           const SizedBox(
                             width: 5,
                           ),
@@ -163,8 +166,8 @@ class _TestSeriesState extends State<TestSeries> {
                           width: 15,
                         ),
                         Text(
-                          'Score : 10/100',
-                          style: TextStyle(
+                          'Score : ${carddata.attempted!.score}',
+                          style: GoogleFonts.notoSansDevanagari(
                             color: ColorResources.gray,
                           ),
                         ),
@@ -192,7 +195,7 @@ class _TestSeriesState extends State<TestSeries> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Explore',
+                                  'Continue',
                                   style: GoogleFonts.notoSansDevanagari(
                                       fontSize: 12,
                                       color: Colors.white,
@@ -236,8 +239,11 @@ class _TestSeriesState extends State<TestSeries> {
           icon,
           size: 20,
         ),
-        const SizedBox(width: 6),
-        Text(text)
+        const SizedBox(width: 3),
+        Text(
+          text,
+          style: GoogleFonts.notoSansDevanagari(fontSize: Fontsize().h6),
+        )
       ],
     );
   }

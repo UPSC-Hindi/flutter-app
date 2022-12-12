@@ -469,7 +469,7 @@ class _loginscreenState extends State<loginscreen> {
             await SharedPreferenceHelper.setString(
                 Preferences.email, response.data!.email);
             await SharedPreferenceHelper.setString(
-                Preferences.access_token, response.data!.accessToken);
+                Preferences.auth_token, response.data!.verificationToken);
             await SharedPreferenceHelper.setString(
                 Preferences.profileImage, response.data!.profilePhoto);
             Navigator.of(context).push(

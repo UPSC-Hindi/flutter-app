@@ -160,9 +160,10 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return ResourcesContainerWidget(
+                        resourcetype: resources[index].resource_type,
                         title: resources[index].title,
                         uploadFile: resources[index].fileUrl.fileLoc,
-                        fileSize: resources[index].fileUrl.fileSize,
+                        fileSize: resources[index].fileUrl.fileSize ?? 0.toString(),
                       );
                     },
                   ),

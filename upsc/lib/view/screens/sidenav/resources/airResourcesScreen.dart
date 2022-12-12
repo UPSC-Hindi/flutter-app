@@ -136,24 +136,40 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                           onTap: () async {
                             duration = await player
                                 .setUrl(resources[index].audioFile.fileLoc);
-                            player.playing ? player.stop() : player.play();
+                            player.playing
+                                ? setState(() {
+                                    player.stop();
+                                  })
+                                : setState(() {
+                                    player.play();
+                                  });
                           },
-                          child: Column(
-                            children: [
-                              Icon(
-                                //todo this dead code pls check onces
-                                player.playing ? Icons.pause : Icons.play_arrow,
-                                size: 25,
-                                color: ColorResources.buttoncolor,
-                              ),
-                              player.playing
-                                  ? Text('pause',
-                                      style: GoogleFonts.notoSansDevanagari(
-                                        fontSize: 8,
-                                        color: ColorResources.buttoncolor,
-                                        fontWeight: FontWeight.w700,
-                                      ))
-                                  : Text(
+                          child: player.playing
+                              ? Column(
+                                  children: [
+                                    Icon(
+                                      //todo this dead code pls check onces
+                                      Icons.pause,
+                                      size: 25,
+                                      color: ColorResources.buttoncolor,
+                                    ),
+                                    Text('pause',
+                                        style: GoogleFonts.notoSansDevanagari(
+                                          fontSize: 8,
+                                          color: ColorResources.buttoncolor,
+                                          fontWeight: FontWeight.w700,
+                                        ))
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    Icon(
+                                      //todo this dead code pls check onces
+                                      Icons.play_arrow,
+                                      size: 25,
+                                      color: ColorResources.buttoncolor,
+                                    ),
+                                    Text(
                                       'Audio Play',
                                       style: GoogleFonts.notoSansDevanagari(
                                         fontSize: 8,
@@ -161,8 +177,8 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                            ],
-                          ),
+                                  ],
+                                ),
                         )
                       ],
                     ),

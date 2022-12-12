@@ -17,11 +17,13 @@ class ResourcesContainerWidget extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.uploadFile,
+      required this.resourcetype,
       required this.fileSize})
       : super(key: key);
   final String title;
   final String uploadFile;
-  final String fileSize;
+  final String resourcetype;
+  final String? fileSize;
 
   @override
   State<ResourcesContainerWidget> createState() =>
@@ -114,7 +116,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                         color: ColorResources.gray),
                   ),
                   Text(
-                    widget.fileSize,
+                    widget.resourcetype == "file" ? widget.fileSize! : "",
                     style: GoogleFonts.notoSansDevanagari(
                         fontSize: 10, color: ColorResources.gray),
                   ),
@@ -132,7 +134,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                       Permission.manageExternalStorage,
                     ].request();
                     if (await Permission.storage.isGranted) {
-                      if (true) {
+                      if (widget.resourcetype == "file") {
                         download(widget.uploadFile, widget.title);
                       }
                       //todo this dead code pls check onces
@@ -146,7 +148,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                     children: [
                       //todo this dead code pls check onces of link why true always
                       Text(
-                        true ? 'PDF' : 'Link',
+                        widget.resourcetype == "file" ? 'PDF' : 'Link',
                         style: GoogleFonts.notoSansDevanagari(
                           fontSize: 15,
                           color: ColorResources.buttoncolor,
@@ -155,7 +157,9 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                       ),
                       Icon(
                         //todo this dead code pls check onces
-                        true ? Icons.file_download_outlined : Icons.link,
+                        widget.resourcetype == "file"
+                            ? Icons.file_download_outlined
+                            : Icons.link,
                         size: 25,
                         color: ColorResources.buttoncolor,
                       ),

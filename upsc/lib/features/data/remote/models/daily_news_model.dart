@@ -29,6 +29,7 @@ class DailyNewsDataModel {
     required this.title,
     required this.isActive,
     required this.language,
+    required this.resource_type,
     required this.createdAt,
   });
 
@@ -37,6 +38,7 @@ class DailyNewsDataModel {
   final String title;
   final bool isActive;
   final String language;
+  final String resource_type;
   final String createdAt;
 
   factory DailyNewsDataModel.fromJson(Map<String, dynamic> json) => DailyNewsDataModel(
@@ -45,6 +47,7 @@ class DailyNewsDataModel {
     title: json["title"],
     isActive: json["is_active"],
     language: json["language"],
+    resource_type: json["resource_type"],
     createdAt: json["created_at"],
   );
 
@@ -53,6 +56,7 @@ class DailyNewsDataModel {
     "file_url": fileUrl.toJson(),
     "title": title,
     "is_active": isActive,
+    "resource_type":resource_type,
     "language": language,
     "created_at": createdAt,
   };
@@ -67,7 +71,7 @@ class FileUrl {
 
   final String fileLoc;
   final String fileName;
-  final String fileSize;
+  final String? fileSize;
 
   factory FileUrl.fromJson(Map<String, dynamic> json) => FileUrl(
     fileLoc: json["fileLoc"],

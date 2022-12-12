@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -12,7 +11,10 @@ import 'package:upsc/util/prefConstatnt.dart';
 
 class TestSubmitScreen extends StatefulWidget {
   final String id;
-  const TestSubmitScreen({Key? key, required this.id}) : super(key: key);
+  final String examtype;
+  final String name;
+  const TestSubmitScreen({Key? key, required this.id, required this.examtype,required this.name})
+      : super(key: key);
 
   @override
   State<TestSubmitScreen> createState() => _TestSubmitScreenState();
@@ -65,7 +67,7 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'TestSubmitScreen',
+          widget.name,
           style: GoogleFonts.notoSansDevanagari(
               color: ColorResources.textblack, fontWeight: FontWeight.bold),
         ),
@@ -99,55 +101,90 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
               }
             },
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.50,
+              width: MediaQuery.of(context).size.width * 0.70,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 color: ColorResources.buttoncolor,
                 borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
-              child: Text(
-                'Upload OMR',
-                style: GoogleFonts.notoSansDevanagari(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'PDF',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: ColorResources.textWhite,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Icon(
+                        Icons.download_outlined,
+                        size: 18,
+                        color: ColorResources.textWhite,
+                      )
+                    ],
+                  ),
+                  Text(
+                    widget.examtype == "objective"
+                        ? 'Upload OMR'
+                        : "Upload Answer Sheet",
+                    style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
             ),
           ),
-          selectfile ? Text(file!.path!) : const Text(""),
-          const SizedBox(
-            height: 200,
-          ),
+          //selectfile ? Text(file!.path!) : const Text(""),
           selectfile
-              ? GestureDetector(
-                  onTap: () {
-                    fileupload();
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.50,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: ColorResources.buttoncolor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sumbit',
-                          style: GoogleFonts.notoSansDevanagari(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: ColorResources.textWhite,
-                        )
-                      ],
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.60,
+                  child: PdfViewer.openFile(
+                    file!.path!,
+                  ),
+                )
+              : const Text(""),
+          selectfile
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      fileupload();
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 10),
+                      width: MediaQuery.of(context).size.width * 0.50,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: ColorResources.buttoncolor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Sumbit',
+                            style: GoogleFonts.notoSansDevanagari(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: ColorResources.textWhite,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )
