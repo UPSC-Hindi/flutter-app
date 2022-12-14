@@ -219,8 +219,9 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
               alignment: Alignment.bottomCenter,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => TestSubmitScreen(
+                        questionPaper:widget.data.questionPaper!.fileLoc!,
                         name: widget.data.testTitle!,
                         id: widget.data.sId!,
                         examtype: widget.data.questionPaperType!),

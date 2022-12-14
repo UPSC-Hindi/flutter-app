@@ -393,7 +393,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PaymentScreen(),
+            builder: (context) => const PaymentScreen(paymentfor: "course"),
           ),
         );
       } else {

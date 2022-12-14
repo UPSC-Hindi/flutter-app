@@ -7,6 +7,7 @@ import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/util/appString..dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/test_detail_screen.dart';
 
 class TestSeries extends StatefulWidget {
@@ -195,7 +196,8 @@ class _TestSeriesState extends State<TestSeries> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Continue',
+                                  //'Continue'
+                                  Languages.continueText,
                                   style: GoogleFonts.notoSansDevanagari(
                                       fontSize: 12,
                                       color: Colors.white,

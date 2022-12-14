@@ -6,6 +6,7 @@ import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/localfiles.dart';
 
 class CoursesIndexResources extends StatefulWidget {
@@ -34,7 +35,8 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
         elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Course Index',
+          //'Course Index'
+          Languages.Course_Index,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/localfiles.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,7 +29,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Resources',
+          //'Resources'
+          Languages.resources,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -46,7 +48,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
           GestureDetector(
             onTap: () => Navigator.of(context).pushNamed('courseIndex'),
-            child: _resourceCardWidget(SvgImages.courseIndex, 'Course Index'),
+            child: _resourceCardWidget(
+                SvgImages.courseIndex, Languages.Course_Index),
           ),
           GestureDetector(
             onTap: () => Navigator.of(context).pushNamed('shortnotes'),

@@ -90,104 +90,105 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
                 itemCount: resources.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: ColorResources.borderColor),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: SvgImages.pdfimage,
-                              placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  resources[index].data,
-                                  style: GoogleFonts.notoSansDevanagari(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: ColorResources.gray),
-                                ),
-                                Text(
-                                  resources[index].audioFile.fileSize,
-                                  style: GoogleFonts.notoSansDevanagari(
-                                      fontSize: 10, color: ColorResources.gray),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            duration = await player
-                                .setUrl(resources[index].audioFile.fileLoc);
-                            player.playing
-                                ? setState(() {
-                                    player.stop();
-                                  })
-                                : setState(() {
-                                    player.play();
-                                  });
-                          },
-                          child: player.playing
-                              ? Column(
-                                  children: [
-                                    Icon(
-                                      //todo this dead code pls check onces
-                                      Icons.pause,
-                                      size: 25,
-                                      color: ColorResources.buttoncolor,
-                                    ),
-                                    Text('pause',
-                                        style: GoogleFonts.notoSansDevanagari(
-                                          fontSize: 8,
-                                          color: ColorResources.buttoncolor,
-                                          fontWeight: FontWeight.w700,
-                                        ))
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    Icon(
-                                      //todo this dead code pls check onces
-                                      Icons.play_arrow,
-                                      size: 25,
-                                      color: ColorResources.buttoncolor,
-                                    ),
-                                    Text(
-                                      'Audio Play',
-                                      style: GoogleFonts.notoSansDevanagari(
-                                        fontSize: 8,
-                                        color: ColorResources.buttoncolor,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                        )
-                      ],
-                    ),
-                  );
+                  return aircard(resources[index]);
                 },
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget aircard(AirResourcesDataModel resources) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: ColorResources.borderColor),
+      ),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: SvgImages.pdfimage,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+              const SizedBox(
+                width: 30,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    resources.data,
+                    style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: ColorResources.gray),
+                  ),
+                  Text(
+                    resources.audioFile.fileSize,
+                    style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 10, color: ColorResources.gray),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          InkWell(
+            onTap: () async {
+              duration =
+                  await player.setUrl(resources.audioFile.fileLoc);
+              player.playing
+                  ? setState(() {
+                      player.stop();
+                    })
+                  : setState(() {
+                      player.play();
+                    });
+            },
+            child: player.playing
+                ? Column(
+                    children: [
+                      Icon(
+                        Icons.pause,
+                        size: 25,
+                        color: ColorResources.buttoncolor,
+                      ),
+                      Text('pause',
+                          style: GoogleFonts.notoSansDevanagari(
+                            fontSize: 8,
+                            color: ColorResources.buttoncolor,
+                            fontWeight: FontWeight.w700,
+                          ))
+                    ],
+                  )
+                : Column(
+                    children: [
+                      Icon(
+                        Icons.play_arrow,
+                        size: 25,
+                        color: ColorResources.buttoncolor,
+                      ),
+                      Text(
+                        'Audio Play',
+                        style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 8,
+                          color: ColorResources.buttoncolor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+          )
+        ],
       ),
     );
   }

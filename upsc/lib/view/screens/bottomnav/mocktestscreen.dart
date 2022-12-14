@@ -6,6 +6,7 @@ import 'package:upsc/models/Test_series/MyTests.dart';
 import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/sidenav/mytest.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/testsdetails.dart';
 
@@ -133,7 +134,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'My Tests Series',
               style: Theme.of(context).textTheme.headline1,
@@ -271,12 +272,12 @@ class _mocktestscreenState extends State<mocktestscreen> {
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Text('Continue'), // <-- Text
-                        SizedBox(
+                      children: [
+                        Text(Languages.continueText), // <-- Text
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                         ),
                       ],
@@ -365,7 +366,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('  Learn more'),
+                      Text(Languages.LearnMore),
                       Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(

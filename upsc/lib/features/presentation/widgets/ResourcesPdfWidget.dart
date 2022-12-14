@@ -96,24 +96,28 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
         children: [
           Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: SvgImages.pdfimage,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-              const SizedBox(
-                width: 30,
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CachedNetworkImage(
+                  imageUrl: SvgImages.pdfimage,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: ColorResources.gray),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.58,
+                    child: Text(
+                      widget.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: ColorResources.gray),
+                    ),
                   ),
                   Text(
                     widget.resourcetype == "file" ? widget.fileSize! : "",

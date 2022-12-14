@@ -118,7 +118,7 @@ class _HomeScreensState extends State<HomeScreens> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Daily Current Affairs',
+                          Languages.Daily_Current_Affaris,
                           style: GoogleFonts.notoSansDevanagari(
                               fontSize: 14,
                               color: ColorResources.textblack,
@@ -140,7 +140,7 @@ class _HomeScreensState extends State<HomeScreens> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  ' Explore ',
+                                  Languages.explore,
                                   style: GoogleFonts.notoSansDevanagari(
                                     fontSize: 10,
                                     color: Colors.white,
@@ -268,7 +268,7 @@ class _HomeScreensState extends State<HomeScreens> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'Continue',
+                                                Languages.continueText,
                                                 style: GoogleFonts
                                                     .notoSansDevanagari(
                                                   fontSize: 13,
@@ -349,7 +349,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              ' Explore ',
+                              Languages.explore,
                               style: GoogleFonts.notoSansDevanagari(
                                 fontSize: 10,
                                 color: Colors.white,
@@ -527,7 +527,8 @@ class _HomeScreensState extends State<HomeScreens> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          'Got a Query?',
+                          //'Got a Query?'
+                          Languages.GotaQuery,
                           style: GoogleFonts.notoSansDevanagari(),
                         ),
                         Container(
@@ -653,7 +654,7 @@ class _HomeScreensState extends State<HomeScreens> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      ' Continue ',
+                      Languages.continueText,
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 10,
                         color: Colors.white,

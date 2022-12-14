@@ -1,19 +1,28 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 
 class TestSubmitScreen extends StatefulWidget {
   final String id;
   final String examtype;
   final String name;
-  const TestSubmitScreen({Key? key, required this.id, required this.examtype,required this.name})
+  final String questionPaper;
+  const TestSubmitScreen(
+      {Key? key,
+      required this.id,
+      required this.examtype,
+      required this.name,
+      required this.questionPaper})
       : super(key: key);
 
   @override
@@ -151,7 +160,16 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
                     file!.path!,
                   ),
                 )
-              : const Text(""),
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.60,
+                  child: FutureBuilder<File>(
+                    future: DefaultCacheManager()
+                        .getSingleFile(widget.questionPaper),
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? PdfViewer.openFile(snapshot.data!.path)
+                        : Center(child: CircularProgressIndicator()),
+                  ),
+                ),
           selectfile
               ? Align(
                   alignment: Alignment.centerRight,
@@ -173,7 +191,8 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Sumbit',
+                            //'Sumbit'
+                            Languages.Submit,
                             style: GoogleFonts.notoSansDevanagari(
                                 fontSize: 18,
                                 color: Colors.white,
@@ -205,6 +224,7 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
         setState(() {
           Preferences.hideDialog(context);
         });
+        Navigator.of(context).pop();
         flutterToast(response.data['msg']);
       } else {
         setState(() {

@@ -246,7 +246,9 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Learn more',
+                    //'Learn more'
+                    Languages.LearnMore
+                    ,
                     style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                   ),
                   Container(

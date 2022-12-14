@@ -120,7 +120,7 @@ class _CartScreenState extends State<CartScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18.0, vertical: 10.0),
-                      child: Text('Make Payment',
+                      child: Text(Languages.makePayment,
                           style: GoogleFonts.notoSansDevanagari(fontSize: 20)),
                     ))
               ],

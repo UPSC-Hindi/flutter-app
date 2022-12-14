@@ -6,6 +6,7 @@ import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyCoursesScreen extends StatelessWidget {
@@ -19,7 +20,8 @@ class MyCoursesScreen extends StatelessWidget {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'My Courses',
+          //'My Courses'
+          Languages.myCourses,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -84,7 +86,7 @@ class MyCoursesScreen extends StatelessWidget {
             children: [
               Text(
                 courseData.batchDetails.batchName,
-                style:  GoogleFonts.notoSansDevanagari(fontSize: 24),
+                style: GoogleFonts.notoSansDevanagari(fontSize: 24),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +104,7 @@ class MyCoursesScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      if(courseData.batchDetails.isActive){
+                      if (courseData.batchDetails.isActive) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => CourseViewScreen(
@@ -116,7 +118,9 @@ class MyCoursesScreen extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(courseData.batchDetails.isActive?'Continue':'Expired'), // <-- Text
+                        Text(courseData.batchDetails.isActive
+                            ? Languages.continueText
+                            : 'Expired'), // <-- Text
                         const SizedBox(
                           width: 5,
                         ),
