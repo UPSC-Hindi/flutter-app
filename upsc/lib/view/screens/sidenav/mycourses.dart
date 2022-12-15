@@ -6,6 +6,7 @@ import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyCoursesScreen extends StatelessWidget {
@@ -19,7 +20,8 @@ class MyCoursesScreen extends StatelessWidget {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'My Courses',
+          //'My Courses'
+          Languages.myCourses,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -61,6 +63,8 @@ class MyCoursesScreen extends StatelessWidget {
 
   Center _myCoursesCardWidget(
       BuildContext context, MyCoursesDataModel courseData) {
+    print("courses status");
+    print(courseData.batchDetails.isActive);
     return Center(
       child: Container(
         padding: const EdgeInsets.all(10.0),
@@ -82,7 +86,7 @@ class MyCoursesScreen extends StatelessWidget {
             children: [
               Text(
                 courseData.batchDetails.batchName,
-                style:  GoogleFonts.notoSansDevanagari(fontSize: 24),
+                style: GoogleFonts.notoSansDevanagari(fontSize: 24),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,23 +104,27 @@ class MyCoursesScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CourseViewScreen(
-                            lecture: courseData.lectureDetails,
-                            batch: courseData.batchDetails,
+                      if (courseData.batchDetails.isActive) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CourseViewScreen(
+                              lecture: courseData.lectureDetails,
+                              batch: courseData.batchDetails,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Text('Continue'), // <-- Text
-                        SizedBox(
+                      children: [
+                        Text(courseData.batchDetails.isActive
+                            ? Languages.continueText
+                            : 'Expired'), // <-- Text
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                         ),
                       ],

@@ -37,6 +37,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  Progress? progress;
 
   Data(
       {this.sId,
@@ -47,7 +48,8 @@ class Data {
       this.isPaid,
       this.createdAt,
       this.updatedAt,
-      this.iV});
+      this.iV,
+      this.progress});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -61,6 +63,8 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     iV = json['__v'];
+    progress =
+        json['progress'] != null ? Progress.fromJson(json['progress']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +80,9 @@ class Data {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['__v'] = iV;
+    if (progress != null) {
+      data['progress'] = progress!.toJson();
+    }
     return data;
   }
 }
@@ -190,6 +197,25 @@ class Banner {
     data['fileLoc'] = fileLoc;
     data['fileName'] = fileName;
     data['fileSize'] = fileSize;
+    return data;
+  }
+}
+
+class Progress {
+  String? percentage;
+  String? value;
+
+  Progress({this.percentage, this.value});
+
+  Progress.fromJson(Map<String, dynamic> json) {
+    percentage = json['percentage'];
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['percentage'] = percentage;
+    data['value'] = value;
     return data;
   }
 }

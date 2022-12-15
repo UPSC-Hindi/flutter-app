@@ -6,6 +6,8 @@ import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc/util/langauge.dart';
+import 'package:upsc/util/localfiles.dart';
 
 class CoursesIndexResources extends StatefulWidget {
   const CoursesIndexResources({Key? key, required this.resourceDataSourceImpl})
@@ -19,8 +21,9 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
   String? datetoshow;
   @override
   void initState() {
-    super.initState();
+    Localfilesfind.initState();
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
+    super.initState();
   }
 
   @override
@@ -32,7 +35,8 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
         elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Course Index',
+          //'Course Index'
+          Languages.Course_Index,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -76,6 +80,7 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
       child: Column(
         children: [
           SearchBarWidget(
+            searchText: 'Course Index',
             onChanged: (String value) {
               setState(() {
                 filterText = value;
@@ -96,9 +101,10 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
+                  resourcetype: resources[index].resourceType!,
                   title: resources[index].title!,
                   uploadFile: resources[index].fileUrl!.fileLoc!,
-                  fileSize: resources[index].fileUrl!.fileSize!,
+                  fileSize: resources[index].fileUrl!.fileSize ?? 0.toString(),
                 );
               },
             ),

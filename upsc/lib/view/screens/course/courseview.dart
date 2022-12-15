@@ -17,12 +17,14 @@ import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
+import 'package:upsc/features/presentation/widgets/videopaler.dart';
 import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/joinStreaming.dart';
 import 'package:intl/intl.dart';
 
@@ -195,6 +197,46 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Demo Video",
+                          style: GoogleFonts.notoSansDevanagari(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: ColorResources.textblack),
+                        ),
+                        Container(
+                          height: 120,
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                            color: ColorResources.textWhite,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: ColorResources.gray.withOpacity(0.5),
+                                  blurRadius: 5,
+                                  blurStyle: BlurStyle.normal)
+                            ],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.batch.demoVideo.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) => Container(
+                              margin: const EdgeInsets.all(5),
+                              width: 130,
+                              height: 90,
+                              child: YouTubeContainerWidget(
+                                videoUrl: widget.batch.demoVideo[index].fileLoc,
+                                height: 90,
+                              ),
+                            ),
+                          ),
+                        ),
                         ListView.builder(
                           itemCount: widget.lecture.length,
                           shrinkWrap: true,
@@ -365,7 +407,9 @@ class BatchNotesWidget extends StatelessWidget {
                       image: SvgImages.emptyCard, text: "There is no Notes")
                   : ListView.builder(
                       itemCount: notesList!.length,
+                      //todo
                       itemBuilder: (context, index) => ResourcesContainerWidget(
+                        resourcetype: "file",
                         title: notesList![index].title,
                         uploadFile: notesList![index].uploadFile.fileLoc,
                         fileSize: notesList![index].uploadFile.fileSize,
@@ -483,10 +527,10 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
             child: Text(
               lectureName.lectureName!,
-              style: GoogleFonts.notoSansDevanagari(fontSize: 24),
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
           ListView.builder(
@@ -504,7 +548,13 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
   Widget _recordedVideoWidget(Listofvideos videosdata) {
     return InkWell(
       onTap: () {
-        
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PlayVideoFromNetwork(Videourl: videosdata.fileUrl!.fileLoc!),
+          ),
+        );
         //download(videosdata.fileUrl!.fileLoc!, videosdata.title);
       },
       child: Container(

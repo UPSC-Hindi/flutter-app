@@ -6,8 +6,10 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/localfiles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
@@ -15,11 +17,13 @@ class ResourcesContainerWidget extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.uploadFile,
+      required this.resourcetype,
       required this.fileSize})
       : super(key: key);
   final String title;
   final String uploadFile;
-  final String fileSize;
+  final String resourcetype;
+  final String? fileSize;
 
   @override
   State<ResourcesContainerWidget> createState() =>
@@ -34,9 +38,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
 
     print('directory:${baseStorage!.path}');
     //todo pls chek this variable use
-    List files = baseStorage.listSync();
-
-    await FlutterDownloader.enqueue(
+    String? status = await FlutterDownloader.enqueue(
       url: url,
       headers: {},
       // optional: header send with url (auth token etc)
@@ -47,6 +49,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
       openFileFromNotification:
           false, // click on notification to open downloaded file (for Android)
     );
+    print(status);
   }
 
   @override
@@ -58,7 +61,6 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
       String id = data[0];
       DownloadTaskStatus status = data[1];
       int progress = data[2];
-      setState(() {});
     });
 
     FlutterDownloader.registerCallback(downloadCallback);
@@ -94,27 +96,31 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
         children: [
           Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: SvgImages.pdfimage,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-              const SizedBox(
-                width: 30,
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CachedNetworkImage(
+                  imageUrl: SvgImages.pdfimage,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: ColorResources.gray),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.58,
+                    child: Text(
+                      widget.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: ColorResources.gray),
+                    ),
                   ),
                   Text(
-                    widget.fileSize,
+                    widget.resourcetype == "file" ? widget.fileSize! : "",
                     style: GoogleFonts.notoSansDevanagari(
                         fontSize: 10, color: ColorResources.gray),
                   ),
@@ -122,43 +128,48 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               ),
             ],
           ),
-          InkWell(
-            onTap: () async {
-              Map<Permission, PermissionStatus> status = await [
-                Permission.storage,
-                Permission.manageExternalStorage,
-              ].request();
-              if (await Permission.storage.isGranted) {
-                if (true) {
-                  download(widget.uploadFile, widget.title);
-                }
-                //todo this dead code pls check onces
-                else {
-                  launchUrl(Uri.parse(''),
-                      mode: LaunchMode.externalApplication);
-                }
-              }
-            },
-            child: Column(
-              children: [
-                //todo this dead code pls check onces of link why true always
-                Text(
-                  true ? 'PDF' : 'Link',
-                  style: GoogleFonts.notoSansDevanagari(
-                    fontSize: 15,
-                    color: ColorResources.buttoncolor,
-                    fontWeight: FontWeight.w700,
+          Localfilesfind.localfiles.contains(widget.title)
+              ? Icon(Icons.verified)
+              : InkWell(
+                  onTap: () async {
+                    flutterToast("Donwloading... ");
+                    Map<Permission, PermissionStatus> status = await [
+                      Permission.storage,
+                      Permission.manageExternalStorage,
+                    ].request();
+                    if (await Permission.storage.isGranted) {
+                      if (widget.resourcetype == "file") {
+                        download(widget.uploadFile, widget.title);
+                      }
+                      //todo this dead code pls check onces
+                      else {
+                        launchUrl(Uri.parse(''),
+                            mode: LaunchMode.externalApplication);
+                      }
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      //todo this dead code pls check onces of link why true always
+                      Text(
+                        widget.resourcetype == "file" ? 'PDF' : 'Link',
+                        style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 15,
+                          color: ColorResources.buttoncolor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Icon(
+                        //todo this dead code pls check onces
+                        widget.resourcetype == "file"
+                            ? Icons.file_download_outlined
+                            : Icons.link,
+                        size: 25,
+                        color: ColorResources.buttoncolor,
+                      ),
+                    ],
                   ),
-                ),
-                Icon(
-                  //todo this dead code pls check onces
-                  true ? Icons.file_download_outlined : Icons.link,
-                  size: 25,
-                  color: ColorResources.buttoncolor,
-                ),
-              ],
-            ),
-          )
+                )
         ],
       ),
     );

@@ -108,7 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.35,
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
                 color: const Color(0xFFF6CBB4),
@@ -116,10 +115,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Notification',
-                  style: GoogleFonts.notoSansDevanagari(
-                      color: const Color(0xFF783B3B), fontSize: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    //'Notification'
+                    Languages.Notification,
+                    style: GoogleFonts.notoSansDevanagari(
+                        color: const Color(0xFF783B3B), fontSize: 12),
+                  ),
                 ),
                 InkWell(
                   onTap: (() {
@@ -351,34 +354,34 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    const Divider(),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed('mytestseries');
-                      },
-                      style: TextButton.styleFrom(
-                        primary: ColorResources.textblack, // Text Color
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                            left: 16, top: 0, bottom: 0, right: 0),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.text_snippet),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              Languages.myTestseries,
-                              style: GoogleFonts.notoSansDevanagari(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                  color: ColorResources.textblack),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    // const Divider(),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Navigator.of(context).popAndPushNamed('mytestseries');
+                    //   },
+                    //   style: TextButton.styleFrom(
+                    //     primary: ColorResources.textblack, // Text Color
+                    //   ),
+                    //   child: Container(
+                    //     padding: const EdgeInsets.only(
+                    //         left: 16, top: 0, bottom: 0, right: 0),
+                    //     child: Row(
+                    //       children: [
+                    //         const Icon(Icons.text_snippet),
+                    //         const SizedBox(
+                    //           width: 10,
+                    //         ),
+                    //         Text(
+                    //           Languages.myTestseries,
+                    //           style: GoogleFonts.notoSansDevanagari(
+                    //               fontWeight: FontWeight.w500,
+                    //               fontSize: 20,
+                    //               color: ColorResources.textblack),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     const Divider(),
                     TextButton(
                       onPressed: () {

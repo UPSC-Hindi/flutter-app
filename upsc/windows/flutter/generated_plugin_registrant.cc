@@ -8,6 +8,7 @@
 
 #include <agora_rtc_engine/agora_rtc_engine_plugin.h>
 #include <connectivity_plus_windows/connectivity_plus_windows_plugin.h>
+#include <iris_event/iris_event_plugin.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <smart_auth/smart_auth_plugin.h>
 #include <syncfusion_pdfviewer_windows/syncfusion_pdfviewer_windows_plugin.h>
@@ -18,6 +19,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("AgoraRtcEnginePlugin"));
   ConnectivityPlusWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
+  IrisEventPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("IrisEventPlugin"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   SmartAuthPluginRegisterWithRegistrar(

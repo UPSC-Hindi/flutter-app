@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/contactus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -45,7 +46,8 @@ class AboutUsScreen extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     Text(
-                      'About US',
+                      //'About US'
+                      Languages.aboutUs,
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 25,
                         color: ColorResources.textWhite,

@@ -5,6 +5,7 @@ class Fontsize {
    double h3 = 16.0;
    double h4 = 14.0;
    double h5 = 12.0;
+   double h6 = 8.0;
    
 }
 

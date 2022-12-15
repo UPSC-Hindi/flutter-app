@@ -18,6 +18,7 @@ class EmptyWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CachedNetworkImage(
+            height: 100,
             imageUrl: image,
             placeholder: (context, url) =>
                 const Center(child: CircularProgressIndicator()),

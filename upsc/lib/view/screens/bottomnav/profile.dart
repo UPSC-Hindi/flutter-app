@@ -12,6 +12,7 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/home.dart';
 
 class ProfilScreen extends StatefulWidget {
   ProfilScreen({Key? key}) : super(key: key);
@@ -135,48 +136,57 @@ class _ProfilScreenState extends State<ProfilScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 80,
-                width: MediaQuery.of(context).size.width * 0.90,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorResources.textWhite,
-                  boxShadow: [
-                    const BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5.0,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomeScreen(
+                      index: 2,
                     ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Icon(Icons.bookmark, size: 30),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          Languages.yourTestSeries,
-                          style: GoogleFonts.notoSansDevanagari(
-                            color: ColorResources.textblack,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                  ));
+                },
+                child: Container(
+                  height: 80,
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorResources.textWhite,
+                    boxShadow: [
+                      const BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Icon(Icons.bookmark, size: 30),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Languages.yourTestSeries,
+                            style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Text(
-                          Languages.seeYourEnrollTest,
-                          style: GoogleFonts.notoSansDevanagari(
-                            color: ColorResources.textblack.withOpacity(0.5),
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                    const Icon(Icons.arrow_forward_ios)
-                  ],
+                          Text(
+                            Languages.seeYourEnrollTest,
+                            style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack.withOpacity(0.5),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                      const Icon(Icons.arrow_forward_ios)
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(

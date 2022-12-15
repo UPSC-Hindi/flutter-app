@@ -401,7 +401,7 @@ class _TestPaymentScreenState extends State<TestPaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PaymentScreen(),
+            builder: (context) => const PaymentScreen(paymentfor: "test"),
           ),
         );
       } else {

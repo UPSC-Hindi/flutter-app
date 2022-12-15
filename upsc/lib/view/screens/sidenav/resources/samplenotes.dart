@@ -5,6 +5,7 @@ import 'package:upsc/features/data/remote/models/notes_model.dart';
 import 'package:upsc/features/presentation/widgets/ResourcesPdfWidget.dart';
 import 'package:upsc/features/presentation/widgets/search_bar_widget.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/localfiles.dart';
 
 class SampleNotesScreen extends StatefulWidget {
   const SampleNotesScreen({Key? key, required this.resourceDataSourceImpl})
@@ -16,6 +17,12 @@ class SampleNotesScreen extends StatefulWidget {
 }
 
 class _SampleNotesScreenState extends State<SampleNotesScreen> {
+  @override
+  void initState() {
+    Localfilesfind.initState();
+    super.initState();
+    
+  }
   @override
   void dispose() {
     super.dispose();
@@ -30,7 +37,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          'Sample Notes',
+            'Sample Notes',
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -43,7 +50,7 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
                 NotesModel? response = snapshots.data;
                 if (response!.status) {
                   return NotesWidget(
-                    resources: response.data,
+                    resources: response.data, heading: 'Sample Notes',
                   );
                 } else {
                   return Text(response.msg);
@@ -61,8 +68,8 @@ class _SampleNotesScreenState extends State<SampleNotesScreen> {
 
 class NotesWidget extends StatefulWidget {
   final List<NotesDataModel> resources;
-  const NotesWidget({Key? key, required this.resources}) : super(key: key);
-
+  final String heading;
+  const NotesWidget({Key? key, required this.resources, required this.heading}) : super(key: key);
   @override
   State<NotesWidget> createState() => _NotesWidgetState();
 }
@@ -78,6 +85,7 @@ class _NotesWidgetState extends State<NotesWidget> {
       child: Column(
         children: [
           SearchBarWidget(
+            searchText: widget.heading,
             onChanged: (String value) {
               setState(() {
                 filterText = value;
@@ -98,9 +106,10 @@ class _NotesWidgetState extends State<NotesWidget> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ResourcesContainerWidget(
+                  resourcetype: resources[index].resourcetype,
                   title: resources[index].title,
                   uploadFile: resources[index].fileUrl.fileLoc,
-                  fileSize: resources[index].fileUrl.fileSize,
+                  fileSize: resources[index].fileUrl.fileSize ?? 0.toString(),
                 );
               },
             ),

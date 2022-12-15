@@ -1,11 +1,11 @@
-class TestSeries {
+class TestSeriesModel {
   bool? status;
   List<TestSeriesData>? data;
   String? msg;
 
-  TestSeries({this.status, this.data, this.msg});
+  TestSeriesModel({this.status, this.data, this.msg});
 
-  TestSeries.fromJson(Map<String, dynamic> json) {
+  TestSeriesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <TestSeriesData>[];
