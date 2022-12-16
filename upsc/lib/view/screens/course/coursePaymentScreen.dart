@@ -96,44 +96,50 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     Fluttertoast.showToast(
         msg:
             "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
-    _savePaymentStatus(PaymentModel(
-        orderId: '',
-        userpaymentOrderId: response.orderId!,
-        paymentId: response.paymentId!.toString(),
-        description: "upschindi",
-        mobileNumber: mobileNumber!,
-        userName: userName!,
-        userEmail: userEmail!,
-        Signature: response.signature!,
-        batchId: widget.course.batchDetails.id,
-        price: (int.parse(widget.course.amount) -
-                ((int.parse(widget.course.amount) *
-                    (int.parse(widget.course.batchDetails.discount) / 100))))
-            .round()
-            .toString(),
-        success: true.toString()));
+    _savePaymentStatus(
+        PaymentModel(
+            orderId: '',
+            userpaymentOrderId: response.orderId!,
+            paymentId: response.paymentId!.toString(),
+            description: "upschindi",
+            mobileNumber: mobileNumber!,
+            userName: userName!,
+            userEmail: userEmail!,
+            Signature: response.signature!,
+            batchId: widget.course.batchDetails.id,
+            price: (int.parse(widget.course.amount) -
+                    ((int.parse(widget.course.amount) *
+                        (int.parse(widget.course.batchDetails.discount) /
+                            100))))
+                .round()
+                .toString(),
+            success: true.toString()),
+        true);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     print("-----Payment error-----");
     Fluttertoast.showToast(
         msg: "ERROR: ${response.code} - ${response.message!}");
-    _savePaymentStatus(PaymentModel(
-        orderId: '',
-        userpaymentOrderId: '',
-        paymentId: '',
-        description: "",
-        mobileNumber: mobileNumber!,
-        userName: userName!,
-        userEmail: userEmail!,
-        Signature: '',
-        batchId: widget.course.batchDetails.id,
-        price: (int.parse(widget.course.amount) -
-                ((int.parse(widget.course.amount) *
-                    (int.parse(widget.course.batchDetails.discount) / 100))))
-            .round()
-            .toString(),
-        success: false.toString()));
+    _savePaymentStatus(
+        PaymentModel(
+            orderId: '',
+            userpaymentOrderId: '',
+            paymentId: '',
+            description: "",
+            mobileNumber: mobileNumber!,
+            userName: userName!,
+            userEmail: userEmail!,
+            Signature: '',
+            batchId: widget.course.batchDetails.id,
+            price: (int.parse(widget.course.amount) -
+                    ((int.parse(widget.course.amount) *
+                        (int.parse(widget.course.batchDetails.discount) /
+                            100))))
+                .round()
+                .toString(),
+            success: false.toString()),
+        false);
   }
 
   Future<BaseModel<getbannerdetails>> callApigetbanner() async {
@@ -378,7 +384,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     return BaseModel()..data = response;
   }
 
-  void _savePaymentStatus(PaymentModel paymentData) async {
+  void _savePaymentStatus(PaymentModel paymentData, bool status) async {
     print("----Saving Payment Details -----");
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     Preferences.onLoading(context);
@@ -393,7 +399,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PaymentScreen(paymentfor: "course"),
+            builder: (context) => PaymentScreen(
+              paymentfor: "course",
+              status: status,
+            ),
           ),
         );
       } else {

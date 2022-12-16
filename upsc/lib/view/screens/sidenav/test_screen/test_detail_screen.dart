@@ -43,8 +43,12 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [
-                          Text("-ve"),
+                        children: [
+                          Text(
+                            "-ve",
+                            style: GoogleFonts.notoSansDevanagari(
+                                color: ColorResources.buttoncolor),
+                          ),
                           SizedBox(
                             width: 5,
                           ),
@@ -221,7 +225,7 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => TestSubmitScreen(
-                        questionPaper:widget.data.questionPaper!.fileLoc!,
+                        questionPaper: widget.data.questionPaper!.fileLoc!,
                         name: widget.data.testTitle!,
                         id: widget.data.sId!,
                         examtype: widget.data.questionPaperType!),

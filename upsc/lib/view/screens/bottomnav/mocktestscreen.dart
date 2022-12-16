@@ -66,10 +66,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
           children: [
             Center(
               child: Container(
-                margin:  const EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: searchtest,
-                  decoration:  InputDecoration(
+                  decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: Languages.SearchMockTestQuizzes,
                     suffixIcon: const Icon(
@@ -196,14 +196,14 @@ class _mocktestscreenState extends State<mocktestscreen> {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
-          color: const Color(0xFFF9F9F9),
-          boxShadow: const [
+          borderRadius: BorderRadius.circular(10),
+          color: ColorResources.textWhite,
+          boxShadow: [
             BoxShadow(
-              color: Colors.grey,
+              color: ColorResources.gray.withOpacity(0.5),
               blurRadius: 5.0,
             ),
           ],
-          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -298,9 +298,9 @@ class _mocktestscreenState extends State<mocktestscreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: ColorResources.gray.withOpacity(0.5),
             blurRadius: 5.0,
           ),
         ],
