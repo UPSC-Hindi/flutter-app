@@ -66,13 +66,13 @@ class _mocktestscreenState extends State<mocktestscreen> {
           children: [
             Center(
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin:  const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: searchtest,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Search Mock Tests, Quizzes",
-                    suffixIcon: Icon(
+                  decoration:  InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: Languages.SearchMockTestQuizzes,
+                    suffixIcon: const Icon(
                       Icons.search,
                       size: 30,
                     ), //icon at tail of input

@@ -87,6 +87,8 @@ class Languages {
   static String Notification = "";
   //resources
   static String Course_Index = "";
+  //search
+  static String SearchMockTestQuizzes="";
 
   static initState() {
     Languages.isEnglish =
@@ -102,6 +104,8 @@ class Languages {
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
     latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
     Notification = isEnglish ? "Notification " : "सूचना";
+    //search
+    SearchMockTestQuizzes = isEnglish ? "Search Mock Test,Quizzes" : "मॉकटेस्ट/क्विज खोजे";
     //tab bar course
     prelims = isEnglish ? 'Prelims' : 'प्रीलिम्स';
     mains = isEnglish ? 'Mains' : 'मैन्स';

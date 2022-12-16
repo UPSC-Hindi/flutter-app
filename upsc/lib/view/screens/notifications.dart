@@ -8,6 +8,7 @@ import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/notificationget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
@@ -61,7 +62,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           width: 30,
                         ),
                         Text(
-                          'Notification',
+                          Languages.Notification,
                           style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textblack,
                               fontSize: 20,
