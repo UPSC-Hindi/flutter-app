@@ -13,6 +13,8 @@ class SvgImages {
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png';
 
   static String logo = 'assets/images/logo_Splash.jpg';
+  static String paymentfailed = "assets/images/Payment failed.gif";
+  static String paymentsucess = "assets/images/paymentsucess.gif";
 
   static String aboutLogo =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/logo/app_final.png';
