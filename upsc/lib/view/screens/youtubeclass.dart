@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -47,6 +48,17 @@ class _YTClassScreenState extends State<YTClassScreen> {
             return Column(
               children: [
                 player,
+                Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.lecture.lectureTitle,
+                            style:
+                                GoogleFonts.notoSansDevanagari(fontSize: 30)),
+                        Text(widget.lecture.description),
+                      ]),
+                )
                 //some other widgets
               ],
             );

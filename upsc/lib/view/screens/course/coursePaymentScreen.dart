@@ -93,9 +93,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     print(response.paymentId);
     print(response.orderId);
     print(response.signature);
-    Fluttertoast.showToast(
-        msg:
-            "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
+    // Fluttertoast.showToast(
+    //     msg:
+    //         "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
     _savePaymentStatus(
         PaymentModel(
             orderId: '',
@@ -162,7 +162,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     print("-----Payment Success W-----");
-    Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
+    // Fluttertoast.showToast(msg: "EXTERNAL_WALLET: ${response.walletName!}");
   }
 
   @override
@@ -354,13 +354,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         setState(() {
           Preferences.hideDialog(context);
         });
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
+        // Fluttertoast.showToast(
+        //   msg: '${response.msg}',
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   backgroundColor: ColorResources.gray,
+        //   textColor: ColorResources.textWhite,
+        // );
         openCheckout(response.id, response.keyId);
       } else {
         setState(() {
