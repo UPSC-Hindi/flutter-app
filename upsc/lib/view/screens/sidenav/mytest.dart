@@ -156,23 +156,27 @@ class _TestSeriesState extends State<TestSeries> {
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          carddata.startingDate!,
-                          style: TextStyle(
-                            color: ColorResources.gray,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              carddata.startingDate!,
+                              style: TextStyle(
+                                color: ColorResources.gray,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              'Score : ${carddata.attempted!.score}',
+                              style: GoogleFonts.notoSansDevanagari(
+                                color: ColorResources.gray,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                          'Score : ${carddata.attempted!.score}',
-                          style: GoogleFonts.notoSansDevanagari(
-                            color: ColorResources.gray,
-                          ),
-                        ),
-                        const Expanded(child: SizedBox()),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
