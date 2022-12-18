@@ -1,16 +1,21 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:upsc_web/features/controller/resource_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/view/courses_payement_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/language_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
+import 'package:upsc_web/features/view/screen/home/contactus_screen.dart';
 import 'package:upsc_web/features/view/screen/home_screen.dart';
-import 'package:upsc_web/features/view/screen/side_bar/my_cart_screen.dart';
-import 'package:upsc_web/features/view/screen/side_bar/my_courses_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/about_us_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/help_and_support_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/my_cart_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/my_courses_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/daily_news_resources.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/short_notes_resources.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources_screen.dart';
 import 'features/view/splash_screen.dart';
 
 class AppRoute {
@@ -23,12 +28,20 @@ class AppRoute {
   static const String myCartScreen = 'myCartScreen';
   static const String myCoursesScreen = 'myCoursesScreen';
   static const String coursePaymentScreen = 'coursePaymentScreen';
+  static const String aboutUsScreen = 'aboutUsScreen';
+  static const String helpAndSupport = 'helpAndSupport';
+  static const String contactUs = 'contactUs';
+
+  //RESOURCES SCREEN
+  static const String resourcesScreen = 'resourcesScreen';
+  static const String dailyNews = 'dailyNews';
+  static const String shortNotes = 'shortNotes';
 }
 
 class OnGenerateRoute {
   static Route<dynamic> route(RouteSettings settings) {
     final args = settings.arguments;
-
+    ResourceController resourceController = ResourceController();
     switch (settings.name) {
       case AppRoute.splashScreen:
         return cupertinoBuilder(widget: const SplashScreen());
@@ -68,6 +81,28 @@ class OnGenerateRoute {
         return CupertinoPageRoute(
           builder: (context) => CoursePaymentScreen(course: courseData),
         );
+
+      case AppRoute.aboutUsScreen:
+        return cupertinoBuilder(widget: AboutUsScreen());
+
+      case AppRoute.helpAndSupport:
+        return cupertinoBuilder(widget: const HelpAndSupportScreen());
+
+      case AppRoute.contactUs:
+        return cupertinoBuilder(widget: const ContactUsScreen());
+
+      case AppRoute.resourcesScreen:
+        return cupertinoBuilder(widget: const ResourcesScreen());
+
+      case AppRoute.dailyNews:
+        return cupertinoBuilder(
+            widget: DailyNewsScreen(resourceController: resourceController));
+      case AppRoute.shortNotes:
+        return cupertinoBuilder(
+            widget: ShortNotesScreen(
+          resourceController: resourceController,
+        ));
+
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),

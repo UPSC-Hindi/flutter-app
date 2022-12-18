@@ -29,5 +29,10 @@ class Api {
   static const String getOrderId = 'UPSCPayment/orders';
   // static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
   // static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
-  // static const String getCourseIndex = 'adminPanel/ResourceDetails';
+
+  //Resources
+  static const String getCourseIndex = 'adminPanel/ResourceDetails';
+  static const String getDailyNews = 'adminPanel/getNewsClips';
+  static const String getAirResources = 'adminPanel/getallindiaradio';
+  static const String getNotes = 'adminPanel/getNotesDetails';
 }

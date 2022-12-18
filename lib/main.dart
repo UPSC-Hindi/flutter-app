@@ -53,6 +53,11 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: ColorResources.textblack,
             ),
+            bodyText2: GoogleFonts.notoSansDevanagari(
+              fontSize: 20,
+            ),
+            bodyText1:
+                GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
             headlineLarge: GoogleFonts.notoSansDevanagari(
                 fontSize: 30, fontWeight: FontWeight.bold),
           ),

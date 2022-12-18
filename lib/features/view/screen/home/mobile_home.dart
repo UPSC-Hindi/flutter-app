@@ -6,6 +6,7 @@ import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/course_tab.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/home_tab.dart';
+import 'package:upsc_web/features/view/screen/home/contactus_screen.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 
@@ -39,8 +40,26 @@ class _MobileHomeState extends State<MobileHome> {
         if (state is MyCartState) {
           Navigator.popAndPushNamed(context, AppRoute.myCartScreen);
         }
-        if(state is MyCoursesState){
+        if (state is MyCoursesState) {
           Navigator.popAndPushNamed(context, AppRoute.myCoursesScreen);
+        }
+        if (state is AboutUsState) {
+          Navigator.popAndPushNamed(context, AppRoute.aboutUsScreen);
+        }
+        if (state is HelpAndSupport) {
+          Navigator.popAndPushNamed(context, AppRoute.helpAndSupport);
+        }
+        if (state is ContactUs) {
+          Navigator.popAndPushNamed(context, AppRoute.contactUs);
+        }
+        if (state is ShareApp) {
+          // Navigator.popAndPushNamed(context, AppRoute.aboutUsScreen);
+        }
+        if (state is Setting) {
+          Navigator.popAndPushNamed(context, AppRoute.languageScreen);
+        }
+        if (state is Resources) {
+          Navigator.popAndPushNamed(context, AppRoute.resourcesScreen);
         }
       },
       builder: (context, state) {

@@ -455,12 +455,10 @@ class _HomeTabState extends State<HomeTab> {
                           child: TextButton(
                             child: Text(
                               'Contact Us',
-                              style: GoogleFonts.notoSansDevanagari(
-                                  fontSize: 20,
-                                  color: ColorResources.textWhite),
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                             onPressed: () {
-                              Navigator.of(context).pushNamed("contactus");
+                              BlocProvider.of<DrawerCubit>(context).contactUs();
                             },
                           ),
                         )

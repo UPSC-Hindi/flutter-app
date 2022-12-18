@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
+import 'package:upsc_web/utils/langauge.dart';
 
 class ResponsiveWidget extends StatelessWidget {
   const ResponsiveWidget(
@@ -48,9 +48,10 @@ Drawer drawer(BuildContext context) {
                     "About Us",
                     style: Theme.of(context).textTheme.headline2,
                   ),
+                  onTap: () => BlocProvider.of<DrawerCubit>(context).aboutUs(),
                 ),
                 ListTile(
-                  leading:const Icon(Icons.info),
+                  leading: const Icon(Icons.info),
                   title: Text(
                     "My Cart",
                     style: Theme.of(context).textTheme.headline2,
@@ -60,13 +61,75 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading:const Icon(Icons.info),
+                  leading: const Icon(Icons.info),
                   title: Text(
-                    "My Courses",
+                    Languages.myCourses,
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   onTap: () {
                     BlocProvider.of<DrawerCubit>(context).myCourses();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(
+                    Languages.ourachievements,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // BlocProvider.of<DrawerCubit>(context).shareApp();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(
+                    Languages.mySchedule,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // BlocProvider.of<DrawerCubit>(context).shareApp();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(
+                    Languages.resources,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    BlocProvider.of<DrawerCubit>(context).resources();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(
+                    Languages.helpAndSupport,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    BlocProvider.of<DrawerCubit>(context).helpAndSupport();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(
+                    Languages.shareApp,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    BlocProvider.of<DrawerCubit>(context).shareApp();
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(
+                    Languages.setting,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    BlocProvider.of<DrawerCubit>(context).setting();
                   },
                 ),
               ],
@@ -95,12 +158,14 @@ Drawer drawer(BuildContext context) {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text('Logout',
-                      style: GoogleFonts.notoSansDevanagari(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                        color: Colors.redAccent,
-                      ))
+                  Text(
+                    'Logout',
+                    style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                      color: Colors.redAccent,
+                    ),
+                  ),
                 ],
               ),
             ),

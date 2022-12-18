@@ -5,13 +5,21 @@ part 'drawer_state.dart';
 class DrawerCubit extends Cubit<DrawerState> {
   DrawerCubit() : super(DrawerInitial());
 
-  void aboutUs(){
+  void aboutUs() {
     emit(AboutUsState());
   }
-  void myCart(){
+
+  void myCart() {
     emit(MyCartState());
   }
-  void myCourses(){
+
+  void myCourses() {
     emit(MyCoursesState());
   }
+
+  void helpAndSupport() => emit(HelpAndSupport());
+  void contactUs() => emit(ContactUs());
+  void shareApp() => emit(ShareApp());
+  void setting() => emit(Setting());
+  void resources() => emit(Resources());
 }
