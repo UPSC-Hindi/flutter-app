@@ -19,6 +19,7 @@ jobs:
           architecture: x64
       - run: cd upsc && flutter pub get
       - run: cd upsc && cp keystore.jks android/app/
+      - run: cd upsc/android/app/ && ls -la
       - run: cd upsc && flutter build apk --no-sound-null-safety
 
       - uses: actions/upload-artifact@v3

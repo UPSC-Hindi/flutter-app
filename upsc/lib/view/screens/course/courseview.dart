@@ -27,6 +27,7 @@ import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/joinStreaming.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc/view/screens/youtubeclass.dart';
 
 class CourseViewScreen extends StatefulWidget {
   const CourseViewScreen({
@@ -274,12 +275,12 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
           // subtitle:Text('Starts : ${DateFormat("dd-MM-yyyy",'UTC').parse(lecture.startingDate)}'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                '9:00 AM to 12:00 PM',
+                "${lecture.startingDate.split(" ")[1]} to ${lecture.endingDate.split(" ")[1]}",
                 style: TextStyle(fontSize: 15),
               ),
-              Text('Date- 08/10/2022 '),
+              Text('Date-${lecture.startingDate.split(" ")[0]}'),
             ],
           ),
           trailing: ElevatedButton(
@@ -294,7 +295,13 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                 )),
             onPressed: () async {
               await [Permission.camera, Permission.microphone].request();
-              callApiJoinStreamingScreen(lecture);
+              lecture.lecture_type == "YT"
+                  ? Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              YTClassScreen(lecture: lecture)),
+                    )
+                  : callApiJoinStreamingScreen(lecture);
               //Navigator.of(context).pushNamed('joinstreaming');
             },
             child: Row(
