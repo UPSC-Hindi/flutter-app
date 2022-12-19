@@ -37,36 +37,26 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             child: _resourceCardWidget(SvgImages.dailyNews, 'Daily News'),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed('courseIndex', arguments: resourceController),
+            onTap: () => Navigator.of(context).pushNamed('courseIndex'),
             child: _resourceCardWidget(
                 SvgImages.courseIndex, Languages.Course_Index),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed(AppRoute.shortNotes, arguments: resourceController),
+            onTap: () => Navigator.of(context).pushNamed(AppRoute.shortNotes),
             child: _resourceCardWidget(SvgImages.shortNotes, 'Short Notes'),
           ),
           GestureDetector(
             onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) => const NcertScreen(
-              //       from: 'note',
-              //     ),
-              //   ),
-              // );
+              Navigator.of(context).pushNamed(AppRoute.youtubeNotes);
             },
             child: _resourceCardWidget(SvgImages.youtubeNotes, 'Youtube Note'),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed('samplenotes', arguments: resourceController),
+            onTap: () => Navigator.of(context).pushNamed(AppRoute.sampleNotes),
             child: _resourceCardWidget(SvgImages.sampleNotes, 'Sample Notes'),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context)
-                .pushNamed('airResources', arguments: resourceController),
+            onTap: () => Navigator.of(context).pushNamed(AppRoute.airResources),
             child: _resourceCardWidget(SvgImages.air, 'Air'),
           ),
         ],

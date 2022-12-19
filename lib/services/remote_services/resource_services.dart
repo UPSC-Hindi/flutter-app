@@ -23,4 +23,37 @@ class ResourceServices {
       rethrow;
     }
   }
+
+  Future<dynamic> getYouTubeVideoService() async {
+    try {
+      var response =
+          await BaseClient.get(url: Api.baseUrl + Api.getYouTubeVideo);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getAirREsourceService() async {
+    try {
+      dynamic response =
+          await BaseClient.get(url: Api.baseUrl + Api.getAirResources);
+
+      return response;
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getCourseIndexService() async {
+    try {
+      dynamic response =
+          await BaseClient.get(url: Api.baseUrl + Api.getCourseIndex);
+      return response;
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
 }

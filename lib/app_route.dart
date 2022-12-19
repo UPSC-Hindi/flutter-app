@@ -13,8 +13,12 @@ import 'package:upsc_web/features/view/screen/side_nav/about_us_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/help_and_support_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/my_cart_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/my_courses_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/air_resources.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/course_index.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources/daily_news_resources.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/sample_notes_resources.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources/short_notes_resources.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/youtube_notes.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources_screen.dart';
 import 'features/view/splash_screen.dart';
 
@@ -36,6 +40,10 @@ class AppRoute {
   static const String resourcesScreen = 'resourcesScreen';
   static const String dailyNews = 'dailyNews';
   static const String shortNotes = 'shortNotes';
+  static const String sampleNotes = 'sampleNotes';
+  static const String youtubeNotes = 'youtubeNotes';
+  static const String airResources = 'airResources';
+  static const String courseIndex = 'courseIndex';
 }
 
 class OnGenerateRoute {
@@ -97,6 +105,24 @@ class OnGenerateRoute {
       case AppRoute.dailyNews:
         return cupertinoBuilder(
             widget: DailyNewsScreen(resourceController: resourceController));
+
+      case AppRoute.sampleNotes:
+        return cupertinoBuilder(
+            widget: SampleNotesScreen(resourceController: resourceController));
+
+      case AppRoute.youtubeNotes:
+        return cupertinoBuilder(
+            widget: YoutubeNotes(resourceController: resourceController));
+
+      case AppRoute.airResources:
+        return cupertinoBuilder(
+            widget: AirResourcesScreen(resourceController: resourceController));
+
+      case AppRoute.courseIndex:
+        return cupertinoBuilder(
+            widget:
+                CoursesIndexResources(resourceController: resourceController));
+
       case AppRoute.shortNotes:
         return cupertinoBuilder(
             widget: ShortNotesScreen(

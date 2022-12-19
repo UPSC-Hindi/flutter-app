@@ -35,4 +35,5 @@ class Api {
   static const String getDailyNews = 'adminPanel/getNewsClips';
   static const String getAirResources = 'adminPanel/getallindiaradio';
   static const String getNotes = 'adminPanel/getNotesDetails';
+  static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
 }
