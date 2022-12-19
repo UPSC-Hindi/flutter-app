@@ -30,47 +30,12 @@ class TestSubmitScreen extends StatefulWidget {
 }
 
 class _TestSubmitScreenState extends State<TestSubmitScreen> {
-  Timer? countdownTimer;
-  Duration myDuration = const Duration(hours: 3);
   FilePickerResult? result;
   PlatformFile? file;
   bool selectfile = false;
 
   @override
-  void initState() {
-    startTimer();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    countdownTimer!.cancel();
-    super.dispose();
-  }
-
-  void startTimer() {
-    countdownTimer =
-        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
-  }
-
-  void setCountDown() {
-    final reduceSecondsBy = 1;
-    setState(() {
-      final seconds = myDuration.inSeconds - reduceSecondsBy;
-      if (seconds < 0) {
-        countdownTimer!.cancel();
-      } else {
-        myDuration = Duration(seconds: seconds);
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = strDigits(myDuration.inHours.remainder(24));
-    final minutes = strDigits(myDuration.inMinutes.remainder(60));
-    final seconds = strDigits(myDuration.inSeconds.remainder(60));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorResources.textWhite,
@@ -84,17 +49,7 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.timer_sharp),
-                Text(
-                  '$hours:$minutes:$seconds',
-                ),
-              ],
-            ),
-          ),
+          const ExamTimer(),
           GestureDetector(
             onTap: () async {
               result = await FilePicker.platform.pickFiles(
@@ -167,7 +122,7 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
                         .getSingleFile(widget.questionPaper),
                     builder: (context, snapshot) => snapshot.hasData
                         ? PdfViewer.openFile(snapshot.data!.path)
-                        : Center(child: CircularProgressIndicator()),
+                        : const Center(child: CircularProgressIndicator()),
                   ),
                 ),
           selectfile
@@ -178,7 +133,7 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
                       fileupload();
                     },
                     child: Container(
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
                       width: MediaQuery.of(context).size.width * 0.50,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
@@ -238,5 +193,65 @@ class _TestSubmitScreenState extends State<TestSubmitScreen> {
       });
       flutterToast('Server Error');
     }
+  }
+}
+
+class ExamTimer extends StatefulWidget {
+  const ExamTimer({super.key});
+
+  @override
+  State<ExamTimer> createState() => _ExamTimerState();
+}
+
+class _ExamTimerState extends State<ExamTimer> {
+  Timer? countdownTimer;
+  Duration myDuration = const Duration(hours: 3);
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    countdownTimer!.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    countdownTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+  }
+
+  void setCountDown() {
+    final reduceSecondsBy = 1;
+    setState(() {
+      final seconds = myDuration.inSeconds - reduceSecondsBy;
+      if (seconds < 0) {
+        countdownTimer!.cancel();
+      } else {
+        myDuration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String strDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = strDigits(myDuration.inHours.remainder(24));
+    final minutes = strDigits(myDuration.inMinutes.remainder(60));
+    final seconds = strDigits(myDuration.inSeconds.remainder(60));
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.timer_sharp),
+          Text(
+            '$hours:$minutes:$seconds',
+          ),
+        ],
+      ),
+    );
   }
 }
