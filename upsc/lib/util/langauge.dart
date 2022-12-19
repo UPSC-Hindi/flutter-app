@@ -88,7 +88,7 @@ class Languages {
   //resources
   static String Course_Index = "";
   //search
-  static String SearchMockTestQuizzes="";
+  static String SearchMockTestQuizzes = "";
 
   static initState() {
     Languages.isEnglish =
@@ -105,7 +105,8 @@ class Languages {
     latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
     Notification = isEnglish ? "Notification " : "सूचना";
     //search
-    SearchMockTestQuizzes = isEnglish ? "Search Mock Test,Quizzes" : "मॉकटेस्ट/क्विज खोजे";
+    SearchMockTestQuizzes =
+        isEnglish ? "Search Mock Test,Quizzes" : "मॉकटेस्ट/क्विज खोजे";
     //tab bar course
     prelims = isEnglish ? 'Prelims' : 'प्रीलिम्स';
     mains = isEnglish ? 'Mains' : 'मैन्स';
@@ -150,7 +151,7 @@ class Languages {
     setting = isEnglish ? 'Settings' : 'सेटिंग्स ';
 
     //Download screen
-    download = isEnglish ? 'Downloads' : 'निःशुल्क टेस्ट सीरीज ';
+    download = isEnglish ? 'Downloads' : 'डाउनलोड';
     video = isEnglish ? 'Videos' : 'वीडियो ';
     testSeries = isEnglish ? 'Test Series' : 'टेस्ट सीरीज';
 
