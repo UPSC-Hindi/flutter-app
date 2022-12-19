@@ -1,3 +1,5 @@
+import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
+import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 
 class Languages {
   static bool isEnglish = true;
@@ -13,7 +15,11 @@ class Languages {
   static String courses = '';
   static String home = '';
   static String Test = '';
-
+  static String Daily_Current_Affaris = "";
+  static String GotaQuery = "";
+  //buttons
+  static String explore = '';
+  static String LearnMore = "";
   //profile
   static String profile = '';
   static String personalInformation = '';
@@ -73,19 +79,30 @@ class Languages {
   static String emailText = '';
   static String phoneText = '';
   static String whatsApp = '';
+  //test
+  static String score = "";
+  static String Take_Live_Test = "";
+  static String OMR_Sheet = "";
+  static String Submit = "";
+  static String Notification = "";
+  //resources
+  static String Course_Index = "";
 
   static initState() {
-    Languages.isEnglish = true;
-        // SharedPreferenceHelper.getString(Preferences.language)! == "English"
-        //     ? true
-        //     : false;
-
+    Languages.isEnglish =
+        PreferencesHelper.getString(Preferences.language)! == "hi"
+            ? false
+            : true;
+    print("Is English $isEnglish");
+    //buttons
+    explore = isEnglish ? 'Explore' : 'और खोंज़े';
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
-    ncertBatches = isEnglish ? 'Join Us On' : 'को हमारे साथ शामिल हों';
+    LearnMore = isEnglish ? "Learn More" : "और जाने";
+    ncertBatches = isEnglish ? 'Join Us On' : 'हमसे जुड़ें';
     youTube = isEnglish ? 'On YouTube' : 'यूट्यूब पर ';
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
     latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
-
+    Notification = isEnglish ? "Notification " : "सूचना";
     //tab bar course
     prelims = isEnglish ? 'Prelims' : 'प्रीलिम्स';
     mains = isEnglish ? 'Mains' : 'मैन्स';
@@ -93,31 +110,34 @@ class Languages {
     ro = isEnglish ? 'Ro' : 'आर ओ ';
 
     //bottom bar
-    courses = isEnglish ? 'Courses' : 'कोर्सेस ';
+    courses = isEnglish ? 'Courses' : 'कोर्स';
     home = isEnglish ? 'Home' : 'होम ';
-    profile = isEnglish ? 'Profile' : 'प्रोफाइल ';
-    Test = isEnglish ? 'Test' : 'टेस्ट';
-
+    profile = isEnglish ? 'Profile' : 'प्रोफ़ाइल ';
+    Test = isEnglish ? 'Tests' : 'टेस्ट';
+    Daily_Current_Affaris =
+        isEnglish ? "Daily Current Affaris " : "दैनिक करंट अफेयर्स";
+    GotaQuery = isEnglish ? "Got a Query ?" : "कोई समस्या ?";
     //profile info
     personalInformation =
         isEnglish ? 'Personal Information' : 'व्यक्तिगत जानकारी';
-    yourTestSeries = isEnglish ? 'Your Test Series' : 'टेस्ट सीरीज';
+    yourTestSeries = isEnglish ? 'My Test Series' : 'टेस्ट सीरीज';
     yourCourses = isEnglish ? 'Your Courses' : 'कोर्सेस';
-    editProfile =
-        isEnglish ? 'Edit Phone, Email, Profile Name' : 'फ़ोन ईमेल नाम बदले';
+    editProfile = isEnglish
+        ? 'Edit Phone, Email, Profile Name'
+        : 'फ़ोन, ईमेल, प्रोफ़ाइल नाम संपादित करें';
     seeYourEnrollTest =
         isEnglish ? 'See your enrolled tests' : 'अपने दाखिल टेस्ट देखे';
     seeYourEnrollCourses =
         isEnglish ? 'See your enrolled courses' : 'अपने दाखिल कोर्स देखे';
-    saveChanges = isEnglish ? 'Save Changes' : 'परिवर्तनों को सुरक्षित करें';
+    saveChanges = isEnglish ? 'Save Changes' : 'बदलाव सहजें';
     mobile = isEnglish ? 'Mobile' : 'मोबाइल';
 
     //Drawer
     aboutUs = isEnglish ? 'About Us' : 'हमारे बारे में';
-    yourDownloads = isEnglish ? 'Your Downloads' : 'डाउनलोडस';
-    myCart = isEnglish ? 'My Cart' : 'कार्ट ';
-    myOrders = isEnglish ? 'My Orders' : 'ऑर्डर्स ';
-    myCourses = isEnglish ? 'My Courses' : 'कोर्सेस';
+    yourDownloads = isEnglish ? 'Your Downloads' : 'आपके डाउनलोड्स';
+    myCart = isEnglish ? 'My Cart' : 'मेरा कार्ट';
+    myOrders = isEnglish ? 'My Orders' : 'मेरे ऑर्डर्स';
+    myCourses = isEnglish ? 'My Courses' : 'आपके कोर्स';
     myTestseries = isEnglish ? 'My Test Series' : 'मेरी टेस्ट सीरीज';
     ourachievements = isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
     mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
@@ -133,10 +153,11 @@ class Languages {
 
     //cart
     cart = isEnglish ? 'My Cart' : 'कार्ट ';
-    makePayment = isEnglish ? 'Make Payment' : 'पेमेंट करें ';
-    remove = isEnglish ? 'Remove' : 'हटाए';
+    makePayment = isEnglish ? 'Make Payment' : 'भुगतान करें';
+    remove = isEnglish ? 'Remove' : 'हटाएं';
     total = isEnglish ? 'Total' : 'कुलs';
-
+    //resources
+    Course_Index = isEnglish ? "Course Index" : "पाठ्यक्रम";
     //courses
     inProgress = isEnglish ? 'In Progress' : 'प्रगति मे';
     continueText = isEnglish ? 'Continue' : 'जारी रखे';
@@ -153,8 +174,15 @@ class Languages {
     addTask = isEnglish ? '+ Add Task' : '+ कार्य जोड़ें';
 
     //help and support
-    freeMessage = isEnglish ? 'Feel free to message us at' : '+ कार्य जोड़ें';
-    emailText = isEnglish ? 'Mail us at' : 'हमें मेल करें';
-    whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सप्प करें ';
+    freeMessage =
+        isEnglish ? 'Feel free to message us at' : 'बेझिझक हमें पर मैसेज करें';
+    emailText = isEnglish ? 'Mail us at' : 'हमे ईमेल करें';
+    whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सअप पर सम्पर्क करें';
+
+    //test
+    score = isEnglish ? "Score" : "स्कोर";
+    Take_Live_Test = isEnglish ? "Take Live Test" : "लाइव टेस्ट दे";
+    OMR_Sheet = isEnglish ? "OMR Sheet" : "ओएमआर शीट";
+    Submit = isEnglish ? "Submit" : "जमा  करें";
   }
 }

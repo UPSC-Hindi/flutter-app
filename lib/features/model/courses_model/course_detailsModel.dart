@@ -185,9 +185,9 @@ class Banners {
       fileName: json["fileName"],
       fileSize: json["fileSize"],
       bannerfileType:
-          json["bannerfileType"] == null ? null : json["bannerfileType"],
+          json["bannerfileType"] ?? null,
       demoVideofileType:
-          json["DemoVideofileType"] == null ? null : json["DemoVideofileType"],
+          json["DemoVideofileType"] ?? null,
     );
   }
 
@@ -195,9 +195,9 @@ class Banners {
         "fileLoc": fileLoc,
         "fileName": fileName,
         "fileSize": fileSize,
-        "bannerfileType": bannerfileType == null ? null : bannerfileType,
+        "bannerfileType": bannerfileType ?? null,
         "DemoVideofileType":
-            demoVideofileType == null ? null : demoVideofileType,
+            demoVideofileType ?? null,
       };
 }
 

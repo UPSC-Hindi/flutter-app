@@ -8,7 +8,7 @@ import 'package:upsc_web/services/local_services/share_preferences/preferences_h
 import 'app_exception.dart';
 
 Dio dioAuthorizationData({String? token}) {
-  if(token=='N/A')token = null;
+  if (token == 'N/A') token = null;
   var localToken = PreferencesHelper.getString(Preferences.accessToken);
   final dio = Dio();
   dio.options.headers["Accept"] =
@@ -22,14 +22,15 @@ Dio dioAuthorizationData({String? token}) {
 }
 
 class BaseClient {
-  static Future<dynamic> get({required String url, String? token,dynamic queryParameters}) async {
+  static Future<dynamic> get(
+      {required String url, String? token, dynamic queryParameters}) async {
     try {
       final response = await dioAuthorizationData(token: token)
-          .get(url,queryParameters: queryParameters)
+          .get(url, queryParameters: queryParameters)
           .timeout(const Duration(seconds: 10));
       return response.data;
     } on DioError catch (error) {
-      throw dioError(error.type,error);
+      throw dioError(error.type, error);
     }
   }
 
@@ -42,12 +43,11 @@ class BaseClient {
       return response;
     } on DioError catch (error) {
       print(error.type.toString());
-      throw dioError(error.type,error);
+      throw dioError(error.type, error);
     }
   }
 
-  static Future<dynamic> put(
-      {required String url, dynamic data}) async {
+  static Future<dynamic> put({required String url, dynamic data}) async {
     try {
       final response = await dioAuthorizationData()
           .put(url, data: data)
@@ -55,7 +55,19 @@ class BaseClient {
       return response.data;
     } on DioError catch (error) {
       print(error.type.toString());
-      throw dioError(error.type,error);
+      throw dioError(error.type, error);
+    }
+  }
+
+  static Future<dynamic> delete({required String url}) async {
+    try {
+      final response = await dioAuthorizationData()
+          .delete(url)
+          .timeout(const Duration(seconds: 10));
+      return response;
+    } on DioError catch (error) {
+      print(error.type.toString());
+      throw dioError(error.type, error);
     }
   }
 

@@ -1,14 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc_web/features/controller/course_controller.dart';
-import 'package:upsc_web/features/model/courses_model/course_details_Model.dart';
+import 'package:upsc_web/features/model/courses_model/courseDetailsModel.dart';
+import 'package:upsc_web/features/view/cubit/courses/courses_cubit.dart';
+import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
-
 
 class CoursesDetailsScreens extends StatefulWidget {
   final String courseId;
@@ -33,39 +35,46 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(
-      mobile: Scaffold(
-        appBar: AppBar(
-          backgroundColor: ColorResources.textWhite,
-          iconTheme: IconThemeData(color: ColorResources.textblack),
-          title: Text(
-            widget.courseName,
-            style:
-            GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
+    return BlocConsumer<CoursesCubit, CoursesState>(listener: (context, state) {
+      if (state is CartCourseAddSuccess) {
+        Navigator.pop(context);
+        BlocProvider.of<DrawerCubit>(context).myCart();
+      }
+    }, builder: (context, state) {
+      return ResponsiveWidget(
+        mobile: Scaffold(
+          appBar: AppBar(
+            backgroundColor: ColorResources.textWhite,
+            iconTheme: IconThemeData(color: ColorResources.textblack),
+            title: Text(
+              widget.courseName,
+              style: GoogleFonts.notoSansDevanagari(
+                  color: ColorResources.textblack),
+            ),
           ),
-        ),
-        body: FutureBuilder<CoursesDetailsModel>(
-            future: _getCourseDetails,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  snapshot.data!.data.batchDetails.banner.forEach((element) {
-                    image.add(Image.network(element.fileLoc));
-                  });
-                  return _bodyWidget(snapshot.data!);
-                }else if(snapshot.hasError){
-                  return Text(snapshot.error.toString());
-                } else{
-                  return const Text('Check Your internet');
+          body: FutureBuilder<CoursesDetailsModel>(
+              future: _getCourseDetails,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    snapshot.data!.data.batchDetails.banner.forEach((element) {
+                      image.add(Image.network(element.fileLoc));
+                    });
+                    return _bodyWidget(snapshot.data!);
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else {
+                    return const Text('Check Your internet');
+                  }
+                } else {
+                  return const CircularProgressIndicator();
                 }
-              } else {
-                return const CircularProgressIndicator();
-              }
-            }),
-      ),
-      tab: Text("Need to developed"),
-      web: Text("Need to developed"),
-    );
+              }),
+        ),
+        tab: Text("Need to developed"),
+        web: Text("Need to developed"),
+      );
+    });
   }
 
   SingleChildScrollView _bodyWidget(CoursesDetailsModel course) {
@@ -94,7 +103,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.all(5),
@@ -116,33 +125,33 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
               ),
               course.data.batchDetails.remark.isNotEmpty
                   ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 15),
-                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Note: ",
-                          style: GoogleFonts.notoSansDevanagari(
-                              fontSize: 20,
-                              color: ColorResources.buttoncolor),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.70,
-                          child: Text(
-                            course.data.batchDetails.remark,
-                            style: GoogleFonts.lato(fontSize: 16),
-                            textAlign: TextAlign.justify,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 15),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Note: ",
+                                style: GoogleFonts.notoSansDevanagari(
+                                    fontSize: 20,
+                                    color: ColorResources.buttoncolor),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.70,
+                                child: Text(
+                                  course.data.batchDetails.remark,
+                                  style: GoogleFonts.lato(fontSize: 16),
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        )
                       ],
-                    ),
-                  )
-                ],
-              )
+                    )
                   : const Text(''),
               GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
@@ -255,13 +264,17 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
                           primary: ColorResources.buttoncolor,
                           shape: const StadiumBorder()),
                       onPressed: () {
+                        print('courses id');
+                        print(course.data.batchDetails.id);
+                        BlocProvider.of<CoursesCubit>(context)
+                            .addToCart(courseId: course.data.batchDetails.id);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 18.0, vertical: 5.0),
                         child: Text('Add to Cart',
                             style:
-                            GoogleFonts.notoSansDevanagari(fontSize: 20)),
+                                GoogleFonts.notoSansDevanagari(fontSize: 20)),
                       ))
                 ],
               )),
@@ -296,47 +309,4 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
       ),
     );
   }
-
-  // Future<void> callApiaddtocart(String courseId) async {
-  //   AddToCart response;
-  //   Map<String, dynamic> body = {
-  //     "batch_id": courseId,
-  //   };
-  //   try {
-  //     setState(() {
-  //       Preferences.onLoading(context);
-  //     });
-  //     var token =
-  //     SharedPreferenceHelper.getString(Preferences.access_token).toString();
-  //     Response response = await dioAuthorizationData().post(
-  //       '${Apis.baseUrl}${Apis.addtocart}',
-  //       data: body,
-  //     );
-  //     if (response.data['status']) {
-  //       setState(() {
-  //         Preferences.hideDialog(context);
-  //       });
-  //       Navigator.of(context).popAndPushNamed('cartscreen');
-  //       Fluttertoast.showToast(
-  //         msg: '${response.data['msg']}',
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         backgroundColor: ColorResources.gray,
-  //         textColor: ColorResources.textWhite,
-  //       );
-  //     } else {
-  //       Fluttertoast.showToast(
-  //         msg: '${response.data['msg']}',
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         backgroundColor: ColorResources.gray,
-  //         textColor: ColorResources.textWhite,
-  //       );
-  //     }
-  //   } catch (error, stacktrace) {
-  //     setState(() {
-  //       Preferences.hideDialog(context);
-  //     });
-  //   }
-  // }
 }

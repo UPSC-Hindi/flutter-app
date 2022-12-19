@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:upsc_web/features/model/base_model.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/model/courses_model/CoursesModel.dart';
 import 'package:upsc_web/features/model/courses_model/MyCoursesModel.dart';
-import 'package:upsc_web/features/model/courses_model/course_details_Model.dart';
+import 'package:upsc_web/features/model/courses_model/courseDetailsModel.dart';
 import 'package:upsc_web/services/remote_services/course_services.dart';
 import 'package:upsc_web/utils/utils.dart';
 
@@ -19,13 +21,11 @@ class CoursesController {
     }
   }
 
-  Future<CoursesDetailsModel>getCoursesDetails(String courseId) async {
+  Future<CoursesDetailsModel> getCoursesDetails(String courseId) async {
     try {
-      print(courseId);
       dynamic response =
           await courseServices.getCoursesDetailsService(courseId);
-      CoursesDetailsModel temp = CoursesDetailsModel.fromJson(response);
-      return temp;
+      return CoursesDetailsModel.fromJson(response);
     } catch (error) {
       print(error.toString());
       rethrow;
@@ -34,13 +34,13 @@ class CoursesController {
 
   Future<bool> addCoursesToCart({required String courseId}) async {
     try {
-      dynamic response =
-          await courseServices.addCoursesToCart({'batch_id': courseId});
-      BaseModel data = BaseModel.fromJson(response);
+      Response response =
+          await courseServices.addCoursesToCartServices({'batch_id': courseId});
+      BaseModel data = BaseModel.fromJson(response.data);
       Utils.flutterToast(data.msg);
       return data.status;
     } catch (error) {
-      Utils.flutterToast(error.toString());
+      Utils.toastMessage(error.toString());
       return false;
     }
   }
@@ -54,6 +54,20 @@ class CoursesController {
       rethrow;
     }
   }
+
+  Future<bool> deleteMyCartCourses(String cartId) async {
+    try {
+      Response responseJson =
+          await courseServices.deleteMyCartCoursesService(cartId);
+      BaseModel response = BaseModel.fromJson(responseJson.data);
+      Utils.flutterToast(response.msg);
+      return response.status;
+    } catch (error) {
+      Utils.toastMessage(error.toString());
+      return false;
+    }
+  }
+
   Future<MyCoursesModel> getMyCourses() async {
     try {
       dynamic response = await courseServices.getMyCoursesServices();
