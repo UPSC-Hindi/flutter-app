@@ -142,7 +142,7 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                               color: const Color(0xFFD9D9D9).withOpacity(0.3),
                               child: ListTile(
                                 title: Text(
-                                  "Your Checked Answer Sheet",
+                                  "Your Answer Sheet",
                                   style: GoogleFonts.notoSansDevanagari(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20,
@@ -188,6 +188,66 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                                 ),
                               ),
                             )
+                          : Container(),
+                      widget.data.isAttempted!
+                          ? widget.data.attempted!.checkedAnswerSheet!
+                                      .fileLoc !=
+                                  ""
+                              ? Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  color:
+                                      const Color(0xFFD9D9D9).withOpacity(0.3),
+                                  child: ListTile(
+                                    title: Text(
+                                      "Your Checked Answer Sheet",
+                                      style: GoogleFonts.notoSansDevanagari(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 20,
+                                        color: ColorResources.textblack,
+                                      ),
+                                    ),
+                                    trailing: GestureDetector(
+                                      onTap: () {
+                                        flutterToast("downloading..");
+                                        download(
+                                            widget.data.attempted!
+                                                .checkedAnswerSheet!.fileLoc,
+                                            widget.data.attempted!
+                                                .checkedAnswerSheet!.fileName);
+                                        // launchUrl(
+                                        //     Uri.parse(widget.data.attempted!
+                                        //         .answerSheet!.fileLoc!),
+                                        //     mode: LaunchMode.externalApplication);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 20.0,
+                                        backgroundColor:
+                                            ColorResources.buttoncolor,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'PDF',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: ColorResources.textWhite,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.download_outlined,
+                                              size: 18,
+                                              color: ColorResources.textWhite,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container()
                           : Text(""),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),

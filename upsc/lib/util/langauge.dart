@@ -40,6 +40,7 @@ class Languages {
   static String myTestseries = '';
   static String ourachievements = '';
   static String mySchedule = '';
+  static String ClassSchedule = '';
   static String resources = '';
   static String helpAndSupport = '';
   static String shareApp = '';
@@ -79,8 +80,12 @@ class Languages {
   static String emailText = '';
   static String phoneText = '';
   static String whatsApp = '';
+  static String feelfree = "";
+  //empty
+  static String noscheduler = "";
+
   //test
-  
+  static String MockTests = "";
   static String DailyEditorialBasedQuiz = "";
   static String MCQdescription = "";
   static String score = "";
@@ -148,6 +153,7 @@ class Languages {
     myTestseries = isEnglish ? 'My Test Series' : 'मेरी टेस्ट सीरीज';
     ourachievements = isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
     mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
+    ClassSchedule = isEnglish ? "Class Schedule" : "कक्षा शेडयूल";
     resources = isEnglish ? 'Resources' : 'संसाधन ';
     helpAndSupport = isEnglish ? 'Help & Support' : 'सहायता और समर्थन';
     shareApp = isEnglish ? 'Share App' : 'एप शेयर करें ';
@@ -181,12 +187,17 @@ class Languages {
     addTask = isEnglish ? '+ Add Task' : '+ कार्य जोड़ें';
 
     //help and support
+    feelfree =
+        isEnglish ? "We are Here to Solve" : "आपकी सहायता हेतु हम उपस्थित है";
     freeMessage =
         isEnglish ? 'Feel free to message us at' : 'बेझिझक हमें पर मैसेज करें';
     emailText = isEnglish ? 'Mail us at' : 'हमे ईमेल करें';
     whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सअप पर सम्पर्क करें';
+    //empty
+    noscheduler = isEnglish ? "There is no scheduler" : "कोई शेडयूल नहीं है";
 
     //test
+    MockTests = isEnglish ? "mock test series" : "मॉक टेस्ट सीरीज";
     DailyEditorialBasedQuiz =
         isEnglish ? "Daily Editorial Based Quiz" : "एडिटोरियल आधारित क़्विज";
     MCQdescription = isEnglish

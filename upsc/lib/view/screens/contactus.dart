@@ -56,7 +56,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       height: 20,
                     ),
                     Text(
-                      'We’re here to Solve',
+                      Languages.feelfree,
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 30,
                         color: ColorResources.textWhite,
@@ -73,7 +73,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   height: MediaQuery.of(context).size.height * 0.40,
                 ),
                 Text(
-                  'Feel free to reach us on',
+                  Languages.freeMessage,
                   style: GoogleFonts.notoSansDevanagari(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Mail us at',
+                          Languages.emailText,
                           style: GoogleFonts.notoSansDevanagari(
                             fontSize: 20,
                           ),

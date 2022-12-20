@@ -36,7 +36,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          "Class Schedule",
+          Languages.ClassSchedule,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -78,14 +78,14 @@ class _ClassScheduleState extends State<ClassSchedule> {
                         ),
                       ),
                   child: Text(
-                    'My Schedule',
+                    Languages.mySchedule,
                     style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textblack),
                   )),
               TextButton(
                   onPressed: () {},
                   child: Text(
-                    'Class Schedule',
+                    Languages.ClassSchedule,
                     style: GoogleFonts.notoSansDevanagari(
                       shadows: [
                         Shadow(

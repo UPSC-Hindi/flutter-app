@@ -158,7 +158,8 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 }
               },
             ),
-            Text('Mock Tests', style: Theme.of(context).textTheme.headline1),
+            Text(Languages.MockTests,
+                style: Theme.of(context).textTheme.headline1),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
