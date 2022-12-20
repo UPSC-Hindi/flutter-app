@@ -91,13 +91,15 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Daily Editorial Based Quiz',
+                    //'Daily Editorial Based Quiz'
+                    Languages.DailyEditorialBasedQuiz,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.70,
-                    child: const Text(
-                        'Helps Improve MCQ  Solving, Attempting Daily  will help you through your preparation'),
+                    child: Text(Languages.MCQdescription
+                        //'Helps Improve MCQ  Solving, Attempting Daily  will help you through your preparation'
+                        ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,11 +149,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                     MyTestsModel? myTestsModel = snapshot.data;
                     return myTestsModel!.data!.isNotEmpty
                         ? myTestsbody(myTestsModel)
-                        : Container(
-                            padding: const EdgeInsets.all(20),
-                            child: EmptyWidget(
-                                image: SvgImages.emptyCard,
-                                text: "No Test Series purchase"));
+                        : Container();
                   } else {
                     return const Text("There is no internet Connection");
                   }
@@ -160,7 +158,8 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 }
               },
             ),
-            Text('Mock Tests', style: Theme.of(context).textTheme.headline1),
+            Text(Languages.MockTests,
+                style: Theme.of(context).textTheme.headline1),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -323,8 +322,9 @@ class _mocktestscreenState extends State<mocktestscreen> {
               Row(
                 children: [
                   Image.network(
-                    SvgImages.pdfimage,
+                    SvgImages.exampen,
                     height: 25,
+                    width: 25,
                   ),
                   const SizedBox(
                     width: 5,

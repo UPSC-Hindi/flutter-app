@@ -40,6 +40,7 @@ class Languages {
   static String myTestseries = '';
   static String ourachievements = '';
   static String mySchedule = '';
+  static String ClassSchedule = '';
   static String resources = '';
   static String helpAndSupport = '';
   static String shareApp = '';
@@ -79,7 +80,14 @@ class Languages {
   static String emailText = '';
   static String phoneText = '';
   static String whatsApp = '';
+  static String feelfree = "";
+  //empty
+  static String noscheduler = "";
+
   //test
+  static String MockTests = "";
+  static String DailyEditorialBasedQuiz = "";
+  static String MCQdescription = "";
   static String score = "";
   static String Take_Live_Test = "";
   static String OMR_Sheet = "";
@@ -88,7 +96,7 @@ class Languages {
   //resources
   static String Course_Index = "";
   //search
-  static String SearchMockTestQuizzes="";
+  static String SearchMockTestQuizzes = "";
 
   static initState() {
     Languages.isEnglish =
@@ -105,7 +113,8 @@ class Languages {
     latestNews = isEnglish ? 'Our Videos ' : 'हमारे वीडियो';
     Notification = isEnglish ? "Notification " : "सूचना";
     //search
-    SearchMockTestQuizzes = isEnglish ? "Search Mock Test,Quizzes" : "मॉकटेस्ट/क्विज खोजे";
+    SearchMockTestQuizzes =
+        isEnglish ? "Search Mock Test,Quizzes" : "मॉकटेस्ट/क्विज खोजे";
     //tab bar course
     prelims = isEnglish ? 'Prelims' : 'प्रीलिम्स';
     mains = isEnglish ? 'Mains' : 'मैन्स';
@@ -144,13 +153,14 @@ class Languages {
     myTestseries = isEnglish ? 'My Test Series' : 'मेरी टेस्ट सीरीज';
     ourachievements = isEnglish ? 'Our Achievements' : 'हमारी उपलब्धियां';
     mySchedule = isEnglish ? 'My Schedule' : 'अनुसूची';
+    ClassSchedule = isEnglish ? "Class Schedule" : "कक्षा शेडयूल";
     resources = isEnglish ? 'Resources' : 'संसाधन ';
     helpAndSupport = isEnglish ? 'Help & Support' : 'सहायता और समर्थन';
     shareApp = isEnglish ? 'Share App' : 'एप शेयर करें ';
     setting = isEnglish ? 'Settings' : 'सेटिंग्स ';
 
     //Download screen
-    download = isEnglish ? 'Downloads' : 'निःशुल्क टेस्ट सीरीज ';
+    download = isEnglish ? 'Downloads' : 'डाउनलोड';
     video = isEnglish ? 'Videos' : 'वीडियो ';
     testSeries = isEnglish ? 'Test Series' : 'टेस्ट सीरीज';
 
@@ -177,12 +187,22 @@ class Languages {
     addTask = isEnglish ? '+ Add Task' : '+ कार्य जोड़ें';
 
     //help and support
+    feelfree =
+        isEnglish ? "We are Here to Solve" : "आपकी सहायता हेतु हम उपस्थित है";
     freeMessage =
         isEnglish ? 'Feel free to message us at' : 'बेझिझक हमें पर मैसेज करें';
     emailText = isEnglish ? 'Mail us at' : 'हमे ईमेल करें';
     whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सअप पर सम्पर्क करें';
+    //empty
+    noscheduler = isEnglish ? "There is no scheduler" : "कोई शेडयूल नहीं है";
 
     //test
+    MockTests = isEnglish ? "mock test series" : "मॉक टेस्ट सीरीज";
+    DailyEditorialBasedQuiz =
+        isEnglish ? "Daily Editorial Based Quiz" : "एडिटोरियल आधारित क़्विज";
+    MCQdescription = isEnglish
+        ? "Helps Improve MCQ  Solving, Attempting Daily  will help you through your preparation"
+        : "MCQ समाधान को बेहतर बनाने में मदद करता है, दैनिक प्रयास करने से आपको मदद मिलेगी";
     score = isEnglish ? "Score" : "स्कोर";
     Take_Live_Test = isEnglish ? "Take Live Test" : "लाइव टेस्ट दे";
     OMR_Sheet = isEnglish ? "OMR Sheet" : "ओएमआर शीट";

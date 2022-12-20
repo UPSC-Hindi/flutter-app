@@ -31,7 +31,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<ResourcesModel> getResources() async {
     try {
       Response response = await dioAuthorizationData().get(
@@ -87,7 +86,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<Response> submit_answer(PlatformFile file, String id) async {
     try {
       FormData data = FormData.fromMap({
@@ -116,7 +114,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<MyTestsModel> getMyTests() async {
     try {
       var response =
@@ -127,7 +124,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<TestSeriesDetails> getMyTestsdetails(String id) async {
     try {
       final queryParameters = <String, dynamic>{"TestSeries_id": id};
@@ -152,12 +148,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  //TODO by dinesh
-  @override
-  Future<void> addMyCart() {
-    // TODO: implement addMyCart
-    throw UnimplementedError();
-  }
 
   @override
   Future<Response> addMyCourses(String batchId, bool isPaid) async {

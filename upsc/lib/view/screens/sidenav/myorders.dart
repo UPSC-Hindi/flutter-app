@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/myorders_model.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
-import 'package:upsc/view/screens/course/courseview.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);

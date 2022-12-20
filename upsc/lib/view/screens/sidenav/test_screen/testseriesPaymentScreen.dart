@@ -9,7 +9,6 @@ import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/banner.dart';

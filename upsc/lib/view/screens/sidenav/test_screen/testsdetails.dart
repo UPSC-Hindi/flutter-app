@@ -78,7 +78,7 @@ class _TestSeriesDetailScreenState extends State<TestSeriesDetailScreen> {
                               color: const Color(0xFfD9D9D9),
                               borderRadius: BorderRadius.circular(90)),
                           child: Text(
-                            '  Course Details  ',
+                            '  test Details  ',
                             style: GoogleFonts.notoSansDevanagari(fontSize: 16),
                           ),
                         ),

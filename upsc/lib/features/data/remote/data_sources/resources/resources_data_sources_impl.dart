@@ -57,8 +57,4 @@ class ResourceDataSourceImpl extends ResourcesDataSource {
     }
   }
 
-  @override
-  void getYoutubeNotes() {
-    // TODO: implement getYoutubeNotes
-  }
 }

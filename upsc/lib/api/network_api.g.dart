@@ -292,9 +292,7 @@ class _RestClient implements RestClient {
 
   @override
   removefromcartRequest(body) async {
-    const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{"id": body};
-    final _headers = <String, dynamic>{};
     final _result = await _dio.delete(
       Apis.baseUrl + Apis.removefromCart,
       queryParameters: queryParameters,
