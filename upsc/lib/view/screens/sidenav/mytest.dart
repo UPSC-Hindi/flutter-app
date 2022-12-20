@@ -94,6 +94,18 @@ class _TestSeriesState extends State<TestSeries> {
             Expanded(
                 flex: 2,
                 child: Container(
+                  decoration: BoxDecoration(
+                    border: carddata.isAttempted!
+                        ? Border(
+                            left: BorderSide(
+                              color: ColorResources.buttoncolor,
+                              style: BorderStyle.solid,
+                            ),
+                          )
+                        : Border(
+                            left: BorderSide.none,
+                          ),
+                  ),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,7 +130,18 @@ class _TestSeriesState extends State<TestSeries> {
               flex: 5,
               child: Container(
                 padding: const EdgeInsets.all(15),
-                color: const Color(0xFFD9D9D9).withOpacity(0.2),
+                decoration: BoxDecoration(
+                  border: carddata.isAttempted!
+                      ? Border(
+                          left: BorderSide(
+                            color: ColorResources.buttoncolor,
+                          ),
+                        )
+                      : Border(
+                          left: BorderSide.none,
+                        ),
+                  color: const Color(0xFFD9D9D9).withOpacity(0.2),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

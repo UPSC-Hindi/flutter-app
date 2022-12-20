@@ -6,7 +6,6 @@ import 'package:upsc/features/data/remote/models/resources_model.dart';
 abstract class ResourcesDataSource {
   Future<DailyNewsModel> getDailyNews();
   Future<ResourcesModel> getCourseIndex();
-  void getYoutubeNotes();
   Future<NotesModel> getNotes({required String filter});
   Future<AirResourcesModel> getAir();
 }

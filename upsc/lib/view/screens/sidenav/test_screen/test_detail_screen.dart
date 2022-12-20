@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -100,10 +104,12 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                           trailing: GestureDetector(
                             onTap: () {
                               flutterToast("downloading..");
-                              launchUrl(
-                                  Uri.parse(
-                                      widget.data.questionPaper!.fileLoc!),
-                                  mode: LaunchMode.externalApplication);
+                              download(widget.data.questionPaper!.fileLoc,
+                                  widget.data.questionPaper!.fileName);
+                              // launchUrl(
+                              //     Uri.parse(
+                              //         widget.data.questionPaper!.fileLoc!),
+                              //     mode: LaunchMode.externalApplication);
                             },
                             child: CircleAvatar(
                               radius: 20.0,
@@ -146,10 +152,15 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                                 trailing: GestureDetector(
                                   onTap: () {
                                     flutterToast("downloading..");
-                                    launchUrl(
-                                        Uri.parse(widget.data.attempted!
-                                            .answerSheet!.fileLoc!),
-                                        mode: LaunchMode.externalApplication);
+                                    download(
+                                        widget.data.attempted!.answerSheet!
+                                            .fileLoc,
+                                        widget.data.attempted!.answerSheet!
+                                            .fileName);
+                                    // launchUrl(
+                                    //     Uri.parse(widget.data.attempted!
+                                    //         .answerSheet!.fileLoc!),
+                                    //     mode: LaunchMode.externalApplication);
                                   },
                                   child: CircleAvatar(
                                     radius: 20.0,
@@ -193,10 +204,12 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                           trailing: GestureDetector(
                             onTap: () {
                               flutterToast("downloading..");
-                              launchUrl(
-                                  Uri.parse(
-                                      widget.data.answerTemplate!.fileLoc!),
-                                  mode: LaunchMode.externalApplication);
+                              download(widget.data.answerTemplate!.fileLoc,
+                                  widget.data.answerTemplate!.fileName);
+                              // launchUrl(
+                              //     Uri.parse(
+                              //         widget.data.answerTemplate!.fileLoc!),
+                              //     mode: LaunchMode.externalApplication);
                             },
                             child: CircleAvatar(
                               radius: 20.0,
@@ -267,5 +280,22 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
         ),
       ),
     );
+  }
+
+  download(url, name) async {
+    bool hasPermission = await _requestWritePermission();
+    if (!hasPermission) return;
+    var dir = await getApplicationDocumentsDirectory();
+    print(dir.path);
+    // downloads the file
+    Dio dio = Dio();
+    await dio.download(url, "${dir.path}/${name!}.${url.split('.').last}");
+    OpenFile.open("${dir.path}/${name!}.${url.split('.').last}",
+        type: 'application/pdf');
+  }
+
+  Future<bool> _requestWritePermission() async {
+    await Permission.storage.request();
+    return await Permission.storage.request().isGranted;
   }
 }

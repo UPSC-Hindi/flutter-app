@@ -80,6 +80,9 @@ class Languages {
   static String phoneText = '';
   static String whatsApp = '';
   //test
+  
+  static String DailyEditorialBasedQuiz = "";
+  static String MCQdescription = "";
   static String score = "";
   static String Take_Live_Test = "";
   static String OMR_Sheet = "";
@@ -184,6 +187,11 @@ class Languages {
     whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सअप पर सम्पर्क करें';
 
     //test
+    DailyEditorialBasedQuiz =
+        isEnglish ? "Daily Editorial Based Quiz" : "एडिटोरियल आधारित क़्विज";
+    MCQdescription = isEnglish
+        ? "Helps Improve MCQ  Solving, Attempting Daily  will help you through your preparation"
+        : "MCQ समाधान को बेहतर बनाने में मदद करता है, दैनिक प्रयास करने से आपको मदद मिलेगी";
     score = isEnglish ? "Score" : "स्कोर";
     Take_Live_Test = isEnglish ? "Take Live Test" : "लाइव टेस्ट दे";
     OMR_Sheet = isEnglish ? "OMR Sheet" : "ओएमआर शीट";

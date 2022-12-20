@@ -37,7 +37,7 @@ class SvgImages {
 
   //icons
   static String exampen =
-      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/icon+_Exam+Multiple-Choice_.svg';
+      'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/book_pan.png';
   static String pdfimage =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/pdf.png';
   static String courses =
