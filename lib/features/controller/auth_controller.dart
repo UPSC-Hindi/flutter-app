@@ -1,14 +1,20 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
+import 'package:upsc_web/services/base_api/api.dart';
+import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
+import 'package:upsc_web/utils.dart';
 import 'package:upsc_web/utils/langauge.dart';
 import 'package:upsc_web/utils/utils.dart';
 
 class AuthController {
   AuthServices authServices = AuthServices();
-
   Future<BaseModel> login(dynamic data) async {
     try {
       var response = await authServices.loginServices(data);
@@ -82,9 +88,7 @@ class AuthController {
   Future<bool> verifyPhoneNumber(dynamic data) async {
     try {
       dynamic responseJson = await authServices.verifyPhoneNumberService(data);
-      print(responseJson);
       BaseModel response = BaseModel.fromJson(responseJson);
-      print("Successfully verify otp done from base model");
       if (response.status) {
         await PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
         PreferencesHelper.setString(
@@ -112,6 +116,65 @@ class AuthController {
     } catch (error) {
       Utils.toastMessage(error.toString());
       rethrow;
+    }
+  }
+
+  Future<bool>logout(BuildContext context)async{
+    Utils.showLoading(context);
+    try{
+      dynamic responseJson = await authServices.logoutService();
+      BaseModel response = BaseModel.fromJson(responseJson.data);
+      Utils.flutterToast(response.msg);
+      Utils.hideLoading(context);
+      return response.status;
+    }catch(error){
+      Utils.hideLoading(context);
+      Utils.toastMessage(error.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateUserDetails(String fullName, String userAddress) async {
+    try {
+      dynamic response =
+          await authServices.updateUserDetailsService(fullName, userAddress);
+      BaseModel data = BaseModel.fromJson(response);
+      if(data.status){
+        PreferencesHelper.setString(Preferences.address, userAddress);
+        PreferencesHelper.setString(Preferences.name, fullName);
+      }
+      Util.flutterToast(data.msg);
+      return data.status;
+    } catch (error) {
+      Util.toastMessage(error.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateUserProfilePhoto(XFile file) async {
+    try {
+      dynamic response = await authServices.updateUserProfilePhotoService(file);
+      print(response);
+      BaseModel data = BaseModel.fromJson(response);
+      Util.flutterToast(response.msg);
+      // if (response.statusCode == 200) {
+      //   await SharedPreferenceHelper.setString(
+      //     Preferences.profileImage,
+      //     response.data['data']['fileUploadedLocation'],
+      //   );
+      //   var Image = SharedPreferenceHelper.getString(Preferences.profileImage)!;
+      //   setState(() {
+      //     profileImage = response.data['data']['fileUploadedLocation'];
+      //   });
+      //   flutterToast(response.data['msg']);
+      // } else {
+      //   flutterToast(response.data['msg']);
+      // }
+      return data.status;
+    } catch (error) {
+      print(error);
+      Util.toastMessage(error.toString());
+      return false;
     }
   }
 }

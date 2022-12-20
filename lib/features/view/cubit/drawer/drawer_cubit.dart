@@ -22,4 +22,5 @@ class DrawerCubit extends Cubit<DrawerState> {
   void shareApp() => emit(ShareApp());
   void setting() => emit(Setting());
   void resources() => emit(Resources());
+  void logout() => emit(Logout());
 }

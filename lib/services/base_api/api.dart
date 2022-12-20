@@ -14,6 +14,14 @@ class Api {
   static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
   static const String updateUserStream = 'authentication/updateUserStream';
   static const String updateUserLanguage = 'authentication/updateUserLanguage';
+  static const String logout = "authentication/Logout";
+
+
+  //PROFILE
+  static const String updateUserProfileInfo =
+      "authentication/UpdateUserDetails";
+  static const String updateUserProfilePhoto =
+      "authentication/UpdateUserProfilePhoto";
 
   //COURSES
   static const String getCourses = "adminPanel/getBatchesDetails";

@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/app_route.dart';
+import 'package:upsc_web/features/controller/auth_controller.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/course_tab.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/home_tab.dart';
+import 'package:upsc_web/features/view/screen/bottom_navigation/profile/profile_tab.dart';
 import 'package:upsc_web/features/view/screen/home/contactus_screen.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
+import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
+import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 
 class MobileHome extends StatefulWidget {
@@ -30,9 +34,17 @@ class _MobileHomeState extends State<MobileHome> {
     HomeTab(),
     const CoursesScreen(),
     Container(),
-    Container(),
+    ProfileTab(),
   ];
 
+  void logout()async{
+    AuthController authController = AuthController();
+    if(await authController.logout(context)){
+      PreferencesHelper.clearPref();
+      PreferencesHelper.setBoolean(Preferences.isLoggedIn, false);
+      Navigator.pushReplacementNamed(context, AppRoute.signInScreen);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DrawerCubit, DrawerState>(
@@ -60,6 +72,10 @@ class _MobileHomeState extends State<MobileHome> {
         }
         if (state is Resources) {
           Navigator.popAndPushNamed(context, AppRoute.resourcesScreen);
+        }
+        if(state is Logout) {
+          Navigator.pop(context);
+          logout();
         }
       },
       builder: (context, state) {

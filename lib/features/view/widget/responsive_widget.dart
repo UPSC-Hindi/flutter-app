@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/profile/cubit/profile_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
+import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/langauge.dart';
 
 class ResponsiveWidget extends StatelessWidget {
@@ -33,10 +35,20 @@ Drawer drawer(BuildContext context) {
       children: [
         DrawerHeader(
           child: Container(
-            decoration: BoxDecoration(
-              color: ColorResources.buttoncolor,
-            ),
-          ),
+              decoration: BoxDecoration(
+                color: ColorResources.buttoncolor,
+              ),
+              child: BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                if (state is ProfileLoading) {
+                  return CircularProgressIndicator();
+                } else if (state is ProfileSuccess) {
+                  return profileInfo(
+                      context, state.userName, state.profileImage);
+                } else {
+                  return profileInfo(context, "UPSC", SvgImages.avatar);
+                }
+              })),
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -138,7 +150,7 @@ Drawer drawer(BuildContext context) {
         ),
         GestureDetector(
           onTap: () {
-            PreferencesHelper.clearPref();
+            BlocProvider.of<DrawerCubit>(context).logout();
           },
           child: Padding(
             padding:
@@ -173,5 +185,31 @@ Drawer drawer(BuildContext context) {
         )
       ],
     ),
+  );
+}
+
+Row profileInfo(BuildContext context, String userName, String profileImage) {
+  return Row(
+    children: [
+      CircleAvatar(
+        radius: 25.0,
+        backgroundImage: NetworkImage(profileImage),
+        backgroundColor: Colors.grey,
+      ),
+      SizedBox(
+        width: MediaQuery.of(context).size.width * 0.02,
+      ),
+      Expanded(
+        child: Text(
+          userName,
+          overflow: TextOverflow.clip,
+          maxLines: 2,
+          style: GoogleFonts.notoSansDevanagari(
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: ColorResources.textWhite),
+        ),
+      ),
+    ],
   );
 }

@@ -6,6 +6,7 @@ import 'package:upsc_web/features/controller/auth_controller.dart';
 import 'package:upsc_web/features/model/base_model.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
+import 'package:upsc_web/utils/langauge.dart';
 import 'package:upsc_web/utils/utils.dart';
 
 part 'auth_state.dart';
@@ -81,6 +82,7 @@ class AuthCubit extends Cubit<AuthState> {
         PreferencesHelper.setString(Preferences.language, language);
         PreferencesHelper.setStringList(Preferences.course, stream);
         PreferencesHelper.setBoolean(Preferences.isLoggedIn, true);
+        Languages.initState();
         emit(UpdateLanguageStreamSuccess());
       } else {
         emit(ErrorAuth());

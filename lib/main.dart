@@ -4,6 +4,7 @@ import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
 import 'package:upsc_web/features/view/cubit/courses/courses_cubit.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/profile/cubit/profile_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/langauge.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CoursesCubit>(
           create: (context) => CoursesCubit(),
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => ProfileCubit(),
         ),
       ],
       child: MaterialApp(

@@ -1,12 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:razorpay_flutter_customui/razorpay_flutter_customui.dart';
 import 'package:flutter/material.dart';
-import 'package:upsc_web/features/controller/global_controller.dart';
+import 'package:razorpay_web/razorpay_web.dart';
+import 'package:upsc_web/app_route.dart';
+import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
-import 'package:upsc_web/features/model/payment_model/order_id_model.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
+import 'package:upsc_web/services/remote_services/remote_services.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/utils.dart';
 
@@ -21,15 +23,16 @@ class CoursePaymentScreen extends StatefulWidget {
 }
 
 class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
-  final Razorpay _razorpay = Razorpay();
-
+  late Razorpay _razorpay;
   @override
   void initState() {
     super.initState();
+    _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
-
+  CoursesController coursesController= CoursesController();
   @override
   void dispose() {
     super.dispose();
@@ -42,11 +45,11 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     print(key.toString());
     var options = {
       'key': key,
-      "order_id": orderId,
+      //"order_id": orderId,
       'amount': (100 * int.parse(widget.course.amount) -
-              (100 *
-                  (int.parse(widget.course.amount) *
-                      (int.parse(widget.course.batchDetails.discount) / 100))))
+          (100 *
+              (int.parse(widget.course.amount) *
+                  (int.parse(widget.course.batchDetails.discount) / 100))))
           .toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
@@ -54,32 +57,45 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
         'contact': PreferencesHelper.getString(Preferences.phoneNUmber),
         'email': PreferencesHelper.getString(Preferences.email),
       },
-      "notify": {"sms": true, "email": true},
-      'timeout': 180,
-      "currency": "INR",
+      //'timeout': 180,
+      //"currency": "INR",
       "external": {
         "wallets": ["paytm"]
       }
     };
     try {
-      _razorpay.submit(options);
+      _razorpay.open(options);
     } catch (e) {
       print(e.toString());
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async{
     print("-----Payment Success-----");
     print(response.paymentId);
     print(response.orderId);
     print(response.signature);
     Utils.flutterToast(
         "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
+    if(await coursesController.addMyCourses(widget.course.batchDetails.id, true)){
+      Navigator.popAndPushNamed(context, AppRoute.myCoursesScreen);
+    }else{
+      Navigator.pop(context);
+    }
   }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
+  void _handlePaymentError(PaymentFailureResponse response) async{
     print("-----Payment error-----");
     Utils.flutterToast("ERROR: ${response.code} - ${response.message}");
+    if(await coursesController.addMyCourses(widget.course.batchDetails.id, false)){
+    Navigator.popAndPushNamed(context, AppRoute.myCoursesScreen);
+    }else{
+    Navigator.pop(context);
+    }
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Utils.flutterToast("SUCCESS: ${response.walletName}");
   }
 
   @override
@@ -91,21 +107,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // CarouselSlider(
-              //   items: images,
-              //   options: CarouselOptions(
-              //     viewportFraction: 1,
-              //     initialPage: 0,
-              //     enableInfiniteScroll: true,
-              //     reverse: false,
-              //     autoPlay: true,
-              //     autoPlayInterval: const Duration(seconds: 3),
-              //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              //     autoPlayCurve: Curves.fastOutSlowIn,
-              //     enlargeCenterPage: true,
-              //     scrollDirection: Axis.horizontal,
-              //   ),
-              // ),
+
               const SizedBox(
                 height: 20,
               ),
@@ -156,27 +158,27 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
               ),
               int.parse(widget.course.batchDetails.discount) != 0
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'discount',
-                          style: GoogleFonts.notoSansDevanagari(
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        Text(
-                          (int.parse(widget.course.amount) *
-                                  (int.parse(
-                                          widget.course.batchDetails.discount) /
-                                      100))
-                              .round()
-                              .toString(),
-                          style: GoogleFonts.notoSansDevanagari(
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ],
-                    )
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'discount',
+                    style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  Text(
+                    (int.parse(widget.course.amount) *
+                        (int.parse(
+                            widget.course.batchDetails.discount) /
+                            100))
+                        .round()
+                        .toString(),
+                    style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              )
                   : Text(''),
               const SizedBox(
                 height: 20,
@@ -198,10 +200,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                   Text(
                     (int.parse(widget.course.amount) -
-                            ((int.parse(widget.course.amount) *
-                                (int.parse(
-                                        widget.course.batchDetails.discount) /
-                                    100))))
+                        ((int.parse(widget.course.amount) *
+                            (int.parse(
+                                widget.course.batchDetails.discount) /
+                                100))))
                         .round()
                         .toString(),
                     style: GoogleFonts.notoSansDevanagari(
@@ -223,10 +225,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                   child: TextButton(
                     onPressed: () async {
-                      OrderIdModel orderInfo =
-                          await GlobalController.getOrderId(
-                              {'amount': widget.course.amount});
-                      openCheckout(orderInfo.keyId!, orderInfo.id!);
+                      getOrderId({'amount': widget.course.amount});
                     },
                     child: Text(
                       'Checkout',
@@ -245,5 +244,18 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       web: Text('It is not build'),
       tab: Text('It is not build'),
     );
+  }
+
+  getOrderId(dynamic data) async {
+    try {
+      Response response = await RemoteServices.getOrderIdService(data);
+      print(response);
+      //OrderIdGeneration resp = OrderIdGeneration.fromJson(response);
+      if (response.statusCode == 200) {
+        openCheckout(response.data["key_id"], response.data["id"]);
+      }
+    } catch (error) {
+      rethrow;
+    }
   }
 }

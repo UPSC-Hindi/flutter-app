@@ -32,6 +32,23 @@ class CoursesController {
     }
   }
 
+  Future<bool> addMyCourses(
+      String courseId, bool isPaid) async {
+    try {
+      dynamic response = await courseServices.addToMyCourses({
+        "batch_id": courseId,
+        'is_paid': isPaid,
+      });
+      print(response);
+      BaseModel res =  BaseModel.fromJson(response.data);
+      return res.status;
+    } catch (error) {
+      print(error.toString());
+      Utils.toastMessage(error.toString());
+      return false;
+    }
+  }
+
   Future<bool> addCoursesToCart({required String courseId}) async {
     try {
       Response response =
