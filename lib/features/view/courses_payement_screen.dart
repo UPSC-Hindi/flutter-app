@@ -54,7 +54,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
       'prefill': {
-        'contact': PreferencesHelper.getString(Preferences.phoneNUmber),
+        'contact': 9112916534,
         'email': PreferencesHelper.getString(Preferences.email),
       },
       //'timeout': 180,
@@ -87,11 +87,6 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   void _handlePaymentError(PaymentFailureResponse response) async{
     print("-----Payment error-----");
     Utils.flutterToast("ERROR: ${response.code} - ${response.message}");
-    if(await coursesController.addMyCourses(widget.course.batchDetails.id, false)){
-    Navigator.popAndPushNamed(context, AppRoute.myCoursesScreen);
-    }else{
-    Navigator.pop(context);
-    }
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {

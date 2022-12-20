@@ -2,18 +2,20 @@ import 'dart:isolate';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/widget/pdf_viewer_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
+import 'package:upsc_web/utils/utils.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
-  const ResourcesContainerWidget(
-      {Key? key,
-      required this.title,
-      required this.uploadFile,
-      required this.resourcetype,
-      required this.fileSize})
+  const ResourcesContainerWidget({Key? key,
+    required this.title,
+    required this.uploadFile,
+    required this.resourcetype,
+    required this.fileSize})
       : super(key: key);
   final String title;
   final String uploadFile;
@@ -54,7 +56,10 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.58,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.58,
                     child: Text(
                       widget.title,
                       overflow: TextOverflow.ellipsis,
@@ -73,36 +78,59 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               ),
             ],
           ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => PdfViewerWidget(url: widget.uploadFile),
+          BlocConsumer<PdfViewerCubit, PdfViewerState>(
+            listener: (context, state) {
+              if(state is PdfViewerSuccess){
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) =>
+                        PdfViewerWidget(url: widget.uploadFile),
+                  ),
+                );
+              }
+              if(state is PdfViewerError){
+                Utils.toastMessage('Unable To open');
+                //TODO Remove if fix
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) =>
+                        PdfViewerWidget(url: widget.uploadFile),
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              if(state is PdfViewerLoading){
+                return CircularProgressIndicator();
+              }
+              return InkWell(
+                onTap: () {
+                  BlocProvider.of<PdfViewerCubit>(context).viewPdf(widget.uploadFile);
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      widget.resourcetype == "file" ? 'PDF' : 'Link',
+                      style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 15,
+                        color: ColorResources.buttoncolor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Icon(
+                      //todo this dead code pls check onces
+                      widget.resourcetype == "file"
+                          ? Icons.file_download_outlined
+                          : Icons.link,
+                      size: 25,
+                      color: ColorResources.buttoncolor,
+                    ),
+                  ],
                 ),
               );
             },
-            child: Column(
-              children: [
-                //todo this dead code pls check onces of link why true always
-                Text(
-                  widget.resourcetype == "file" ? 'PDF' : 'Link',
-                  style: GoogleFonts.notoSansDevanagari(
-                    fontSize: 15,
-                    color: ColorResources.buttoncolor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Icon(
-                  //todo this dead code pls check onces
-                  widget.resourcetype == "file"
-                      ? Icons.file_download_outlined
-                      : Icons.link,
-                  size: 25,
-                  color: ColorResources.buttoncolor,
-                ),
-              ],
-            ),
           )
         ],
       ),
