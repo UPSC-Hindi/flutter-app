@@ -58,7 +58,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     Text(
                       Languages.feelfree,
                       style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 30,
+                        fontSize: Languages.isEnglish ? 30 : 15,
                         color: ColorResources.textWhite,
                         fontWeight: FontWeight.w700,
                       ),
