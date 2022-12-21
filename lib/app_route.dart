@@ -20,6 +20,7 @@ import 'package:upsc_web/features/view/screen/side_nav/resources/sample_notes_re
 import 'package:upsc_web/features/view/screen/side_nav/resources/short_notes_resources.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources/youtube_notes.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/scheduler_screen.dart';
 import 'features/view/splash_screen.dart';
 
 class AppRoute {
@@ -29,12 +30,15 @@ class AppRoute {
   static const String homeScreen = 'homeScreen';
   static const String otpVerificationScreen = 'otpVerificationScreen';
   static const String languageScreen = 'languageScreen';
+
+  //Side navigation
   static const String myCartScreen = 'myCartScreen';
   static const String myCoursesScreen = 'myCoursesScreen';
   static const String coursePaymentScreen = 'coursePaymentScreen';
   static const String aboutUsScreen = 'aboutUsScreen';
   static const String helpAndSupport = 'helpAndSupport';
   static const String contactUs = 'contactUs';
+  static const String schedulerScreen = 'schedulerScreen';
 
   //RESOURCES SCREEN
   static const String resourcesScreen = 'resourcesScreen';
@@ -129,6 +133,8 @@ class OnGenerateRoute {
           resourceController: resourceController,
         ));
 
+      case AppRoute.schedulerScreen:
+        return cupertinoBuilder(widget: SchedulerScreen());
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),

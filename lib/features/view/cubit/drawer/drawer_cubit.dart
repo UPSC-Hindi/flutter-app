@@ -23,4 +23,5 @@ class DrawerCubit extends Cubit<DrawerState> {
   void setting() => emit(Setting());
   void resources() => emit(Resources());
   void logout() => emit(Logout());
+  void scheduler() => emit(Scheduler());
 }

@@ -100,8 +100,7 @@ Drawer drawer(BuildContext context) {
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    // BlocProvider.of<DrawerCubit>(context).shareApp();
+                    BlocProvider.of<DrawerCubit>(context).scheduler();
                   },
                 ),
                 ListTile(

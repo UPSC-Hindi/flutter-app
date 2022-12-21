@@ -73,6 +73,9 @@ class _MobileHomeState extends State<MobileHome> {
         if (state is Resources) {
           Navigator.popAndPushNamed(context, AppRoute.resourcesScreen);
         }
+        if(state is Scheduler){
+          Navigator.popAndPushNamed(context, AppRoute.schedulerScreen);
+        }
         if(state is Logout) {
           Navigator.pop(context);
           logout();

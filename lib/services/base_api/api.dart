@@ -44,4 +44,10 @@ class Api {
   static const String getAirResources = 'adminPanel/getallindiaradio';
   static const String getNotes = 'adminPanel/getNotesDetails';
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
+
+
+  //Scheduler
+  static const String getMyScheduler = 'adminPanel/getScheduleDetails';
+  static const String getClassScheduler = 'adminPanel/getMySchedular';
+
 }
