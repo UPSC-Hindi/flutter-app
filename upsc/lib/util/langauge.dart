@@ -85,6 +85,13 @@ class Languages {
   static String noscheduler = "";
 
   //test
+  static String Score = "";
+  static String questionpaper = "";
+  static String Questions = "";
+  static String marks = "";
+  static String CheckedAnswer = "";
+  static String noTest = "";
+  static String myTest = "";
   static String MockTests = "";
   static String DailyEditorialBasedQuiz = "";
   static String MCQdescription = "";
@@ -93,6 +100,8 @@ class Languages {
   static String OMR_Sheet = "";
   static String Submit = "";
   static String Notification = "";
+  static String StartTest = "";
+  static String Startagain = "";
   //resources
   static String Course_Index = "";
   //search
@@ -197,7 +206,16 @@ class Languages {
     noscheduler = isEnglish ? "There is no scheduler" : "कोई शेडयूल नहीं है";
 
     //test
-    MockTests = isEnglish ? "mock test series" : "मॉक टेस्ट सीरीज";
+    CheckedAnswer = isEnglish
+        ? "Your Checked Answer Sheet"
+        : "आपकी जांची गई उत्तर पुस्तिका";
+    questionpaper = isEnglish ? "Question Paper" : "प्रश्न पत्र";
+    score = isEnglish ? "Score" : " अंक";
+    marks = isEnglish ? "Marks" : "अंक";
+    Questions = isEnglish ? "Questions" : "रश्न";
+    noTest = isEnglish ? "Tests" : "टेस्ट";
+    myTest = isEnglish ? "My Tests" : "मेरे टेस्ट";
+    MockTests = isEnglish ? "All Test Series" : "सभी टेस्ट सीरीज";
     DailyEditorialBasedQuiz =
         isEnglish ? "Daily Editorial Based Quiz" : "एडिटोरियल आधारित क़्विज";
     MCQdescription = isEnglish
@@ -207,5 +225,7 @@ class Languages {
     Take_Live_Test = isEnglish ? "Take Live Test" : "लाइव टेस्ट दे";
     OMR_Sheet = isEnglish ? "OMR Sheet" : "ओएमआर शीट";
     Submit = isEnglish ? "Submit" : "जमा  करें";
+    StartTest = isEnglish ? "Start Test" : "शुरू कर टेस्ट";
+    Startagain = isEnglish ? "Start Again" : "फिर से शुरू करें";
   }
 }

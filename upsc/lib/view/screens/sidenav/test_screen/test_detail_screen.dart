@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/view/screens/sidenav/test_screen/test_submit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -94,7 +95,7 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                         color: const Color(0xFFD9D9D9).withOpacity(0.3),
                         child: ListTile(
                           title: Text(
-                            "Question Paper",
+                            Languages.questionpaper,
                             style: GoogleFonts.notoSansDevanagari(
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
@@ -200,7 +201,7 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                                       const Color(0xFFD9D9D9).withOpacity(0.3),
                                   child: ListTile(
                                     title: Text(
-                                      "Your Checked Answer Sheet",
+                                      Languages.CheckedAnswer,
                                       style: GoogleFonts.notoSansDevanagari(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 20,
@@ -254,7 +255,7 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                         color: const Color(0xFFD9D9D9).withOpacity(0.3),
                         child: ListTile(
                           title: Text(
-                            'OMR Sheet',
+                            Languages.OMR_Sheet,
                             style: GoogleFonts.notoSansDevanagari(
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
@@ -324,8 +325,8 @@ class _TestDetailsScreenState extends State<TestDetailsScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         widget.data.isAttempted!
-                            ? "Start Again "
-                            : 'Start Test',
+                            ? Languages.StartTest
+                            : Languages.Startagain,
                         style: GoogleFonts.notoSansDevanagari(
                             fontSize: 18,
                             color: Colors.white,
