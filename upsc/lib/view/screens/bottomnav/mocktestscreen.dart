@@ -137,10 +137,6 @@ class _mocktestscreenState extends State<mocktestscreen> {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              'My Tests Series',
-              style: Theme.of(context).textTheme.headline1,
-            ),
             FutureBuilder<MyTestsModel>(
               future: mytestsData,
               builder: (context, snapshot) {
@@ -175,17 +171,25 @@ class _mocktestscreenState extends State<mocktestscreen> {
   }
 
   Widget myTestsbody(MyTestsModel response) {
-    return SizedBox(
-      height: 130,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: response.data!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _mytestsCard(response.data![index]);
-        },
-      ),
+    return Column(
+      children: [
+        Text(
+          Languages.myTest,
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        SizedBox(
+          height: 130,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: response.data!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _mytestsCard(response.data![index]);
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -329,7 +333,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text('${response.noOfTest!} Tests')
+                  Text('${response.noOfTest!} ${Languages.noTest}')
                 ],
               ),
               Row(

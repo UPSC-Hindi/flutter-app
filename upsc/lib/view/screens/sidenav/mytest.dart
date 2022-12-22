@@ -111,10 +111,12 @@ class _TestSeriesState extends State<TestSeries> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _iconTextWidget(
-                          '${carddata.noOfQuestions} Questions', Icons.menu),
+                          '${carddata.noOfQuestions}${Languages.Questions}',
+                          Icons.menu),
                       Row(
                         children: [
-                          _iconTextWidget('${carddata.totalMarks} Marks',
+                          _iconTextWidget(
+                              '${carddata.totalMarks} ${Languages.marks}',
                               Icons.verified_outlined),
                           const SizedBox(
                             width: 5,
@@ -193,7 +195,7 @@ class _TestSeriesState extends State<TestSeries> {
                               width: 8,
                             ),
                             Text(
-                              'Score : ${carddata.attempted!.score}',
+                              '${Languages.score}: ${carddata.attempted!.score}',
                               style: GoogleFonts.notoSansDevanagari(
                                 color: ColorResources.gray,
                               ),
