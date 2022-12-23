@@ -1,7 +1,9 @@
+import 'dart:math';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:upsc_web/features/controller/auth_controller.dart';
 import 'package:upsc_web/features/view/cubit/profile/cubit/profile_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
@@ -9,6 +11,7 @@ import 'package:upsc_web/services/local_services/share_preferences/preferences_h
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/langauge.dart';
+import 'package:upsc_web/utils/utils.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -239,11 +242,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future getImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (await authController.updateUserProfilePhoto(image!)) {
-    } else {
-      BlocProvider.of<ProfileCubit>(context).getProfile();
+    var picked = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (picked != null) {
+      Utils.showLoading(context);
+      if (await authController.updateUserProfilePhoto(picked.files.first.bytes,picked.files.first.name,)) {
+        BlocProvider.of<ProfileCubit>(context).getProfile();
+        Navigator.pop(context);
+      }
+      Utils.hideLoading(context);
     }
   }
 }

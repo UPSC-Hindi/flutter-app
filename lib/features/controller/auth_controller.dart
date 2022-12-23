@@ -1,11 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
-import 'package:upsc_web/services/base_api/api.dart';
-import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
@@ -151,28 +146,14 @@ class AuthController {
     }
   }
 
-  Future<bool> updateUserProfilePhoto(XFile file) async {
+  Future<bool> updateUserProfilePhoto(var fileBytes,String imageName) async {
     try {
-      dynamic response = await authServices.updateUserProfilePhotoService(file);
-      print(response);
+      dynamic response = await authServices.updateUserProfilePhotoService(fileBytes,imageName);
       BaseModel data = BaseModel.fromJson(response);
-      Util.flutterToast(response.msg);
-      // if (response.statusCode == 200) {
-      //   await SharedPreferenceHelper.setString(
-      //     Preferences.profileImage,
-      //     response.data['data']['fileUploadedLocation'],
-      //   );
-      //   var Image = SharedPreferenceHelper.getString(Preferences.profileImage)!;
-      //   setState(() {
-      //     profileImage = response.data['data']['fileUploadedLocation'];
-      //   });
-      //   flutterToast(response.data['msg']);
-      // } else {
-      //   flutterToast(response.data['msg']);
-      // }
+      PreferencesHelper.setString(Preferences.profileImage, data.data['fileUploadedLocation']);
+      Util.flutterToast(data.msg);
       return data.status;
     } catch (error) {
-      print(error);
       Util.toastMessage(error.toString());
       return false;
     }

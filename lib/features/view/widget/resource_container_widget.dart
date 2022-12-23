@@ -85,20 +85,20 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                   context,
                   CupertinoPageRoute(
                     builder: (context) =>
-                        PdfViewerWidget(url: widget.uploadFile),
+                        PdfViewerWidget(bytes: state.bytes),
                   ),
                 );
               }
               if(state is PdfViewerError){
                 Utils.toastMessage('Unable To open');
                 //TODO Remove if fix
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) =>
-                        PdfViewerWidget(url: widget.uploadFile),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   CupertinoPageRoute(
+                //     builder: (context) =>
+                //         PdfViewerWidget(url: widget.uploadFile),
+                //   ),
+                // );
               }
             },
             builder: (context, state) {

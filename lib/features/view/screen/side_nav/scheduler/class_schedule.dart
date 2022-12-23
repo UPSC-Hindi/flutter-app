@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc_web/features/controller/scheduler_controller.dart';
-import 'package:upsc_web/features/model/scheduler_model/class_scheduler.dart';
+import 'package:upsc_web/features/model/scheduler_model/class_scheduler_model.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 
 class ClassSchedule extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
         builder: (context,snapshot){
       if(snapshot.connectionState == ConnectionState.done){
         if(snapshot.hasData){
-          return _bodyWidget(context, snapshot.data!.data!);
+          return snapshot.data!.data!.isEmpty?Text('There is no scheduler'):_bodyWidget(context, snapshot.data!.data!);
         }else{
           return const Text('Something went wrong');
         }

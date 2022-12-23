@@ -5,7 +5,21 @@ class SchedulerServices {
   Future<dynamic> getClassSchedulerService() async {
     try {
       dynamic response =
-          BaseClient.get(url: Api.baseUrl + Api.getClassScheduler);
+          await BaseClient.get(url: Api.baseUrl + Api.getClassScheduler);
+      return response;
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getMySchedulerService(dynamic queryParameters) async {
+    try {
+      dynamic response =
+          await BaseClient.get(url: Api.baseUrl + Api.getMyScheduler,
+          queryParameters: queryParameters,
+          );
+      print(response);
       return response;
     } catch (error) {
       print(error);

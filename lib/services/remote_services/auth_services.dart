@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:upsc_web/services/base_api/api.dart';
 import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
@@ -103,18 +102,17 @@ class AuthServices {
     }
   }
 
-  Future<dynamic> updateUserProfilePhotoService(XFile file) async {
+  Future<dynamic> updateUserProfilePhotoService(var fileBytes,String imageName) async {
     try {
-      print(file.path);
-      print(file.name);
       FormData data = FormData.fromMap({
-        "file": await MultipartFile.fromFile(
-          file.path,
-          filename: file.name,
+        "file":  MultipartFile.fromBytes(
+          fileBytes,
+          filename: imageName
         ),
       });
       dynamic response = await BaseClient.put(
           url: "${Api.baseUrl}${Api.updateUserProfilePhoto}", data: data);
+      print(response);
       return response;
     } catch (error) {
       rethrow;

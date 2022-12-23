@@ -1,5 +1,9 @@
+import 'dart:html';
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:internet_file/internet_file.dart';
 import 'package:meta/meta.dart';
 part 'pdf_viewer_state.dart';
 
@@ -8,13 +12,24 @@ class PdfViewerCubit extends Cubit<PdfViewerState> {
 
   void viewPdf(String url)async{
     emit(PdfViewerLoading());
+    print(url);
     try{
-      print("getting response");
-      print(url);
-      dynamic response = await Dio().download(url,'view.pdf');
-      print("got response");
+      Response response = await Dio().get(
+        url,
+        // onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            }),
+      );
+      print(response.headers);
       print(response);
-      emit(PdfViewerSuccess());
+      // File file = File(savePath);
+      Uint8List bytes = Uint8List(4);
+      emit(PdfViewerSuccess(bytes: bytes));
     }catch(error){
       print(error.toString());
       emit(PdfViewerError());
