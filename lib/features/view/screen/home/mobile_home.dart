@@ -140,7 +140,7 @@ class _MobileHomeState extends State<MobileHome> {
               )
             ],
           ),
-          drawer: drawer(context),
+          drawer: drawer(context,true),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             unselectedItemColor: Colors.grey,

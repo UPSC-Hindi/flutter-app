@@ -13,6 +13,7 @@ import 'package:upsc_web/features/view/screen/bottom_navigation/profile/profile_
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
+import 'package:upsc_web/utils/images_file.dart';
 
 class WebHome extends StatelessWidget {
   const WebHome({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class WebHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Image.network(SvgImages.aboutLogo),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -84,7 +86,7 @@ class WebHome extends StatelessWidget {
       ),
       body: Row(
         children: [
-          Expanded(flex: 2, child: drawer(context)),
+          Expanded(flex: 2, child: drawer(context,false)),
           Expanded(
             flex: 7,
             child: BlocConsumer<DrawerCubit, DrawerState>(

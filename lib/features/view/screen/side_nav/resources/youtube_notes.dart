@@ -34,7 +34,7 @@ class _YoutubeNotesState extends State<YoutubeNotes> {
         ),
       ),
       body: FutureBuilder<VideoModel>(
-          future: widget.resourceController.getYoutbeNotes(),
+          future: widget.resourceController.getYoutubeNotes(),
           builder: (context, snapshots) {
             if (ConnectionState.done == snapshots.connectionState) {
               if (snapshots.hasData) {

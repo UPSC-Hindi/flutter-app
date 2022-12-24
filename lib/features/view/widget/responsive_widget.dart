@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,11 +30,11 @@ class ResponsiveWidget extends StatelessWidget {
   }
 }
 
-Drawer drawer(BuildContext context) {
+Drawer drawer(BuildContext context,bool isMobile) {
   return Drawer(
     child: Column(
       children: [
-        DrawerHeader(
+        isMobile?DrawerHeader(
           child: Container(
               decoration: BoxDecoration(
                 color: ColorResources.buttoncolor,
@@ -49,13 +50,13 @@ Drawer drawer(BuildContext context) {
                   return profileInfo(context, "UPSC", SvgImages.avatar);
                 }
               })),
-        ),
+        ):Container(),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 ListTile(
-                  leading: Icon(Icons.info),
+                  leading: Icon(Icons.info,color: ColorResources.textblack,),
                   title: Text(
                     "About Us",
                     style: Theme.of(context).textTheme.headline2,
@@ -63,9 +64,9 @@ Drawer drawer(BuildContext context) {
                   onTap: () => BlocProvider.of<DrawerCubit>(context).aboutUs(),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(Icons.shopping_cart,color: ColorResources.textblack,),
                   title: Text(
-                    "My Cart",
+                    Languages.myCart,
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   onTap: () {
@@ -73,7 +74,17 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(Icons.list,color: ColorResources.textblack,),
+                  title: Text(
+                    Languages.myOrders,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    BlocProvider.of<DrawerCubit>(context).myCart();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.menu_book,color: ColorResources.textblack,),
                   title: Text(
                     Languages.myCourses,
                     style: Theme.of(context).textTheme.headline2,
@@ -83,7 +94,18 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(Icons.text_snippet,color: ColorResources.textblack,),
+                  title: Text(
+                    Languages.myTestseries,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // BlocProvider.of<DrawerCubit>(context).shareApp();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.people,color: ColorResources.textblack,),
                   title: Text(
                     Languages.ourachievements,
                     style: Theme.of(context).textTheme.headline2,
@@ -94,7 +116,7 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(Icons.event_available_rounded,color: ColorResources.textblack,),
                   title: Text(
                     Languages.mySchedule,
                     style: Theme.of(context).textTheme.headline2,
@@ -104,7 +126,7 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(CupertinoIcons.layers,color: ColorResources.textblack,),
                   title: Text(
                     Languages.resources,
                     style: Theme.of(context).textTheme.headline2,
@@ -114,7 +136,7 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(Icons.help_outlined,color: ColorResources.textblack,),
                   title: Text(
                     Languages.helpAndSupport,
                     style: Theme.of(context).textTheme.headline2,
@@ -124,7 +146,7 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(CupertinoIcons.reply,color: ColorResources.textblack,),
                   title: Text(
                     Languages.shareApp,
                     style: Theme.of(context).textTheme.headline2,
@@ -134,7 +156,7 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info),
+                  leading: Icon(CupertinoIcons.settings,color: ColorResources.textblack,),
                   title: Text(
                     Languages.setting,
                     style: Theme.of(context).textTheme.headline2,
