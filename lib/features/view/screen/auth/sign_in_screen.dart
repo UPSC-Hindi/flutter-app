@@ -56,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
   late Future<List<Widget>> getBanner;
   @override
   void initState() {
-    getBanner = GlobalController.getBanner();
+    getBanner = GlobalController.getBanner('APP');
     super.initState();
   }
 

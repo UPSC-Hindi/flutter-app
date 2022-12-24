@@ -4,10 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/features/view/cubit/profile/cubit/profile_cubit.dart';
-import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/langauge.dart';
+
+bool isWeb = false;
+bool isMobile = false;
+bool isTab = false;
+
+double screenWidth = 500;
+double screenHeight = 500;
+
 
 class ResponsiveWidget extends StatelessWidget {
   const ResponsiveWidget(
@@ -20,11 +27,22 @@ class ResponsiveWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth < 600) {
+      screenWidth = MediaQuery.of(context).size.width;
+      screenHeight = MediaQuery.of(context).size.width;
+      if (constraints.maxWidth < 700) {
+        isMobile = true;
+        isWeb = false;
+        isTab = false;
         return mobile;
-      } else if (constraints.maxWidth > 600 && constraints.maxWidth < 1100) {
+      } else if (constraints.maxWidth > 700 && constraints.maxWidth < 1100) {
+        isMobile = false;
+        isWeb = false;
+        isTab = true;
         return tab;
       }
+      isMobile = false;
+      isWeb = true;
+      isTab = false;
       return web;
     });
   }

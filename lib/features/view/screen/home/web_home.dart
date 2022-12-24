@@ -6,7 +6,6 @@ import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/auth_controller.dart';
 import 'package:upsc_web/features/view/cubit/bottom_tab/bottom_tab_cubit.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
-import 'package:upsc_web/features/view/cubit/profile/cubit/profile_cubit.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/course_tab.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/home_tab.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/profile/profile_tab.dart';
@@ -17,7 +16,6 @@ import 'package:upsc_web/utils/images_file.dart';
 
 class WebHome extends StatelessWidget {
   const WebHome({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,34 +90,33 @@ class WebHome extends StatelessWidget {
             child: BlocConsumer<DrawerCubit, DrawerState>(
               listener: (context, state) {
                 if (state is MyCartState) {
-                  Navigator.popAndPushNamed(context, AppRoute.myCartScreen);
+                  Navigator.pushNamed(context, AppRoute.myCartScreen);
                 }
                 if (state is MyCoursesState) {
-                  Navigator.popAndPushNamed(context, AppRoute.myCoursesScreen);
+                  Navigator.pushNamed(context, AppRoute.myCoursesScreen);
                 }
                 if (state is AboutUsState) {
-                  Navigator.popAndPushNamed(context, AppRoute.aboutUsScreen);
+                  Navigator.pushNamed(context, AppRoute.aboutUsScreen);
                 }
                 if (state is HelpAndSupport) {
-                  Navigator.popAndPushNamed(context, AppRoute.helpAndSupport);
+                  Navigator.pushNamed(context, AppRoute.helpAndSupport);
                 }
                 if (state is ContactUs) {
-                  Navigator.popAndPushNamed(context, AppRoute.contactUs);
+                  Navigator.pushNamed(context, AppRoute.contactUs);
                 }
                 if (state is ShareApp) {
                   // Navigator.popAndPushNamed(context, AppRoute.aboutUsScreen);
                 }
                 if (state is Setting) {
-                  Navigator.popAndPushNamed(context, AppRoute.languageScreen);
+                  Navigator.pushNamed(context, AppRoute.languageScreen);
                 }
                 if (state is Resources) {
-                  Navigator.popAndPushNamed(context, AppRoute.resourcesScreen);
+                  Navigator.pushNamed(context, AppRoute.resourcesScreen);
                 }
                 if (state is Scheduler) {
-                  Navigator.popAndPushNamed(context, AppRoute.schedulerScreen);
+                  Navigator.pushNamed(context, AppRoute.schedulerScreen);
                 }
                 if (state is Logout) {
-                  Navigator.pop(context);
                   logout(context);
                 }
               },

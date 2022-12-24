@@ -6,9 +6,9 @@ import 'package:upsc_web/services/remote_services/remote_services.dart';
 import 'package:upsc_web/utils/utils.dart';
 
 class GlobalController {
-  static Future<List<Widget>> getBanner() async {
+  static Future<List<Widget>> getBanner(String? bannerType) async {
     List<Widget> imageList = [];
-    await RemoteServices.getBannerApi().then((value) {
+    await RemoteServices.getBannerApi(bannerType).then((value) {
       BannerModel response = BannerModel.fromJson(value);
       if (response.status) {
         for (var entry in response.data) {
