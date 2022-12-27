@@ -2,7 +2,6 @@ class CourseModel {
   String? sId;
   String? user;
   String? batchName;
-  String? category;
   String? examType;
   List<Student>? student;
   String? subject;
@@ -26,7 +25,6 @@ class CourseModel {
       {this.sId,
       this.user,
       this.batchName,
-      this.category,
       this.examType,
       this.student,
       this.subject,
@@ -50,7 +48,6 @@ class CourseModel {
     sId = json['_id'];
     user = json['user'];
     batchName = json['batch_name'];
-    category = json['category'];
     examType = json['exam_type'];
     if (json['student'] != null) {
       student = <Student>[];
@@ -86,7 +83,6 @@ class CourseModel {
     data['_id'] = sId;
     data['user'] = user;
     data['batch_name'] = batchName;
-    data['category'] = category;
     data['exam_type'] = examType;
     if (student != null) {
       data['student'] = student!.map((v) => v.toJson()).toList();

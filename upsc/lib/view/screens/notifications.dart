@@ -119,6 +119,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       : ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
+                          reverse: true,
                           itemCount: notificationData.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
@@ -177,14 +178,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<BaseModel<NotificationGet>> callApinotication() async {
     NotificationGet response;
-
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response =
           await RestClient(RetroApi().dioData(token!)).getnotificationRequest();
       setState(() {
-        print(response.data);
         notificationData = response.data!;
+        notificationData.sort((a, b) => (a.createdAt!.compareTo(b.createdAt!)));
       });
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");

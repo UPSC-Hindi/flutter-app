@@ -31,7 +31,6 @@ class Data {
   String? sId;
   String? user;
   String? batchName;
-  String? category;
   String? examType;
   List<String>? student;
   String? subject;
@@ -55,7 +54,6 @@ class Data {
       {this.sId,
       this.user,
       this.batchName,
-      this.category,
       this.examType,
       this.student,
       this.subject,
@@ -79,7 +77,6 @@ class Data {
     sId = json['_id'];
     user = json['user'];
     batchName = json['batch_name'];
-    category = json['category'];
     examType = json['exam_type'];
     student = json['student'].cast<String>();
     subject = json['subject'];
@@ -105,7 +102,6 @@ class Data {
     data['_id'] = sId;
     data['user'] = user;
     data['batch_name'] = batchName;
-    data['category'] = category;
     data['exam_type'] = examType;
     data['student'] = student;
     data['subject'] = subject;
