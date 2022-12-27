@@ -29,7 +29,6 @@ class ResourcesModel {
 
 class ResourcesDataModle {
   String? sId;
-  Category? category;
   String? title;
   FileUrl? fileUrl;
   String? language;
@@ -39,7 +38,6 @@ class ResourcesDataModle {
 
   ResourcesDataModle(
       {this.sId,
-      this.category,
       this.title,
       this.fileUrl,
       this.language,
@@ -49,8 +47,7 @@ class ResourcesDataModle {
 
   ResourcesDataModle.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    category =
-        json['category'] != null ? Category.fromJson(json['category']) : null;
+   
     title = json['title'];
     fileUrl =
         json['file_url'] != null ? FileUrl.fromJson(json['file_url']) : null;
@@ -63,9 +60,7 @@ class ResourcesDataModle {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
-    if (category != null) {
-      data['category'] = category!.toJson();
-    }
+  
     data['title'] = title;
     if (fileUrl != null) {
       data['file_url'] = fileUrl!.toJson();

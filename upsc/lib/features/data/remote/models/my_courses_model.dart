@@ -59,7 +59,6 @@ class BatchDetails {
     required this.id,
     required this.user,
     required this.batchName,
-    required this.category,
     required this.examType,
     required this.subject,
     required this.teacher,
@@ -80,7 +79,6 @@ class BatchDetails {
   final String id;
   final String user;
   final String batchName;
-  final Category category;
   final String examType;
   final List<Category> subject;
   final List<Teacher> teacher;
@@ -101,7 +99,6 @@ class BatchDetails {
         id: json["_id"],
         user: json["user"],
         batchName: json["batch_name"],
-        category: Category.fromJson(json["category"]),
         examType: json["exam_type"],
         subject: List<Category>.from(
             json["subject"].map((x) => Category.fromJson(x))),
@@ -127,7 +124,6 @@ class BatchDetails {
         "_id": id,
         "user": user,
         "batch_name": batchName,
-        "category": category.toJson(),
         "exam_type": examType,
         "subject": List<dynamic>.from(subject.map((x) => x.toJson())),
         "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
