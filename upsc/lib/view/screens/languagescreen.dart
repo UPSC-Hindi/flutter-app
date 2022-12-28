@@ -144,7 +144,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 //   ],
                 // ),
                 Wrap(
-                  children: _buildChoiceList(),
+                  children: streamlist.isEmpty? center(child: CircularProgressIndicator()):_buildChoiceList(),
                 ),
                 const SizedBox(
                   height: 100,
