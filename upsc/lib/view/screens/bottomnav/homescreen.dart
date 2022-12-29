@@ -207,7 +207,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           MyCoursesModel? myCourses = snapshot.data;
                           List<MyCoursesDataModel> activeCoursesList = [];
                           for (var course in myCourses!.data) {
-                            if (course.batchDetails.isActive) {
+                            if (course.isActive) {
                               activeCoursesList.add(course);
                             }
                           }
