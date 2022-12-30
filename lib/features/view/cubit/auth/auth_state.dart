@@ -14,6 +14,9 @@ class ResendOtpSuccess extends AuthState{}
 class UpdateLanguageStreamSuccess extends AuthState{}
 class UnVerifiedNumber extends AuthState{
   final String phoneNumber;
-
   UnVerifiedNumber({required this.phoneNumber});
 }
+class RequestToLogout extends AuthState {}
+class GoogleSuccess extends AuthState{}
+class GooglePhoneNumberVerification extends AuthState{}
+class RequestLogoutSuccess extends AuthState {}

@@ -5,6 +5,7 @@ import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/view/courses_payement_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/language_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart';
+import 'package:upsc_web/features/view/screen/auth/request_logout_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
 import 'package:upsc_web/features/view/screen/home/contactus_screen.dart';
@@ -30,6 +31,8 @@ class AppRoute {
   static const String homeScreen = 'homeScreen';
   static const String otpVerificationScreen = 'otpVerificationScreen';
   static const String languageScreen = 'languageScreen';
+  static const String phoneNumberScreen = 'phoneNumberScreen';
+  static const String requestToLogoutScreen = 'requestToLogoutScreen';
 
   //Side navigation
   static const String myCartScreen = 'myCartScreen';
@@ -85,6 +88,17 @@ class OnGenerateRoute {
           ),
         );
 
+      case AppRoute.requestToLogoutScreen:
+        List data = args as List;
+        List<Widget> bannerList = data.last;
+        String userEmail = data.first;
+        return cupertinoBuilder(
+          widget: RequestLogoutScreen(
+            userEmail: userEmail,
+            bannerList: bannerList,
+          ),
+        );
+
       case AppRoute.languageScreen:
         return cupertinoBuilder(widget: const LanguageScreen());
 
@@ -134,7 +148,7 @@ class OnGenerateRoute {
         ));
 
       case AppRoute.schedulerScreen:
-        return cupertinoBuilder(widget: SchedulerScreen());
+        return cupertinoBuilder(widget: const SchedulerScreen());
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),

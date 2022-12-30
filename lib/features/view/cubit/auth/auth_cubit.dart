@@ -37,10 +37,14 @@ class AuthCubit extends Cubit<AuthState> {
       data["deviceName"] = webBrowserInfo.appName;
       BaseModel user = await authController.login(data);
 
-      if (user.data['mobileVerified']) {
-        emit(LoginSuccess());
-      } else {
-        emit(UnVerifiedNumber(phoneNumber: user.data['phoneNumber']));
+      if(user.status){
+        if (user.data['mobileVerified']) {
+          emit(LoginSuccess());
+        }else {
+          emit(UnVerifiedNumber(phoneNumber: user.data['phoneNumber']));
+        }
+      }else{
+        emit(RequestToLogout());
       }
     } catch (error) {
       emit(ErrorAuth());
@@ -88,6 +92,29 @@ class AuthCubit extends Cubit<AuthState> {
         emit(ErrorAuth());
       }
     } catch (error) {
+      emit(ErrorAuth());
+    }
+  }
+
+  Future<void> googleAuth()async{
+    emit(LoadingAuth());
+     List<bool>response = await authController.googleAuth();
+     if(response.first){
+       if(response.last){
+         emit(GoogleSuccess());
+       }else{
+         emit(GooglePhoneNumberVerification());
+       }
+     }else{
+       emit(ErrorAuth());
+     }
+  }
+
+  Future<void>requestLogout(String userEmail)async{
+    emit(LoadingAuth());
+    if(await authController.requestToLogout(userEmail)){
+      emit(RequestLogoutSuccess());
+    }else{
       emit(ErrorAuth());
     }
   }

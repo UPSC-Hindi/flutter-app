@@ -10,11 +10,13 @@ class Api {
   static const String register = 'authentication/userRegister';
   static const String resendMobileVerificationOtp =
       'authentication/resendmobileverificationotp';
+  static const String googleAuth = 'authentication/googleSignIn';
   static const String verifyMobileNumber = 'authentication/verifyMobileNumber';
   static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
   static const String updateUserStream = 'authentication/updateUserStream';
   static const String updateUserLanguage = 'authentication/updateUserLanguage';
   static const String logout = "authentication/Logout";
+  static const String requestToLogout = 'adminPanel/postRequestToLogoutUserByAdmin';
 
 
   //PROFILE

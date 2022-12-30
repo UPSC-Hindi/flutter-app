@@ -1,4 +1,6 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:upsc_web/features/model/auth/google_auth_model.dart';
 import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
@@ -7,9 +9,12 @@ import 'package:upsc_web/services/remote_services/auth_services.dart';
 import 'package:upsc_web/utils.dart';
 import 'package:upsc_web/utils/langauge.dart';
 import 'package:upsc_web/utils/utils.dart';
+import 'package:google_sign_in/google_sign_in.dart' as googleauth;
+
 
 class AuthController {
   AuthServices authServices = AuthServices();
+
   Future<BaseModel> login(dynamic data) async {
     try {
       var response = await authServices.loginServices(data);
@@ -97,10 +102,51 @@ class AuthController {
     }
   }
 
+  Future<List<bool>> googleAuth() async {
+    try {
+      googleauth.GoogleSignInAccount? result;
+      final _googleSignIn = googleauth.GoogleSignIn();
+      result = await _googleSignIn.signIn();
+      if (result!.email.isNotEmpty) {
+        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+        dynamic data = {
+          'deviceConfig': webBrowserInfo.userAgent,
+          'DeviceName': webBrowserInfo.appName,
+          'email': result.email,
+          'profilePhoto': result.photoUrl,
+          'usernameFromGoogle': result.displayName,
+        };
+        dynamic response = await authServices.googleAuthService(data);
+        GoogleAuthModel user = GoogleAuthModel.fromJson(response.data);
+        Util.flutterToast(user.msg);
+        if (user.status) {
+          print(user.data.accessToken);
+          PreferencesHelper.setString(
+              Preferences.accessToken, user.data.accessToken);
+          PreferencesHelper.setString(Preferences.name, user.data.fullName);
+          PreferencesHelper.setString(Preferences.email, user.data.email);
+          PreferencesHelper.setString(
+              Preferences.profileImage, user.data.profilePhoto);
+          PreferencesHelper.setString(Preferences.address, user.data.address);
+          return [user.status, user.data.userMobileNumberVerified];
+        }
+        return [user.status, false];
+        //await _googleSignIn.signOut();
+        await _googleSignIn.disconnect();
+      }
+      return [false, false];
+    } catch (error) {
+      print(error);
+      Utils.toastMessage(error.toString());
+      return [false, false];
+    }
+  }
+
   Future<bool> updateStreamLanguage({dynamic language, dynamic stream}) async {
     try {
       dynamic responseLanguageJson =
-          await authServices.updateLanguage(language);
+      await authServices.updateLanguage(language);
       BaseModel responseLanguage = BaseModel.fromJson(responseLanguageJson);
 
       dynamic responseStreamJson = await authServices.updateStream(stream);
@@ -114,27 +160,28 @@ class AuthController {
     }
   }
 
-  Future<bool>logout(BuildContext context)async{
+  Future<bool> logout(BuildContext context) async {
     Utils.showLoading(context);
-    try{
+    try {
       dynamic responseJson = await authServices.logoutService();
       BaseModel response = BaseModel.fromJson(responseJson.data);
       Utils.flutterToast(response.msg);
       Utils.hideLoading(context);
       return response.status;
-    }catch(error){
+    } catch (error) {
       Utils.hideLoading(context);
       Utils.toastMessage(error.toString());
       return false;
     }
   }
 
+
   Future<bool> updateUserDetails(String fullName, String userAddress) async {
     try {
       dynamic response =
-          await authServices.updateUserDetailsService(fullName, userAddress);
+      await authServices.updateUserDetailsService(fullName, userAddress);
       BaseModel data = BaseModel.fromJson(response);
-      if(data.status){
+      if (data.status) {
         PreferencesHelper.setString(Preferences.address, userAddress);
         PreferencesHelper.setString(Preferences.name, fullName);
       }
@@ -146,16 +193,33 @@ class AuthController {
     }
   }
 
-  Future<bool> updateUserProfilePhoto(var fileBytes,String imageName) async {
+  Future<bool> updateUserProfilePhoto(var fileBytes, String imageName) async {
     try {
-      dynamic response = await authServices.updateUserProfilePhotoService(fileBytes,imageName);
+      dynamic response = await authServices.updateUserProfilePhotoService(
+          fileBytes, imageName);
       BaseModel data = BaseModel.fromJson(response);
-      PreferencesHelper.setString(Preferences.profileImage, data.data['fileUploadedLocation']);
+      PreferencesHelper.setString(
+          Preferences.profileImage, data.data['fileUploadedLocation']);
       Util.flutterToast(data.msg);
       return data.status;
     } catch (error) {
       Util.toastMessage(error.toString());
       return false;
     }
+  }
+
+  Future<bool> requestToLogout(String userEmail) async {
+    try {
+      dynamic response = await authServices.requestToLogoutService(
+        {'email_phoneNumber': userEmail,},);
+      BaseModel data = BaseModel.fromJson(response.data);
+      Util.flutterToast(data.msg);
+      return data.status;
+    }catch(error){
+      print(error);
+      Utils.toastMessage(error.toString());
+      return false;
+    }
+
   }
 }

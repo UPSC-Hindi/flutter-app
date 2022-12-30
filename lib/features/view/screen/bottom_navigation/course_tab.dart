@@ -135,7 +135,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                         );
                       }
                     }),
-                Center(
+                const Center(
                   child: Text("Update will come soon......"),
                 ),
               ]),

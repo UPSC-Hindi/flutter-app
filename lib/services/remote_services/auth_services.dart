@@ -52,6 +52,19 @@ class AuthServices {
     }
   }
 
+  Future<dynamic> googleAuthService(dynamic data) async {
+    try {
+      var response = await BaseClient.post(
+        url: Api.baseUrl + Api.googleAuth,
+        data: data,
+      );
+      return response;
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
   Future<dynamic> updateLanguage(String language) async {
     try {
       var response = await BaseClient.put(
@@ -77,11 +90,11 @@ class AuthServices {
     }
   }
 
-  Future<dynamic>logoutService()async{
-    try{
-      dynamic response = await BaseClient.post(url: Api.baseUrl+Api.logout);
+  Future<dynamic> logoutService() async {
+    try {
+      dynamic response = await BaseClient.post(url: Api.baseUrl + Api.logout);
       return response;
-    }catch(error){
+    } catch (error) {
       rethrow;
     }
   }
@@ -102,19 +115,29 @@ class AuthServices {
     }
   }
 
-  Future<dynamic> updateUserProfilePhotoService(var fileBytes,String imageName) async {
+  Future<dynamic> updateUserProfilePhotoService(
+      var fileBytes, String imageName) async {
     try {
       FormData data = FormData.fromMap({
-        "file":  MultipartFile.fromBytes(
-          fileBytes,
-          filename: imageName
-        ),
+        "file": MultipartFile.fromBytes(fileBytes, filename: imageName),
       });
       dynamic response = await BaseClient.put(
           url: "${Api.baseUrl}${Api.updateUserProfilePhoto}", data: data);
       print(response);
       return response;
     } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> requestToLogoutService(dynamic data) async {
+    try {
+      dynamic response = await BaseClient.post(
+        url: Api.baseUrl + Api.requestToLogout,
+        data: data,
+      );
+      return response;
+    } catch (e) {
       rethrow;
     }
   }
