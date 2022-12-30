@@ -414,11 +414,14 @@ class BatchNotesWidget extends StatelessWidget {
                   : ListView.builder(
                       itemCount: notesList!.length,
                       //todo
-                      itemBuilder: (context, index) => ResourcesContainerWidget(
-                        resourcetype: "file",
-                        title: notesList![index].title,
-                        uploadFile: notesList![index].uploadFile.fileLoc,
-                        fileSize: notesList![index].uploadFile.fileSize,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ResourcesContainerWidget(
+                          resourcetype: notesList![index].resourceType,
+                          title: notesList![index].title,
+                          uploadFile: notesList![index].uploadFile.fileLoc,
+                          fileSize: notesList![index].uploadFile.fileSize,
+                        ),
                       ),
                     );
             } else {
