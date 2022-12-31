@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:upsc_web/features/model/auth/google_auth_model.dart';
 import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
+import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';
@@ -10,7 +11,6 @@ import 'package:upsc_web/utils.dart';
 import 'package:upsc_web/utils/langauge.dart';
 import 'package:upsc_web/utils/utils.dart';
 import 'package:google_sign_in/google_sign_in.dart' as googleauth;
-
 
 class AuthController {
   AuthServices authServices = AuthServices();
@@ -146,7 +146,7 @@ class AuthController {
   Future<bool> updateStreamLanguage({dynamic language, dynamic stream}) async {
     try {
       dynamic responseLanguageJson =
-      await authServices.updateLanguage(language);
+          await authServices.updateLanguage(language);
       BaseModel responseLanguage = BaseModel.fromJson(responseLanguageJson);
 
       dynamic responseStreamJson = await authServices.updateStream(stream);
@@ -175,11 +175,10 @@ class AuthController {
     }
   }
 
-
   Future<bool> updateUserDetails(String fullName, String userAddress) async {
     try {
       dynamic response =
-      await authServices.updateUserDetailsService(fullName, userAddress);
+          await authServices.updateUserDetailsService(fullName, userAddress);
       BaseModel data = BaseModel.fromJson(response);
       if (data.status) {
         PreferencesHelper.setString(Preferences.address, userAddress);
@@ -211,15 +210,61 @@ class AuthController {
   Future<bool> requestToLogout(String userEmail) async {
     try {
       dynamic response = await authServices.requestToLogoutService(
-        {'email_phoneNumber': userEmail,},);
+        {
+          'email_phoneNumber': userEmail,
+        },
+      );
       BaseModel data = BaseModel.fromJson(response.data);
       Util.flutterToast(data.msg);
       return data.status;
-    }catch(error){
+    } catch (error) {
       print(error);
       Utils.toastMessage(error.toString());
       return false;
     }
+  }
 
+  Future<BaseModel> resetPasswordVerification(dynamic email_phoneNumber) async {
+    try {
+      dynamic response = await authServices.resetPasswordVerificationService({
+        'email_phoneNumber': email_phoneNumber,
+      });
+      print(response);
+      return BaseModel.fromJson(response);
+    } catch (error) {
+      print(error);
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
+  }
+
+  Future<BaseModel> resetPasswordVerifyOtp(
+      String email_phoneNumber, String otp) async {
+    try {
+      dynamic response = await authServices.resetPasswordVerifyOtpService({
+        'email_phoneNumber': email_phoneNumber,
+        'otp': otp,
+      });
+      print(response);
+      return BaseModel.fromJson(response);
+    } catch (error) {
+      print(error);
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
+  }
+
+  Future<BaseModel> resendPasswordVerifyOtp(String email_phoneNumber) async {
+    try {
+      dynamic response = await authServices.resendPasswordVerifyOtpService({
+        'email_phoneNumber': email_phoneNumber,
+      });
+      print(response);
+      return BaseModel.fromJson(response.data);
+    } catch (error) {
+      print(error);
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
   }
 }

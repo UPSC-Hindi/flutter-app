@@ -7,6 +7,7 @@ import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/global_controller.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
 import 'package:upsc_web/features/view/screen/auth/mobile_number_screen.dart';
+import 'package:upsc_web/features/view/screen/auth/reset_password_screen.dart';
 import 'package:upsc_web/features/view/widget/auth_button.dart';
 import 'package:upsc_web/features/view/widget/custom_text_field.dart';
 import 'package:upsc_web/utils/utils.dart';
@@ -68,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
               Navigator.popAndPushNamed(
                 context,
                 AppRoute.requestToLogoutScreen,
-                arguments: [emailController.text,bannerList],
+                arguments: [emailController.text, bannerList],
               );
             }
             if (state is GoogleSuccess) {
@@ -113,7 +114,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     enableInfiniteScroll: true,
                                     reverse: false,
                                     autoPlay: true,
-                                    autoPlayInterval: const Duration(seconds: 3),
+                                    autoPlayInterval:
+                                        const Duration(seconds: 3),
                                     autoPlayAnimationDuration:
                                         const Duration(milliseconds: 800),
                                     autoPlayCurve: Curves.fastOutSlowIn,
@@ -141,19 +143,39 @@ class _SignInScreenState extends State<SignInScreen> {
                           .required()
                           .minLength(8)
                           .regExp(
-                          RegExp(
-                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
-                          'valid password ex:Testing@1')
+                              RegExp(
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                              'valid password ex:Testing@1')
                           .maxLength(50)
                           .build(),
                     ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => const ResetPasswordScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Forgot password?',
+                          style: TextStyle(
+                            color: Utils.buttonColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
                     AuthButton(
                       text: 'Login',
-                      onPressed: (){
+                      onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _loginButton;
                         }
-
                       },
                     ),
                     Row(
@@ -212,20 +234,21 @@ class _SignInScreenState extends State<SignInScreen> {
                           'Create an account?',
                         ),
                         TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, AppRoute.signupScreen,
-                                      arguments: bannerList)
-                                  .then((value) => {
-                                        emailController.clear(),
-                                        passwordController.clear(),
-                                      });
-                            },
-                            child: Text(
-                              ' Register',
-                              style: TextStyle(
-                                color: Utils.buttonColor,
-                              ),
-                            ))
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoute.signupScreen,
+                                    arguments: bannerList)
+                                .then((value) => {
+                                      emailController.clear(),
+                                      passwordController.clear(),
+                                    });
+                          },
+                          child: Text(
+                            ' Register',
+                            style: TextStyle(
+                              color: Utils.buttonColor,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],

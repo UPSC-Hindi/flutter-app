@@ -141,4 +141,38 @@ class AuthServices {
       rethrow;
     }
   }
+
+  Future<dynamic> resetPasswordVerificationService(dynamic data)async{
+    try {
+      dynamic response = await BaseClient.post(
+        url: Api.baseUrl + Api.resetPassword,
+        data: data,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<dynamic> resetPasswordVerifyOtpService(dynamic data)async{
+    try {
+      dynamic response = await BaseClient.post(
+        url: Api.baseUrl + Api.resetPasswordVerifyOtp,
+        data: data,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<dynamic> resendPasswordVerifyOtpService(dynamic data)async{
+    try {
+      dynamic response = await BaseClient.post(
+        url: Api.baseUrl + Api.resendOtp,
+        data: data,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

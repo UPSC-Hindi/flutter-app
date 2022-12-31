@@ -17,7 +17,10 @@ class Api {
   static const String updateUserLanguage = 'authentication/updateUserLanguage';
   static const String logout = "authentication/Logout";
   static const String requestToLogout = 'adminPanel/postRequestToLogoutUserByAdmin';
-
+  //RESET OTP
+  static const String resetPassword = 'authentication/forgetpassword';
+  static const String resetPasswordVerifyOtp = 'authentication/reset';
+  static const String resendOtp = 'authentication/resendotp';
 
   //PROFILE
   static const String updateUserProfileInfo =
