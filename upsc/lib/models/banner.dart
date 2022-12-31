@@ -33,7 +33,6 @@ class Data {
   List<String>? bannerUrl;
   String? title;
   String? language;
-  Category? category;
   bool? isActive;
   String? createdAt;
   int? iV;
@@ -44,7 +43,6 @@ class Data {
       this.bannerUrl,
       this.title,
       this.language,
-      this.category,
       this.isActive,
       this.createdAt,
       this.iV});
@@ -55,9 +53,7 @@ class Data {
     bannerUrl = json['banner_url'].cast<String>();
     title = json['title'];
     language = json['language'];
-    category = json['category'] != null
-        ? Category.fromJson(json['category'])
-        : null;
+   
     isActive = json['is_active'];
     createdAt = json['created_at'];
     iV = json['__v'];
@@ -70,9 +66,7 @@ class Data {
     data['banner_url'] = bannerUrl;
     data['title'] = title;
     data['language'] = language;
-    if (category != null) {
-      data['category'] = category!.toJson();
-    }
+
     data['is_active'] = isActive;
     data['created_at'] = createdAt;
     data['__v'] = iV;

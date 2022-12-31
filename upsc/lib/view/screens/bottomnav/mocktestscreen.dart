@@ -69,10 +69,10 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: searchtest,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Search Mock Tests, Quizzes",
-                    suffixIcon: Icon(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: Languages.SearchMockTestQuizzes,
+                    suffixIcon: const Icon(
                       Icons.search,
                       size: 30,
                     ), //icon at tail of input
@@ -91,13 +91,15 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Daily Editorial Based Quiz',
+                    //'Daily Editorial Based Quiz'
+                    Languages.DailyEditorialBasedQuiz,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.70,
-                    child: const Text(
-                        'Helps Improve MCQ  Solving, Attempting Daily  will help you through your preparation'),
+                    child: Text(Languages.MCQdescription
+                        //'Helps Improve MCQ  Solving, Attempting Daily  will help you through your preparation'
+                        ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,10 +137,6 @@ class _mocktestscreenState extends State<mocktestscreen> {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              'My Tests Series',
-              style: Theme.of(context).textTheme.headline1,
-            ),
             FutureBuilder<MyTestsModel>(
               future: mytestsData,
               builder: (context, snapshot) {
@@ -147,11 +145,7 @@ class _mocktestscreenState extends State<mocktestscreen> {
                     MyTestsModel? myTestsModel = snapshot.data;
                     return myTestsModel!.data!.isNotEmpty
                         ? myTestsbody(myTestsModel)
-                        : Container(
-                            padding: const EdgeInsets.all(20),
-                            child: EmptyWidget(
-                                image: SvgImages.emptyCard,
-                                text: "No Test Series purchase"));
+                        : Container();
                   } else {
                     return const Text("There is no internet Connection");
                   }
@@ -160,7 +154,8 @@ class _mocktestscreenState extends State<mocktestscreen> {
                 }
               },
             ),
-            Text('Mock Tests', style: Theme.of(context).textTheme.headline1),
+            Text(Languages.MockTests,
+                style: Theme.of(context).textTheme.headline1),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -176,17 +171,25 @@ class _mocktestscreenState extends State<mocktestscreen> {
   }
 
   Widget myTestsbody(MyTestsModel response) {
-    return SizedBox(
-      height: 130,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: response.data!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _mytestsCard(response.data![index]);
-        },
-      ),
+    return Column(
+      children: [
+        Text(
+          Languages.myTest,
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        SizedBox(
+          height: 130,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            itemCount: response.data!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _mytestsCard(response.data![index]);
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -196,14 +199,14 @@ class _mocktestscreenState extends State<mocktestscreen> {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
-          color: const Color(0xFFF9F9F9),
-          boxShadow: const [
+          borderRadius: BorderRadius.circular(10),
+          color: ColorResources.textWhite,
+          boxShadow: [
             BoxShadow(
-              color: Colors.grey,
+              color: ColorResources.gray.withOpacity(0.5),
               blurRadius: 5.0,
             ),
           ],
-          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -298,9 +301,9 @@ class _mocktestscreenState extends State<mocktestscreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: ColorResources.textWhite,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: ColorResources.gray.withOpacity(0.5),
             blurRadius: 5.0,
           ),
         ],
@@ -323,13 +326,14 @@ class _mocktestscreenState extends State<mocktestscreen> {
               Row(
                 children: [
                   Image.network(
-                    SvgImages.pdfimage,
+                    SvgImages.exampen,
                     height: 25,
+                    width: 25,
                   ),
                   const SizedBox(
                     width: 5,
                   ),
-                  Text('${response.noOfTest!} Tests')
+                  Text('${response.noOfTest!} ${Languages.noTest}')
                 ],
               ),
               Row(

@@ -1,3 +1,4 @@
+
 class StreamModel {
   StreamModel({
     required this.status,
@@ -10,17 +11,16 @@ class StreamModel {
   final String msg;
 
   factory StreamModel.fromJson(Map<String, dynamic> json) => StreamModel(
-        status: json["status"],
-        data: List<StreamDataModel>.from(
-            json["data"].map((x) => StreamDataModel.fromJson(x))),
-        msg: json["msg"],
-      );
+    status: json["status"],
+    data: List<StreamDataModel>.from(json["data"].map((x) => StreamDataModel.fromJson(x))),
+    msg: json["msg"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "msg": msg,
-      };
+    "status": status,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "msg": msg,
+  };
 }
 
 class StreamDataModel {
@@ -42,24 +42,23 @@ class StreamDataModel {
   final String user;
   final int v;
 
-  factory StreamDataModel.fromJson(Map<String, dynamic> json) =>
-      StreamDataModel(
-        id: json["_id"],
-        title: json["title"],
-        isActive: json["is_active"],
-        createdAt: json["created_at"],
-        type: json["type"],
-        user: json["user"],
-        v: json["__v"],
-      );
+  factory StreamDataModel.fromJson(Map<String, dynamic> json) => StreamDataModel(
+    id: json["_id"],
+    title: json["title"],
+    isActive: json["is_active"],
+    createdAt: json["created_at"],
+    type: json["type"],
+    user: json["user"],
+    v: json["__v"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "title": title,
-        "is_active": isActive,
-        "created_at": createdAt,
-        "type": type,
-        "user": user,
-        "__v": v,
-      };
+    "_id": id,
+    "title": title,
+    "is_active": isActive,
+    "created_at": createdAt,
+    "type": type,
+    "user": user,
+    "__v": v,
+  };
 }

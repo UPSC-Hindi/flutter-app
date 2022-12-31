@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upsc/features/cubit/auth/auth_cubit.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
 import 'package:upsc/features/data/remote/data_sources/resources/resources_data_sources_impl.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
@@ -10,13 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
-import 'package:upsc/view/screens/auth/SignIn.dart';
-import 'package:upsc/view/screens/auth/SignUp.dart';
-import 'package:upsc/view/screens/auth/forgotpassword.dart';
-import 'package:upsc/view/screens/auth/otpverification.dart';
-import 'package:upsc/view/screens/auth/passwordVerified.dart';
-import 'package:upsc/view/screens/auth/passwordchange.dart';
-import 'package:upsc/view/screens/auth/passwordotp.dart';
+import 'package:upsc/view/screens/auth/sign_in_screen.dart';
 import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
 import 'package:upsc/view/screens/bottomnav/editprofile.dart';
 import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
@@ -24,7 +19,6 @@ import 'package:upsc/view/screens/bottomnav/ncert.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
 import 'package:upsc/view/screens/contactus.dart';
 import 'package:upsc/view/screens/home.dart';
-import 'package:upsc/view/screens/languagescreen.dart';
 import 'package:upsc/view/screens/notifications.dart';
 import 'package:upsc/view/screens/sidenav/resources/courseIndexResources.dart';
 import 'package:upsc/view/screens/sidenav/aboutus.dart';
@@ -128,8 +122,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ResourceDataSourceImpl resourceDataSourceImpl = ResourceDataSourceImpl();
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
-    return BlocProvider(
-      create: (context) => ApiBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ApiBloc(),
+        ),
+        BlocProvider(create: (context) => AuthCubit()),
+      ],
       child: MaterialApp(
         title: 'UPSC HINDI',
         debugShowCheckedModeBanner: false,
@@ -137,9 +136,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
             headline1: GoogleFonts.notoSansDevanagari(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: ColorResources.textblack,),
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: ColorResources.textblack,
+            ),
             headline2: GoogleFonts.notoSansDevanagari(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
@@ -158,36 +158,41 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const Splash(),
           'home': (context) => const HomeScreen(),
-          'SignIn': (context) => const loginscreen(), //SignIn(),
-          'SignUp': (context) => const SignUp(),
-          'otpverification': (context) => Otpverification(
-                number: '',
-              ),
-          'languagescreen': (context) => const LanguageScreen(
-                isLogin: false,
-              ),
+          // 'SignIn': (context) => const loginscreen(), //SignIn(),
+          // 'SignUp': (context) => const SignUp(),
+          // 'otpverification': (context) => Otpverification(
+          //       number: '',
+          //     ),
+          // 'languagescreen': (context) => const LanguageScreen(
+          //       isLogin: false,
+          //     ),
           'notifications': (context) => const NotificationScreen(),
           // 'homescreen': (context) => const HomeScreens(),
           'Coursescreen': (context) => const CourseScreen(),
-          'mocktestscreen': (context) => mocktestscreen(remoteDataSourceImpl: remoteDataSourceImpl,),
+          'mocktestscreen': (context) => mocktestscreen(
+                remoteDataSourceImpl: remoteDataSourceImpl,
+              ),
           'ProfilScreen': (context) => ProfilScreen(),
           'editprofilescreen': (context) => const EditProfileScreen(),
           'downloadScreen': (context) => const DownloadScreen(),
           'resourcesscreen': (context) => const ResourcesScreen(),
           'cartscreen': (context) => const CartScreen(),
           'mycoursesscreen': (context) => const MyCoursesScreen(),
-          'mytestseries': (context) =>  const TestSeries(id: "",name: "",),
+          'mytestseries': (context) => const TestSeries(
+                id: "",
+                name: "",
+              ),
           'ourachievements': (context) => const OurAchievementsScreen(),
           'myordersscreen': (context) => const MyOrdersScreen(),
           'helpandsupport': (context) => const HelpAndSupport(),
-          'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
-          'passwordotp': (context) => PasswordOtp(
-                Otpfor: '',
-              ),
-          'passwordverified': (context) => passwordVerified(
-                type: '',
-              ),
-          'passwordchange': (context) => const PasswordChange(),
+          // 'forgotpasswordscreen': (context) => const ForgotPasswordScreen(),
+          // 'passwordotp': (context) => PasswordOtp(
+          //       Otpfor: '',
+          //     ),
+          // 'passwordverified': (context) => passwordVerified(
+          //       type: '',
+          //     ),
+          // 'passwordchange': (context) => const PasswordChange(),
           'ncertscreen': (context) => const NcertScreen(),
           'MySchedule': (context) => const MySchedule(),
           'MyScheduleAdd': (context) => const MyScheduleAdd(),
@@ -234,7 +239,7 @@ class _SplashState extends State<Splash> {
     return SplashScreenView(
       navigateRoute: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)
           ? const HomeScreen()
-          : const loginscreen(),
+          : const SignInScreen(),
       //duration: 30,
       //imageSize: 130,
       imageSrc: "assets/images/splash.gif",

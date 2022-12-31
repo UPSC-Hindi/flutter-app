@@ -153,13 +153,17 @@ class QuestionPaper {
 class Attempted {
   String? score;
   QuestionPaper? answerSheet;
+  QuestionPaper? checkedAnswerSheet;
 
-  Attempted({this.score, this.answerSheet});
+  Attempted({this.score, this.answerSheet, this.checkedAnswerSheet});
 
   Attempted.fromJson(Map<String, dynamic> json) {
     score = json['Score'];
     answerSheet = json['answer_sheet'] != null
         ? QuestionPaper.fromJson(json['answer_sheet'])
+        : null;
+    checkedAnswerSheet = json['checked_answer_sheet'] != null
+        ? QuestionPaper.fromJson(json['checked_answer_sheet'])
         : null;
   }
 
@@ -168,6 +172,9 @@ class Attempted {
     data['Score'] = score;
     if (answerSheet != null) {
       data['answer_sheet'] = answerSheet!.toJson();
+    }
+    if (checkedAnswerSheet != null) {
+      data['checked_answer_sheet'] = checkedAnswerSheet!.toJson();
     }
     return data;
   }

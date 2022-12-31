@@ -94,15 +94,29 @@ class _TestSeriesState extends State<TestSeries> {
             Expanded(
                 flex: 2,
                 child: Container(
+                  decoration: BoxDecoration(
+                    border: carddata.isAttempted!
+                        ? Border(
+                            left: BorderSide(
+                              color: ColorResources.buttoncolor,
+                              style: BorderStyle.solid,
+                            ),
+                          )
+                        : Border(
+                            left: BorderSide.none,
+                          ),
+                  ),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _iconTextWidget(
-                          '${carddata.noOfQuestions} Questions', Icons.menu),
+                          '${carddata.noOfQuestions}${Languages.Questions}',
+                          Icons.menu),
                       Row(
                         children: [
-                          _iconTextWidget('${carddata.totalMarks} Marks',
+                          _iconTextWidget(
+                              '${carddata.totalMarks} ${Languages.marks}',
                               Icons.verified_outlined),
                           const SizedBox(
                             width: 5,
@@ -118,7 +132,18 @@ class _TestSeriesState extends State<TestSeries> {
               flex: 5,
               child: Container(
                 padding: const EdgeInsets.all(15),
-                color: const Color(0xFFD9D9D9).withOpacity(0.2),
+                decoration: BoxDecoration(
+                  border: carddata.isAttempted!
+                      ? Border(
+                          left: BorderSide(
+                            color: ColorResources.buttoncolor,
+                          ),
+                        )
+                      : Border(
+                          left: BorderSide.none,
+                        ),
+                  color: const Color(0xFFD9D9D9).withOpacity(0.2),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -156,23 +181,27 @@ class _TestSeriesState extends State<TestSeries> {
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          carddata.startingDate!,
-                          style: TextStyle(
-                            color: ColorResources.gray,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              carddata.startingDate!,
+                              style: TextStyle(
+                                color: ColorResources.gray,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              '${Languages.score}: ${carddata.attempted!.score}',
+                              style: GoogleFonts.notoSansDevanagari(
+                                color: ColorResources.gray,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                          'Score : ${carddata.attempted!.score}',
-                          style: GoogleFonts.notoSansDevanagari(
-                            color: ColorResources.gray,
-                          ),
-                        ),
-                        const Expanded(child: SizedBox()),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(

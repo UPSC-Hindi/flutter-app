@@ -104,7 +104,7 @@ class MyCoursesScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      if (courseData.batchDetails.isActive) {
+                      if (courseData.isActive) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => CourseViewScreen(
@@ -118,7 +118,7 @@ class MyCoursesScreen extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(courseData.batchDetails.isActive
+                        Text(courseData.isActive
                             ? Languages.continueText
                             : 'Expired'), // <-- Text
                         const SizedBox(

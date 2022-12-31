@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:retrofit/http.dart';
 import 'package:upsc/api/api.dart';
+import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/AddToCart.dart';
 import 'package:upsc/models/DeleteUserDetailsFromStream.dart';
 import 'package:upsc/models/GoogleSignIn.dart';
@@ -29,39 +31,6 @@ abstract class RestClient {
 
   @GET(Apis.banner)
   Future<getbannerdetails> bannerimagesRequest();
-
-  @POST(Apis.login)
-  Future<Login> loginRequest(@Body() body);
-
-  @POST(Apis.register)
-  Future<Register> registerRequest(@Body() body);
-
-  @POST(Apis.verifymobilenumber)
-  Future<VerifyMobileNumber> verifymobilenumberRequest(@Body() body);
-
-  @GET(Apis.resendotpm)
-  Future<Resendotp> resendotpRequest();
-
-  @POST(Apis.forgetpassword)
-  Future<ForgetPassword> forgetpasswordRequest(@Body() body);
-
-  @POST(Apis.passwordverifyotp)
-  Future<PasswordVerifyOtp> passwordverifyotpRequest(@Body() body);
-
-  @POST(Apis.passwordotpresend)
-  Future<PasswordOtpResend> passwordotpresendRequest(@Body() body);
-
-  @POST(Apis.resetpassword)
-  Future<ResetPassword> resetpasswordRequest(@Body() body);
-
-  @POST(Apis.logout)
-  Future<Logout> logoutRequest();
-
-  @POST(Apis.googleSignIn)
-  Future<GoogleSignIn> googleSigninRequest(@Body() body);
-
-  @POST(Apis.postUserMobileNumber)
-  Future<postUserMobileNumber> postUserMobileNumberRequest(@Body() body);
 
   @POST(Apis.joinmeeting)
   Future<JoinStreaming> joinmeetingRequest(@Body() body);

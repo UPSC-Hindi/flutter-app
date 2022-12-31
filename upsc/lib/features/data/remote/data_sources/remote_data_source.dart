@@ -19,7 +19,6 @@ abstract class RemoteDataSource{
   Future<ClassSchedulermodel> getMyClassSchedule();
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();
-  Future<void>addMyCart();
   Future<Response>addMyCourses(String batchId,bool isPaid);
   Future<Response>deleteCartCourse(String id);
   Future<Response>savePaymentStatus(PaymentModel paymentData);

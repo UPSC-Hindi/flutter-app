@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final coursesDetailsModel = coursesDetailsModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 CoursesDetailsModel coursesDetailsModelFromJson(String str) =>
@@ -64,7 +59,6 @@ class BatchDetails {
   BatchDetails({
     required this.id,
     required this.batchName,
-    required this.category,
     required this.examType,
     required this.student,
     required this.subject,
@@ -89,7 +83,6 @@ class BatchDetails {
 
   final String id;
   final String batchName;
-  final Category category;
   final String examType;
   final List<String> student;
   final List<Category> subject;
@@ -114,7 +107,6 @@ class BatchDetails {
   factory BatchDetails.fromJson(Map<String, dynamic> json) => BatchDetails(
         id: json["_id"],
         batchName: json["batch_name"],
-        category: Category.fromJson(json["category"]),
         examType: json["exam_type"],
         student: List<String>.from(json["student"].map((x) => x)),
         subject: List<Category>.from(
@@ -144,7 +136,6 @@ class BatchDetails {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "batch_name": batchName,
-        "category": category.toJson(),
         "exam_type": examType,
         "student": List<dynamic>.from(student.map((x) => x)),
         "subject": List<dynamic>.from(subject.map((x) => x.toJson())),

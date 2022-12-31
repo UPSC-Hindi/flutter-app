@@ -27,7 +27,6 @@ class CoursesDataModel {
   CoursesDataModel({
     required this.id,
     required this.batchName,
-    required this.category,
     required this.examType,
     required this.student,
     required this.teacher,
@@ -50,7 +49,6 @@ class CoursesDataModel {
 
   final String id;
   final String batchName;
-  final Category category;
   final String examType;
   final List<String> student;
   final List<Teacher> teacher;
@@ -73,7 +71,6 @@ class CoursesDataModel {
   factory CoursesDataModel.fromJson(Map<String, dynamic> json) => CoursesDataModel(
     id: json["_id"],
     batchName: json["batch_name"],
-    category: Category.fromJson(json["category"]),
     examType: json["exam_type"],
     student: List<String>.from(json["student"].map((x) => x)),
     teacher: List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
@@ -97,7 +94,6 @@ class CoursesDataModel {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "batch_name": batchName,
-    "category": category.toJson(),
     "exam_type": examType,
     "student": List<dynamic>.from(student.map((x) => x)),
     "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
@@ -143,29 +139,6 @@ class Banner {
   };
 }
 
-class Category {
-  Category({
-    required this.id,
-    required this.title,
-    required this.isActive,
-  });
-
-  final String id;
-  final String title;
-  final bool isActive;
-
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["_id"],
-    title: json["title"],
-    isActive: json["is_active"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "title": title,
-    "is_active": isActive,
-  };
-}
 
 class Teacher {
   Teacher({

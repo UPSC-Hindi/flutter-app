@@ -10,19 +10,19 @@ class RecordedVideoModel {
     if (json['data'] != null) {
       data = <RecordedVideoDataModel>[];
       json['data'].forEach((v) {
-        data!.add(new RecordedVideoDataModel.fromJson(v));
+        data!.add(RecordedVideoDataModel.fromJson(v));
       });
     }
     msg = json['msg'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['msg'] = this.msg;
+    data['msg'] = msg;
     return data;
   }
 }
@@ -38,16 +38,16 @@ class RecordedVideoDataModel {
     if (json['Listofvideos'] != null) {
       listofvideos = <Listofvideos>[];
       json['Listofvideos'].forEach((v) {
-        listofvideos!.add(new Listofvideos.fromJson(v));
+        listofvideos!.add(Listofvideos.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['LectureName'] = this.lectureName;
-    if (this.listofvideos != null) {
-      data['Listofvideos'] = this.listofvideos!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['LectureName'] = lectureName;
+    if (listofvideos != null) {
+      data['Listofvideos'] = listofvideos!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -79,12 +79,12 @@ class Listofvideos {
     sId = json['_id'];
     title = json['title'];
     fileUrl = json['file_url'] != null
-        ? new FileUrl.fromJson(json['file_url'])
+        ? FileUrl.fromJson(json['file_url'])
         : null;
     batchId = json['batch_id'];
     language = json['language'];
     lectureId = json['lecture_id'] != null
-        ? new LectureId.fromJson(json['lecture_id'])
+        ? LectureId.fromJson(json['lecture_id'])
         : null;
     isActive = json['is_active'];
     createdAt = json['created_at'];
@@ -92,20 +92,20 @@ class Listofvideos {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    if (this.fileUrl != null) {
-      data['file_url'] = this.fileUrl!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['title'] = title;
+    if (fileUrl != null) {
+      data['file_url'] = fileUrl!.toJson();
     }
-    data['batch_id'] = this.batchId;
-    data['language'] = this.language;
-    if (this.lectureId != null) {
-      data['lecture_id'] = this.lectureId!.toJson();
+    data['batch_id'] = batchId;
+    data['language'] = language;
+    if (lectureId != null) {
+      data['lecture_id'] = lectureId!.toJson();
     }
-    data['is_active'] = this.isActive;
-    data['created_at'] = this.createdAt;
-    data['is_verfied'] = this.isVerfied;
+    data['is_active'] = isActive;
+    data['created_at'] = createdAt;
+    data['is_verfied'] = isVerfied;
     return data;
   }
 }
@@ -124,10 +124,10 @@ class FileUrl {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['fileLoc'] = this.fileLoc;
-    data['fileName'] = this.fileName;
-    data['fileSize'] = this.fileSize;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['fileLoc'] = fileLoc;
+    data['fileName'] = fileName;
+    data['fileSize'] = fileSize;
     return data;
   }
 }
@@ -144,9 +144,9 @@ class LectureId {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['lecture_title'] = this.lectureTitle;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['lecture_title'] = lectureTitle;
     return data;
   }
 }

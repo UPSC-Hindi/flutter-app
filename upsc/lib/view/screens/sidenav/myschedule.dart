@@ -63,7 +63,7 @@ class _MyScheduleState extends State<MySchedule> {
               TextButton(
                   onPressed: () {},
                   child: Text(
-                    'My Schedule',
+                    Languages.mySchedule,
                     style: GoogleFonts.notoSansDevanagari(
                       shadows: [
                         Shadow(
@@ -78,13 +78,13 @@ class _MyScheduleState extends State<MySchedule> {
                   )),
               TextButton(
                   onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ClassSchedule(),
-                    ),
-                  ),
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ClassSchedule(),
+                        ),
+                      ),
                   child: Text(
-                    'Class Schedule',
+                    Languages.ClassSchedule,
                     style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textblack),
                   ))
@@ -105,7 +105,7 @@ class _MyScheduleState extends State<MySchedule> {
                 print(
                     pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                 String formattedDate =
-                DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                    DateFormat('dd-MMMM-yyyy').format(pickedDate);
                 print(
                     formattedDate); //formatted date output using intl package =>  2021-03-16
                 setState(() {
@@ -141,8 +141,8 @@ class _MyScheduleState extends State<MySchedule> {
               }
               if (state is ApiGetSchedulerSuccess) {
                 return state.schedulerList.isEmpty
-                    ? const Center(
-                        child: Text('There is no Scheduler'),
+                    ? Center(
+                        child: Text(Languages.noscheduler),
                       )
                     : _bodyWidget(context, state.schedulerList);
               }
