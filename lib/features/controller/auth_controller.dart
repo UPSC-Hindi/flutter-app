@@ -224,47 +224,66 @@ class AuthController {
     }
   }
 
-  Future<BaseModel> resetPasswordVerification(dynamic email_phoneNumber) async {
+  Future<bool> resetPasswordVerification(dynamic email_phoneNumber) async {
     try {
       dynamic response = await authServices.resetPasswordVerificationService({
         'email_phoneNumber': email_phoneNumber,
       });
-      print(response);
-      return BaseModel.fromJson(response);
+      BaseModel res = BaseModel.fromJson(response.data);
+      Utils.flutterToast(res.msg);
+      Utils.toastMessage(res.data['otpToResetPassword'].toString());
+      return res.status;
     } catch (error) {
       print(error);
       Utils.toastMessage(error.toString());
-      rethrow;
+      return false;
     }
   }
 
-  Future<BaseModel> resetPasswordVerifyOtp(
+  Future<bool> resetPasswordVerifyOtp(
       String email_phoneNumber, String otp) async {
     try {
       dynamic response = await authServices.resetPasswordVerifyOtpService({
         'email_phoneNumber': email_phoneNumber,
         'otp': otp,
       });
-      print(response);
-      return BaseModel.fromJson(response);
+      BaseModel res = BaseModel.fromJson(response.data);
+      Utils.flutterToast(res.msg);
+      return res.status;
     } catch (error) {
       print(error);
+      Utils.toastMessage(error.toString());
+      return false;
+    }
+  }
+
+  Future<bool> resendPasswordVerifyOtp(String email_phoneNumber) async {
+    try {
+      dynamic response = await authServices.resendPasswordVerifyOtpService({
+        'email_phoneNumber': email_phoneNumber,
+      });
+
+      BaseModel res = BaseModel.fromJson(response.data);
+      Utils.flutterToast(res.msg);
+      Utils.toastMessage(res.data['otpToResetPassword'].toString());
+      return res.status;
+    } catch (error) {
       Utils.toastMessage(error.toString());
       rethrow;
     }
   }
 
-  Future<BaseModel> resendPasswordVerifyOtp(String email_phoneNumber) async {
+  Future<bool> updatePassword(dynamic data) async {
     try {
-      dynamic response = await authServices.resendPasswordVerifyOtpService({
-        'email_phoneNumber': email_phoneNumber,
-      });
+      dynamic response = await authServices.updatePasswordService(data);
       print(response);
-      return BaseModel.fromJson(response.data);
+      BaseModel res = BaseModel.fromJson(response.data);
+      Utils.flutterToast(res.msg);
+      return res.status;
     } catch (error) {
       print(error);
       Utils.toastMessage(error.toString());
-      rethrow;
+      return false;
     }
   }
 }

@@ -118,4 +118,33 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ErrorAuth());
     }
   }
+
+  Future<void> resetPassword(String email_mobileNumber)async{
+    emit(LoadingAuth());
+    if(await authController.resetPasswordVerification(email_mobileNumber)){
+      emit(ResetPasswordSuccess());
+    }else{
+      emit(ErrorAuth());
+    }
+  }
+
+  Future<void> resetPasswordOtp(String email_mobileNumber,String otp)async{
+    emit(LoadingAuth());
+    if(await authController.resetPasswordVerifyOtp(email_mobileNumber,otp)){
+      emit(ResetPasswordOtpSuccess());
+    }else{
+      emit(ErrorAuth());
+    }
+  }
+  Future<void>resendPasswordOtp(String email_phoneNumber)async{
+    await authController.resendPasswordVerifyOtp(email_phoneNumber);
+  }
+  Future<void>updatePassword(dynamic data)async{
+    emit(LoadingAuth());
+    if(await authController.updatePassword(data)){
+      emit(UpdatePasswordSuccess());
+    }else{
+      emit(ErrorAuth());
+    }
+  }
 }

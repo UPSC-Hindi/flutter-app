@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
 import 'package:upsc_web/features/view/screen/auth/reset_password_verify_otp.dart';
 import 'package:upsc_web/features/view/widget/auth_button.dart';
 import 'package:upsc_web/features/view/widget/custom_text_field.dart';
@@ -27,7 +29,38 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: BlocConsumer<AuthCubit, AuthState>(
+  listener: (context, state) {
+    if(state is LoadingAuth){
+      Utils.showLoading(context);
+    }
+    if(state is ErrorAuth){
+      Utils.hideLoading(context);
+    }
+    if(state is ResetPasswordSuccess){
+      Utils.hideLoading(context);
+      if (mobileController.text.isNotEmpty &&
+          mobileController.text.length == 10) {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => ResetPasswordVerifyOtp(
+                email_phoneNumber: mobileController.text),
+          ),
+        );
+      }else if(emailController.text.isNotEmpty){
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => ResetPasswordVerifyOtp(
+                email_phoneNumber: emailController.text),
+          ),
+        );
+      }
+    }
+  },
+  builder: (context, state) {
+    return Container(
         constraints: const BoxConstraints(
           maxWidth: 500,
         ),
@@ -70,21 +103,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 onPressed: () {
                   if (mobileController.text.isNotEmpty &&
                       mobileController.text.length == 10) {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => ResetPasswordVerifyOtp(
-                            email_phoneNumber: mobileController.text),
-                      ),
-                    );
+                    BlocProvider.of<AuthCubit>(context).resetPassword(mobileController.text);
                   }else if(emailController.text.isNotEmpty){
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => ResetPasswordVerifyOtp(
-                            email_phoneNumber: emailController.text),
-                      ),
-                    );
+                    BlocProvider.of<AuthCubit>(context).resetPassword(emailController.text);
                   }  else{
                     Utils.toastMessage('Enter valid data');
                   }
@@ -93,7 +114,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ],
           ),
         ),
-      ),
+      );
+  },
+),
     );
   }
 }

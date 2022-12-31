@@ -22,3 +22,7 @@ class GooglePhoneNumberVerification extends AuthState{}
 class RequestLogoutSuccess extends AuthState {}
 
 //RESET PASSWORD CUBIT
+class ResetPasswordSuccess extends AuthState {}
+class ResetPasswordOtpSuccess extends AuthState {}
+class ResendPasswordVerifyOtpSuccess extends AuthState {}
+class UpdatePasswordSuccess extends AuthState {}

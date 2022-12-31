@@ -21,7 +21,7 @@ class Api {
   static const String resetPassword = 'authentication/forgetpassword';
   static const String resetPasswordVerifyOtp = 'authentication/reset';
   static const String resendOtp = 'authentication/resendotp';
-
+  static const String updatePassword = 'authentication/resetpassword';
   //PROFILE
   static const String updateUserProfileInfo =
       "authentication/UpdateUserDetails";
