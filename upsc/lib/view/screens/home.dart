@@ -16,11 +16,11 @@ import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/auth/language_screen.dart';
 import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
 import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
-import 'package:upsc/view/screens/languagescreen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? index;
@@ -532,9 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LanguageScreen(
-                              isLogin: true,
-                            ),
+                            builder: (context) => const LanguageScreen(),
                           ),
                         );
                       },
@@ -625,39 +623,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<BaseModel<Logout>> callApilogout() async {
+  callApilogout() async {
     Logout response;
     setState(() {
       Preferences.onLoading(context);
     });
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
-      response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
-      if (response.status!) {
-        setState(() {
-          Preferences.hideDialog(context);
-        });
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-        SharedPreferenceHelper.clearPref();
-        Navigator.of(context).popAndPushNamed('/');
-      } else {
-        setState(() {
-          Preferences.hideDialog(context);
-        });
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
+
+      SharedPreferenceHelper.clearPref();
+      Navigator.of(context).popAndPushNamed('/');
     } catch (error, stacktrace) {
       setState(() {
         Preferences.hideDialog(context);
@@ -665,6 +640,5 @@ class _HomeScreenState extends State<HomeScreen> {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
-    return BaseModel()..data = response;
   }
 }
