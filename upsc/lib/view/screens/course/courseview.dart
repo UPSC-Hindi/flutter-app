@@ -279,7 +279,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                 "${lecture.startingDate.split(" ")[1]} to ${lecture.endingDate.split(" ")[1]}",
                 style: TextStyle(fontSize: 15),
               ),
-              Text('Date-${lecture.startingDate.split(" ")[0]}'),
+              Text('Date: ${lecture.startingDate.split(" ")[0]}'),
             ],
           ),
           trailing: ElevatedButton(
@@ -306,7 +306,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Start Now',
+                Text(lecture.LiveOrRecorded == "Live" ? 'Start Now' : "View",
                     style: GoogleFonts.notoSansDevanagari()), // <-- Text
                 const SizedBox(
                   width: 5,
