@@ -55,6 +55,10 @@ class _SignInScreenState extends State<SignInScreen> {
           listener: (context, state) {
             emailController.clear();
             passwordController.clear();
+            print(state);
+            if (state is LoadingAuth) {
+              Preferences.onLoading(context);
+            }
             if (state is LoginSuccess) {
               Preferences.hideDialog(context);
 
@@ -66,6 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
             }
             if (state is UnVerifiedNumber) {
               Preferences.hideDialog(context);
+              BlocProvider.of<AuthCubit>(context).resendOtp();
               Navigator.pushReplacement(
                   context,
                   CupertinoPageRoute(
@@ -107,9 +112,6 @@ class _SignInScreenState extends State<SignInScreen> {
             }
           },
           builder: (context, state) {
-            if (state is LoadingAuth) {
-              return const CircularProgressIndicator();
-            }
             return Container(
               constraints: const BoxConstraints(maxWidth: 375),
               child: Form(
@@ -194,7 +196,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       text: 'Login',
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _loginButton;
+                          _loginButton();
                         }
                       },
                     ),
@@ -258,7 +260,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => SignUpScreen(bannerList: bannerList,),
+                                  builder: (context) => SignUpScreen(
+                                    bannerList: bannerList,
+                                  ),
                                 ));
                           },
                           child: Text(

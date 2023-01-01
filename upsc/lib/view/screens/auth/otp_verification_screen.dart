@@ -61,13 +61,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
+        print(state);
         if (state is VerificationOtpSuccess) {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) =>LanguageScreen()
-              ),
-            );
+          Navigator.push(
+            context,
+            CupertinoPageRoute(builder: (context) => LanguageScreen()),
+          );
         }
       },
       builder: (context, state) {

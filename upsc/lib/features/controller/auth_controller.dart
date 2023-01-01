@@ -23,22 +23,22 @@ class AuthController {
         LoginModel user = LoginModel.fromJson(response);
         await SharedPreferenceHelper.setString(
             Preferences.access_token, user.data.accessToken);
+        await SharedPreferenceHelper.setString(
+            Preferences.name, user.data.fullName);
+        await SharedPreferenceHelper.setString(
+            Preferences.email, user.data.email);
+        await SharedPreferenceHelper.setString(
+            Preferences.phoneNUmber, user.data.phoneNumber);
+        await SharedPreferenceHelper.setString(
+            Preferences.language, user.data.language);
+        Languages.isEnglish = user.data.language == "hi" ? false : true;
+        await SharedPreferenceHelper.setString(
+            Preferences.profileImage, user.data.profilePhoto);
+        await SharedPreferenceHelper.setString(
+            Preferences.address, user.data.address);
         if (user.data.mobileVerified) {
           await SharedPreferenceHelper.setBoolean(
               Preferences.is_logged_in, true);
-          await SharedPreferenceHelper.setString(
-              Preferences.name, user.data.fullName);
-          await SharedPreferenceHelper.setString(
-              Preferences.email, user.data.email);
-          await SharedPreferenceHelper.setString(
-              Preferences.phoneNUmber, user.data.phoneNumber);
-          await SharedPreferenceHelper.setString(
-              Preferences.language, user.data.language);
-          Languages.isEnglish = user.data.language == "hi" ? false : true;
-          await SharedPreferenceHelper.setString(
-              Preferences.profileImage, user.data.profilePhoto);
-          await SharedPreferenceHelper.setString(
-              Preferences.address, user.data.address);
         }
         flutterToast(user.msg);
       } else {
@@ -89,6 +89,8 @@ class AuthController {
   Future<bool> verifyPhoneNumber(dynamic data) async {
     try {
       dynamic responseJson = await authServices.verifyPhoneNumberService(data);
+      print(responseJson);
+
       BaseModel response = BaseModel.fromJson(responseJson);
       if (response.status) {
         await SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
@@ -108,12 +110,14 @@ class AuthController {
       googleauth.GoogleSignInAccount? result;
       final _googleSignIn = googleauth.GoogleSignIn();
       result = await _googleSignIn.signIn();
+      await _googleSignIn.signOut();
+      //await _googleSignIn.disconnect();
       if (result!.email.isNotEmpty) {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-        WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+        AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
         dynamic data = {
-          'deviceConfig': webBrowserInfo.userAgent,
-          'DeviceName': webBrowserInfo.appName,
+          'deviceConfig': androidDeviceInfo.id,
+          'DeviceName': androidDeviceInfo.brand,
           'email': result.email,
           'profilePhoto': result.photoUrl,
           'usernameFromGoogle': result.displayName,
@@ -135,8 +139,6 @@ class AuthController {
           return [user.status, user.data.userMobileNumberVerified];
         }
         return [user.status, false];
-        //await _googleSignIn.signOut();
-        await _googleSignIn.disconnect();
       }
       return [false, false];
     } catch (error) {

@@ -109,7 +109,7 @@ class Languages {
 
   static initState() {
     Languages.isEnglish =
-        SharedPreferenceHelper.getString(Preferences.language)! == "English"
+        SharedPreferenceHelper.getString(Preferences.language)! == "en"
             ? true
             : false;
     //buttons

@@ -77,13 +77,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     customRadio(
-                      'en',
+                      'English',
                       'A',
                       0,
                       true,
                     ),
                     customRadio(
-                      'hi',
+                      'Hindi',
                       'अ',
                       1,
                       true,
