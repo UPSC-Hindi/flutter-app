@@ -388,15 +388,9 @@ class _loginscreenState extends State<loginscreen> {
           backgroundColor: ColorResources.gray,
           textColor: ColorResources.textWhite,
         );
-      } else {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
+      } 
+        
+      
     } catch (error, stacktrace) {
       setState(() {
         Preferences.hideDialog(context);

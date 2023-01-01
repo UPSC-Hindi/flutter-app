@@ -227,6 +227,7 @@ class LectureDetail {
     required this.subject,
     required this.startingDate,
     required this.endingDate,
+    required this.LiveOrRecorded,
     required this.material,
     required this.language,
     required this.link,
@@ -236,6 +237,7 @@ class LectureDetail {
   final String lectureTitle;
   final String lecture_type;
   final String link;
+  final String LiveOrRecorded;
   final String description;
   final List<Teacher> teacher;
   final Subject subject;
@@ -250,6 +252,7 @@ class LectureDetail {
         lectureTitle: json["lecture_title"],
         description: json["description"],
         link: json["link"],
+        LiveOrRecorded:json['LiveOrRecorded'],
         teacher:
             List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
         subject: Subject.fromJson(json["subject"]),
@@ -265,6 +268,7 @@ class LectureDetail {
         "description": description,
         "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
         "subject": subject.toJson(),
+        "LiveOrRecorded":LiveOrRecorded,
         "starting_date": startingDate,
         "ending_date": endingDate,
         "material": material.toJson(),

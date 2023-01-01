@@ -37,6 +37,9 @@ class _RestClient implements RestClient {
                 .compose(_dio.options, Apis.login,
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    if (_result.data!['status'] == false) {
+      flutterToast(_result.data!['msg']);
+    }
     final value = Login.fromJson(_result.data!);
     return value;
   }
@@ -301,7 +304,7 @@ class _RestClient implements RestClient {
     return value;
   }
 
-    @override
+  @override
   getnotificationRequest() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

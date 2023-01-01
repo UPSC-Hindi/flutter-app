@@ -279,7 +279,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                 "${lecture.startingDate.split(" ")[1]} to ${lecture.endingDate.split(" ")[1]}",
                 style: TextStyle(fontSize: 15),
               ),
-              Text('Date-${lecture.startingDate.split(" ")[0]}'),
+              Text('Date: ${lecture.startingDate.split(" ")[0]}'),
             ],
           ),
           trailing: ElevatedButton(
@@ -306,7 +306,7 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Start Now',
+                Text(lecture.LiveOrRecorded == "Live" ? 'Start Now' : "View",
                     style: GoogleFonts.notoSansDevanagari()), // <-- Text
                 const SizedBox(
                   width: 5,
@@ -414,11 +414,14 @@ class BatchNotesWidget extends StatelessWidget {
                   : ListView.builder(
                       itemCount: notesList!.length,
                       //todo
-                      itemBuilder: (context, index) => ResourcesContainerWidget(
-                        resourcetype: "file",
-                        title: notesList![index].title,
-                        uploadFile: notesList![index].uploadFile.fileLoc,
-                        fileSize: notesList![index].uploadFile.fileSize,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ResourcesContainerWidget(
+                          resourcetype: notesList![index].resourceType,
+                          title: notesList![index].title,
+                          uploadFile: notesList![index].uploadFile.fileLoc,
+                          fileSize: notesList![index].uploadFile.fileSize,
+                        ),
                       ),
                     );
             } else {
