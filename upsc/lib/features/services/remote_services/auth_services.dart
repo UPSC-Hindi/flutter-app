@@ -195,4 +195,17 @@ class AuthServices {
       rethrow;
     }
   }
+
+  Future<dynamic> updatePasswordService(dynamic data)async{
+    try {
+      print(data);
+      dynamic response = await BaseClient.post(
+        url: Apis.baseUrl + Apis.updatePassword,
+        data: data,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

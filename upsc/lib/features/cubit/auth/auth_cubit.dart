@@ -7,6 +7,7 @@ import 'package:upsc/features/data/remote/models/base_model.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/auth/reset_password_verify_otp.dart';
 
 part 'auth_state.dart';
 
@@ -41,6 +42,7 @@ class AuthCubit extends Cubit<AuthState> {
         if (user.data['mobileVerified']) {
           emit(LoginSuccess());
         } else {
+          await authController.resendOtp();
           emit(UnVerifiedNumber(phoneNumber: user.data['phoneNumber']));
         }
       } else {
@@ -52,7 +54,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> verifyOtp(String otp) async {
-    emit(LoadingAuth());
+    emit(VerificationOtpLoading());
     try {
       if (await authController.verifyPhoneNumber({'otp': otp})) {
         emit(VerificationOtpSuccess());
@@ -65,15 +67,11 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> resendOtp() async {
-    
-    try {
-      if (await authController.resendOtp()) {
-        emit(ResendOtpSuccess());
-      } else {
-        emit(ErrorAuth());
-      }
-    } catch (error) {
-      emit(ErrorAuth());
+    emit(VerificationOtpLoading());
+    if (await authController.resendOtp()) {
+      emit(ResendOtpSuccess());
+    }else{
+      emit(VerificationOtpError());
     }
   }
 
@@ -120,4 +118,40 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ErrorAuth());
     }
   }
+
+  //RESET PASSWORD
+  Future<void> resetPassword(String email_mobileNumber)async{
+    emit(LoadingAuth());
+    if(await authController.resetPasswordVerification(email_mobileNumber)){
+      emit(ResetPasswordSuccess());
+    }else{
+      emit(ErrorAuth());
+    }
+  }
+
+  Future<void> resetPasswordVerifyOtp(String email_mobileNumber,String otp)async{
+    emit(UpdatePasswordLoading());
+    if(await authController.resetPasswordVerifyOtp(email_mobileNumber,otp)){
+      emit(UpdatePasswordOtpVerifySuccess());
+    }else{
+      emit(UpdatePasswordError());
+    }
+  }
+  Future<void>resendPasswordOtp(String email_phoneNumber)async{
+    emit(UpdatePasswordLoading());
+    if(await authController.resendPasswordVerifyOtp(email_phoneNumber)){
+      emit(UpdatePasswordOtpResend());
+    }else{
+      emit(UpdatePasswordError());
+    }
+  }
+  Future<void>updatePassword(dynamic data)async{
+    emit(LoadingAuth());
+    if(await authController.updatePassword(data)){
+      emit(UpdatePasswordSuccess());
+    }else{
+      emit(UpdatePasswordError());
+    }
+  }
+
 }

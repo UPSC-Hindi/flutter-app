@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:upsc/features/cubit/auth/auth_cubit.dart';
 import 'package:upsc/util/color_resources.dart';
+import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/view/screens/auth/language_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -56,26 +57,29 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = TextEditingController();
     final focusNode = FocusNode();
-
-    return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
-        print(state);
-        if (state is VerificationOtpSuccess) {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => LanguageScreen()),
-          );
-        }
-      },
-      builder: (context, state) {
-        if (State is LoadingAuth) {
-          return const CircularProgressIndicator();
-        }
-        return Scaffold(
-          body: SafeArea(
+    return Scaffold(
+      body: BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          print('-----------------Otp Verification Screen-------------');
+          print(state);
+          if (state is VerificationOtpLoading) {
+            Preferences.onLoading(context);
+          }
+          if (state is VerificationOtpSuccess) {
+            Preferences.hideDialog(context);
+            Navigator.pushReplacement(
+              context,
+              CupertinoPageRoute(builder: (context) => LanguageScreen()),
+            );
+          }
+          if (state is VerificationOtpError || state is ResendOtpSuccess) {
+            Preferences.hideDialog(context);
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -184,9 +188,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ],
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

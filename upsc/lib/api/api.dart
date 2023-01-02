@@ -18,6 +18,8 @@ class Apis {
   static const String resetPassword = 'authentication/forgetpassword';
   static const String resetPasswordVerifyOtp = 'authentication/reset';
   static const String resendOtp = 'authentication/resendotp';
+  static const String updatePassword = 'authentication/resetpassword';
+
   //user details
   static const String updateUserDetails = "authentication/UpdateUserDetails";
   static const String updateUserProfilePhoto =

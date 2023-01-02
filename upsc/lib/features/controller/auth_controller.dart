@@ -110,6 +110,8 @@ class AuthController {
       googleauth.GoogleSignInAccount? result;
       final _googleSignIn = googleauth.GoogleSignIn();
       result = await _googleSignIn.signIn();
+      print('----------------------------------------------');
+      print(result!.email);
       await _googleSignIn.signOut();
       //await _googleSignIn.disconnect();
       if (result!.email.isNotEmpty) {
@@ -229,50 +231,6 @@ class AuthController {
     }
   }
 
-  Future<BaseModel> resetPasswordVerification(dynamic email_phoneNumber) async {
-    try {
-      dynamic response = await authServices.resetPasswordVerificationService({
-        'email_phoneNumber': email_phoneNumber,
-      });
-      print(response);
-      return BaseModel.fromJson(response);
-    } catch (error) {
-      print(error);
-      flutterToast(error.toString());
-      rethrow;
-    }
-  }
-
-  Future<BaseModel> resetPasswordVerifyOtp(
-      String email_phoneNumber, String otp) async {
-    try {
-      dynamic response = await authServices.resetPasswordVerifyOtpService({
-        'email_phoneNumber': email_phoneNumber,
-        'otp': otp,
-      });
-      print(response);
-      return BaseModel.fromJson(response);
-    } catch (error) {
-      print(error);
-      flutterToast(error.toString());
-      rethrow;
-    }
-  }
-
-  Future<BaseModel> resendPasswordVerifyOtp(String email_phoneNumber) async {
-    try {
-      dynamic response = await authServices.resendPasswordVerifyOtpService({
-        'email_phoneNumber': email_phoneNumber,
-      });
-      print(response);
-      return BaseModel.fromJson(response.data);
-    } catch (error) {
-      print(error);
-      flutterToast(error.toString());
-      rethrow;
-    }
-  }
-
   Future<List<Widget>> getBanner() async {
     List<Widget> imageList = [];
     await authServices.getBannerApi().then((value) {
@@ -301,6 +259,68 @@ class AuthController {
       return stream;
     } catch (error) {
       rethrow;
+    }
+  }
+
+  Future<bool> resetPasswordVerification(dynamic email_phoneNumber) async {
+    try {
+      dynamic response = await authServices.resetPasswordVerificationService({
+        'email_phoneNumber': email_phoneNumber,
+      });
+      BaseModel res = BaseModel.fromJson(response.data);
+      flutterToast(res.msg);
+      flutterToast(res.data['otpToResetPassword'].toString());
+      return res.status;
+    } catch (error) {
+      print(error);
+      flutterToast(error.toString());
+      return false;
+    }
+  }
+
+  Future<bool> resetPasswordVerifyOtp(
+      String email_phoneNumber, String otp) async {
+    try {
+      dynamic response = await authServices.resetPasswordVerifyOtpService({
+        'email_phoneNumber': email_phoneNumber,
+        'otp': otp,
+      });
+      BaseModel res = BaseModel.fromJson(response.data);
+      flutterToast(res.msg);
+      return res.status;
+    } catch (error) {
+      print(error);
+      flutterToast(error.toString());
+      return false;
+    }
+  }
+
+  Future<bool> resendPasswordVerifyOtp(String email_phoneNumber) async {
+    try {
+      dynamic response = await authServices.resendPasswordVerifyOtpService({
+        'email_phoneNumber': email_phoneNumber,
+      });
+
+      BaseModel res = BaseModel.fromJson(response.data);
+      flutterToast(res.msg);
+      flutterToast(res.data['otpToResetPassword'].toString());
+      return res.status;
+    } catch (error) {
+      flutterToast(error.toString());
+      rethrow;
+    }
+  }
+  Future<bool> updatePassword(dynamic data) async {
+    try {
+      dynamic response = await authServices.updatePasswordService(data);
+      print(response);
+      BaseModel res = BaseModel.fromJson(response.data);
+      flutterToast(res.msg);
+      return res.status;
+    } catch (error) {
+      print(error);
+      flutterToast(error.toString());
+      return false;
     }
   }
 }

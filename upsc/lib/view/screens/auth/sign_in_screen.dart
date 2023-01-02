@@ -59,43 +59,43 @@ class _SignInScreenState extends State<SignInScreen> {
               listener: (context, state) {
                 emailController.clear();
                 passwordController.clear();
-                print(state);
                 if (state is LoadingAuth) {
                   Preferences.onLoading(context);
                 }
                 if (state is LoginSuccess) {
                   Preferences.hideDialog(context);
-
                   Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ));
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => HomeScreen(),
+                    ),
+                  );
                 }
                 if (state is UnVerifiedNumber) {
                   Preferences.hideDialog(context);
-                  BlocProvider.of<AuthCubit>(context).resendOtp();
-                  Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => OtpVerificationScreen(
-                          bannerList: bannerList,
-                          userNumber: state.phoneNumber,
-                        ),
-                      ));
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => OtpVerificationScreen(
+                        bannerList: bannerList,
+                        userNumber: state.phoneNumber,
+                      ),
+                    ),
+                  );
                 }
                 if (state is ErrorAuth) {
                   Preferences.hideDialog(context);
                 }
                 if (state is RequestToLogout) {
-                  Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => RequestLogoutScreen(
-                          userEmail: emailController.text,
-                          bannerList: bannerList,
-                        ),
-                      ));
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => RequestLogoutScreen(
+                        userEmail: emailController.text,
+                        bannerList: bannerList,
+                      ),
+                    ),
+                  );
                 }
                 if (state is GoogleSuccess) {
                   print(state);

@@ -46,6 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
         if (state is RegisterSuccess) {
+          Preferences.hideDialog(context);
           Navigator.push(
             context,
             CupertinoPageRoute(
