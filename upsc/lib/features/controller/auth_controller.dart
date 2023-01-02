@@ -138,6 +138,8 @@ class AuthController {
               Preferences.profileImage, user.data.profilePhoto);
           SharedPreferenceHelper.setString(
               Preferences.address, user.data.address);
+          SharedPreferenceHelper.setString(
+              Preferences.language, user.data.language);
           return [user.status, user.data.userMobileNumberVerified];
         }
         return [user.status, false];
@@ -310,6 +312,7 @@ class AuthController {
       rethrow;
     }
   }
+
   Future<bool> updatePassword(dynamic data) async {
     try {
       dynamic response = await authServices.updatePasswordService(data);

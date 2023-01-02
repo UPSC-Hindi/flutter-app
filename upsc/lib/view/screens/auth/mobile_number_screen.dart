@@ -62,7 +62,7 @@ class MobileNumberScreen extends StatelessWidget {
                         const BorderSide(color: Colors.blueAccent, width: 32.0),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelText: 'Mobile Number',
+                  labelText: 'Mobile No.',
                 ),
               ),
             ),

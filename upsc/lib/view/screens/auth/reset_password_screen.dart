@@ -9,7 +9,6 @@ import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/view/screens/auth/reset_password_verify_otp.dart';
 
-
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({Key? key}) : super(key: key);
 
@@ -28,18 +27,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     emailController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if(state is LoadingAuth){
+          if (state is LoadingAuth) {
             Preferences.onLoading(context);
           }
-          if(state is ErrorAuth){
+          if (state is ErrorAuth) {
             Preferences.hideDialog(context);
           }
-          if(state is ResetPasswordSuccess){
+          if (state is ResetPasswordSuccess) {
             Preferences.hideDialog(context);
             Preferences.hideDialog(context);
             if (mobileController.text.isNotEmpty &&
@@ -51,7 +51,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       email_phoneNumber: mobileController.text),
                 ),
               );
-            }else if(emailController.text.isNotEmpty){
+            } else if (emailController.text.isNotEmpty) {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
@@ -81,7 +81,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   const SizedBox(height: 60),
                   CustomTextFilled(
-                    hintText: 'Mobile No',
+                    onChanged: (value) =>
+                      _formKey.currentState!.validate(),
+                    hintText: 'Mobile No.',
                     textController: mobileController,
                     validator: ValidationBuilder()
                         .required()
@@ -94,6 +96,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   const Text('Or'),
                   const SizedBox(height: 20),
                   CustomTextFilled(
+                    onChanged: (value) =>
+                      _formKey.currentState!.validate(),
                     hintText: 'Email ',
                     textController: emailController,
                     validator: (value) {
@@ -106,10 +110,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     onPressed: () {
                       if (mobileController.text.isNotEmpty &&
                           mobileController.text.length == 10) {
-                        BlocProvider.of<AuthCubit>(context).resetPassword(mobileController.text);
-                      }else if(emailController.text.isNotEmpty){
-                        BlocProvider.of<AuthCubit>(context).resetPassword(emailController.text);
-                      }  else{
+                        BlocProvider.of<AuthCubit>(context)
+                            .resetPassword(mobileController.text);
+                      } else if (emailController.text.isNotEmpty) {
+                        BlocProvider.of<AuthCubit>(context)
+                            .resetPassword(emailController.text);
+                      } else {
                         flutterToast('Enter valid data');
                       }
                     },

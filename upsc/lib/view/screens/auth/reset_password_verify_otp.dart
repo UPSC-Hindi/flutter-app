@@ -43,31 +43,43 @@ class _ResetPasswordVerifyOtpState extends State<ResetPasswordVerifyOtp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
-        print(state);
-        if (state is UpdatePasswordLoading) {
-          Preferences.onLoading(context);
-        }
-        if (state is UpdatePasswordError || state is UpdatePasswordOtpResend) {
-          Preferences.hideDialog(context);
-        }
-        if (state is UpdatePasswordOtpVerifySuccess) {
-          Preferences.hideDialog(context);
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => CreatePasswordScreen(
-                email_phoneNumber: widget.email_phoneNumber,
-              ),
-            ),
-          );
-        }
-      },
-      builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            child: Column(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            print(state);
+            if (state is UpdatePasswordLoading) {
+              Preferences.onLoading(context);
+            }
+            if (state is UpdatePasswordError ||
+                state is UpdatePasswordOtpResend) {
+              Preferences.hideDialog(context);
+            }
+            if (state is UpdatePasswordOtpVerifySuccess) {
+              Preferences.hideDialog(context);
+              Future.delayed(Duration(seconds: 2), () {
+                Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => CreatePasswordScreen(
+                      email_phoneNumber: widget.email_phoneNumber,
+                    ),
+                  ),
+                );
+              });
+            }
+          },
+          builder: (context, state) {
+            if (state is UpdatePasswordOtpVerifySuccess) {
+              return Center(
+                child: Icon(
+                  Icons.verified,
+                  size: 200,
+                  color: ColorResources.buttoncolor,
+                ),
+              );
+            }
+            return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
@@ -145,8 +157,9 @@ class _ResetPasswordVerifyOtpState extends State<ResetPasswordVerifyOtp> {
                       borderRadius: BorderRadius.circular(14)),
                   child: TextButton(
                     onPressed: () {
-                      BlocProvider.of<AuthCubit>(context).resetPasswordVerifyOtp(
-                          widget.email_phoneNumber, controller.text);
+                      BlocProvider.of<AuthCubit>(context)
+                          .resetPasswordVerifyOtp(
+                              widget.email_phoneNumber, controller.text);
                     },
                     child: Text(
                       'Verify',
@@ -180,10 +193,10 @@ class _ResetPasswordVerifyOtpState extends State<ResetPasswordVerifyOtp> {
                   ],
                 ),
               ],
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 }

@@ -6,11 +6,13 @@ import 'package:upsc/features/cubit/auth/auth_cubit.dart';
 import 'package:upsc/features/presentation/widgets/auth_button.dart';
 import 'package:upsc/features/presentation/widgets/custom_text_field.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/view/screens/auth/sign_in_screen.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
-  const CreatePasswordScreen({Key? key, required this.email_phoneNumber}) : super(key: key);
+  const CreatePasswordScreen({Key? key, required this.email_phoneNumber})
+      : super(key: key);
   final String email_phoneNumber;
   @override
   State<CreatePasswordScreen> createState() => _CreatePasswordScreenState();
@@ -42,15 +44,26 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
           }
           if (state is UpdatePasswordSuccess) {
             Preferences.hideDialog(context);
-            Navigator.pushReplacement(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => SignInScreen(),
-              ),
-            );
+            Future.delayed(Duration(seconds: 2), () {
+              Navigator.pushReplacement(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => SignInScreen(),
+                ),
+              );
+            });
           }
         },
         builder: (context, state) {
+          if (state is UpdatePasswordSuccess) {
+            return Center(
+              child: Icon(
+                Icons.verified,
+                size: 200,
+                color: ColorResources.buttoncolor,
+              ),
+            );
+          }
           return Container(
             constraints: const BoxConstraints(
               maxWidth: 500,
@@ -69,6 +82,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
                   ),
                   const SizedBox(height: 60),
                   CustomTextFilled(
+                    onChanged: (value) => _formKey.currentState!.validate(),
                     hintText: 'New Password',
                     textController: passwordController,
                     validator: ValidationBuilder()
@@ -83,6 +97,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
                   ),
                   const SizedBox(height: 30),
                   CustomTextFilled(
+                    onChanged: (value) => _formKey.currentState!.validate(),
                     hintText: 'Conform Password ',
                     textController: conformPasswordController,
                     validator: ValidationBuilder()
