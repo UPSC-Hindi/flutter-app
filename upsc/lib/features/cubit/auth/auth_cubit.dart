@@ -16,6 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthController authController = AuthController();
 
   Future<void> registerUser(Map<String, dynamic> data) async {
+    print(data);
     emit(LoadingAuth());
     try {
       BaseModel user = await authController.register(data);
@@ -32,9 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> loginUser(dynamic data) async {
     try {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-      data["deviceConfig"] = webBrowserInfo.userAgent;
-      data["deviceName"] = webBrowserInfo.appName;
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      data["deviceConfig"] = androidDeviceInfo.id;
+      data["deviceName"] = androidDeviceInfo.brand;
       BaseModel user = await authController.login(data);
 
       if(user.status){

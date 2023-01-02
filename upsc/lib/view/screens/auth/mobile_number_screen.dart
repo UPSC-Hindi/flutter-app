@@ -78,10 +78,11 @@ class MobileNumberScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => OtpVerificationScreen(
-                                bannerList: images,
-                                userNumber: mobileNumber,
-                              )),
+                        builder: (context) => OtpVerificationScreen(
+                          bannerList: images,
+                          userNumber: mobileNumber,
+                        ),
+                      ),
                     );
                   } else {
                     flutterToast('Enter the valid Number');

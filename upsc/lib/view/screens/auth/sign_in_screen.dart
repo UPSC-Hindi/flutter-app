@@ -194,7 +194,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       text: 'Login',
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _loginButton;
+                          _loginButton();
                         }
                       },
                     ),

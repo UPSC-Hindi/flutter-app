@@ -82,7 +82,7 @@ class AuthController {
       return response.status;
     } catch (error) {
       flutterToast(error.toString());
-      rethrow;
+      return false;
     }
   }
 
@@ -110,10 +110,10 @@ class AuthController {
       result = await _googleSignIn.signIn();
       if (result!.email.isNotEmpty) {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-        WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
         dynamic data = {
-          'deviceConfig': webBrowserInfo.userAgent,
-          'DeviceName': webBrowserInfo.appName,
+          "deviceConfig": androidInfo.id,
+          "deviceName": androidInfo.brand,
           'email': result.email,
           'profilePhoto': result.photoUrl,
           'usernameFromGoogle': result.displayName,

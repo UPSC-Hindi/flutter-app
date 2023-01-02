@@ -47,24 +47,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>OtpVerificationScreen(bannerList: widget.bannerList, userNumber: numberController.text),
+                builder: (context) => OtpVerificationScreen(
+                    bannerList: widget.bannerList,
+                    userNumber: numberController.text),
               ),
             );
-            
           }
           if (state is GoogleSuccess) {
-             Navigator.push(
+            Navigator.push(
               context,
-              CupertinoPageRoute(
-                builder: (context) =>HomeScreen()
-              ),
+              CupertinoPageRoute(builder: (context) => HomeScreen()),
             );
           }
           if (state is GooglePhoneNumberVerification) {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) => MobileNumberScreen(images: widget.bannerList),
+                builder: (context) =>
+                    MobileNumberScreen(images: widget.bannerList),
               ),
             );
           }
@@ -127,17 +127,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           .required()
                           .minLength(8)
                           .regExp(
-                          RegExp(
-                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
-                          'valid password ex:Testing@1')
+                              RegExp(
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                              'valid password ex:Testing@1')
                           .maxLength(50)
                           .build(),
                     ),
                     AuthButton(
                       text: 'Sign up',
-                      onPressed: (){
+                      onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _registerButton;
+                          _registerButton();
                         }
                       },
                     ),
@@ -218,17 +218,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  _registerButton() async {
+  void _registerButton() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     var body = {
       "FullName": nameController.text,
       "email": emailController.text,
       "mobileNumber": numberController.text,
       "password": passwordController.text,
-      "deviceConfig": webBrowserInfo.userAgent,
-      "deviceName": webBrowserInfo.appName
+      "deviceConfig": androidInfo.id,
+      "deviceName": androidInfo.brand,
     };
+    print('sk');
     BlocProvider.of<AuthCubit>(context).registerUser(body);
   }
 }

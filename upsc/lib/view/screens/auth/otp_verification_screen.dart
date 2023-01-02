@@ -56,6 +56,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final controller = TextEditingController();
     final focusNode = FocusNode();
 
