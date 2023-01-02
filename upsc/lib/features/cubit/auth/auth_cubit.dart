@@ -64,7 +64,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> resendOtp() async {
-    emit(LoadingAuth());
+    
     try {
       if (await authController.resendOtp()) {
         emit(ResendOtpSuccess());

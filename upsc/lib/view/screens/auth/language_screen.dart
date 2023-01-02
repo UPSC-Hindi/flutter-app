@@ -34,11 +34,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
         if (state is UpdateLanguageStreamSuccess) {
           Navigator.popUntil(context, (route) => false);
           Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) =>HomeScreen()
-              ),
-            );
+            context,
+            CupertinoPageRoute(builder: (context) => HomeScreen()),
+          );
         }
       },
       builder: (context, state) {
@@ -225,6 +223,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         });
       },
       child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
         child: Stack(
           children: [
@@ -248,7 +247,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             ),
             selected == index
                 ? const Positioned(
-                    top: 5,
+                    top: 0,
                     left: 0,
                     child: Icon(
                       Icons.check_circle,
