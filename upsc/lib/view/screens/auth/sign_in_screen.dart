@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/controller/auth_controller.dart';
 import 'package:upsc/features/cubit/auth/auth_cubit.dart';
 import 'package:upsc/features/presentation/widgets/auth_button.dart';
@@ -50,231 +52,259 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            emailController.clear();
-            passwordController.clear();
-            if (state is LoginSuccess) {
-              Preferences.hideDialog(context);
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                emailController.clear();
+                passwordController.clear();
+                print(state);
+                if (state is LoadingAuth) {
+                  Preferences.onLoading(context);
+                }
+                if (state is LoginSuccess) {
+                  Preferences.hideDialog(context);
 
-              Navigator.pushReplacement(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ));
-            }
-            if (state is UnVerifiedNumber) {
-              Preferences.hideDialog(context);
-              Navigator.pushReplacement(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => OtpVerificationScreen(
-                      bannerList: bannerList,
-                      userNumber: state.phoneNumber,
-                    ),
-                  ));
-            }
-            if (state is ErrorAuth) {
-              Preferences.hideDialog(context);
-            }
-            if (state is RequestToLogout) {
-              Navigator.pushReplacement(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => RequestLogoutScreen(
-                      userEmail: emailController.text,
-                      bannerList: bannerList,
-                    ),
-                  ));
-            }
-            if (state is GoogleSuccess) {
-              print(state);
-              Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ));
-            }
-            if (state is GooglePhoneNumberVerification) {
-              print(state);
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => MobileNumberScreen(images: bannerList),
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is LoadingAuth) {
-              return const CircularProgressIndicator();
-            }
-            return Container(
-              constraints: const BoxConstraints(maxWidth: 375),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: FutureBuilder<List<Widget>>(
-                          future: getBanner,
-                          builder: (context, snapshots) {
-                            if (snapshots.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshots.hasData) {
-                                bannerList = snapshots.data!;
-                                return CarouselSlider(
-                                  items: snapshots.data,
-                                  options: CarouselOptions(
-                                    viewportFraction: 1,
-                                    initialPage: 0,
-                                    enableInfiniteScroll: true,
-                                    reverse: false,
-                                    autoPlay: true,
-                                    autoPlayInterval:
-                                        const Duration(seconds: 3),
-                                    autoPlayAnimationDuration:
-                                        const Duration(milliseconds: 800),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enlargeCenterPage: true,
-                                    scrollDirection: Axis.horizontal,
-                                  ),
-                                );
-                              } else if (snapshots.hasError) {}
-                              return Text('Something went wrong');
-                            } else {
-                              return Center();
-                            }
-                          }),
-                    ),
-                    Text('Login',
-                        style: Theme.of(context).textTheme.headlineMedium),
-                    CustomTextFilled(
-                      hintText: 'Email Id',
-                      textController: emailController,
-                      validator: ValidationBuilder().required().email().build(),
-                    ),
-                    PasswordTextFilled(
-                      textEditingController: passwordController,
-                      validator: ValidationBuilder()
-                          .required()
-                          .minLength(8)
-                          .regExp(
-                              RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
-                              'valid password ex:Testing@1')
-                          .maxLength(50)
-                          .build(),
-                    ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => const ResetPasswordScreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Forgot password?',
-                          style: TextStyle(
-                            color: ColorResources.buttoncolor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ));
+                }
+                if (state is UnVerifiedNumber) {
+                  Preferences.hideDialog(context);
+                  BlocProvider.of<AuthCubit>(context).resendOtp();
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => OtpVerificationScreen(
+                          bannerList: bannerList,
+                          userNumber: state.phoneNumber,
                         ),
-                      ),
-                    ),
-                    AuthButton(
-                      text: 'Login',
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _loginButton();
-                        }
-                      },
-                    ),
-                    Row(
-                      children: const [
-                        Expanded(
-                          child: Divider(
-                            thickness: 2,
-                          ),
+                      ));
+                }
+                if (state is ErrorAuth) {
+                  Preferences.hideDialog(context);
+                }
+                if (state is RequestToLogout) {
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => RequestLogoutScreen(
+                          userEmail: emailController.text,
+                          bannerList: bannerList,
                         ),
-                        Text(
-                          "Or Sign in with",
-                        ),
-                        Expanded(
-                            child: Divider(
-                          thickness: 2,
-                        )),
-                      ],
+                      ));
+                }
+                if (state is GoogleSuccess) {
+                  print(state);
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ));
+                }
+                if (state is GooglePhoneNumberVerification) {
+                  print(state);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) =>
+                          MobileNumberScreen(images: bannerList),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  );
+                }
+              },
+              builder: (context, state) {
+                return Container(
+                  constraints: const BoxConstraints(maxWidth: 375),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<AuthCubit>(context).googleAuth();
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Image.network(SvgImages.google),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: FutureBuilder<List<Widget>>(
+                              future: getBanner,
+                              builder: (context, snapshots) {
+                                if (snapshots.connectionState ==
+                                    ConnectionState.done) {
+                                  if (snapshots.hasData) {
+                                    bannerList = snapshots.data!;
+                                    return CarouselSlider(
+                                      items: snapshots.data,
+                                      options: CarouselOptions(
+                                        viewportFraction: 1,
+                                        initialPage: 0,
+                                        enableInfiniteScroll: true,
+                                        reverse: false,
+                                        autoPlay: true,
+                                        autoPlayInterval:
+                                            const Duration(seconds: 3),
+                                        autoPlayAnimationDuration:
+                                            const Duration(milliseconds: 800),
+                                        autoPlayCurve: Curves.fastOutSlowIn,
+                                        enlargeCenterPage: true,
+                                        scrollDirection: Axis.horizontal,
+                                      ),
+                                    );
+                                  } else if (snapshots.hasError) {}
+                                  return Text('Something went wrong');
+                                } else {
+                                  return Center();
+                                }
+                              }),
+                        ),
+                        Text('Login',
+                            style: Theme.of(context).textTheme.headlineMedium),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 14),
+                          child: CustomTextFilled(
+                            hintText: 'Email Id',
+                            textController: emailController,
+                            validator:
+                                ValidationBuilder().required().email().build(),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
+                        PasswordTextFilled(
+                          textEditingController: passwordController,
+                          validator: ValidationBuilder()
+                              .required()
+                              .minLength(8)
+                              .regExp(
+                                  RegExp(
+                                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                                  'valid password ex:Testing@1')
+                              .maxLength(50)
+                              .build(),
                         ),
                         Container(
-                          height: 50,
-                          width: 50,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Image.network(SvgImages.apple),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Create an account?',
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
+                          margin: const EdgeInsets.symmetric(vertical: 14),
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => SignUpScreen(bannerList: bannerList,),
-                                ));
-                          },
-                          child: Text(
-                            ' Register',
-                            style: TextStyle(
-                              color: ColorResources.buttoncolor,
+                                  builder: (context) =>
+                                      const ResetPasswordScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Forgot password?',
+                              style: GoogleFonts.notoSansDevanagari(
+                                color: ColorResources.buttoncolor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 15),
+                          child: AuthButton(
+                            text: 'Login',
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _loginButton();
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
+                        Row(
+                          children: const [
+                            Expanded(
+                              child: Divider(
+                                thickness: 2,
+                              ),
+                            ),
+                            Text(
+                              " Or Sign in with ",
+                            ),
+                            Expanded(
+                                child: Divider(
+                              thickness: 2,
+                            )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<AuthCubit>(context)
+                                    .googleAuth();
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: SvgPicture.network(SvgImages.google),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: SvgPicture.network(SvgImages.apple),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Create an account?',
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => SignUpScreen(
+                                        bannerList: bannerList,
+                                      ),
+                                    ));
+                              },
+                              child: Text(
+                                ' Register',
+                                style: TextStyle(
+                                  color: ColorResources.buttoncolor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          },
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

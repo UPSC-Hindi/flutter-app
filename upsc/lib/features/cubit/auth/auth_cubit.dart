@@ -8,7 +8,6 @@ import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 
-
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -38,13 +37,13 @@ class AuthCubit extends Cubit<AuthState> {
       data["deviceName"] = androidDeviceInfo.brand;
       BaseModel user = await authController.login(data);
 
-      if(user.status){
+      if (user.status) {
         if (user.data['mobileVerified']) {
           emit(LoginSuccess());
-        }else {
+        } else {
           emit(UnVerifiedNumber(phoneNumber: user.data['phoneNumber']));
         }
-      }else{
+      } else {
         emit(RequestToLogout());
       }
     } catch (error) {
@@ -58,15 +57,15 @@ class AuthCubit extends Cubit<AuthState> {
       if (await authController.verifyPhoneNumber({'otp': otp})) {
         emit(VerificationOtpSuccess());
       } else {
-        emit(ErrorAuth());
+        emit(VerificationOtpError());
       }
     } catch (error) {
-      emit(ErrorAuth());
+      emit(VerificationOtpError());
     }
   }
 
   Future<void> resendOtp() async {
-    emit(LoadingAuth());
+    
     try {
       if (await authController.resendOtp()) {
         emit(ResendOtpSuccess());
@@ -82,6 +81,7 @@ class AuthCubit extends Cubit<AuthState> {
       {required String language, required List<String> stream}) async {
     emit(LoadingAuth());
     try {
+      print(language);
       if (await authController.updateStreamLanguage(
           language: language, stream: stream)) {
         SharedPreferenceHelper.setString(Preferences.language, language);
@@ -97,25 +97,26 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> googleAuth()async{
+  Future<void> googleAuth() async {
     emit(LoadingAuth());
-     List<bool>response = await authController.googleAuth();
-     if(response.first){
-       if(response.last){
-         emit(GoogleSuccess());
-       }else{
-         emit(GooglePhoneNumberVerification());
-       }
-     }else{
-       emit(ErrorAuth());
-     }
+    List<bool> response = await authController.googleAuth();
+    print(response.first.toString() + response.last.toString());
+    if (response.first) {
+      if (response.last) {
+        emit(GoogleSuccess());
+      } else {
+        emit(GooglePhoneNumberVerification());
+      }
+    } else {
+      emit(ErrorAuth());
+    }
   }
 
-  Future<void>requestLogout(String userEmail)async{
+  Future<void> requestLogout(String userEmail) async {
     emit(LoadingAuth());
-    if(await authController.requestToLogout(userEmail)){
+    if (await authController.requestToLogout(userEmail)) {
       emit(RequestLogoutSuccess());
-    }else{
+    } else {
       emit(ErrorAuth());
     }
   }

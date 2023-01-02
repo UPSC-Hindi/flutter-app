@@ -10,6 +10,7 @@ class ErrorAuth extends AuthState{}
 class RegisterSuccess extends AuthState{}
 class LoginSuccess extends AuthState{}
 class VerificationOtpSuccess extends AuthState{}
+class VerificationOtpError extends AuthState{}
 class ResendOtpSuccess extends AuthState{}
 class UpdateLanguageStreamSuccess extends AuthState{}
 class UnVerifiedNumber extends AuthState{
