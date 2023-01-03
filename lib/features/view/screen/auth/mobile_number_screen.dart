@@ -73,7 +73,6 @@ class MobileNumberScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14)),
               child: TextButton(
                 onPressed: () {
-
                   if(mobileNumber.length==10){
                     Navigator.pushNamed(context, AppRoute.otpVerificationScreen,
                         arguments: [images, mobileNumber]);
