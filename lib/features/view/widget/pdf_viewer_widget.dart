@@ -1,27 +1,16 @@
-import 'package:dio/dio.dart';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:upsc_web/utils/utils.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 
 class PdfViewerWidget extends StatelessWidget {
-  final String url;
-  const PdfViewerWidget({super.key, required this.url});
+  final Uint8List bytes;
+  const PdfViewerWidget({super.key, required this.bytes});
   @override
   Widget build(BuildContext context) {
-    print(url);
+    print(bytes);
     return Scaffold(
       appBar: AppBar(),
-      body: SfPdfViewer.network(
-        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
-        // url,
-        onDocumentLoaded: (details) {
-          Utils.flutterToast("Successfullly Loaded");
-        },
-        onDocumentLoadFailed: (details) {
-          print(details.error);
-          Utils.toastMessage(details.description);
-        },
-      ),
+      body: PdfViewer.openData(bytes),
     );
   }
 }

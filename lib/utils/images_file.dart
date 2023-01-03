@@ -8,7 +8,6 @@ class SvgImages {
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/ad+3.jpg';
   static String banner_4 =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/ad+4.jpg';
-
   static String avatar =
       'https://storage-upschindi.s3.ap-south-1.amazonaws.com/data/images/avatar.png';
 

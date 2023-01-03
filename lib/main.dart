@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/view/cubit/auth/auth_cubit.dart';
+import 'package:upsc_web/features/view/cubit/bottom_tab/bottom_tab_cubit.dart';
 import 'package:upsc_web/features/view/cubit/courses/courses_cubit.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/profile/cubit/profile_cubit.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
-import 'package:upsc_web/utils/langauge.dart';
-import 'package:upsc_web/utils/utils.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,6 +33,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<CoursesCubit>(
           create: (context) => CoursesCubit(),
         ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => ProfileCubit(),
+        ),
+        BlocProvider<BottomTabCubit>(
+          create: (context) => BottomTabCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -53,13 +59,31 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: ColorResources.textblack,
             ),
-            bodyText2: GoogleFonts.notoSansDevanagari(
+
+            //White Text
+            headline4: GoogleFonts.notoSansDevanagari(
+              color: ColorResources.textWhite,
+              fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
-            bodyText1:
-                GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
+              bodyText1:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
+              bodyText2: GoogleFonts.notoSansDevanagari(
+              fontSize: 20,
+            ),
             headlineLarge: GoogleFonts.notoSansDevanagari(
                 fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          appBarTheme: AppBarTheme(
+            color: ColorResources.textWhite,
+            titleTextStyle: GoogleFonts.notoSansDevanagari(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: ColorResources.textblack),
+            iconTheme: IconThemeData(
+              color: ColorResources.textblack,
+            ),
+            elevation: 0,
           ),
         ),
         onGenerateRoute: OnGenerateRoute.route,

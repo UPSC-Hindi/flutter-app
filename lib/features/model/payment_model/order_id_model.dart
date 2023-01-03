@@ -1,4 +1,4 @@
-class OrderIdGeneration {
+class OrderIdModel {
   bool? status;
   String? keyId;
   String? keySecret;
@@ -7,7 +7,7 @@ class OrderIdGeneration {
   int? amount;
   String? msg;
 
-  OrderIdGeneration(
+  OrderIdModel(
       {this.status,
       this.keyId,
       this.keySecret,
@@ -16,7 +16,7 @@ class OrderIdGeneration {
       this.amount,
       this.msg});
 
-  OrderIdGeneration.fromJson(Map<String, dynamic> json) {
+  OrderIdModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     keyId = json['key_id'];
     keySecret = json['key_secret'];
@@ -27,7 +27,6 @@ class OrderIdGeneration {
   }
 
   Map<String, dynamic> toJson() {
-    print("hello");
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = status;
     data['key_id'] = keyId;

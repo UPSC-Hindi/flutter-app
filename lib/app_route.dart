@@ -5,6 +5,7 @@ import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/view/courses_payement_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/language_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/otp_verification_screen.dart';
+import 'package:upsc_web/features/view/screen/auth/request_logout_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_in_screen.dart';
 import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
 import 'package:upsc_web/features/view/screen/home/contactus_screen.dart';
@@ -20,6 +21,7 @@ import 'package:upsc_web/features/view/screen/side_nav/resources/sample_notes_re
 import 'package:upsc_web/features/view/screen/side_nav/resources/short_notes_resources.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources/youtube_notes.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/scheduler_screen.dart';
 import 'features/view/splash_screen.dart';
 
 class AppRoute {
@@ -29,12 +31,17 @@ class AppRoute {
   static const String homeScreen = 'homeScreen';
   static const String otpVerificationScreen = 'otpVerificationScreen';
   static const String languageScreen = 'languageScreen';
+  static const String phoneNumberScreen = 'phoneNumberScreen';
+  static const String requestToLogoutScreen = 'requestToLogoutScreen';
+
+  //Side navigation
   static const String myCartScreen = 'myCartScreen';
   static const String myCoursesScreen = 'myCoursesScreen';
   static const String coursePaymentScreen = 'coursePaymentScreen';
   static const String aboutUsScreen = 'aboutUsScreen';
   static const String helpAndSupport = 'helpAndSupport';
   static const String contactUs = 'contactUs';
+  static const String schedulerScreen = 'schedulerScreen';
 
   //RESOURCES SCREEN
   static const String resourcesScreen = 'resourcesScreen';
@@ -78,6 +85,17 @@ class OnGenerateRoute {
           widget: OtpVerificationScreen(
             bannerList: bannerList,
             userNumber: userNumber,
+          ),
+        );
+
+      case AppRoute.requestToLogoutScreen:
+        List data = args as List;
+        List<Widget> bannerList = data.last;
+        String userEmail = data.first;
+        return cupertinoBuilder(
+          widget: RequestLogoutScreen(
+            userEmail: userEmail,
+            bannerList: bannerList,
           ),
         );
 
@@ -129,6 +147,8 @@ class OnGenerateRoute {
           resourceController: resourceController,
         ));
 
+      case AppRoute.schedulerScreen:
+        return cupertinoBuilder(widget: const SchedulerScreen());
       default:
         return cupertinoBuilder(
           widget: ErrorPage(),

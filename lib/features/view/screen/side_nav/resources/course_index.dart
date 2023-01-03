@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc_web/features/controller/resource_controller.dart';
 import 'package:upsc_web/features/model/resources_model/course_index_model.dart';
+import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/features/view/widget/search_bar_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
@@ -12,12 +14,14 @@ class CoursesIndexResources extends StatefulWidget {
   const CoursesIndexResources({Key? key, required this.resourceController})
       : super(key: key);
   final ResourceController resourceController;
+
   @override
   State<CoursesIndexResources> createState() => _CoursesIndexResourcesState();
 }
 
 class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
   String? datetoshow;
+
   @override
   void initState() {
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
@@ -64,6 +68,7 @@ class _CoursesIndexResourcesState extends State<CoursesIndexResources> {
 class CourseIndexBody extends StatefulWidget {
   const CourseIndexBody({Key? key, required this.resources}) : super(key: key);
   final List<CourseIndexDataModel> resources;
+
   @override
   State<CourseIndexBody> createState() => _CourseIndexBodyState();
 }
@@ -71,6 +76,7 @@ class CourseIndexBody extends StatefulWidget {
 class _CourseIndexBodyState extends State<CourseIndexBody> {
   String filterText = '';
   late List<CourseIndexDataModel> resources = widget.resources;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,11 +104,15 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
               itemCount: resources.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ResourcesContainerWidget(
-                  resourcetype: resources[index].resourceType!,
-                  title: resources[index].title!,
-                  uploadFile: resources[index].fileUrl!.fileLoc!,
-                  fileSize: resources[index].fileUrl!.fileSize ?? 0.toString(),
+                return BlocProvider(
+                  create: (context) => PdfViewerCubit(),
+                  child: ResourcesContainerWidget(
+                    resourcetype: resources[index].resourceType!,
+                    title: resources[index].title!,
+                    uploadFile: resources[index].fileUrl!.fileLoc!,
+                    fileSize:
+                        resources[index].fileUrl!.fileSize ?? 0.toString(),
+                  ),
                 );
               },
             ),

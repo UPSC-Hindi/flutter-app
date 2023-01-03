@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:upsc_web/features/model/base_model.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
-
 import 'app_exception.dart';
 
 Dio dioAuthorizationData({String? token}) {
@@ -14,8 +11,8 @@ Dio dioAuthorizationData({String? token}) {
   dio.options.headers["Accept"] =
       "application/json"; // config your dio headers globally
   dio.options.followRedirects = false;
-  dio.options.connectTimeout = 75000; //5s
-  dio.options.receiveTimeout = 3000;
+  dio.options.connectTimeout = 85000; //5s
+  dio.options.receiveTimeout = 4000;
   print('token in = ${token ?? localToken}');
   dio.options.headers["Authorization"] = "Bearer ${token ?? localToken}";
   return dio;

@@ -2,9 +2,13 @@ import 'package:upsc_web/services/base_api/api.dart';
 import 'package:upsc_web/services/base_api/base_client.dart';
 
 class RemoteServices {
-  static Future<dynamic> getBannerApi() async {
+  static Future<dynamic> getBannerApi(String? bannerType) async {
     try {
-      dynamic response = await BaseClient.get(url: Api.baseUrl + Api.getBanner);
+      dynamic queryParameters = {'BannerType': bannerType ?? 'APP'};
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getBanner,
+        queryParameters: queryParameters,
+      );
       return response;
     } catch (e) {
       rethrow;

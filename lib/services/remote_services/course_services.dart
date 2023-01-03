@@ -25,6 +25,16 @@ class CourseServices {
     }
   }
 
+  Future<dynamic> addToMyCourses(dynamic data) async {
+    try {
+      dynamic response =
+          await BaseClient.post(url: Api.baseUrl + Api.addToMyCourses,data: data);
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> addCoursesToCartServices(dynamic data) async {
     try {
       dynamic response = await BaseClient.post(

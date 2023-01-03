@@ -22,3 +22,5 @@ class Setting extends DrawerState {}
 class ContactUs extends DrawerState {}
 
 class Resources extends DrawerState {}
+class Logout extends DrawerState {}
+class Scheduler extends DrawerState {}

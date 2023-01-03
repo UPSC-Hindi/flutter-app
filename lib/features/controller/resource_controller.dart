@@ -29,7 +29,7 @@ class ResourceController {
     }
   }
 
-  Future<VideoModel> getYoutbeNotes() async {
+  Future<VideoModel> getYoutubeNotes() async {
     try {
       dynamic response = await resourceServices.getYouTubeVideoService();
       return VideoModel.fromJson(response);

@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_web/razorpay_web.dart';
-import 'package:upsc_web/features/controller/global_controller.dart';
+import 'package:upsc_web/app_route.dart';
+import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
-import 'package:upsc_web/features/model/payment_model/order_id_model.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
@@ -32,7 +32,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
-
+  CoursesController coursesController= CoursesController();
   @override
   void dispose() {
     super.dispose();
@@ -47,14 +47,14 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       'key': key,
       //"order_id": orderId,
       'amount': (100 * int.parse(widget.course.amount) -
-              (100 *
-                  (int.parse(widget.course.amount) *
-                      (int.parse(widget.course.batchDetails.discount) / 100))))
+          (100 *
+              (int.parse(widget.course.amount) *
+                  (int.parse(widget.course.batchDetails.discount) / 100))))
           .toString(),
       'name': widget.course.batchDetails.batchName,
       'description': "upschindi",
       'prefill': {
-        'contact': PreferencesHelper.getString(Preferences.phoneNUmber),
+        'contact': 9112916534,
         'email': PreferencesHelper.getString(Preferences.email),
       },
       //'timeout': 180,
@@ -70,16 +70,21 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async{
     print("-----Payment Success-----");
     print(response.paymentId);
     print(response.orderId);
     print(response.signature);
     Utils.flutterToast(
         "SUCCESS: ${response.orderId} ${response.paymentId} ${response.signature}");
+    if(await coursesController.addMyCourses(widget.course.batchDetails.id, true)){
+      Navigator.popAndPushNamed(context, AppRoute.myCoursesScreen);
+    }else{
+      Navigator.pop(context);
+    }
   }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
+  void _handlePaymentError(PaymentFailureResponse response) async{
     print("-----Payment error-----");
     Utils.flutterToast("ERROR: ${response.code} - ${response.message}");
   }
@@ -97,21 +102,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // CarouselSlider(
-              //   items: images,
-              //   options: CarouselOptions(
-              //     viewportFraction: 1,
-              //     initialPage: 0,
-              //     enableInfiniteScroll: true,
-              //     reverse: false,
-              //     autoPlay: true,
-              //     autoPlayInterval: const Duration(seconds: 3),
-              //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              //     autoPlayCurve: Curves.fastOutSlowIn,
-              //     enlargeCenterPage: true,
-              //     scrollDirection: Axis.horizontal,
-              //   ),
-              // ),
+
               const SizedBox(
                 height: 20,
               ),
@@ -162,27 +153,27 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
               ),
               int.parse(widget.course.batchDetails.discount) != 0
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'discount',
-                          style: GoogleFonts.notoSansDevanagari(
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        Text(
-                          (int.parse(widget.course.amount) *
-                                  (int.parse(
-                                          widget.course.batchDetails.discount) /
-                                      100))
-                              .round()
-                              .toString(),
-                          style: GoogleFonts.notoSansDevanagari(
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ],
-                    )
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'discount',
+                    style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  Text(
+                    (int.parse(widget.course.amount) *
+                        (int.parse(
+                            widget.course.batchDetails.discount) /
+                            100))
+                        .round()
+                        .toString(),
+                    style: GoogleFonts.notoSansDevanagari(
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              )
                   : Text(''),
               const SizedBox(
                 height: 20,
@@ -204,10 +195,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   ),
                   Text(
                     (int.parse(widget.course.amount) -
-                            ((int.parse(widget.course.amount) *
-                                (int.parse(
-                                        widget.course.batchDetails.discount) /
-                                    100))))
+                        ((int.parse(widget.course.amount) *
+                            (int.parse(
+                                widget.course.batchDetails.discount) /
+                                100))))
                         .round()
                         .toString(),
                     style: GoogleFonts.notoSansDevanagari(

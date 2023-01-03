@@ -6,9 +6,9 @@ import 'package:upsc_web/services/remote_services/remote_services.dart';
 import 'package:upsc_web/utils/utils.dart';
 
 class GlobalController {
-  static Future<List<Widget>> getBanner() async {
+  static Future<List<Widget>> getBanner(String? bannerType) async {
     List<Widget> imageList = [];
-    await RemoteServices.getBannerApi().then((value) {
+    await RemoteServices.getBannerApi(bannerType).then((value) {
       BannerModel response = BannerModel.fromJson(value);
       if (response.status) {
         for (var entry in response.data) {
@@ -37,11 +37,11 @@ class GlobalController {
     }
   }
 
-  static Future<OrderIdGeneration> getOrderId(dynamic data) async {
+  static Future<OrderIdModel> getOrderId(dynamic data) async {
     try {
       dynamic response = await RemoteServices.getOrderIdService(data);
       print(response);
-      return OrderIdGeneration.fromJson(response);
+      return OrderIdModel.fromJson(response);
     } catch (error) {
       rethrow;
     }

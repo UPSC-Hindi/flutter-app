@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upsc_web/features/model/resources_model/notes_model.dart';
+import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/features/view/widget/search_bar_widget.dart';
 
 class NotesWidget extends StatefulWidget {
   final List<NotesDataModel> resources;
   final String heading;
+
   const NotesWidget({Key? key, required this.resources, required this.heading})
       : super(key: key);
+
   @override
   State<NotesWidget> createState() => _NotesWidgetState();
 }
@@ -29,10 +33,11 @@ class _NotesWidgetState extends State<NotesWidget> {
                 filterText = value;
                 resources = widget.resources
                     .where(
-                      (element) => element.title.toLowerCase().contains(
-                            filterText.toLowerCase(),
-                          ),
-                    )
+                      (element) =>
+                      element.title.toLowerCase().contains(
+                        filterText.toLowerCase(),
+                      ),
+                )
                     .toList();
               });
             },
@@ -43,11 +48,14 @@ class _NotesWidgetState extends State<NotesWidget> {
               itemCount: resources.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ResourcesContainerWidget(
-                  resourcetype: resources[index].resourcetype,
-                  title: resources[index].title,
-                  uploadFile: resources[index].fileUrl.fileLoc,
-                  fileSize: resources[index].fileUrl.fileSize ?? 0.toString(),
+                return BlocProvider(
+                  create: (context) => PdfViewerCubit(),
+                  child: ResourcesContainerWidget(
+                    resourcetype: resources[index].resourcetype,
+                    title: resources[index].title,
+                    uploadFile: resources[index].fileUrl.fileLoc,
+                    fileSize: resources[index].fileUrl.fileSize ?? 0.toString(),
+                  ),
                 );
               },
             ),

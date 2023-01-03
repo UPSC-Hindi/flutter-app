@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: FutureBuilder<List<Widget>>(
-                    future: GlobalController.getBanner(),
+                    future: GlobalController.getBanner("web"),
                     builder: (context, snapshots) {
                       if (snapshots.connectionState == ConnectionState.done) {
                         if (snapshots.hasData) {

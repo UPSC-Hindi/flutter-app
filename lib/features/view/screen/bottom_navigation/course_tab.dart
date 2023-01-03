@@ -5,6 +5,7 @@ import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/CoursesModel.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/course_details_screen.dart';
 import 'package:upsc_web/features/view/widget/empty_widget.dart';
+import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/langauge.dart';
@@ -43,18 +44,9 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 labelColor: ColorResources.buttoncolor,
                 unselectedLabelColor: Colors.black,
                 tabs: [
-                  Tab(
-                    text: 'Main',
-                  ),
-                  Tab(
-                    text: 'Prelims',
-                  ),
-                  // Tab(text: Languages.prelims),
-                  // Tab(text: Languages.mains),
-                  // Tab(text: Languages.interview)
-                  Tab(
-                    text: "Interview",
-                  ),
+                  Tab(text: Languages.prelims),
+                  Tab(text: Languages.mains),
+                  Tab(text: Languages.interview)
                 ],
               ),
             ),
@@ -65,15 +57,34 @@ class _CoursesScreenState extends State<CoursesScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          return ListView.builder(
-                              itemCount: snapshot.data!.data.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data!.data.isEmpty
-                                    ? EmptyWidget(
-                                        image: SvgImages.emptyCard,
-                                        text: "No Courses")
-                                    : _cardWidget(snapshot.data!.data[index]);
-                              });
+                          return isWeb
+                              ? GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                        childAspectRatio: 1.9,
+                                  ),
+                                  itemCount: snapshot.data!.data.length,
+                                  itemBuilder: (context, index) {
+                                    return snapshot.data!.data.isEmpty
+                                        ? EmptyWidget(
+                                            image: SvgImages.emptyCard,
+                                            text: "No Courses")
+                                        : SizedBox(
+                                          child: _cardWidget(
+                                              snapshot.data!.data[index]),
+                                        );
+                                  })
+                              : ListView.builder(
+                                  itemCount: snapshot.data!.data.length,
+                                  itemBuilder: (context, index) {
+                                    return snapshot.data!.data.isEmpty
+                                        ? EmptyWidget(
+                                            image: SvgImages.emptyCard,
+                                            text: "No Courses")
+                                        : _cardWidget(
+                                            snapshot.data!.data[index]);
+                                  });
                         } else {
                           return const Text("Unable to get data");
                         }
@@ -88,7 +99,25 @@ class _CoursesScreenState extends State<CoursesScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          return ListView.builder(
+                          return isWeb
+                              ? GridView.builder(
+                              gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 1.9,
+                              ),
+                              itemCount: snapshot.data!.data.length,
+                              itemBuilder: (context, index) {
+                                return snapshot.data!.data.isEmpty
+                                    ? EmptyWidget(
+                                    image: SvgImages.emptyCard,
+                                    text: "No Courses")
+                                    : SizedBox(
+                                  child: _cardWidget(
+                                      snapshot.data!.data[index]),
+                                );
+                              })
+                              : ListView.builder(
                               itemCount: snapshot.data!.data.length,
                               itemBuilder: (context, index) {
                                 return snapshot.data!.data.isEmpty
@@ -106,7 +135,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                         );
                       }
                     }),
-                Center(
+                const Center(
                   child: Text("Update will come soon......"),
                 ),
               ]),
