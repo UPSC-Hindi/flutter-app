@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       text: 'Sign up',
                       onPressed: (){
                         if (_formKey.currentState!.validate()) {
-                          _registerButton;
+                          _registerButton();
                         }
                       },
                     ),

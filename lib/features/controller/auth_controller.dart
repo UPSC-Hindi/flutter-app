@@ -107,6 +107,7 @@ class AuthController {
       googleauth.GoogleSignInAccount? result;
       final _googleSignIn = googleauth.GoogleSignIn();
       result = await _googleSignIn.signIn();
+      await _googleSignIn.signOut();
       if (result!.email.isNotEmpty) {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
@@ -132,7 +133,6 @@ class AuthController {
           return [user.status, user.data.userMobileNumberVerified];
         }
         return [user.status, false];
-        //await _googleSignIn.signOut();
         await _googleSignIn.disconnect();
       }
       return [false, false];
