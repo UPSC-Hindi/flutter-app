@@ -6,7 +6,6 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -288,7 +287,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   }
 
   callApilogout() async {
-    Logout response;
+    //Logout response;
     setState(() {
       Preferences.onLoading(context);
     });

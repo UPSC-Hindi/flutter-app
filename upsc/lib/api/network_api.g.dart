@@ -16,7 +16,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Resendotp>(
+        _setStreamType<getbannerdetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, Apis.banner,
                     queryParameters: queryParameters)

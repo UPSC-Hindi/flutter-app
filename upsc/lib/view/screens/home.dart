@@ -2,15 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
-import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -32,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  String? _profileimage =
+  final String _profileimage =
       SharedPreferenceHelper.getString(Preferences.profileImage) != "N/A"
           ? SharedPreferenceHelper.getString(Preferences.profileImage)!
           : SvgImages.avatar;
@@ -624,7 +620,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   callApilogout() async {
-    Logout response;
+    //Logout response;
     setState(() {
       Preferences.onLoading(context);
     });
