@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - dinesh
+      - dev_android
 
 jobs:
   build:

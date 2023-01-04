@@ -22,7 +22,6 @@ import 'package:upsc/models/auth/resendotp.dart';
 import 'package:upsc/models/auth/resetpassword.dart';
 import 'package:upsc/models/notificationget.dart';
 import 'package:upsc/models/orderIdgeneration.dart';
-import 'package:upsc/view/screens/auth/deviesreq.dart';
 
 part 'network_api.g.dart';
 
@@ -32,39 +31,6 @@ abstract class RestClient {
 
   @GET(Apis.banner)
   Future<getbannerdetails> bannerimagesRequest();
-
-  @POST(Apis.login)
-  Future<Login> loginRequest(@Body() body);
-
-  @POST(Apis.register)
-  Future<Register> registerRequest(@Body() body);
-
-  @POST(Apis.verifymobilenumber)
-  Future<VerifyMobileNumber> verifymobilenumberRequest(@Body() body);
-
-  @GET(Apis.resendotpm)
-  Future<Resendotp> resendotpRequest();
-
-  @POST(Apis.forgetpassword)
-  Future<ForgetPassword> forgetpasswordRequest(@Body() body);
-
-  @POST(Apis.passwordverifyotp)
-  Future<PasswordVerifyOtp> passwordverifyotpRequest(@Body() body);
-
-  @POST(Apis.passwordotpresend)
-  Future<PasswordOtpResend> passwordotpresendRequest(@Body() body);
-
-  @POST(Apis.resetpassword)
-  Future<ResetPassword> resetpasswordRequest(@Body() body);
-
-  @POST(Apis.logout)
-  Future<Logout> logoutRequest();
-
-  @POST(Apis.googleSignIn)
-  Future<GoogleSignIn> googleSigninRequest(@Body() body);
-
-  @POST(Apis.postUserMobileNumber)
-  Future<postUserMobileNumber> postUserMobileNumberRequest(@Body() body);
 
   @POST(Apis.joinmeeting)
   Future<JoinStreaming> joinmeetingRequest(@Body() body);

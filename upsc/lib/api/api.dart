@@ -2,20 +2,24 @@ class Apis {
   static const String baseUrl = 'https://upsc.trando.in/api/v1/';
   // Please don't remove "/api/v1".
   static const String banner = "adminPanel/getbannerdetails";
-  //user auth
-  static const String login = "authentication/login";
-  static const String register = "authentication/userRegister";
-  static const String verifymobilenumber = "authentication/verifyMobileNumber";
-  static const String resendotpm = "authentication/resendmobileVerificationotp";
-  static const String forgetpassword = "authentication/forgetpassword";
-  static const String passwordverifyotp = "authentication/reset";
-  static const String passwordotpresend = "authentication/resendotp";
-  static const String resetpassword = "authentication/resetpassword";
-  static const String logout = "authentication/Logout";
-  //usergoogle auth
+  static const String login = 'authentication/login';
   static const String googleSignIn = "authentication/googleSignIn";
-  static const String postUserMobileNumber =
-      "authentication/postUserMobileNumber";
+  static const String register = 'authentication/userRegister';
+  static const String resendMobileVerificationOtp =
+      'authentication/resendmobileverificationotp';
+  static const String googleAuth = 'authentication/googleSignIn';
+  static const String verifyMobileNumber = 'authentication/verifyMobileNumber';
+  static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
+  static const String updateUserStream = 'authentication/updateUserStream';
+  static const String updateUserLanguage = 'authentication/updateUserLanguage';
+  static const String logout = "authentication/Logout";
+  static const String requestToLogout = 'adminPanel/postRequestToLogoutUserByAdmin';
+  //RESET OTP
+  static const String resetPassword = 'authentication/forgetpassword';
+  static const String resetPasswordVerifyOtp = 'authentication/reset';
+  static const String resendOtp = 'authentication/resendotp';
+  static const String updatePassword = 'authentication/resetpassword';
+
   //user details
   static const String updateUserDetails = "authentication/UpdateUserDetails";
   static const String updateUserProfilePhoto =
@@ -31,10 +35,6 @@ class Apis {
   static const String streamingUserDetails = "Streaming/StreamingUserDetails";
 
   static const String getResources = "adminPanel/ResourceDetails";
-
-  static const String putUserStream = 'authentication/updateUserStream';
-  static const String putUserLanguage = 'authentication/updateUserLanguage';
-  static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
 
   static const String addtocart = 'adminPanel/addtocart';
   static const String getcartdata = 'adminPanel/getCartDetails';
