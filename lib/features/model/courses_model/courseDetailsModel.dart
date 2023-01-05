@@ -1,10 +1,9 @@
+
 import 'dart:convert';
 
-CoursesDetailsModel coursesDetailsModelFromJson(String str) =>
-    CoursesDetailsModel.fromJson(json.decode(str));
+CoursesDetailsModel coursesDetailsModelFromJson(String str) => CoursesDetailsModel.fromJson(json.decode(str));
 
-String coursesDetailsModelToJson(CoursesDetailsModel data) =>
-    json.encode(data.toJson());
+String coursesDetailsModelToJson(CoursesDetailsModel data) => json.encode(data.toJson());
 
 class CoursesDetailsModel {
   CoursesDetailsModel({
@@ -14,15 +13,14 @@ class CoursesDetailsModel {
   });
 
   final bool status;
-  final Data data;
+  final CoursesDetailsDataModel data;
   final String msg;
 
-  factory CoursesDetailsModel.fromJson(Map<String, dynamic> json) =>
-      CoursesDetailsModel(
-        status: json["status"],
-        data: Data.fromJson(json["data"]),
-        msg: json["msg"],
-      );
+  factory CoursesDetailsModel.fromJson(Map<String, dynamic> json) => CoursesDetailsModel(
+    status: json["status"],
+    data: CoursesDetailsDataModel.fromJson(json["data"]),
+    msg: json["msg"],
+  );
 
   Map<String, dynamic> toJson() => {
     "status": status,
@@ -31,8 +29,8 @@ class CoursesDetailsModel {
   };
 }
 
-class Data {
-  Data({
+class CoursesDetailsDataModel {
+  CoursesDetailsDataModel({
     required this.batchDetails,
     required this.noOfVideos,
     required this.noofNotes,
@@ -42,7 +40,7 @@ class Data {
   final int noOfVideos;
   final int noofNotes;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory CoursesDetailsDataModel.fromJson(Map<String, dynamic> json) => CoursesDetailsDataModel(
     batchDetails: BatchDetails.fromJson(json["batchDetails"]),
     noOfVideos: json["NoOfVideos"],
     noofNotes: json["NoofNotes"],
@@ -85,7 +83,7 @@ class BatchDetails {
   final String batchName;
   final String examType;
   final List<String> student;
-  final List<Category> subject;
+  final List<Subject> subject;
   final List<Teacher> teacher;
   final DateTime startingDate;
   final DateTime endingDate;
@@ -95,10 +93,10 @@ class BatchDetails {
   final String charges;
   final String discount;
   final String description;
-  final List<Banners> banner;
+  final List<Banner> banner;
   final String stream;
   final String remark;
-  final List<Banners> demoVideo;
+  final List<Banner> demoVideo;
   final String validity;
   final bool isActive;
   final String courseReview;
@@ -109,10 +107,8 @@ class BatchDetails {
     batchName: json["batch_name"],
     examType: json["exam_type"],
     student: List<String>.from(json["student"].map((x) => x)),
-    subject: List<Category>.from(
-        json["subject"].map((x) => Category.fromJson(x))),
-    teacher:
-    List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
+    subject: List<Subject>.from(json["subject"].map((x) => Subject.fromJson(x))),
+    teacher: List<Teacher>.from(json["teacher"].map((x) => Teacher.fromJson(x))),
     startingDate: DateTime.parse(json["starting_date"]),
     endingDate: DateTime.parse(json["ending_date"]),
     mode: json["mode"],
@@ -121,12 +117,10 @@ class BatchDetails {
     charges: json["charges"],
     discount: json["discount"],
     description: json["description"],
-    banner:
-    List<Banners>.from(json["banner"].map((x) => Banners.fromJson(x))),
+    banner: List<Banner>.from(json["banner"].map((x) => Banner.fromJson(x))),
     stream: json["stream"],
     remark: json["remark"],
-    demoVideo: List<Banners>.from(
-        json["demoVideo"].map((x) => Banners.fromJson(x))),
+    demoVideo: List<Banner>.from(json["demoVideo"].map((x) => Banner.fromJson(x))),
     validity: json["validity"],
     isActive: json["is_active"],
     courseReview: json["course_review"],
@@ -140,10 +134,8 @@ class BatchDetails {
     "student": List<dynamic>.from(student.map((x) => x)),
     "subject": List<dynamic>.from(subject.map((x) => x.toJson())),
     "teacher": List<dynamic>.from(teacher.map((x) => x.toJson())),
-    "starting_date":
-    "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
-    "ending_date":
-    "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
+    "starting_date": "${startingDate.year.toString().padLeft(4, '0')}-${startingDate.month.toString().padLeft(2, '0')}-${startingDate.day.toString().padLeft(2, '0')}",
+    "ending_date": "${endingDate.year.toString().padLeft(4, '0')}-${endingDate.month.toString().padLeft(2, '0')}-${endingDate.day.toString().padLeft(2, '0')}",
     "mode": mode,
     "materials": materials,
     "language": language,
@@ -161,8 +153,8 @@ class BatchDetails {
   };
 }
 
-class Banners {
-  Banners({
+class Banner {
+  Banner({
     required this.fileLoc,
     required this.fileName,
     required this.fileSize,
@@ -173,32 +165,28 @@ class Banners {
   final String fileLoc;
   final String fileName;
   final String fileSize;
-  final String bannerfileType;
-  final String demoVideofileType;
+  final dynamic bannerfileType;
+  final dynamic demoVideofileType;
 
-  factory Banners.fromJson(Map<String, dynamic> json) => Banners(
+  factory Banner.fromJson(Map<String, dynamic> json) => Banner(
     fileLoc: json["fileLoc"],
     fileName: json["fileName"],
     fileSize: json["fileSize"],
-    bannerfileType:
-    json["bannerfileType"] == null ? null : json["bannerfileType"],
-    demoVideofileType: json["DemoVideofileType"] == null
-        ? null
-        : json["DemoVideofileType"],
+    bannerfileType: json["bannerfileType"],
+    demoVideofileType: json["DemoVideofileType"],
   );
 
   Map<String, dynamic> toJson() => {
     "fileLoc": fileLoc,
     "fileName": fileName,
     "fileSize": fileSize,
-    "bannerfileType": bannerfileType == null ? null : bannerfileType,
-    "DemoVideofileType":
-    demoVideofileType == null ? null : demoVideofileType,
+    "bannerfileType": bannerfileType,
+    "DemoVideofileType": demoVideofileType,
   };
 }
 
-class Category {
-  Category({
+class Subject {
+  Subject({
     required this.id,
     required this.title,
   });
@@ -206,7 +194,7 @@ class Category {
   final String id;
   final String title;
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory Subject.fromJson(Map<String, dynamic> json) => Subject(
     id: json["_id"],
     title: json["title"],
   );

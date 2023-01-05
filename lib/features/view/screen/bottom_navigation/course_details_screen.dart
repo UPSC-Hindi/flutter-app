@@ -15,6 +15,7 @@ import 'package:upsc_web/utils/color_resources.dart';
 class CoursesDetailsScreens extends StatefulWidget {
   final String courseId;
   final String courseName;
+
   const CoursesDetailsScreens(
       {Key? key, required this.courseId, required this.courseName})
       : super(key: key);
@@ -27,6 +28,7 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
   List<Widget> image = [];
   late Future<CoursesDetailsModel> _getCourseDetails;
   CoursesController coursesController = CoursesController();
+
   @override
   void initState() {
     _getCourseDetails = coursesController.getCoursesDetails(widget.courseId);
@@ -53,26 +55,27 @@ class _CoursesDetailsScreensState extends State<CoursesDetailsScreens> {
             ),
           ),
           body: FutureBuilder<CoursesDetailsModel>(
-              future: _getCourseDetails,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData) {
-                    snapshot.data!.data.batchDetails.banner.forEach((element) {
-                      image.add(Image.network(element.fileLoc));
-                    });
-                    return _bodyWidget(snapshot.data!);
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else {
-                    return const Text('Check Your internet');
-                  }
+            future: _getCourseDetails,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  snapshot.data!.data.batchDetails.banner.forEach((element) {
+                    image.add(Image.network(element.fileLoc));
+                  });
+                  return _bodyWidget(snapshot.data!);
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
                 } else {
-                  return const CircularProgressIndicator();
+                  return const Text('Check Your internet');
                 }
-              }),
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
         ),
-        tab: Text("Need to developed"),
-        web: Text("Need to developed"),
+        tab: const Text("Need to developed"),
+        web:const Text("Need to developed"),
       );
     });
   }

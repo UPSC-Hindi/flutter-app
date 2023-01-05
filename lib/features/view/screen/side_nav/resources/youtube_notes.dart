@@ -70,12 +70,13 @@ class _YoutubeNotesState extends State<YoutubeNotes> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ResponsiveWidget(
-                mobile: gridViewWidget(videData, 2, 1 / 0.8),
-                web: gridViewWidget(videData, 4, 1 / 0.8),
-                tab: gridViewWidget(videData, 3, 1 / 0.8),
-              ))
+            padding: const EdgeInsets.all(8.0),
+            child: ResponsiveWidget(
+              mobile: gridViewWidget(videData, 2, 1 / 0.8),
+              web: gridViewWidget(videData, 4, 1 / 0.8),
+              tab: gridViewWidget(videData, 3, 1 / 0.8),
+            ),
+          ),
         ],
       ),
     );
@@ -84,20 +85,21 @@ class _YoutubeNotesState extends State<YoutubeNotes> {
   GridView gridViewWidget(
       List<VideoDataModel> videData, int count, double childRatio) {
     return GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: videData.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: count,
-          childAspectRatio: childRatio,
-          crossAxisSpacing: 8,
-        ),
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return YouTubeContainerWidget(
-            videoUrl: videData[index].videoUrl,
-            height: MediaQuery.of(context).size.width*0.24,
-          );
-        });
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: videData.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: count,
+        childAspectRatio: childRatio,
+        crossAxisSpacing: 8,
+      ),
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index) {
+        return YouTubeContainerWidget(
+          videoUrl: videData[index].videoUrl,
+          height: MediaQuery.of(context).size.width * 0.24,
+        );
+      },
+    );
   }
 }
 
