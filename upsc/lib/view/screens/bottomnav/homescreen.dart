@@ -539,7 +539,7 @@ class _HomeScreensState extends State<HomeScreens> {
                           ),
                           child: TextButton(
                             child: Text(
-                              'Contact Us',
+                              Languages.contactus,
                               style: GoogleFonts.notoSansDevanagari(
                                   fontSize: 20,
                                   color: ColorResources.textWhite),

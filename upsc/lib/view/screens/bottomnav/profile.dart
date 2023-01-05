@@ -306,7 +306,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         //   textColor: ColorResources.textWhite,
         // );
         SharedPreferenceHelper.clearPref();
-        Navigator.of(context).popAndPushNamed('/');
+        Navigator.of(context).pushNamedAndRemoveUntil('/',(Route<dynamic> route) => false);
       // } else {
       //   Fluttertoast.showToast(
       //     msg: '${response.msg}',

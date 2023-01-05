@@ -120,8 +120,8 @@ class _mocktestscreenState extends State<mocktestscreen> {
                         onPressed: () {},
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Text('Start Now'), // <-- Text
+                          children: [
+                            Text(Languages.startnow), // <-- Text
                             SizedBox(
                               width: 5,
                             ),
@@ -371,15 +371,12 @@ class _mocktestscreenState extends State<mocktestscreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(Languages.LearnMore),
-                      Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                            color: const Color(0xFfD9D9D9).withOpacity(0.38),
-                            borderRadius: BorderRadius.circular(90)),
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 20,
-                        ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
                       )
                     ],
                   )),

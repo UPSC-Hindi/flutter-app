@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/models/my_courses_model.dart';
+import 'package:upsc/util/color_resources.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YTClassScreen extends StatefulWidget {
@@ -17,8 +18,8 @@ class _YTClassScreenState extends State<YTClassScreen> {
   void initState() {
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(widget.lecture.link)!,
-      flags: const YoutubePlayerFlags(
-        isLive: true,
+      flags: YoutubePlayerFlags(
+        isLive: widget.lecture.LiveOrRecorded == 'live' ? true : false,
         autoPlay: true,
         mute: false,
         controlsVisibleAtStart: true,
@@ -45,21 +46,37 @@ class _YTClassScreenState extends State<YTClassScreen> {
           ),
           builder: (context, player) {
             print(widget.lecture.link);
-            return Column(
+            return Stack(
               children: [
-                player,
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.lecture.lectureTitle,
-                            style:
-                                GoogleFonts.notoSansDevanagari(fontSize: 30)),
-                        Text(widget.lecture.description),
-                      ]),
-                )
-                //some other widgets
+                Column(
+                  children: [
+                    player,
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.lecture.lectureTitle,
+                                style: GoogleFonts.notoSansDevanagari(
+                                    fontSize: 30)),
+                            Text(widget.lecture.description),
+                          ]),
+                    )
+                    //some other widgets
+                  ],
+                ),
+                Positioned(
+                    top: 0,
+                    left: 0,
+                    child: IconButton(
+                      icon: Container(
+                          decoration: BoxDecoration(
+                              color: ColorResources.gray.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Icon(Icons.close_outlined,
+                              color: ColorResources.textWhite)),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ))
               ],
             );
           }),

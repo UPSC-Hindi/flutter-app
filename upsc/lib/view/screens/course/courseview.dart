@@ -21,6 +21,7 @@ import 'package:upsc/models/joinstreaming.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/localfiles.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
 import 'package:upsc/view/screens/bottomnav/ncert.dart';
@@ -399,6 +400,7 @@ class BatchNotesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Localfilesfind.initState();
     RemoteDataSourceImpl batchNotesDataModel = RemoteDataSourceImpl();
     List<BatchNotesDataModel>? notesList;
     return FutureBuilder<List<BatchNotesDataModel>>(

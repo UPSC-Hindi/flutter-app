@@ -139,35 +139,42 @@ class MyOrdersScreen extends StatelessWidget {
                         ),
                       ],
                     )
-                  : Align(
-                      alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: ColorResources.buttoncolor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${myOrders.transactionDate}',
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: ColorResources.buttoncolor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed("cartscreen");
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Re-try',
+                                style: GoogleFonts.notoSansDevanagari(
+                                    color: ColorResources.textWhite),
+                              ), // <-- Text
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: ColorResources.textWhite),
+                            ],
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed("cartscreen");
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Re-try',
-                              style: GoogleFonts.notoSansDevanagari(
-                                  color: ColorResources.textWhite),
-                            ), // <-- Text
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Icon(Icons.arrow_forward_ios,
-                                color: ColorResources.textWhite),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
             ],
           ),

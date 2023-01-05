@@ -159,7 +159,10 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
             ],
           ),
           Localfilesfind.localfiles.contains(widget.title)
-              ? Icon(Icons.verified)
+              ? Icon(
+                  Icons.verified,
+                  color: ColorResources.buttoncolor,
+                )
               : InkWell(
                   onTap: () async {
                     Map<Permission, PermissionStatus> status = await [

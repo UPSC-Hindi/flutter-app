@@ -142,111 +142,122 @@ class _DownloadScreenState extends State<DownloadScreen> {
           ? EmptyWidget(
               image: SvgImages.emptyCard, text: "There in no Resources")
           : SingleChildScrollView(
-              child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: downloadsListMaps.length,
-                  itemBuilder: (BuildContext context, index) {
-                    Map _map = downloadsListMaps[index];
-                    String _filename = _map['filename'];
-                    int _progress = _map['progress'];
-                    DownloadTaskStatus _status = _map['status'];
-                    String _id = _map['id'];
-                    String _savedDirectory = _map['savedDirectory'];
-                    print(_savedDirectory);
-                    List<io.FileSystemEntity> _directories =
-                        io.Directory(_savedDirectory)
-                            .listSync(followLinks: true);
-                    var _file =
-                        _directories.isNotEmpty ? _directories.first : null;
-                    return GestureDetector(
-                      onTap: () => OpenFile.open("$_savedDirectory/$_filename"),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorResources.gray),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.80,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 5),
-                                    child: Icon(
-                                      Icons.picture_as_pdf,
-                                      size: 30,
-                                      color: ColorResources.buttoncolor,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.60,
-                                          child: Text(
-                                            _filename.split('.').first,
-                                            style:
-                                                GoogleFonts.notoSansDevanagari(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        _status == DownloadTaskStatus.complete
-                                            ? const Text('')
-                                            : Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: <Widget>[
-                                                    Text('$_progress%'),
-                                                    Row(
-                                                      children: <Widget>[
-                                                        Expanded(
-                                                          child:
-                                                              LinearProgressIndicator(
-                                                            value:
-                                                                _progress / 100,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: downloadsListMaps.length,
+                    itemBuilder: (BuildContext context, index) {
+                      Map _map = downloadsListMaps[index];
+                      String _filename = _map['filename'];
+                      int _progress = _map['progress'];
+                      DownloadTaskStatus _status = _map['status'];
+                      String _id = _map['id'];
+                      String _savedDirectory = _map['savedDirectory'];
+                      print(_savedDirectory);
+                      List<io.FileSystemEntity> _directories =
+                          io.Directory(_savedDirectory)
+                              .listSync(followLinks: true);
+                      var _file =
+                          _directories.isNotEmpty ? _directories.first : null;
+                      return GestureDetector(
+                        onTap: () =>
+                            OpenFile.open("$_savedDirectory/$_filename"),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
+                          decoration: BoxDecoration(
+                            //border: Border.all(color: ColorResources.gray),
+                            borderRadius: BorderRadius.circular(20),
+                            color: ColorResources.textWhite,
+                            boxShadow: [
+                              BoxShadow(
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 5.0,
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: buttons(_status, _id, index),
-                            )
-                          ],
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.80,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 5),
+                                      child: Icon(
+                                        Icons.picture_as_pdf,
+                                        size: 30,
+                                        color: ColorResources.buttoncolor,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.60,
+                                            child: Text(
+                                              _filename.split('.').first,
+                                              style: GoogleFonts
+                                                  .notoSansDevanagari(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          _status == DownloadTaskStatus.complete
+                                              ? const Text('')
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: <Widget>[
+                                                      Text('$_progress%'),
+                                                      Row(
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            child:
+                                                                LinearProgressIndicator(
+                                                              value: _progress /
+                                                                  100,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: buttons(_status, _id, index),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
     );
   }

@@ -66,7 +66,7 @@ class HelpAndSupport extends StatelessWidget {
                       ));
                     },
                     child: Text(
-                      'info@upschindi.online',
+                      'upschindi4cse@gmail.com',
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20,
                       ),

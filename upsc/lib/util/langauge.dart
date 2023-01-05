@@ -106,6 +106,8 @@ class Languages {
   static String Course_Index = "";
   //search
   static String SearchMockTestQuizzes = "";
+  static String startnow = '';
+  static String contactus = '';
 
   static initState() {
     Languages.isEnglish =
@@ -113,9 +115,11 @@ class Languages {
             ? true
             : false;
     //buttons
+    contactus = isEnglish ? 'contact us' : 'संपर्क करें';
+    startnow = isEnglish ? 'Start Now' : "शुरु  करें";
     explore = isEnglish ? 'Explore' : 'और खोंज़े';
     learnAbout = isEnglish ? 'Learn About' : 'जानिए ...';
-    LearnMore = isEnglish ? "Learn More" : "और जाने";
+    LearnMore = isEnglish ? "Learn More " : "और जाने";
     ncertBatches = isEnglish ? 'Join Us On' : 'हमसे जुड़ें';
     youTube = isEnglish ? 'On YouTube' : 'यूट्यूब पर ';
     telegram = isEnglish ? 'On Telegram' : 'टेलीग्राम पर ';
@@ -144,7 +148,7 @@ class Languages {
     yourTestSeries = isEnglish ? 'My Test Series' : 'टेस्ट सीरीज';
     yourCourses = isEnglish ? 'Your Courses' : 'कोर्सेस';
     editProfile = isEnglish
-        ? 'Edit Phone, Email, Profile Name'
+        ? 'Phone, Email,Edit Profile Name'
         : 'फ़ोन, ईमेल, प्रोफ़ाइल नाम संपादित करें';
     seeYourEnrollTest =
         isEnglish ? 'See your enrolled tests' : 'अपने दाखिल टेस्ट देखे';

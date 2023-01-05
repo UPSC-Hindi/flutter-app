@@ -628,7 +628,7 @@ class _HomeScreenState extends State<HomeScreen> {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
 
       SharedPreferenceHelper.clearPref();
-      Navigator.of(context).popAndPushNamed('/');
+      Navigator.of(context).pushNamedAndRemoveUntil('/',(Route<dynamic> route) => false);
     } catch (error, stacktrace) {
       setState(() {
         Preferences.hideDialog(context);

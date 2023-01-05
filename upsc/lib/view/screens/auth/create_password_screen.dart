@@ -112,7 +112,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
                   ),
                   const SizedBox(height: 60),
                   AuthButton(
-                    text: 'Send OTP',
+                    text: 'Set and Login',
                     onPressed: () {
                       if (_formKey.currentState!.validate() &&
                           passwordController.text ==
