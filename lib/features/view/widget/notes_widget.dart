@@ -43,16 +43,16 @@ class _NotesWidgetState extends State<NotesWidget> {
             },
           ),
           ResponsiveWidget(
-            mobile: griedViewWidget(1,10/2),
-            web: griedViewWidget(3,27/7),
-            tab: griedViewWidget(2,27/8),
+            mobile: gridViewWidget(1,10/2),
+            web: gridViewWidget(3,27/7),
+            tab: gridViewWidget(2,27/8),
           ),
         ],
       ),
     );
   }
 
-  GridView griedViewWidget(int count,double childRatio) {
+  GridView gridViewWidget(int count,double childRatio) {
     return GridView.builder(
       itemCount: resources.length,
       shrinkWrap: true,
