@@ -295,18 +295,19 @@ class _ProfilScreenState extends State<ProfilScreen> {
       //var token = SharedPreferenceHelper.getString(Preferences.access_token);
       //response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
       //if (response.status!) {
-        setState(() {
-          Preferences.hideDialog(context);
-        });
-        // Fluttertoast.showToast(
-        //   msg: '${response.msg}',
-        //   toastLength: Toast.LENGTH_SHORT,
-        //   gravity: ToastGravity.BOTTOM,
-        //   backgroundColor: ColorResources.gray,
-        //   textColor: ColorResources.textWhite,
-        // );
-        SharedPreferenceHelper.clearPref();
-        Navigator.of(context).pushNamedAndRemoveUntil('/',(Route<dynamic> route) => false);
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      // Fluttertoast.showToast(
+      //   msg: '${response.msg}',
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   backgroundColor: ColorResources.gray,
+      //   textColor: ColorResources.textWhite,
+      // );
+      SharedPreferenceHelper.clearPref();
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
       // } else {
       //   Fluttertoast.showToast(
       //     msg: '${response.msg}',
