@@ -109,7 +109,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             launchUrl(
                                 Uri(
                                   scheme: 'mailto',
-                                  path: 'upschindi4cse@gmail.com',
+                                  path: 'info@upschindi.online',
                                   query: 'subject=helpandsupport&body=msg',
                                 ),
                                 mode: LaunchMode.externalApplication);
@@ -142,7 +142,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () => launchUrl(
-                              Uri.parse('https://wa.me/+91951%209780078'),
+                              Uri.parse('https://www.wa.me/+919519780078'),
                               mode: LaunchMode.externalApplication),
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.whatsapp,

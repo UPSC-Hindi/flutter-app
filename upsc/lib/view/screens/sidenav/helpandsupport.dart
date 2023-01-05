@@ -61,12 +61,12 @@ class HelpAndSupport extends StatelessWidget {
                     onTap: () {
                       launchUrl(Uri(
                         scheme: 'mailto',
-                        path: 'upschindi4cse@gmail.com',
+                        path: 'info@upschindi.online',
                         query: 'subject=helpandsupport&body=msg',
                       ));
                     },
                     child: Text(
-                      'upschindi4cse@gmail.com',
+                      'info@upschindi.online',
                       style: GoogleFonts.notoSansDevanagari(
                         fontSize: 20,
                       ),

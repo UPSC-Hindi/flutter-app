@@ -37,46 +37,36 @@ class _YTClassScreenState extends State<YTClassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.lecture.lectureTitle),
-      // ),
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: ColorResources.textblack),
+        backgroundColor: Colors.white,
+        title: Text(
+          widget.lecture.lectureTitle,
+          style:
+              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
+        ),
+      ),
       body: YoutubePlayerBuilder(
           player: YoutubePlayer(
             controller: _controller,
           ),
           builder: (context, player) {
             print(widget.lecture.link);
-            return Stack(
+            return Column(
               children: [
-                Column(
-                  children: [
-                    player,
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.lecture.lectureTitle,
-                                style: GoogleFonts.notoSansDevanagari(
-                                    fontSize: 30)),
-                            Text(widget.lecture.description),
-                          ]),
-                    )
-                    //some other widgets
-                  ],
-                ),
-                Positioned(
-                    top: 0,
-                    left: 0,
-                    child: IconButton(
-                      icon: Container(
-                          decoration: BoxDecoration(
-                              color: ColorResources.gray.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Icon(Icons.close_outlined,
-                              color: ColorResources.textWhite)),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ))
+                player,
+                Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.lecture.lectureTitle,
+                            style: GoogleFonts.notoSansDevanagari(
+                                fontSize: 30)),
+                        Text(widget.lecture.description),
+                      ]),
+                )
+                //some other widgets
               ],
             );
           }),

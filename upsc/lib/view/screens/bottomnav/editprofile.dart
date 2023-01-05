@@ -138,7 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none),
-                          style:  GoogleFonts.notoSansDevanagari(
+                          style: GoogleFonts.notoSansDevanagari(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -156,10 +156,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     children: [
                       Text(Languages.mobile),
                       Container(
+                        margin: EdgeInsets.only(top: 5),
                         height: 60,
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
+                          color: ColorResources.gray.withOpacity(0.2),
                           border: Border.all(
                               color: ColorResources.gray, width: 1.0),
                           borderRadius: BorderRadius.circular(10),
@@ -171,12 +173,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(Languages.emailText),
+                      Text(Languages.emailText.split(" ")[0]),
                       Container(
+                        margin: EdgeInsets.only(top: 5),
                         height: 60,
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
+                          color: ColorResources.gray.withOpacity(0.2),
                           border: Border.all(
                               color: ColorResources.gray, width: 1.0),
                           borderRadius: BorderRadius.circular(10),
@@ -187,22 +191,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         height: 10,
                       ),
                       const Text('Address'),
-                      TextField(
-                        onChanged: (value) {
-                          address = value;
-                        },
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.blue, width: 1.0),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: TextField(
+                          onChanged: (value) {
+                            address = value;
+                          },
+                          maxLines: 3,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: Colors.blue, width: 1.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorResources.gray, width: 1.0),
+                            ),
+                            hintText: address,
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ColorResources.gray, width: 1.0),
-                          ),
-                          hintText: address,
                         ),
                       ),
                       const SizedBox(
