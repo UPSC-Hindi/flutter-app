@@ -6,6 +6,7 @@ import 'package:upsc_web/features/controller/resource_controller.dart';
 import 'package:upsc_web/features/model/resources_model/course_index_model.dart';
 import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
+import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/features/view/widget/search_bar_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/langauge.dart';
@@ -98,27 +99,36 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
               });
             },
           ),
-          FractionallySizedBox(
-            widthFactor: 0.90,
-            child: ListView.builder(
-              itemCount: resources.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return BlocProvider(
-                  create: (context) => PdfViewerCubit(),
-                  child: ResourcesContainerWidget(
-                    resourcetype: resources[index].resourceType!,
-                    title: resources[index].title!,
-                    uploadFile: resources[index].fileUrl!.fileLoc!,
-                    fileSize:
-                        resources[index].fileUrl!.fileSize ?? 0.toString(),
-                  ),
-                );
-              },
-            ),
+          ResponsiveWidget(
+            mobile: gridViewWidget(1, 10 / 2),
+            web: gridViewWidget(3, 27 / 7),
+            tab: gridViewWidget(2, 27 / 8),
           ),
         ],
       ),
+    );
+  }
+
+  GridView gridViewWidget(int count, double childRatio) {
+    return GridView.builder(
+      itemCount: resources.length,
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: count,
+        childAspectRatio: childRatio,
+        crossAxisSpacing: 5,
+      ),
+      itemBuilder: (context, index) {
+        return BlocProvider(
+          create: (context) => PdfViewerCubit(),
+          child: ResourcesContainerWidget(
+            resourcetype: resources[index].resourceType!,
+            title: resources[index].title!,
+            uploadFile: resources[index].fileUrl!.fileLoc!,
+            fileSize: resources[index].fileUrl!.fileSize ?? 0.toString(),
+          ),
+        );
+      },
     );
   }
 }

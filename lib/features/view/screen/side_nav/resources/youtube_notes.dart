@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/controller/resource_controller.dart';
 import 'package:upsc_web/features/model/resources_model/youtube_notes.dart';
+import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/features/view/widget/youtube_player_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -69,25 +70,34 @@ class _YoutubeNotesState extends State<YoutubeNotes> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: videData.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 0.8,
-                    crossAxisSpacing: 10),
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return YouTubeContainerWidget(
-                    videoUrl: videData[index].videoUrl,
-                    height: 125,
-                  );
-                }),
-          )
+              padding: const EdgeInsets.all(8.0),
+              child: ResponsiveWidget(
+                mobile: gridViewWidget(videData, 2, 1 / 0.8),
+                web: gridViewWidget(videData, 4, 1 / 0.8),
+                tab: gridViewWidget(videData, 3, 1 / 0.8),
+              ))
         ],
       ),
     );
+  }
+
+  GridView gridViewWidget(
+      List<VideoDataModel> videData, int count, double childRatio) {
+    return GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: videData.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: count,
+          childAspectRatio: childRatio,
+          crossAxisSpacing: 8,
+        ),
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return YouTubeContainerWidget(
+            videoUrl: videData[index].videoUrl,
+            height: MediaQuery.of(context).size.width*0.24,
+          );
+        });
   }
 }
 
@@ -97,12 +107,14 @@ class YouTubeContainerWidget extends StatefulWidget {
       : super(key: key);
   final String videoUrl;
   final double height;
+
   @override
   State<YouTubeContainerWidget> createState() => _YouTubeContainerWidgetState();
 }
 
 class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
   String videoId = '';
+
   @override
   void initState() {
     videoId = YoutubePlayer.convertUrlToId(widget.videoUrl) ?? '';

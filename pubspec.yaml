@@ -42,7 +42,7 @@ dependencies:
   url_strategy: ^0.2.0
   carousel_slider: ^4.1.1
   google_sign_in: ^5.4.2
-  device_info_plus: ^8.0.0
+#  device_info_plus: ^8.0.0
   google_fonts: ^3.0.1
   url_launcher: ^6.1.6
   pinput: ^2.2.12
@@ -55,6 +55,8 @@ dependencies:
   just_audio: ^0.9.30
   file_picker: ^5.2.4
   form_validator: ^2.1.1
+  pdfx: ^2.3.0
+  device_info_plus: ^4.1.3
 
 
 

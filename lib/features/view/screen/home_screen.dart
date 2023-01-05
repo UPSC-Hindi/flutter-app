@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<ProfileCubit>(context).getProfile();
-    return ResponsiveWidget(
+    return const ResponsiveWidget(
       mobile: MobileHome(),
       web: WebHome(),
       tab: TabHome(),

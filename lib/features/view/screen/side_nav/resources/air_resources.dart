@@ -21,6 +21,8 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
   final player = AudioPlayer();
 
   Duration? duration;
+  String? audioname;
+
 
   @override
   void initState() {
@@ -138,47 +140,63 @@ class _AirResourcesScreenState extends State<AirResourcesScreen> {
           InkWell(
             onTap: () async {
               duration = await player.setUrl(resources.audioFile.fileLoc);
-              player.playing
-                  ? setState(() {
-                      player.stop();
-                    })
-                  : setState(() {
-                      player.play();
-                    });
+              if (player.playing) {
+                player.stop();
+                audioname = "";
+              } else {
+                player.play();
+                audioname = resources.data;
+              }
             },
-            child: player.playing
-                ? Column(
-                    children: [
-                      Icon(
-                        Icons.pause,
-                        size: 25,
-                        color: ColorResources.buttoncolor,
-                      ),
-                      Text('pause',
-                          style: GoogleFonts.notoSansDevanagari(
-                            fontSize: 8,
-                            color: ColorResources.buttoncolor,
-                            fontWeight: FontWeight.w700,
-                          ))
-                    ],
-                  )
-                : Column(
-                    children: [
-                      Icon(
-                        Icons.play_arrow,
-                        size: 25,
-                        color: ColorResources.buttoncolor,
-                      ),
-                      Text(
-                        'Audio Play',
+            child: StreamBuilder<PlayerState>(
+              stream: player.playerStateStream,
+              //initialData: initialData,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                final playerstate = snapshot.data;
+                final proccesingstsate =
+                PlayerState(player.playing, player.processingState);
+                final bool isplaying = player.playing;
+                return audioname == resources.data
+                    ? proccesingstsate.processingState.index == 1 ||
+                    proccesingstsate.processingState.index == 2
+                    ? Center(
+                  child: CircularProgressIndicator(),
+                )
+                    : Column(
+                  children: [
+                    Icon(
+                      Icons.pause,
+                      size: 25,
+                      color: ColorResources.buttoncolor,
+                    ),
+                    Text('pause',
                         style: GoogleFonts.notoSansDevanagari(
                           fontSize: 8,
                           color: ColorResources.buttoncolor,
                           fontWeight: FontWeight.w700,
-                        ),
+                        ))
+                  ],
+                )
+                    : Column(
+                  children: [
+                    Icon(
+                      Icons.play_arrow,
+                      size: 25,
+                      color: ColorResources.buttoncolor,
+                    ),
+                    Text(
+                      'Audio Play',
+                      style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 8,
+                        color: ColorResources.buttoncolor,
+                        fontWeight: FontWeight.w700,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            //
           )
         ],
       ),
