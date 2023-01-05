@@ -53,38 +53,33 @@ class _CoursesScreenState extends State<CoursesScreen> {
             Expanded(
               child: TabBarView(children: [
                 FutureBuilder<CoursesModel>(
-                    future: getMainCourses,
+                    future: getPrelimsCourses,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          return isWeb
-                              ? GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                        childAspectRatio: 1.9,
-                                  ),
-                                  itemCount: snapshot.data!.data.length,
-                                  itemBuilder: (context, index) {
-                                    return snapshot.data!.data.isEmpty
-                                        ? EmptyWidget(
-                                            image: SvgImages.emptyCard,
-                                            text: "No Courses")
-                                        : SizedBox(
-                                          child: _cardWidget(
-                                              snapshot.data!.data[index]),
-                                        );
-                                  })
-                              : ListView.builder(
-                                  itemCount: snapshot.data!.data.length,
-                                  itemBuilder: (context, index) {
-                                    return snapshot.data!.data.isEmpty
-                                        ? EmptyWidget(
-                                            image: SvgImages.emptyCard,
-                                            text: "No Courses")
-                                        : _cardWidget(
-                                            snapshot.data!.data[index]);
-                                  });
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: isWeb
+                                  ? 3
+                                  : isTab
+                                      ? 2
+                                      : 1,
+                              childAspectRatio: isWeb
+                                  ? 16 / 9
+                                  : isTab
+                                      ? 16 / 8
+                                      : 16 / 6,
+                            ),
+                            itemCount: snapshot.data!.data.length,
+                            itemBuilder: (context, index) {
+                              return snapshot.data!.data.isEmpty
+                                  ? EmptyWidget(
+                                      image: SvgImages.emptyCard,
+                                      text: "No Courses")
+                                  : _cardWidget(snapshot.data!.data[index]);
+                            },
+                          );
                         } else {
                           return const Text("Unable to get data");
                         }
@@ -95,37 +90,33 @@ class _CoursesScreenState extends State<CoursesScreen> {
                       }
                     }),
                 FutureBuilder<CoursesModel>(
-                    future: getPrelimsCourses,
+                    future: getMainCourses,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          return isWeb
-                              ? GridView.builder(
-                              gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                childAspectRatio: 1.9,
-                              ),
-                              itemCount: snapshot.data!.data.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data!.data.isEmpty
-                                    ? EmptyWidget(
-                                    image: SvgImages.emptyCard,
-                                    text: "No Courses")
-                                    : SizedBox(
-                                  child: _cardWidget(
-                                      snapshot.data!.data[index]),
-                                );
-                              })
-                              : ListView.builder(
-                              itemCount: snapshot.data!.data.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data!.data.isEmpty
-                                    ? EmptyWidget(
-                                        image: SvgImages.emptyCard,
-                                        text: "No Courses")
-                                    : _cardWidget(snapshot.data!.data[index]);
-                              });
+                          return GridView.builder(
+                            gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: isWeb
+                                  ? 3
+                                  : isTab
+                                  ? 2
+                                  : 1,
+                              childAspectRatio: isWeb
+                                  ? 16 / 9
+                                  : isTab
+                                  ? 16 / 8
+                                  : 16 / 6,
+                            ),
+                            itemCount: snapshot.data!.data.length,
+                            itemBuilder: (context, index) {
+                              return snapshot.data!.data.isEmpty
+                                  ? EmptyWidget(
+                                  image: SvgImages.emptyCard,
+                                  text: "No Courses")
+                                  : _cardWidget(snapshot.data!.data[index]);
+                            },
+                          );
                         } else {
                           return const Text("Unable to get data");
                         }
@@ -148,6 +139,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
 
   Container _cardWidget(CoursesDataModel data) {
     return Container(
+      padding: EdgeInsets.all(15),
       margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -159,8 +151,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             data.batchName,
@@ -170,9 +162,6 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
                 color: ColorResources.textblack),
-          ),
-          const SizedBox(
-            height: 10,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -208,12 +197,6 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 ],
               )
             ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const SizedBox(
-            height: 10,
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(

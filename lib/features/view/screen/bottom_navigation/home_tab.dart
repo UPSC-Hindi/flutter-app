@@ -666,7 +666,7 @@ class _HomeTabState extends State<HomeTab> {
                             },
                             child: Container(
                                 height: 100,
-                                width: screenWidth * 0.48,
+                                width: screenWidth * 0.40,
                                 decoration: BoxDecoration(
                                     color: ColorResources.youtube,
                                     boxShadow: [
@@ -692,7 +692,7 @@ class _HomeTabState extends State<HomeTab> {
                             },
                             child: Container(
                               height: 100,
-                              width: screenWidth * 0.48,
+                              width: screenWidth * 0.40,
                               decoration: BoxDecoration(
                                   color: ColorResources.telegarm,
                                   boxShadow: [

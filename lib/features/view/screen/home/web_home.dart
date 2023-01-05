@@ -86,7 +86,7 @@ class WebHome extends StatelessWidget {
         children: [
           Expanded(flex: 2, child: drawer(context,false)),
           Expanded(
-            flex: 7,
+            flex: 9 ,
             child: BlocConsumer<DrawerCubit, DrawerState>(
               listener: (context, state) {
                 if (state is MyCartState) {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upsc_web/features/model/resources_model/notes_model.dart';
 import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
+import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/features/view/widget/search_bar_widget.dart';
 
 class NotesWidget extends StatefulWidget {
@@ -33,35 +34,44 @@ class _NotesWidgetState extends State<NotesWidget> {
                 filterText = value;
                 resources = widget.resources
                     .where(
-                      (element) =>
-                      element.title.toLowerCase().contains(
-                        filterText.toLowerCase(),
-                      ),
-                )
+                      (element) => element.title.toLowerCase().contains(
+                            filterText.toLowerCase(),
+                          ),
+                    )
                     .toList();
               });
             },
           ),
-          FractionallySizedBox(
-            widthFactor: 0.90,
-            child: ListView.builder(
-              itemCount: resources.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return BlocProvider(
-                  create: (context) => PdfViewerCubit(),
-                  child: ResourcesContainerWidget(
-                    resourcetype: resources[index].resourcetype,
-                    title: resources[index].title,
-                    uploadFile: resources[index].fileUrl.fileLoc,
-                    fileSize: resources[index].fileUrl.fileSize ?? 0.toString(),
-                  ),
-                );
-              },
-            ),
+          ResponsiveWidget(
+            mobile: griedViewWidget(1,10/2),
+            web: griedViewWidget(3,27/7),
+            tab: griedViewWidget(2,27/8),
           ),
         ],
       ),
+    );
+  }
+
+  GridView griedViewWidget(int count,double childRatio) {
+    return GridView.builder(
+      itemCount: resources.length,
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: count,
+        childAspectRatio: childRatio,
+        crossAxisSpacing: 5,
+      ),
+      itemBuilder: (context, index) {
+        return BlocProvider(
+          create: (context) => PdfViewerCubit(),
+          child: ResourcesContainerWidget(
+            resourcetype: resources[index].resourcetype,
+            title: resources[index].title,
+            uploadFile: resources[index].fileUrl.fileLoc,
+            fileSize: resources[index].fileUrl.fileSize ?? 0.toString(),
+          ),
+        );
+      },
     );
   }
 }

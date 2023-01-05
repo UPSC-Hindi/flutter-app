@@ -11,11 +11,12 @@ import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/utils.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
-  const ResourcesContainerWidget({Key? key,
-    required this.title,
-    required this.uploadFile,
-    required this.resourcetype,
-    required this.fileSize})
+  const ResourcesContainerWidget(
+      {Key? key,
+      required this.title,
+      required this.uploadFile,
+      required this.resourcetype,
+      required this.fileSize})
       : super(key: key);
   final String title;
   final String uploadFile;
@@ -36,7 +37,6 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: ColorResources.borderColor),
@@ -53,13 +53,14 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 child: Image.network(SvgImages.pdfimage),
               ),
               Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.58,
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.58,
+                    constraints: BoxConstraints(
+                      maxWidth: 100,
+                    ),
                     child: Text(
                       widget.title,
                       overflow: TextOverflow.ellipsis,
@@ -80,16 +81,15 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
           ),
           BlocConsumer<PdfViewerCubit, PdfViewerState>(
             listener: (context, state) {
-              if(state is PdfViewerSuccess){
+              if (state is PdfViewerSuccess) {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) =>
-                        PdfViewerWidget(bytes: state.bytes),
+                    builder: (context) => PdfViewerWidget(bytes: state.bytes),
                   ),
                 );
               }
-              if(state is PdfViewerError){
+              if (state is PdfViewerError) {
                 Utils.toastMessage('Unable To open');
                 //TODO Remove if fix
                 // Navigator.push(
@@ -102,14 +102,16 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               }
             },
             builder: (context, state) {
-              if(state is PdfViewerLoading){
+              if (state is PdfViewerLoading) {
                 return CircularProgressIndicator();
               }
               return InkWell(
                 onTap: () {
-                  BlocProvider.of<PdfViewerCubit>(context).viewPdf(widget.uploadFile);
+                  BlocProvider.of<PdfViewerCubit>(context)
+                      .viewPdf(widget.uploadFile);
                 },
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       widget.resourcetype == "file" ? 'PDF' : 'Link',

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,8 +13,30 @@ import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/utils/color_resources.dart';
-class TabHome extends StatelessWidget {
+class TabHome extends StatefulWidget {
   const TabHome({Key? key}) : super(key: key);
+
+  @override
+  State<TabHome> createState() => _TabHomeState();
+}
+
+class _TabHomeState extends State<TabHome> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if(index==1){
+      BlocProvider.of<BottomTabCubit>(context).courseTab();
+    }else if(index ==2){
+      BlocProvider.of<BottomTabCubit>(context).mockTestTab();
+    }else if(index == 3){
+      BlocProvider.of<BottomTabCubit>(context).profileTab();
+    }else{
+      BlocProvider.of<BottomTabCubit>(context).homeTab();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +47,7 @@ class TabHome extends StatelessWidget {
         backgroundColor: Colors.white,
         actions: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.35,
+            padding: EdgeInsets.only(left: 10),
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
                 color: const Color(0xFFF6CBB4),
@@ -76,6 +99,23 @@ class TabHome extends StatelessWidget {
         ],
       ),
       drawer: drawer(context,true),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: Colors.grey,
+        items: [
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: const Icon(CupertinoIcons.book), label: "Courses"),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.book_rounded), label: "Test"),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.person), label: "Profile"),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: ColorResources.buttoncolor,
+        onTap: _onItemTapped,
+      ),
       body: BlocConsumer<DrawerCubit, DrawerState>(
         listener: (context, state) {
           if (state is MyCartState) {
@@ -128,8 +168,10 @@ class TabHome extends StatelessWidget {
           );
         },
       ),
+
     );
   }
+
   void logout(BuildContext context) async {
     AuthController authController = AuthController();
     if (await authController.logout(context)) {

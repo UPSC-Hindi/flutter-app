@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
           if (state is RegisterSuccess) {
             Navigator.popAndPushNamed(context, AppRoute.otpVerificationScreen,
-                arguments: [widget.bannerList,numberController.text]);
+                arguments: [widget.bannerList, numberController.text]);
           }
           if (state is GoogleSuccess) {
             Navigator.pushNamed(context, AppRoute.homeScreen);
@@ -52,7 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) => MobileNumberScreen(images: widget.bannerList),
+                builder: (context) =>
+                    MobileNumberScreen(images: widget.bannerList),
               ),
             );
           }
@@ -115,15 +116,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           .required()
                           .minLength(8)
                           .regExp(
-                          RegExp(
-                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
-                          'valid password ex:Testing@1')
+                              RegExp(
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
+                              'valid password ex:Testing@1')
                           .maxLength(50)
                           .build(),
                     ),
                     AuthButton(
                       text: 'Sign up',
-                      onPressed: (){
+                      onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _registerButton();
                         }
@@ -132,9 +133,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Row(
                       children: const [
                         Expanded(
-                            child: Divider(
-                          thickness: 2,
-                        )),
+                          child: Divider(
+                            thickness: 2,
+                          ),
+                        ),
                         Text(
                           "Or Register with",
                         ),

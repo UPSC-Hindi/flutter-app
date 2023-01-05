@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/auth_controller.dart';
+import 'package:upsc_web/features/view/cubit/bottom_tab/bottom_tab_cubit.dart';
 import 'package:upsc_web/features/view/cubit/drawer/drawer_cubit.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/course_tab.dart';
 import 'package:upsc_web/features/view/screen/bottom_navigation/home_tab.dart';
@@ -28,23 +29,26 @@ class _MobileHomeState extends State<MobileHome> {
     setState(() {
       _selectedIndex = index;
     });
+    if(index==1){
+      BlocProvider.of<BottomTabCubit>(context).courseTab();
+    }else if(index ==2){
+      BlocProvider.of<BottomTabCubit>(context).mockTestTab();
+    }else if(index == 3){
+      BlocProvider.of<BottomTabCubit>(context).profileTab();
+    }else{
+      BlocProvider.of<BottomTabCubit>(context).homeTab();
+    }
   }
 
-  final List _widgetOptions = [
-    HomeTab(),
-    const CoursesScreen(),
-    Container(),
-    ProfileTab(),
-  ];
-
-  void logout()async{
+  void logout() async {
     AuthController authController = AuthController();
-    if(await authController.logout(context)){
+    if (await authController.logout(context)) {
       PreferencesHelper.clearPref();
       PreferencesHelper.setBoolean(Preferences.isLoggedIn, false);
       Navigator.pushReplacementNamed(context, AppRoute.signInScreen);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DrawerCubit, DrawerState>(
@@ -73,10 +77,10 @@ class _MobileHomeState extends State<MobileHome> {
         if (state is Resources) {
           Navigator.popAndPushNamed(context, AppRoute.resourcesScreen);
         }
-        if(state is Scheduler){
+        if (state is Scheduler) {
           Navigator.popAndPushNamed(context, AppRoute.schedulerScreen);
         }
-        if(state is Logout) {
+        if (state is Logout) {
           Navigator.pop(context);
           logout();
         }
@@ -140,7 +144,7 @@ class _MobileHomeState extends State<MobileHome> {
               )
             ],
           ),
-          drawer: drawer(context,true),
+          drawer: drawer(context, true),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             unselectedItemColor: Colors.grey,
@@ -158,7 +162,19 @@ class _MobileHomeState extends State<MobileHome> {
             selectedItemColor: ColorResources.buttoncolor,
             onTap: _onItemTapped,
           ),
-          body: _widgetOptions[_selectedIndex],
+          body: BlocBuilder<BottomTabCubit, BottomTabState>(
+            builder: (context, state) {
+              if (state is CourseTabState) {
+                return CoursesScreen();
+              } else if (state is MockTestTabState) {
+                return Container();
+              } else if (state is ProfileTabState) {
+                return ProfileTab();
+              } else {
+                return HomeTab();
+              }
+            },
+          ),
         );
       },
     );
