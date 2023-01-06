@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:upsc/api/api.dart';
@@ -13,7 +11,6 @@ import 'package:upsc/features/data/remote/models/myorders_model.dart';
 import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/data/remote/models/recorded_video_model.dart';
 import 'package:upsc/features/data/remote/models/resources_model.dart';
-import 'package:upsc/features/data/remote/models/stream_model.dart';
 import 'package:upsc/features/data/remote/models/video_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/MyTests.dart';
@@ -34,7 +31,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<ResourcesModel> getResources() async {
     try {
       Response response = await dioAuthorizationData().get(
@@ -90,7 +86,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<Response> submit_answer(PlatformFile file, String id) async {
     try {
       FormData data = FormData.fromMap({
@@ -119,7 +114,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<MyTestsModel> getMyTests() async {
     try {
       var response =
@@ -130,7 +124,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<TestSeriesDetails> getMyTestsdetails(String id) async {
     try {
       final queryParameters = <String, dynamic>{"TestSeries_id": id};
@@ -155,12 +148,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  //TODO by dinesh
-  @override
-  Future<void> addMyCart() {
-    // TODO: implement addMyCart
-    throw UnimplementedError();
-  }
 
   @override
   Future<Response> addMyCourses(String batchId, bool isPaid) async {
@@ -198,7 +185,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
-  @override
   Future<Response> savetestPaymentStatus(
       Map<String, dynamic> paymentData) async {
     try {

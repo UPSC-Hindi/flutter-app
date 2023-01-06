@@ -9,7 +9,6 @@ import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/features/data/remote/models/payment_model.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/testSerie.dart';
 import 'package:upsc/models/banner.dart';
@@ -94,7 +93,7 @@ class _TestPaymentScreenState extends State<TestPaymentScreen> {
           .toString(),
       "success": true.toString()
     };
-    _savePaymentStatus(body);
+    _savePaymentStatus(body,true);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -118,7 +117,7 @@ class _TestPaymentScreenState extends State<TestPaymentScreen> {
             .toString(),
         "success": false.toString()
     };
-    _savePaymentStatus(body);
+    _savePaymentStatus(body,false);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -378,7 +377,7 @@ class _TestPaymentScreenState extends State<TestPaymentScreen> {
     }
   }
 
-  void _savePaymentStatus( Map<String, dynamic> paymentData) async {
+  void _savePaymentStatus( Map<String, dynamic> paymentData,bool status) async {
     print("----Saving Payment Details -----");
     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
     Map<String, dynamic> body = paymentData;
@@ -401,7 +400,7 @@ class _TestPaymentScreenState extends State<TestPaymentScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PaymentScreen(paymentfor: "test"),
+            builder: (context) => PaymentScreen(paymentfor: "test",status: status),
           ),
         );
       } else {

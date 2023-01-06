@@ -2,20 +2,27 @@ class Apis {
   static const String baseUrl = 'https://upsc.trando.in/api/v1/';
   // Please don't remove "/api/v1".
   static const String banner = "adminPanel/getbannerdetails";
-  //user auth
-  static const String login = "authentication/login";
-  static const String register = "authentication/userRegister";
-  static const String verifymobilenumber = "authentication/verifyMobileNumber";
-  static const String resendotpm = "authentication/resendmobileVerificationotp";
-  static const String forgetpassword = "authentication/forgetpassword";
-  static const String passwordverifyotp = "authentication/reset";
-  static const String passwordotpresend = "authentication/resendotp";
-  static const String resetpassword = "authentication/resetpassword";
+
+  static const String login = 'authentication/login';
+  static const String register = 'authentication/userRegister';
+  static const String resendMobileVerificationOtp ='authentication/resendmobileverificationotp';
+  static const String verifyMobileNumber = 'authentication/verifyMobileNumber';
   static const String logout = "authentication/Logout";
-  //usergoogle auth
-  static const String googleSignIn = "authentication/googleSignIn";
-  static const String postUserMobileNumber =
-      "authentication/postUserMobileNumber";
+  static const String requestToLogout =
+      'adminPanel/postRequestToLogoutUserByAdmin';
+  //googleauth
+  static const String postgoolgeaddnumber = "authentication/postUserMobileNumber";
+  static const String googleAuth = 'authentication/googleSignIn';
+   //langu   
+  static const String updateUserLanguage = 'authentication/updateUserLanguage';
+  static const String updateUserStream = 'authentication/updateUserStream';
+  static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
+  //RESET OTP
+  static const String resetPassword = 'authentication/forgetpassword';
+  static const String resetPasswordVerifyOtp = 'authentication/reset';
+  static const String resendOtp = 'authentication/resendotp';
+  static const String updatePassword = 'authentication/resetpassword';
+
   //user details
   static const String updateUserDetails = "authentication/UpdateUserDetails";
   static const String updateUserProfilePhoto =
@@ -32,17 +39,14 @@ class Apis {
 
   static const String getResources = "adminPanel/ResourceDetails";
 
-  static const String putUserStream = 'authentication/updateUserStream';
-  static const String putUserLanguage = 'authentication/updateUserLanguage';
-  static const String getCategoryStream = 'adminPanel/getCategory?type=Stream';
-
   static const String addtocart = 'adminPanel/addtocart';
   static const String getcartdata = 'adminPanel/getCartDetails';
   static const String mycourses = 'adminPanel/getmybatchdetails';
   static const String addToMyCourses = 'adminPanel/addtomybatch';
   static const String getMyOrders = 'UPSCPayment/userTransactionDetails';
   static const String removefromCart = "adminPanel/deleteCartDetails/";
-  static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
+  static const String getRecordedVideo =
+      "adminPanel/getRecordedVideoStudentSide";
   static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
   static const String getCourseIndex = 'adminPanel/ResourceDetails';
 
@@ -56,7 +60,8 @@ class Apis {
 
   //Payment
   static const String savePaymentStatus = 'UPSCPayment/verifyUserPayment';
-  static const String savetestPaymentStatus = 'UPSCPayment/verifyUserPaymentForTestSeries';
+  static const String savetestPaymentStatus =
+      'UPSCPayment/verifyUserPaymentForTestSeries';
   static const String getOrderId = 'UPSCPayment/orders';
 
   //Scheduler
@@ -66,9 +71,9 @@ class Apis {
   static const String updateScheduler = 'adminPanel/updateSchedulardetails/';
   static const String classScheduler = 'adminPanel/getMySchedular';
 
-  static const String getnotification="Notification/getNotifications";
+  static const String getnotification = "Notification/getNotifications";
   //TestSeries
-  static const String gettestseries="adminPanel/getTestSeriesdetails";
+  static const String gettestseries = "adminPanel/getTestSeriesdetails";
   static const String myTests = 'adminPanel/getMyTestSeries';
   static const String myTestsoftest = 'adminPanel/getTestForTestSeriesDetails';
   static const String submittest = 'adminPanel/addAttemptedTest';

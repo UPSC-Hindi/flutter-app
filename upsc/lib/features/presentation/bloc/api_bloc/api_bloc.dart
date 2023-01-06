@@ -23,14 +23,12 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
     on<GetCartDetails>((event, emit) async {
       try {
         var response = await remoteDataSourceImpl.getCartDetails();
-        print(response.data);
         if (response.status) {
           emit(ApiCartDetailsSuccess(cartData: response.data));
         } else{
           loginRoute();
         }
       } catch (error) {
-        print("Server Error");
         emit(ApiError());
       }
     });
@@ -44,7 +42,6 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
           loginRoute();
         }
       } catch (error) {
-        print(error);
         emit(ApiError());
       }
     });
@@ -61,8 +58,6 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
           loginRoute();
         }
       } catch (error) {
-        print(error);
-        flutterToast(error.toString());
         emit(ApiError());
       }
     });
@@ -81,7 +76,6 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
         }
       } catch (error) {
         print(error);
-        flutterToast(error.toString());
         emit(ApiError());
       }
     });

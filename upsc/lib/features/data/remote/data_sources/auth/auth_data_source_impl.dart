@@ -7,35 +7,9 @@ import 'package:upsc/features/data/remote/models/stream_model.dart';
 
 class AuthDataSourceImpl implements AuthDataSource {
   //Todo pls check what is the use of this in detail
-  @override
-  Future<void> updateLanguage(String language, String token) async {
-    try {
-      Response response = await dioAuthorizationData().put(
-        Apis.baseUrl + Apis.putUserLanguage,
-        data: {'language': language},
-      );
-      print('---Successful Put Language Request ---');
-      // print(response);
-    } catch (error) {
-      print(error);
-    }
-  }
 
 //Todo pls check what is the use of this in detail
-  @override
-  Future<void> updateStream(List<String> stream) async {
-    try {
-      Response response = await dioAuthorizationData().put(
-        Apis.baseUrl + Apis.putUserStream,
-        data: {'Stream': stream},
-      );
-      print(response);
-      print('---Successful Put Stream Request ---');
-      // print(response);
-    } catch (error) {
-      print(error);
-    }
-  }
+
 
   @override
   Future<Response> logout() async {

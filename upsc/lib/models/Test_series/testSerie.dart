@@ -30,6 +30,7 @@ class TestSeriesModel {
 class TestSeriesData {
   String? sId;
   String? user;
+  String? description;
   String? testseriesName;
   String? examType;
   List<String>? student;
@@ -50,6 +51,7 @@ class TestSeriesData {
   TestSeriesData(
       {this.sId,
       this.user,
+      this.description,
       this.testseriesName,
       this.examType,
       this.student,
@@ -69,6 +71,7 @@ class TestSeriesData {
 
   TestSeriesData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
+    description = json["description"];
     user = json['user'];
     testseriesName = json['testseries_name'];
     examType = json['exam_type'];

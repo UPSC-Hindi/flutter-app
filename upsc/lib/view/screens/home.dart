@@ -2,25 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
-import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
+import 'package:upsc/view/screens/auth/language_screen.dart';
 import 'package:upsc/view/screens/bottomnav/coursescreen.dart';
 import 'package:upsc/view/screens/bottomnav/homescreen.dart';
 import 'package:upsc/view/screens/bottomnav/mocktestscreen.dart';
 import 'package:upsc/view/screens/bottomnav/profile.dart';
-import 'package:upsc/view/screens/languagescreen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? index;
@@ -32,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  String? _profileimage =
+  final String _profileimage =
       SharedPreferenceHelper.getString(Preferences.profileImage) != "N/A"
           ? SharedPreferenceHelper.getString(Preferences.profileImage)!
           : SvgImages.avatar;
@@ -532,9 +528,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const LanguageScreen(
-                              isLogin: true,
-                            ),
+                            builder: (context) => const LanguageScreen(),
                           ),
                         );
                       },
@@ -625,39 +619,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<BaseModel<Logout>> callApilogout() async {
-    Logout response;
+  callApilogout() async {
+    //Logout response;
     setState(() {
       Preferences.onLoading(context);
     });
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
-      response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
-      if (response.status!) {
-        setState(() {
-          Preferences.hideDialog(context);
-        });
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-        SharedPreferenceHelper.clearPref();
-        Navigator.of(context).popAndPushNamed('/');
-      } else {
-        setState(() {
-          Preferences.hideDialog(context);
-        });
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
+
+      SharedPreferenceHelper.clearPref();
+      Navigator.of(context).pushNamedAndRemoveUntil('/',(Route<dynamic> route) => false);
     } catch (error, stacktrace) {
       setState(() {
         Preferences.hideDialog(context);
@@ -665,6 +636,5 @@ class _HomeScreenState extends State<HomeScreen> {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
-    return BaseModel()..data = response;
   }
 }

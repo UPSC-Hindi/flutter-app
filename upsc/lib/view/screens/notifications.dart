@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
@@ -7,8 +6,9 @@ import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
 import 'package:upsc/models/notificationget.dart';
 import 'package:upsc/util/color_resources.dart';
-import 'package:upsc/util/images_file.dart';
+import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
+import 'package:intl/intl.dart';
 import 'package:upsc/util/preference.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -20,6 +20,8 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   List<Data> notificationData = [];
+
+  bool isloading = true;
 
   @override
   void initState() {
@@ -61,7 +63,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           width: 30,
                         ),
                         Text(
-                          'Notification',
+                          Languages.Notification,
                           style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textblack,
                               fontSize: 20,
@@ -73,61 +75,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   const Divider(
                     thickness: 1.5,
                   ),
-                  notificationData.isEmpty
-                      ? Container(
-                          height: 130,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: AssetImage(
-                                'assets/images/notificationCurve.png',
-                              ),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 8,
-                                spreadRadius: 1,
-                                offset: Offset(0, 9),
-                              ),
-                            ],
-                          ),
-                          width: double.maxFinite,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor:
-                                    Colors.pinkAccent.withOpacity(0.2),
-                                child: Icon(
-                                  Icons.notifications_none_outlined,
-                                  color: ColorResources.resourcesCardColor,
-                                  size: 35,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                'No notification',
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
+                  isloading
+                      ? Center(
+                          child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: notificationData.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
+                      : notificationData.isEmpty
+                          ? Container(
+                              height: 130,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fill,
                                   image: AssetImage(
-                                      'assets/images/notificationCurve.png'),
+                                    'assets/images/notificationCurve.png',
+                                  ),
                                 ),
                                 boxShadow: [
                                   BoxShadow(
@@ -138,35 +98,82 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   ),
                                 ],
                               ),
+                              width: double.maxFinite,
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 8),
-                              child: ListTile(
-                                // leading: Container(
-                                //   decoration: BoxDecoration(
-                                //     shape: BoxShape.circle,
-                                //   ),
-                                //   child: Image.network(
-                                //     SvgImages.avatar,
-                                //     height: 45,
-                                //   ),
-                                // ),
-                                horizontalTitleGap: 4,
-                                title: Text(
-                                  notificationData[index].message!,
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor:
+                                        Colors.pinkAccent.withOpacity(0.2),
+                                    child: Icon(
+                                      Icons.notifications_none_outlined,
+                                      color: ColorResources.resourcesCardColor,
+                                      size: 35,
+                                    ),
                                   ),
-                                ),
-                                subtitle: Text(
-                                  (notificationData[index].createdAt!),
-                                  style: const TextStyle(
-                                    fontSize: 12,
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                ),
+                                  const Text(
+                                    'No notification',
+                                    style: TextStyle(fontSize: 16),
+                                  )
+                                ],
                               ),
-                            );
-                          },
-                        ),
+                            )
+                          : ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              reverse: true,
+                              itemCount: notificationData.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.fitWidth,
+                                      image: AssetImage(
+                                          'assets/images/notificationCurve.png'),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 8,
+                                        spreadRadius: 1,
+                                        offset: Offset(0, 9),
+                                      ),
+                                    ],
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 8),
+                                  child: ListTile(
+                                    // leading: Container(
+                                    //   decoration: BoxDecoration(
+                                    //     shape: BoxShape.circle,
+                                    //   ),
+                                    //   child: Image.network(
+                                    //     SvgImages.avatar,
+                                    //     height: 45,
+                                    //   ),
+                                    // ),
+                                    horizontalTitleGap: 4,
+                                    title: Text(
+                                      notificationData[index].message!,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "${notificationData[index].createdAt!.split(' ')[0]} ${DateFormat.jms().format(DateFormat('hh:mm:ss').parse(notificationData[index].createdAt!.split(' ')[1]).toLocal()).toString()}",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                 ],
               ),
             ),
@@ -178,14 +185,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<BaseModel<NotificationGet>> callApinotication() async {
     NotificationGet response;
-
     try {
       var token = SharedPreferenceHelper.getString(Preferences.access_token);
       response =
           await RestClient(RetroApi().dioData(token!)).getnotificationRequest();
       setState(() {
-        print(response.data);
         notificationData = response.data!;
+        notificationData.sort((a, b) => (a.createdAt!.compareTo(b.createdAt!)));
+        isloading = false;
       });
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");

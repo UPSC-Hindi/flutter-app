@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/util/color_resources.dart';
@@ -37,7 +36,7 @@ class _ClassScheduleState extends State<ClassSchedule> {
         backgroundColor: ColorResources.textWhite,
         iconTheme: IconThemeData(color: ColorResources.textblack),
         title: Text(
-          "Class Schedule",
+          Languages.ClassSchedule,
           style:
               GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
         ),
@@ -79,14 +78,14 @@ class _ClassScheduleState extends State<ClassSchedule> {
                         ),
                       ),
                   child: Text(
-                    'My Schedule',
+                    Languages.mySchedule,
                     style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textblack),
                   )),
               TextButton(
                   onPressed: () {},
                   child: Text(
-                    'Class Schedule',
+                    Languages.ClassSchedule,
                     style: GoogleFonts.notoSansDevanagari(
                       shadows: [
                         Shadow(

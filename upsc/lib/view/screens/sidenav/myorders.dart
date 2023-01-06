@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc/features/data/remote/data_sources/remote_data_source_impl.dart';
-import 'package:upsc/features/data/remote/models/my_courses_model.dart';
 import 'package:upsc/features/data/remote/models/myorders_model.dart';
-import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/empty_widget.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
-import 'package:upsc/view/screens/course/courseview.dart';
+import 'package:intl/intl.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
@@ -111,7 +108,7 @@ class MyOrdersScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${myOrders.transactionDate}',
+                          '${myOrders.transactionDate.split(" ")[0]} ${DateFormat.jms().format(DateFormat('hh:mm:ss').parse(myOrders.transactionDate.split(" ")[1]))}',
                           style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textblack),
                         ),
@@ -143,35 +140,42 @@ class MyOrdersScreen extends StatelessWidget {
                         ),
                       ],
                     )
-                  : Align(
-                      alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: ColorResources.buttoncolor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${myOrders.transactionDate.split(" ")[0]} ${DateFormat.jms().format(DateFormat('hh:mm:ss').parse(myOrders.transactionDate.split(" ")[1]).toLocal()).toString()}',
+                          style: GoogleFonts.notoSansDevanagari(
+                              color: ColorResources.textblack),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: ColorResources.buttoncolor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed("cartscreen");
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Re-try',
+                                style: GoogleFonts.notoSansDevanagari(
+                                    color: ColorResources.textWhite),
+                              ), // <-- Text
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: ColorResources.textWhite),
+                            ],
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed("cartscreen");
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Re-try',
-                              style: GoogleFonts.notoSansDevanagari(
-                                  color: ColorResources.textWhite),
-                            ), // <-- Text
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Icon(Icons.arrow_forward_ios,
-                                color: ColorResources.textWhite),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
             ],
           ),

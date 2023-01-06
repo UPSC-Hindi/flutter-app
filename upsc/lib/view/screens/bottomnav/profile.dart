@@ -6,7 +6,6 @@ import 'package:upsc/api/Retrofit_Api.dart';
 import 'package:upsc/api/base_model.dart';
 import 'package:upsc/api/network_api.dart';
 import 'package:upsc/api/server_error.dart';
-import 'package:upsc/models/auth/Logout.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
@@ -287,43 +286,44 @@ class _ProfilScreenState extends State<ProfilScreen> {
     );
   }
 
-  Future<BaseModel<Logout>> callApilogout() async {
-    Logout response;
+  callApilogout() async {
+    //Logout response;
     setState(() {
       Preferences.onLoading(context);
     });
     try {
-      var token = SharedPreferenceHelper.getString(Preferences.access_token);
-      response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
-      if (response.status!) {
-        setState(() {
-          Preferences.hideDialog(context);
-        });
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-        SharedPreferenceHelper.clearPref();
-        Navigator.of(context).popAndPushNamed('/');
-      } else {
-        Fluttertoast.showToast(
-          msg: '${response.msg}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: ColorResources.gray,
-          textColor: ColorResources.textWhite,
-        );
-      }
+      //var token = SharedPreferenceHelper.getString(Preferences.access_token);
+      //response = await RestClient(RetroApi().dioData(token!)).logoutRequest();
+      //if (response.status!) {
+      setState(() {
+        Preferences.hideDialog(context);
+      });
+      // Fluttertoast.showToast(
+      //   msg: '${response.msg}',
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   backgroundColor: ColorResources.gray,
+      //   textColor: ColorResources.textWhite,
+      // );
+      SharedPreferenceHelper.clearPref();
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+      // } else {
+      //   Fluttertoast.showToast(
+      //     msg: '${response.msg}',
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.BOTTOM,
+      //     backgroundColor: ColorResources.gray,
+      //     textColor: ColorResources.textWhite,
+      //   );
+      // }
     } catch (error, stacktrace) {
       setState(() {
         Preferences.hideDialog(context);
       });
-      print("Exception occur: $error stackTrace: $stacktrace");
-      return BaseModel()..setException(ServerError.withError(error: error));
+      // print("Exception occur: $error stackTrace: $stacktrace");
+      // return BaseModel()..setException(ServerError.withError(error: error));
     }
-    return BaseModel()..data = response;
+    //return BaseModel()..data = response;
   }
 }

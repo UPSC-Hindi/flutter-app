@@ -56,9 +56,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       height: 20,
                     ),
                     Text(
-                      'We’re here to Solve',
+                      Languages.feelfree,
                       style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 30,
+                        fontSize: Languages.isEnglish ? 30 : 15,
                         color: ColorResources.textWhite,
                         fontWeight: FontWeight.w700,
                       ),
@@ -73,7 +73,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   height: MediaQuery.of(context).size.height * 0.40,
                 ),
                 Text(
-                  'Feel free to reach us on',
+                  Languages.freeMessage,
                   style: GoogleFonts.notoSansDevanagari(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Mail us at',
+                          Languages.emailText,
                           style: GoogleFonts.notoSansDevanagari(
                             fontSize: 20,
                           ),
@@ -109,7 +109,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             launchUrl(
                                 Uri(
                                   scheme: 'mailto',
-                                  path: 'upschindi4cse@gmail.com',
+                                  path: 'info@upschindi.online',
                                   query: 'subject=helpandsupport&body=msg',
                                 ),
                                 mode: LaunchMode.externalApplication);
@@ -142,7 +142,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () => launchUrl(
-                              Uri.parse('https://wa.me/+91951%209780078'),
+                              Uri.parse('https://www.wa.me/+919519780078'),
                               mode: LaunchMode.externalApplication),
                           child: CachedNetworkImage(
                             imageUrl: SvgImages.whatsapp,
