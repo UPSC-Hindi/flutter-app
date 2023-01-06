@@ -4,6 +4,7 @@ import 'package:upsc/api/api.dart';
 import 'package:upsc/features/data/const_data.dart';
 import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/scheduler_remote_data_source.dart';
 import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
+import 'package:upsc/models/classschedule.dart';
 
 class SchedulerRemoteDataSourceImpl implements SchedulerRemoteDataSource {
   @override
@@ -60,6 +61,15 @@ class SchedulerRemoteDataSourceImpl implements SchedulerRemoteDataSource {
       );
       return response;
     } catch (error) {
+      rethrow;
+    }
+  }
+  Future<ClassSchedulermodel> getMyClassSchedule() async {
+    try {
+      var response = await dioAuthorizationData()
+          .get('${Apis.baseUrl}${Apis.classScheduler}');
+      return ClassSchedulermodel.fromJson(response.data);
+    } catch (e) {
       rethrow;
     }
   }

@@ -138,18 +138,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   }
 
   @override
-  Future<ClassSchedulermodel> getMyClassSchedule() async {
-    try {
-      var response = await dioAuthorizationData()
-          .get('${Apis.baseUrl}${Apis.classScheduler}');
-      return ClassSchedulermodel.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-
-  @override
   Future<Response> addMyCourses(String batchId, bool isPaid) async {
     try {
       Response response = await dioAuthorizationData().post(

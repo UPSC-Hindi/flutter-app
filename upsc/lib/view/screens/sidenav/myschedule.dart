@@ -7,6 +7,7 @@ import 'package:upsc/features/data/remote/data_sources/scheduler_data_source/sch
 import 'package:upsc/features/data/remote/models/my_scheduler_model.dart';
 import 'package:upsc/features/presentation/bloc/api_bloc/api_bloc.dart';
 import 'package:upsc/features/presentation/widgets/tostmessage.dart';
+import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
@@ -22,153 +23,272 @@ class MySchedule extends StatefulWidget {
 class _MyScheduleState extends State<MySchedule> {
   String? datetoshow;
   final _dateController = TextEditingController();
+  final schedulerRemoteDataSourceImpl = SchedulerRemoteDataSourceImpl();
+  List listdata = [];
+  late Future<MySchedulerModel> getMyScheduleData;
+  late Future<ClassSchedulermodel> getClassScheduler;
 
   @override
   void initState() {
-    context.read<ApiBloc>().add(
-          GetMyScheduler(),
-        );
+    getClassScheduler = schedulerRemoteDataSourceImpl.getMyClassSchedule();
+    getMyScheduleData = schedulerRemoteDataSourceImpl.getSchedule();
     super.initState();
     datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorResources.textWhite,
-        iconTheme: IconThemeData(color: ColorResources.textblack),
-        title: Text(Languages.mySchedule,
-            style: GoogleFonts.notoSansDevanagari(
-                color: ColorResources.textblack)),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
-                ? Languages.scheduleForToday
-                : "Schedule for",
-            style: GoogleFonts.notoSansDevanagari(fontSize: 20),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    Languages.mySchedule,
-                    style: GoogleFonts.notoSansDevanagari(
-                      shadows: [
-                        Shadow(
-                            color: ColorResources.buttoncolor,
-                            offset: const Offset(0, -10))
-                      ],
-                      color: Colors.transparent,
-                      decoration: TextDecoration.underline,
-                      decorationColor: ColorResources.buttoncolor,
-                      decorationThickness: 4,
-                    ),
-                  )),
-              TextButton(
-                  onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ClassSchedule(),
-                        ),
-                      ),
-                  child: Text(
-                    Languages.ClassSchedule,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: ColorResources.textWhite,
+          iconTheme: IconThemeData(color: ColorResources.textblack),
+          title: Text(Languages.mySchedule,
+              style: GoogleFonts.notoSansDevanagari(
+                  color: ColorResources.textblack)),
+        ),
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
+                  ? Languages.scheduleForToday
+                  : "Schedule for",
+              style: GoogleFonts.notoSansDevanagari(fontSize: 20),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TabBar(
+              indicatorColor: ColorResources.buttoncolor,
+              labelColor: ColorResources.buttoncolor,
+              unselectedLabelColor: Colors.black,
+              tabs: [Tab(text: "My Schedule"), Tab(text: "Class Schedule")],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: ColorResources.textWhite,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))),
+              onPressed: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    lastDate: DateTime(2100));
+                if (pickedDate != null) {
+                  print(
+                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  String formattedDate =
+                      DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                  print(
+                      formattedDate); //formatted date output using intl package =>  2021-03-16
+                  setState(() {
+                    datetoshow =
+                        formattedDate; //set output date to TextField value.
+                  });
+                } else {}
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '$datetoshow',
                     style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textblack),
-                  ))
-            ],
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: ColorResources.textWhite,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-            onPressed: () async {
-              DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1950),
-                  lastDate: DateTime(2100));
-              if (pickedDate != null) {
-                print(
-                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                String formattedDate =
-                    DateFormat('dd-MMMM-yyyy').format(pickedDate);
-                print(
-                    formattedDate); //formatted date output using intl package =>  2021-03-16
-                setState(() {
-                  datetoshow =
-                      formattedDate; //set output date to TextField value.
-                });
-              } else {}
-            },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '$datetoshow',
-                  style: GoogleFonts.notoSansDevanagari(
-                      color: ColorResources.textblack),
-                ),
-                Icon(
-                  Icons.arrow_drop_down_outlined,
-                  color: ColorResources.textblack,
-                )
-              ],
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down_outlined,
+                    color: ColorResources.textblack,
+                  )
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          BlocBuilder<ApiBloc, ApiState>(
-            builder: (context, state) {
-              if (state is ApiError) {
-                return const Center(
-                  child: Text('Pls Refresh (or) Reopen App'),
-                );
-              }
-              if (state is ApiGetSchedulerSuccess) {
-                return state.schedulerList.isEmpty
-                    ? Center(
-                        child: Text(Languages.noscheduler),
-                      )
-                    : _bodyWidget(context, state.schedulerList);
-              }
-
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('MyScheduleAdd').then((value) {
-            context.read<ApiBloc>().add(
-                  GetMyScheduler(),
-                );
-          });
-        },
-        backgroundColor: ColorResources.buttoncolor,
-        child: const Icon(Icons.add),
+            const SizedBox(
+              height: 10,
+            ),
+            Flexible(
+              child: TabBarView(
+                children: [
+                  FutureBuilder<MySchedulerModel>(
+                      future: getMyScheduleData,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasData) {
+                            return snapshot.data!.data.isEmpty
+                                ? Center(
+                                    child: Text(Languages.noscheduler),
+                                  )
+                                : _mySchedulerWidget(
+                                    context, snapshot.data!.data);
+                          } else if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          } else {
+                            return const Center(
+                              child: Text('Pls Refresh (or) Reopen App'),
+                            );
+                          }
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      }),
+                  FutureBuilder<ClassSchedulermodel>(
+                    future: getClassScheduler,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          snapshot.data!.data!.sort((a, b) =>
+                              (a.startingDate!.compareTo(b.startingDate!)));
+                          snapshot.data!.data!.forEach((element) {
+                            if (DateFormat("dd-MM-yyyy")
+                                    .parse(element.startingDate!)
+                                    .toString()
+                                    .split(" ")[0] ==
+                                DateFormat("dd-MM-yyyy")
+                                    .parse(datetoshow!)
+                                    .toString()
+                                    .split(" ")[0]) {
+                              listdata.add(element);
+                              print('------found u---------');
+                            }
+                          });
+                          return snapshot.data!.data!.isEmpty
+                              ? Center(
+                                  child: Text(Languages.noscheduler),
+                                )
+                              : _classSchedulerWidget(
+                                  context, snapshot.data!.data!);
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else {
+                          return const Center(
+                            child: Text('Pls Refresh (or) Reopen App'),
+                          );
+                        }
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed('MyScheduleAdd').then((value) {
+              setState(() {
+                getMyScheduleData = schedulerRemoteDataSourceImpl.getSchedule();
+              });
+            });
+          },
+          backgroundColor: ColorResources.buttoncolor,
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
 
-  Widget _bodyWidget(
+  Widget _classSchedulerWidget(
+      BuildContext context, List<classScheduleModel> schedulerList) {
+    //flutterToast("loggedIn:${schedulerList[0].loggedIn}");
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          listdata.isNotEmpty
+              ? ListView.builder(
+                  itemCount: listdata.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) =>
+                      classSchedulerContainerWidget(
+                          context: context, schedulerData: listdata[index]),
+                )
+              : const Center(
+                  child: Text('There is no Scheduler'),
+                ),
+          const SizedBox(
+            height: 50,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget classSchedulerContainerWidget(
+      {required BuildContext context,
+      required classScheduleModel schedulerData}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorResources.gray.withOpacity(0.5)),
+        borderRadius: BorderRadius.circular(20),
+        color: ColorResources.textWhite.withOpacity(0.9),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 5.0,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.70,
+                child: Text(
+                  schedulerData.lectureTitle!,
+                  style: GoogleFonts.notoSansDevanagari(fontSize: 20),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              //Text(schedulerData.startingDate!),
+              Text(DateFormat.jm()
+                  .format(DateFormat('dd-MM-yyyy HH:mm:ss')
+                      .parse(schedulerData.startingDate!))
+                  .toString()),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.70,
+                child: Text(
+                  schedulerData.description!,
+                  maxLines: 1,
+                  style: GoogleFonts.notoSansDevanagari(fontSize: 14),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('mycoursesscreen');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: ColorResources.buttoncolor,
+                      shape: const StadiumBorder()),
+                  child: const Text("go")),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _mySchedulerWidget(
       BuildContext context, List<MySchedulerDataModel> schedulerList) {
     //flutterToast("loggedIn:${schedulerList[0].loggedIn}");
     return SingleChildScrollView(
@@ -487,7 +607,9 @@ class _MyScheduleState extends State<MySchedule> {
         await schedulerRemoteDataSourceImpl.deleteScheduler(schedulerId);
     if (response.statusCode == 200) {
       flutterToast(response.data['msg']);
-      context.read<ApiBloc>().add(GetMyScheduler());
+      setState(() {
+        getMyScheduleData = schedulerRemoteDataSourceImpl.getSchedule();
+      });
     } else {
       flutterToast(response.data['msg']);
     }
@@ -502,7 +624,9 @@ class _MyScheduleState extends State<MySchedule> {
         .updateScheduler(id, task, notifyAt, isActive: true);
     flutterToast(response.data["msg"]);
     if (response.statusCode == 200) {
-      context.read<ApiBloc>().add(GetMyScheduler());
+      setState(() {
+        getMyScheduleData = schedulerRemoteDataSourceImpl.getSchedule();
+      });
     }
     Preferences.hideDialog(context);
   }

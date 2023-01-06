@@ -65,15 +65,15 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
     on<GetmyClassSchedule>((event, emit) async {
       emit(ApiLoading());
       try {
-        ClassSchedulermodel response =
-        await remoteDataSourceImpl.getMyClassSchedule();
-        print(response);
-        if (response.status!) {
-          emit(ApiGetMyclassSchedulerSucces(myclassschedulerList: response.data!));
-        } else {
-          flutterToast(response.msg.toString());
-          loginRoute();
-        }
+        // ClassSchedulermodel response =
+        // await remoteDataSourceImpl.getMyClassSchedule();
+        // print(response);
+        // if (response.status!) {
+        //   emit(ApiGetMyclassSchedulerSucces(myclassschedulerList: response.data!));
+        // } else {
+        //   flutterToast(response.msg.toString());
+        //   loginRoute();
+        // }
       } catch (error) {
         print(error);
         emit(ApiError());

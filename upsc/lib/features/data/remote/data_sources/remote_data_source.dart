@@ -16,7 +16,6 @@ abstract class RemoteDataSource{
   Future<VideoModel> getYouTubeVideo();
   Future<CoursesModel> getCourses(String filter,String type);
   Future<TestSeriesModel> getTestSeries();
-  Future<ClassSchedulermodel> getMyClassSchedule();
   Future<CartModel>getCartDetails();
   Future<MyCoursesModel>getMyCourses();
   Future<Response>addMyCourses(String batchId,bool isPaid);
