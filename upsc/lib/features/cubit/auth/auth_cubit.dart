@@ -70,7 +70,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(VerificationOtpLoading());
     if (await authController.resendOtp()) {
       emit(ResendOtpSuccess());
-    }else{
+    } else {
       emit(VerificationOtpError());
     }
   }
@@ -110,6 +110,15 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> goolgePhoneNumberAdd(String number) async {
+    emit(GoogleAddPhoneNumberLoading());
+    if (await authController.postGoolglAuthNumber(number)) {
+      emit(GoogleAddPhonenumber());
+    } else {
+      emit(GoogleAddPhonenumberError());
+    }
+  }
+
   Future<void> requestLogout(String userEmail) async {
     emit(LoadingAuth());
     if (await authController.requestToLogout(userEmail)) {
@@ -120,38 +129,40 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   //RESET PASSWORD
-  Future<void> resetPassword(String email_mobileNumber)async{
+  Future<void> resetPassword(String email_mobileNumber) async {
     emit(LoadingAuth());
-    if(await authController.resetPasswordVerification(email_mobileNumber)){
+    if (await authController.resetPasswordVerification(email_mobileNumber)) {
       emit(ResetPasswordSuccess());
-    }else{
+    } else {
       emit(ErrorAuth());
     }
   }
 
-  Future<void> resetPasswordVerifyOtp(String email_mobileNumber,String otp)async{
+  Future<void> resetPasswordVerifyOtp(
+      String email_mobileNumber, String otp) async {
     emit(UpdatePasswordLoading());
-    if(await authController.resetPasswordVerifyOtp(email_mobileNumber,otp)){
+    if (await authController.resetPasswordVerifyOtp(email_mobileNumber, otp)) {
       emit(UpdatePasswordOtpVerifySuccess());
-    }else{
-      emit(UpdatePasswordError());
-    }
-  }
-  Future<void>resendPasswordOtp(String email_phoneNumber)async{
-    emit(UpdatePasswordLoading());
-    if(await authController.resendPasswordVerifyOtp(email_phoneNumber)){
-      emit(UpdatePasswordOtpResend());
-    }else{
-      emit(UpdatePasswordError());
-    }
-  }
-  Future<void>updatePassword(dynamic data)async{
-    emit(LoadingAuth());
-    if(await authController.updatePassword(data)){
-      emit(UpdatePasswordSuccess());
-    }else{
+    } else {
       emit(UpdatePasswordError());
     }
   }
 
+  Future<void> resendPasswordOtp(String email_phoneNumber) async {
+    emit(UpdatePasswordLoading());
+    if (await authController.resendPasswordVerifyOtp(email_phoneNumber)) {
+      emit(UpdatePasswordOtpResend());
+    } else {
+      emit(UpdatePasswordError());
+    }
+  }
+
+  Future<void> updatePassword(dynamic data) async {
+    emit(UpdatePasswordLoading());
+    if (await authController.updatePassword(data)) {
+      emit(UpdatePasswordSuccess());
+    } else {
+      emit(UpdatePasswordError());
+    }
+  }
 }

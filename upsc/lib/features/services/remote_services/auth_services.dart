@@ -25,6 +25,16 @@ class AuthServices {
       rethrow;
     }
   }
+  Future<dynamic> postGooleAuthNumberServices(dynamic data) async {
+    try {
+      dynamic response =
+          await BaseClient.post(url: Apis.baseUrl + Apis.postgoolgeaddnumber, data: data);
+      return response.data;
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
 
   Future<dynamic> resendOtpService() async {
     try {

@@ -7,6 +7,7 @@ import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/images_file.dart';
 import 'package:upsc/util/langauge.dart';
+import 'package:intl/intl.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
@@ -107,7 +108,7 @@ class MyOrdersScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${myOrders.transactionDate}',
+                          '${myOrders.transactionDate.split(" ")[0]} ${DateFormat.jms().format(DateFormat('hh:mm:ss').parse(myOrders.transactionDate.split(" ")[1]))}',
                           style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textblack),
                         ),
@@ -143,7 +144,7 @@ class MyOrdersScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${myOrders.transactionDate}',
+                          '${myOrders.transactionDate.split(" ")[0]} ${DateFormat.jms().format(DateFormat('hh:mm:ss').parse(myOrders.transactionDate.split(" ")[1]).toLocal()).toString()}',
                           style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textblack),
                         ),

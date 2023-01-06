@@ -71,6 +71,26 @@ class AuthController {
     }
   }
 
+  Future<bool> postGoolglAuthNumber(dynamic number) async {
+    dynamic data = {"userMobileNumber": number};
+    try {
+      dynamic response = await authServices.postGooleAuthNumberServices(data);
+      print(response);
+      BaseModel user = BaseModel.fromJson(response);
+      if (user.status) {
+        SharedPreferenceHelper.setString(
+            Preferences.phoneNUmber, user.data[0]['mobileNumber'].toString());
+        flutterToast(user.data[0]['mobileNumberVerificationOTP'].toString());
+      }
+      flutterToast(user.msg);
+      return user.status;
+    } catch (error) {
+      print(error.toString());
+      flutterToast(error.toString());
+      return false;
+    }
+  }
+
   Future<bool> resendOtp() async {
     try {
       dynamic responseJson = await authServices.resendOtpService();
@@ -114,12 +134,12 @@ class AuthController {
       print(result!.email);
       await _googleSignIn.signOut();
       //await _googleSignIn.disconnect();
-      if (result!.email.isNotEmpty) {
+      if (result.email.isNotEmpty) {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
         dynamic data = {
           'deviceConfig': androidDeviceInfo.id,
-          'DeviceName': androidDeviceInfo.brand,
+          'deviceName': androidDeviceInfo.brand,
           'email': result.email,
           'profilePhoto': result.photoUrl,
           'usernameFromGoogle': result.displayName,
@@ -319,6 +339,7 @@ class AuthController {
       print(response);
       BaseModel res = BaseModel.fromJson(response.data);
       flutterToast(res.msg);
+
       return res.status;
     } catch (error) {
       print(error);

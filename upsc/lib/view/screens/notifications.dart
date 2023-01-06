@@ -8,6 +8,7 @@ import 'package:upsc/models/notificationget.dart';
 import 'package:upsc/util/color_resources.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
+import 'package:intl/intl.dart';
 import 'package:upsc/util/preference.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -164,7 +165,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       ),
                                     ),
                                     subtitle: Text(
-                                      (notificationData[index].createdAt!),
+                                      "${notificationData[index].createdAt!.split(' ')[0]} ${DateFormat.jms().format(DateFormat('hh:mm:ss').parse(notificationData[index].createdAt!.split(' ')[1]).toLocal()).toString()}",
                                       style: const TextStyle(
                                         fontSize: 12,
                                       ),

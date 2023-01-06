@@ -36,7 +36,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           print(state);
-          if (state is LoadingAuth) {
+          if (state is UpdatePasswordLoading) {
             Preferences.onLoading(context);
           }
           if (state is UpdatePasswordError) {

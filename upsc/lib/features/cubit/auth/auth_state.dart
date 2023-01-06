@@ -23,6 +23,9 @@ class UnVerifiedNumber extends AuthState{
 }
 class RequestToLogout extends AuthState {}
 class GoogleSuccess extends AuthState{}
+class GoogleAddPhoneNumberLoading extends AuthState{}
+class GoogleAddPhonenumber extends AuthState{}
+class GoogleAddPhonenumberError extends AuthState{}
 class GooglePhoneNumberVerification extends AuthState{}
 class RequestLogoutSuccess extends AuthState {}
 
