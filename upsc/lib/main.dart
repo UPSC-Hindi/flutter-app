@@ -108,7 +108,6 @@ Future<void> main() async {
     sound: true,
   );
 
-  //FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
       await SharedPreferenceHelper.init();
