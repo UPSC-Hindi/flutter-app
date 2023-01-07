@@ -14,6 +14,7 @@ class YTClassScreen extends StatefulWidget {
 
 class _YTClassScreenState extends State<YTClassScreen> {
   late YoutubePlayerController _controller;
+  bool isfullscreen = false;
   @override
   void initState() {
     _controller = YoutubePlayerController(
@@ -37,23 +38,39 @@ class _YTClassScreenState extends State<YTClassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: ColorResources.textblack),
-        backgroundColor: Colors.white,
-        title: Text(
-          widget.lecture.lectureTitle,
-          style:
-              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
-        ),
-      ),
+      // appBar: AppBar(
+      //   iconTheme: IconThemeData(color: ColorResources.textblack),
+      //   backgroundColor: Colors.white,
+      //   title: Text(
+      //     widget.lecture.lectureTitle,
+      //     style:
+      //         GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
+      //   ),
+      // ),
       body: YoutubePlayerBuilder(
           player: YoutubePlayer(
             controller: _controller,
           ),
+          onEnterFullScreen: () => isfullscreen = true,
+          onExitFullScreen: () => isfullscreen = false,
           builder: (context, player) {
             print(widget.lecture.link);
             return Column(
               children: [
+                // isfullscreen
+                //     ? Container()
+                //     : Row(
+                //         children: [
+                //           IconButton(
+                //               onPressed: () => Navigator.of(context).pop(),
+                //               icon: Icon(Icons.arrow_back)),
+                //           Text(
+                //             widget.lecture.lectureTitle,
+                //             style: GoogleFonts.notoSansDevanagari(
+                //                 color: ColorResources.textblack),
+                //           ),
+                //         ],
+                //       ),
                 player,
                 Container(
                   padding: const EdgeInsets.all(15),
@@ -61,8 +78,8 @@ class _YTClassScreenState extends State<YTClassScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(widget.lecture.lectureTitle,
-                            style: GoogleFonts.notoSansDevanagari(
-                                fontSize: 30)),
+                            style:
+                                GoogleFonts.notoSansDevanagari(fontSize: 30)),
                         Text(widget.lecture.description),
                       ]),
                 )

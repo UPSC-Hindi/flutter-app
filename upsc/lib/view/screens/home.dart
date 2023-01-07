@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     CircleAvatar(
                       radius: 25.0,
                       backgroundImage:
-                          CachedNetworkImageProvider(_profileimage!),
+                          CachedNetworkImageProvider(_profileimage),
                       backgroundColor: Colors.grey,
                     ),
                     SizedBox(
