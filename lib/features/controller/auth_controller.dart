@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:upsc_web/features/model/auth/google_auth_model.dart';
 import 'package:upsc_web/features/model/auth/login_model.dart';
 import 'package:upsc_web/features/model/base_model.dart';
-import 'package:upsc_web/services/base_api/base_client.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences.dart';
 import 'package:upsc_web/services/local_services/share_preferences/preferences_helper.dart';
 import 'package:upsc_web/services/remote_services/auth_services.dart';

@@ -23,15 +23,15 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             indicatorColor: ColorResources.buttoncolor,
             labelColor: ColorResources.buttoncolor,
             unselectedLabelColor: Colors.black,
-            tabs: [
-              Tab(text: "My Schedule"),
-              Tab(text: "Class Schedule")
-            ],
-          ),),
-        body: TabBarView(children: [
-          MySchedule(),
-          ClassSchedule(),
-        ]),
+            tabs: [Tab(text: "My Schedule"), Tab(text: "Class Schedule")],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            MySchedule(),
+            ClassSchedule(),
+          ],
+        ),
       ),
     );
   }

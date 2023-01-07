@@ -13,6 +13,9 @@ class ContactContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        constraints: BoxConstraints(
+            maxWidth: 400
+        ),
         padding: const EdgeInsets.symmetric(vertical: 30),
         width: MediaQuery.of(context).size.width * 0.80,
         decoration: BoxDecoration(

@@ -154,8 +154,8 @@ class Banner {
 
   final String fileLoc;
   final String fileName;
-  final String fileSize;
-  final String bannerfileType;
+  final dynamic fileSize;
+  final dynamic bannerfileType;
 
   factory Banner.fromJson(Map<String, dynamic> json) => Banner(
     fileLoc: json["fileLoc"],

@@ -39,218 +39,225 @@ class _ProfileTabState extends State<ProfileTab> {
               repeat: ImageRepeat.noRepeat,
             ),
           ),
-          child: Column(
-            children: [
-              BlocBuilder<ProfileCubit, ProfileState>(
-                builder: (context, state) {
-                  if (state is ProfileLoading) {
-                    return CircularProgressIndicator();
-                  } else if (state is ProfileSuccess) {
-                    return _profileInfo(state.userName, state.profileImage);
-                  } else {
-                    return _profileInfo("UPSC", SvgImages.avatar);
-                  }
-                },
+          child: Center(
+            child: Container(
+              constraints: BoxConstraints(
+                  maxWidth: 400
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => const EditProfileScreen(),
-                    )),
-                child: Container(
-                  height: 80,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorResources.textWhite,
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 5.0,
-                      ),
-                    ],
+              child: Column(
+                children: [
+                  BlocBuilder<ProfileCubit, ProfileState>(
+                    builder: (context, state) {
+                      if (state is ProfileLoading) {
+                        return CircularProgressIndicator();
+                      } else if (state is ProfileSuccess) {
+                        return _profileInfo(state.userName, state.profileImage);
+                      } else {
+                        return _profileInfo("UPSC", SvgImages.avatar);
+                      }
+                    },
                   ),
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(Icons.account_circle_outlined, size: 30),
-                      Column(
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const EditProfileScreen(),
+                        )),
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ColorResources.textWhite,
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const Icon(Icons.account_circle_outlined, size: 30),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                Languages.personalInformation,
+                                style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textblack,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                Languages.editProfile,
+                                style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textblack.withOpacity(0.5),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ColorResources.textWhite,
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Icon(Icons.bookmark, size: 30),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                Languages.yourTestSeries,
+                                style: Theme.of(context).textTheme.headline2,
+                              ),
+                              Text(
+                                Languages.seeYourEnrollTest,
+                                style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textblack.withOpacity(0.5),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRoute.myCoursesScreen);
+                    },
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ColorResources.textWhite,
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Icon(Icons.auto_stories, size: 30),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                Languages.courses,
+                                style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textblack,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                Languages.seeYourEnrollCourses,
+                                style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textblack.withOpacity(0.5),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios)
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      AuthController authController = AuthController();
+                      if(await authController.logout(context)){
+                        PreferencesHelper.clearPref();
+                        PreferencesHelper.setBoolean(Preferences.isLoggedIn, false);
+                        Navigator.pushReplacementNamed(context, AppRoute.signInScreen);
+                      }
+                    },
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ColorResources.textWhite,
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Icon(Icons.logout),
                           Text(
-                            Languages.personalInformation,
+                            'Logout',
                             style: GoogleFonts.notoSansDevanagari(
                               color: ColorResources.textblack,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            Languages.editProfile,
-                            style: GoogleFonts.notoSansDevanagari(
-                              color: ColorResources.textblack.withOpacity(0.5),
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
+                          const Icon(Icons.arrow_forward_ios)
                         ],
                       ),
-                      const Icon(Icons.arrow_forward_ios)
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 80,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorResources.textWhite,
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 5.0,
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 20,
                   ),
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(Icons.bookmark, size: 30),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Languages.yourTestSeries,
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                          Text(
-                            Languages.seeYourEnrollTest,
-                            style: GoogleFonts.notoSansDevanagari(
-                              color: ColorResources.textblack.withOpacity(0.5),
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                      const Icon(Icons.arrow_forward_ios)
-                    ],
-                  ),
-                ),
+                ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed(AppRoute.myCoursesScreen);
-                },
-                child: Container(
-                  height: 80,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorResources.textWhite,
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 5.0,
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(Icons.auto_stories, size: 30),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Languages.courses,
-                            style: GoogleFonts.notoSansDevanagari(
-                              color: ColorResources.textblack,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            Languages.seeYourEnrollCourses,
-                            style: GoogleFonts.notoSansDevanagari(
-                              color: ColorResources.textblack.withOpacity(0.5),
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      ),
-                      const Icon(Icons.arrow_forward_ios)
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () async{
-                  AuthController authController = AuthController();
-                  if(await authController.logout(context)){
-                    PreferencesHelper.clearPref();
-                    PreferencesHelper.setBoolean(Preferences.isLoggedIn, false);
-                    Navigator.pushReplacementNamed(context, AppRoute.signInScreen);
-                  }
-                },
-                child: Container(
-                  height: 80,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorResources.textWhite,
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 5.0,
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(Icons.logout),
-                      Text(
-                        'Logout',
-                        style: GoogleFonts.notoSansDevanagari(
-                          color: ColorResources.textblack,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Icon(Icons.arrow_forward_ios)
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+            ),
           ),
         ),
       ),
