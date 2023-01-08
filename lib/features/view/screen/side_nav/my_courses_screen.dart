@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/controller/course_controller.dart';
@@ -5,6 +6,8 @@ import 'package:upsc_web/features/model/courses_model/MyCoursesModel.dart';
 import 'package:upsc_web/features/view/widget/empty_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
+
+import 'course_view_screen.dart';
 
 class MyCoursesScreen extends StatefulWidget {
   const MyCoursesScreen({Key? key}) : super(key: key);
@@ -118,14 +121,14 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                     ),
                     onPressed: () {
                       if(courseData.batchDetails.isActive){
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => CourseViewScreen(
-                        //       lecture: courseData.lectureDetails,
-                        //       batch: courseData.batchDetails,
-                        //     ),
-                        //   ),
-                        // );
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (context) => CourseViewScreen(
+                              lecture: courseData.lectureDetails,
+                              batch: courseData.batchDetails,
+                            ),
+                          ),
+                        );
                       }
                     },
                     child: Row(

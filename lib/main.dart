@@ -47,13 +47,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
             headline1: GoogleFonts.notoSansDevanagari(
-                color: ColorResources.textblack,
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
+              color: ColorResources.textblack,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
             headline2: GoogleFonts.notoSansDevanagari(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: ColorResources.textblack),
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: ColorResources.textblack,
+            ),
             headline3: GoogleFonts.notoSansDevanagari(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -66,9 +68,9 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
-              bodyText1:
-              GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
-              bodyText2: GoogleFonts.notoSansDevanagari(
+            bodyText1:
+                GoogleFonts.notoSansDevanagari(color: ColorResources.textblack),
+            bodyText2: GoogleFonts.notoSansDevanagari(
               fontSize: 20,
             ),
             headlineLarge: GoogleFonts.notoSansDevanagari(

@@ -11,6 +11,7 @@ import 'package:upsc_web/features/view/screen/auth/sign_up_screen.dart';
 import 'package:upsc_web/features/view/screen/home/contactus_screen.dart';
 import 'package:upsc_web/features/view/screen/home_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/about_us_screen.dart';
+import 'package:upsc_web/features/view/screen/side_nav/course_view_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/help_and_support_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/my_cart_screen.dart';
 import 'package:upsc_web/features/view/screen/side_nav/my_courses_screen.dart';
