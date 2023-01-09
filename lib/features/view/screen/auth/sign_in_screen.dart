@@ -77,7 +77,6 @@ class _SignInScreenState extends State<SignInScreen> {
               Navigator.pushNamed(context, AppRoute.homeScreen);
             }
             if (state is GooglePhoneNumberVerification) {
-              print(state);
               Navigator.push(
                 context,
                 CupertinoPageRoute(
@@ -130,8 +129,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             }
                           }),
                     ),
-                    Text('Login',
-                        style: Theme.of(context).textTheme.headlineMedium),
+                    Text(
+                      'Login',
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
                     CustomTextFilled(
                       hintText: 'Email Id',
                       textController: emailController,

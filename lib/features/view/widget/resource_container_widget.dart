@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/screen/side_nav/resources/youtube_notes.dart';
 import 'package:upsc_web/features/view/widget/pdf_viewer_widget.dart';
+import 'package:upsc_web/features/view/widget/video_player_widget.dart';
 import 'package:upsc_web/features/view/widget/youtube_player_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
@@ -54,7 +55,22 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: Image.network(SvgImages.pdfimage),
+                child: widget.resourcetype == 'file' ||
+                        widget.resourcetype == 'pdf'
+                    ? Image.network(SvgImages.pdfimage,height: 40,width: 40,)
+                    : widget.resourcetype == 'video'
+                        ? Icon(
+                            Icons.video_collection_rounded,
+                            size: 40,
+                            color: Color.fromARGB(255, 143, 51, 51),
+                          )
+                        : widget.resourcetype == 'yt_videos'
+                            ? Image.network(SvgImages.youtube,height: 40,width: 40,)
+                            : Icon(
+                                Icons.wordpress_outlined,
+                                size: 40,
+                                color: Color.fromARGB(255, 143, 51, 51),
+                              ),
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -95,14 +111,6 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
               }
               if (state is PdfViewerError) {
                 Utils.toastMessage('Unable To open');
-                //TODO Remove if fix
-                // Navigator.push(
-                //   context,
-                //   CupertinoPageRoute(
-                //     builder: (context) =>
-                //         PdfViewerWidget(url: widget.uploadFile),
-                //   ),
-                // );
               }
             },
             builder: (context, state) {
@@ -121,7 +129,16 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                       throw 'Could not launch ${widget.uploadFile}';
                     }
                   }
-                  if (widget!.resourcetype == 'video') {}
+                  if (widget!.resourcetype == 'video') {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => VideoPlayerWidget(
+                          videoLink: widget.uploadFile,
+                        ),
+                      ),
+                    );
+                  }
                   if (widget!.resourcetype == 'yt_videos') {
                     Navigator.push(
                       context,
@@ -141,11 +158,9 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        widget.resourcetype == 'link'
-                            ? 'LINK'
-                            : widget.resourcetype == 'pdf'
-                                ? 'PDF'
-                                : "VIDEO",
+                        widget.resourcetype == 'pdf'
+                            ? 'Pdf'
+                            : 'Link',
                         style: GoogleFonts.notoSansDevanagari(
                           fontSize: 15,
                           color: ColorResources.buttoncolor,
@@ -153,10 +168,9 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                         ),
                       ),
                       Icon(
-                        //todo this dead code pls check onces
-                        widget.resourcetype == "file"
-                            ? Icons.file_download_outlined
-                            : Icons.link,
+                        widget.resourcetype == "link" || widget.resourcetype == "pdf"
+                            ? Icons.link
+                            : Icons.visibility,
                         size: 25,
                         color: ColorResources.buttoncolor,
                       ),

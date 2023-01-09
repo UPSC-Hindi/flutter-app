@@ -9,6 +9,7 @@ import 'package:upsc_web/features/model/courses_model/course_notes_model.dart';
 import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
 import 'package:upsc_web/features/view/widget/empty_widget.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
+import 'package:upsc_web/features/view/widget/video_player_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
 
@@ -434,13 +435,14 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
     return InkWell(
       onTap: () {
         print("recorded video");
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) =>
-        //         PlayVideoFromNetwork(Videourl: videosdata.fileUrl!.fileLoc!),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VideoPlayerWidget(
+              videoLink: videosdata.fileUrl!.fileLoc!,
+            ),
+          ),
+        );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),

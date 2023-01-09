@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:upsc_web/app_route.dart';
 import 'package:upsc_web/features/controller/auth_controller.dart';
 import 'package:upsc_web/features/view/cubit/bottom_tab/bottom_tab_cubit.dart';
@@ -134,7 +135,8 @@ class _TabHomeState extends State<TabHome> {
             Navigator.popAndPushNamed(context, AppRoute.contactUs);
           }
           if (state is ShareApp) {
-            // Navigator.popAndPushNamed(context, AppRoute.aboutUsScreen);
+            Navigator.pop(context);
+            Share.share('https://upschindi.in/');
           }
           if (state is Setting) {
             Navigator.popAndPushNamed(context, AppRoute.languageScreen);

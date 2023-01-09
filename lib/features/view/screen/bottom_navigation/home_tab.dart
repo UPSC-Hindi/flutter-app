@@ -38,7 +38,9 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(const Duration(seconds: 5)),
+        onRefresh: () => Future.delayed(
+          const Duration(seconds: 5),
+        ),
         child: isWeb || isTab
             ? SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -278,7 +280,7 @@ class _HomeTabState extends State<HomeTab> {
                                   child: Text(
                                     'Contact Us',
                                     style:
-                                        Theme.of(context).textTheme.headline2,
+                                        Theme.of(context).textTheme.headline4,
                                   ),
                                   onPressed: () {
                                     BlocProvider.of<DrawerCubit>(context)
