@@ -16,12 +16,15 @@ class Api {
   static const String updateUserStream = 'authentication/updateUserStream';
   static const String updateUserLanguage = 'authentication/updateUserLanguage';
   static const String logout = "authentication/Logout";
-  static const String requestToLogout = 'adminPanel/postRequestToLogoutUserByAdmin';
+  static const String requestToLogout =
+      'adminPanel/postRequestToLogoutUserByAdmin';
+
   //RESET OTP
   static const String resetPassword = 'authentication/forgetpassword';
   static const String resetPasswordVerifyOtp = 'authentication/reset';
   static const String resendOtp = 'authentication/resendotp';
   static const String updatePassword = 'authentication/resetpassword';
+
   //PROFILE
   static const String updateUserProfileInfo =
       "authentication/UpdateUserDetails";
@@ -38,8 +41,14 @@ class Api {
   static const String getMyCoursesOrders = 'UPSCPayment/userTransactionDetails';
   static const String deleteFromCart = "adminPanel/deleteCartDetails/";
 
+  //Courses View
+  static const String getCourseNotes = "adminPanel/getNotesOfBatchStudentSide";
+  static const String getCourseRecordedVideo =
+      "adminPanel/getRecordedVideoStudentSide";
+
   //Payment
   static const String getOrderId = 'UPSCPayment/orders';
+
   // static const String getRecordedVideo = "adminPanel/getRecordedVideoStudentSide";
   // static const String getBatchNotes = "adminPanel/getNotesOfBatchStudentSide";
 
@@ -50,9 +59,7 @@ class Api {
   static const String getNotes = 'adminPanel/getNotesDetails';
   static const String getYouTubeVideo = 'adminPanel/YouTubeDetails';
 
-
   //Scheduler
   static const String getMyScheduler = 'adminPanel/getScheduleDetails';
   static const String getClassScheduler = 'adminPanel/getMySchedular';
-
 }

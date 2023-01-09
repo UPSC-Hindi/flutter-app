@@ -27,8 +27,8 @@ class CourseServices {
 
   Future<dynamic> addToMyCourses(dynamic data) async {
     try {
-      dynamic response =
-          await BaseClient.post(url: Api.baseUrl + Api.addToMyCourses,data: data);
+      dynamic response = await BaseClient.post(
+          url: Api.baseUrl + Api.addToMyCourses, data: data);
       return response;
     } catch (error) {
       rethrow;
@@ -73,6 +73,30 @@ class CourseServices {
     try {
       dynamic response = await BaseClient.delete(
           url: Api.baseUrl + Api.deleteFromCart + cartId);
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getCourseRecordedVideoService(dynamic queryParameters) async {
+    try {
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getCourseRecordedVideo,
+        queryParameters: queryParameters,
+      );
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getCourseNotesService(dynamic queryParameters) async {
+    try {
+      dynamic response = await BaseClient.get(
+        url: Api.baseUrl + Api.getCourseNotes,
+        queryParameters: queryParameters,
+      );
       return response;
     } catch (error) {
       rethrow;

@@ -4,7 +4,9 @@ import 'package:upsc_web/features/model/base_model.dart';
 import 'package:upsc_web/features/model/courses_model/CartCoursesModel.dart';
 import 'package:upsc_web/features/model/courses_model/CoursesModel.dart';
 import 'package:upsc_web/features/model/courses_model/MyCoursesModel.dart';
+import 'package:upsc_web/features/model/courses_model/RecordedVideoModel.dart';
 import 'package:upsc_web/features/model/courses_model/courseDetailsModel.dart';
+import 'package:upsc_web/features/model/courses_model/course_notes_model.dart';
 import 'package:upsc_web/services/remote_services/course_services.dart';
 import 'package:upsc_web/utils/utils.dart';
 
@@ -32,15 +34,14 @@ class CoursesController {
     }
   }
 
-  Future<bool> addMyCourses(
-      String courseId, bool isPaid) async {
+  Future<bool> addMyCourses(String courseId, bool isPaid) async {
     try {
       dynamic response = await courseServices.addToMyCourses({
         "batch_id": courseId,
         'is_paid': isPaid,
       });
       print(response);
-      BaseModel res =  BaseModel.fromJson(response.data);
+      BaseModel res = BaseModel.fromJson(response.data);
       return res.status;
     } catch (error) {
       print(error.toString());
@@ -89,6 +90,31 @@ class CoursesController {
     try {
       dynamic response = await courseServices.getMyCoursesServices();
       return MyCoursesModel.fromJson(response);
+    } catch (error) {
+      print(error.toString());
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
+  }
+
+   Future<RecordedVideoModel> getCourseRecordedVideo(String batchId) async {
+    try {
+      dynamic response = await courseServices.getCourseRecordedVideoService(
+        {'batchId': batchId},
+      );
+      return RecordedVideoModel.fromJson(response);
+    } catch (error) {
+      print(error.toString());
+      Utils.toastMessage(error.toString());
+      rethrow;
+    }
+  }
+  Future<CourseNotesModel> getCourseNotes(String batchId) async {
+    try {
+      dynamic response = await courseServices.getCourseNotesService(
+        {'batchId': batchId},
+      );
+      return CourseNotesModel.fromJson(response);
     } catch (error) {
       print(error.toString());
       Utils.toastMessage(error.toString());

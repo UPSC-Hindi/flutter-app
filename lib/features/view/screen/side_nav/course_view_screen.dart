@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/MyCoursesModel.dart';
+import 'package:upsc_web/features/model/courses_model/RecordedVideoModel.dart';
+import 'package:upsc_web/features/model/courses_model/course_notes_model.dart';
+import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
+import 'package:upsc_web/features/view/widget/empty_widget.dart';
+import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
+import 'package:upsc_web/utils/images_file.dart';
 
 import 'resources/youtube_notes.dart';
 
@@ -21,6 +29,8 @@ class CourseViewScreen extends StatefulWidget {
 }
 
 class _CourseViewScreenState extends State<CourseViewScreen> {
+  CoursesController coursesController = CoursesController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,10 +236,14 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
                     ),
                   ),
                 ),
-                // CoursesVideoWidget(
-                //   batchId: widget.batch.id,
-                // ),
-                // BatchNotesWidget(batchId: widget.batch.id)
+                CoursesVideoWidget(
+                  batchId: widget.batch.id,
+                  coursesController: coursesController,
+                ),
+                BatchNotesWidget(
+                  batchId: widget.batch.id,
+                  coursesController: coursesController,
+                )
               ]),
             ),
           ),
@@ -299,288 +313,171 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
       ),
     );
   }
-
-  // Future<BaseModel<JoinStreaming>> callApiJoinStreamingScreen(
-  //     LectureDetail lecture) async {
-  //   JoinStreaming response;
-  //   var random = Random();
-  //   int uid = random.nextInt(999); //= 123;
-  //   Map<String, dynamic> body = {
-  //     "channelName": lecture.lectureTitle,
-  //     "expireTime": "3600",
-  //     "tokentype": "uid",
-  //     "Stream_title": "Mahadeva@12546987",
-  //     "account": "askd",
-  //     "Description": lecture.description,
-  //     "uid": uid.toString()
-  //   };
-  //   setState(() {
-  //     Preferences.onLoading(context);
-  //   });
-  //   try {
-  //     print(uid);
-  //     String acess_token =
-  //     SharedPreferenceHelper.getString(Preferences.access_token).toString();
-  //     response = await RestClient(RetroApi().dioData(acess_token))
-  //         .joinmeetingRequest(body);
-  //
-  //     if (response.status!) {
-  //       print(response.rtmToke);
-  //       print(response.rtcToken);
-  //       setState(() {
-  //         Preferences.hideDialog(context);
-  //       });
-  //       Navigator.of(context).push(
-  //         MaterialPageRoute(
-  //           builder: (context) => JoinStreamingScreen(
-  //               userID: response.userID!,
-  //               userblock: response.userBlocked!,
-  //               rtctoken: response.rtcToken!,
-  //               rtmtoken: response.rtmToke!,
-  //               uid: uid,
-  //               lecture: lecture),
-  //         ),
-  //       );
-  //       Fluttertoast.showToast(
-  //         msg: '${response.msg}',
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         backgroundColor: ColorResources.gray,
-  //         textColor: ColorResources.textWhite,
-  //       );
-  //     } else {
-  //       setState(() {
-  //         Preferences.hideDialog(context);
-  //       });
-  //       Fluttertoast.showToast(
-  //         msg: '${response.msg}',
-  //         toastLength: Toast.LENGTH_SHORT,
-  //         gravity: ToastGravity.BOTTOM,
-  //         backgroundColor: ColorResources.gray,
-  //         textColor: ColorResources.textWhite,
-  //       );
-  //     }
-  //   } catch (error, stacktrace) {
-  //     setState(() {
-  //       Preferences.hideDialog(context);
-  //     });
-  //     print("Exception occur: $error stackTrace: $stacktrace");
-  //     return BaseModel()..setException(ServerError.withError(error: error));
-  //   }
-  //   return BaseModel()..data = response;
-  // }
 }
 
-// class BatchNotesWidget extends StatelessWidget {
-//   const BatchNotesWidget({Key? key, required this.batchId}) : super(key: key);
-//   final String batchId;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     Localfilesfind.initState();
-//     RemoteDataSourceImpl batchNotesDataModel = RemoteDataSourceImpl();
-//     List<BatchNotesDataModel>? notesList;
-//     return FutureBuilder<List<BatchNotesDataModel>>(
-//         initialData: notesList,
-//         future: batchNotesDataModel.getBatchNotes(batchId: batchId),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.done) {
-//             if (snapshot.hasData) {
-//               notesList = snapshot.data!;
-//               return notesList!.isEmpty
-//                   ? EmptyWidget(
-//                   image: SvgImages.emptyCard, text: "There is no Notes")
-//                   : ListView.builder(
-//                 itemCount: notesList!.length,
-//                 //todo
-//                 itemBuilder: (context, index) => Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 10),
-//                   child: ResourcesContainerWidget(
-//                     resourcetype: notesList![index].resourceType,
-//                     title: notesList![index].title,
-//                     uploadFile: notesList![index].uploadFile.fileLoc,
-//                     fileSize: notesList![index].uploadFile.fileSize,
-//                   ),
-//                 ),
-//               );
-//             } else {
-//               return const Center(child: Text("Something Went Wrong"));
-//             }
-//           } else {
-//             return const Center(child: CircularProgressIndicator());
-//           }
-//         });
-//   }
-// }
+class BatchNotesWidget extends StatelessWidget {
+  const BatchNotesWidget(
+      {Key? key, required this.batchId, required this.coursesController})
+      : super(key: key);
+  final String batchId;
+  final CoursesController coursesController;
 
-// class CoursesVideoWidget extends StatefulWidget {
-//   const CoursesVideoWidget({
-//     Key? key,
-//     required this.batchId,
-//   }) : super(key: key);
-//   final String batchId;
-//
-//   @override
-//   State<CoursesVideoWidget> createState() => _CoursesVideoWidgetState();
-// }
-//
-// class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
-//   final ReceivePort _port = ReceivePort();
-//
-//   Future download(String url, String? name) async {
-//     final baseStorage = await getExternalStorageDirectory();
-//
-//     print('directory:${baseStorage!.path}');
-//     //todo pls chek this variable use
-//     List files = baseStorage.listSync();
-//     await FlutterDownloader.enqueue(
-//       url: url,
-//       headers: {},
-//       // optional: header send with url (auth token etc)
-//       savedDir: baseStorage.path,
-//       showNotification: true,
-//       // show download progress in status bar (for Android)
-//       fileName: '${name!}.${url.split('.').last}',
-//       openFileFromNotification:
-//       false, // click on notification to open downloaded file (for Android)
-//     );
-//   }
-//
-//   @override
-//   void initState() {
-//     IsolateNameServer.registerPortWithName(
-//         _port.sendPort, 'downloader_send_port');
-//     _port.listen((dynamic data) {
-//       DownloadTaskStatus status = data[1];
-//       int progress = data[2];
-//       setState(() {});
-//     });
-//
-//     FlutterDownloader.registerCallback(downloadCallback);
-//     super.initState();
-//   }
-//
-//   @override
-//   void dispose() {
-//     IsolateNameServer.removePortNameMapping('downloader_send_port');
-//     super.dispose();
-//   }
-//
-//   @pragma('vm:entry-point')
-//   static void downloadCallback(
-//       String id, DownloadTaskStatus status, int progress) {
-//     final SendPort? send =
-//     IsolateNameServer.lookupPortByName('downloader_send_port');
-//     send!.send([id, status, progress]);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     RemoteDataSourceImpl remoteDataSourceImpl = RemoteDataSourceImpl();
-//     List<RecordedVideoDataModel>? videoList;
-//     return FutureBuilder<List<RecordedVideoDataModel>>(
-//         initialData: videoList,
-//         future: remoteDataSourceImpl.getRecordedVideo(batchId: widget.batchId),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.done) {
-//             if (snapshot.hasData) {
-//               videoList = snapshot.data!;
-//               return videoList!.isEmpty
-//                   ? EmptyWidget(
-//                   image: SvgImages.emptyCard, text: "There is no video")
-//                   : ListView.builder(
-//                 shrinkWrap: true,
-//                 itemCount: videoList!.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   return _recordedvideobody(videoList![index]);
-//                 },
-//               );
-//               //  ListView.builder(
-//               //     itemCount: videoList!.length,
-//               //     itemBuilder: (context, index) =>
-//               //         _recordedVideoWidget(videoList![index]),
-//               //   );
-//             } else {
-//               return const Center(child: Text("Something Went Wrong"));
-//             }
-//           } else {
-//             return const Center(child: CircularProgressIndicator());
-//           }
-//         });
-//   }
-//
-//   Widget _recordedvideobody(RecordedVideoDataModel lectureName) {
-//     return Container(
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-//             child: Text(
-//               lectureName.lectureName!,
-//               style: Theme.of(context).textTheme.headline1,
-//             ),
-//           ),
-//           ListView.builder(
-//             shrinkWrap: true,
-//             itemCount: lectureName.listofvideos!.length,
-//             itemBuilder: (BuildContext context, int index) {
-//               return _recordedVideoWidget(lectureName.listofvideos![index]);
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget _recordedVideoWidget(Listofvideos videosdata) {
-//     return InkWell(
-//       onTap: () {
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//             builder: (context) =>
-//                 PlayVideoFromNetwork(Videourl: videosdata.fileUrl!.fileLoc!),
-//           ),
-//         );
-//         //download(videosdata.fileUrl!.fileLoc!, videosdata.title);
-//       },
-//       child: Container(
-//         padding: const EdgeInsets.symmetric(horizontal: 20),
-//         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//           Row(
-//             children: [
-//               Container(
-//                 height: 60,
-//                 width: 90,
-//                 decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(10),
-//                     color: ColorResources.gray),
-//                 child: Icon(Icons.play_circle, color: ColorResources.textWhite),
-//               ),
-//               const SizedBox(
-//                 width: 20,
-//               ),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     videosdata.title!,
-//                     style: GoogleFonts.notoSansDevanagari(
-//                         fontSize: 20, fontWeight: FontWeight.w400),
-//                   ),
-//                   // Text(
-//                   //   '1hr 2mins',
-//                   //   style: GoogleFonts.notoSansDevanagari(
-//                   //       fontSize: 16, color: ColorResources.gray),
-//                   // ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//           const Divider(),
-//         ]),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<CourseNotesModel>(
+        future: coursesController.getCourseNotes(batchId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              return snapshot.data!.data!.isEmpty
+                  ? EmptyWidget(
+                      image: SvgImages.emptyCard, text: "There is no Notes")
+                  : ListView.builder(
+                      itemCount: snapshot.data!.data!.length,
+                      //todo
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: BlocProvider(
+                          create: (context) => PdfViewerCubit(),
+                          child: ResourcesContainerWidget(
+                            resourcetype:
+                                snapshot.data!.data![index].resourceType,
+                            title: snapshot.data!.data![index].title,
+                            uploadFile:
+                                snapshot.data!.data![index].uploadFile.fileLoc,
+                            fileSize:
+                                snapshot.data!.data![index].uploadFile.fileSize,
+                          ),
+                        ),
+                      ),
+                    );
+            } else {
+              return const Center(child: Text("Something Went Wrong"));
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+}
+
+class CoursesVideoWidget extends StatefulWidget {
+  const CoursesVideoWidget({
+    Key? key,
+    required this.batchId,
+    required this.coursesController,
+  }) : super(key: key);
+  final String batchId;
+  final CoursesController coursesController;
+
+  @override
+  State<CoursesVideoWidget> createState() => _CoursesVideoWidgetState();
+}
+
+class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<RecordedVideoModel>(
+        future: widget.coursesController.getCourseRecordedVideo(widget.batchId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              return snapshot.data!.data!.isEmpty
+                  ? EmptyWidget(
+                      image: SvgImages.emptyCard, text: "There is no video")
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _recordedVideoBody(snapshot.data!.data![index]);
+                      },
+                    );
+              //  ListView.builder(
+              //     itemCount: videoList!.length,
+              //     itemBuilder: (context, index) =>
+              //         _recordedVideoWidget(videoList![index]),
+              //   );
+            } else {
+              return const Center(child: Text("Something Went Wrong"));
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Widget _recordedVideoBody(RecordedVideoDataModel lectureName) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+            child: Text(
+              lectureName.lectureName!,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: lectureName.listofvideos!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _recordedVideoWidget(lectureName.listofvideos![index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _recordedVideoWidget(Listofvideos videosdata) {
+    return InkWell(
+      onTap: () {
+        print("recorded video");
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) =>
+        //         PlayVideoFromNetwork(Videourl: videosdata.fileUrl!.fileLoc!),
+        //   ),
+        // );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            children: [
+              Container(
+                height: 60,
+                width: 90,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorResources.gray),
+                child: Icon(Icons.play_circle, color: ColorResources.textWhite),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    videosdata.title!,
+                    style: GoogleFonts.notoSansDevanagari(
+                        fontSize: 20, fontWeight: FontWeight.w400),
+                  ),
+                  // Text(
+                  //   '1hr 2mins',
+                  //   style: GoogleFonts.notoSansDevanagari(
+                  //       fontSize: 16, color: ColorResources.gray),
+                  // ),
+                ],
+              ),
+            ],
+          ),
+          const Divider(),
+        ]),
+      ),
+    );
+  }
+}

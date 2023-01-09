@@ -5,19 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
+import 'package:upsc_web/features/view/screen/side_nav/resources/youtube_notes.dart';
 import 'package:upsc_web/features/view/widget/pdf_viewer_widget.dart';
+import 'package:upsc_web/features/view/widget/youtube_player_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 import 'package:upsc_web/utils/images_file.dart';
 import 'package:upsc_web/utils/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ResourcesContainerWidget extends StatefulWidget {
-  const ResourcesContainerWidget(
-      {Key? key,
-      required this.title,
-      required this.uploadFile,
-      required this.resourcetype,
-      required this.fileSize})
-      : super(key: key);
+  const ResourcesContainerWidget({
+    Key? key,
+    required this.title,
+    required this.uploadFile,
+    required this.resourcetype,
+    required this.fileSize,
+  }) : super(key: key);
   final String title;
   final String uploadFile;
   final String resourcetype;
@@ -58,7 +62,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width * 0.58,
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxWidth: 100,
                     ),
                     child: Text(
@@ -106,30 +110,58 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                 return CircularProgressIndicator();
               }
               return InkWell(
-                onTap: () {
-                  BlocProvider.of<PdfViewerCubit>(context)
-                      .viewPdf(widget.uploadFile);
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      widget.resourcetype == "file" ? 'PDF' : 'Link',
-                      style: GoogleFonts.notoSansDevanagari(
-                        fontSize: 15,
-                        color: ColorResources.buttoncolor,
-                        fontWeight: FontWeight.w700,
+                onTap: () async {
+                  print(widget.resourcetype);
+                  if (widget!.resourcetype == 'pdf') {
+                    BlocProvider.of<PdfViewerCubit>(context)
+                        .viewPdf(widget.uploadFile);
+                  }
+                  if (widget!.resourcetype == 'link') {
+                    if (!await launchUrl(Uri.parse(widget.uploadFile))) {
+                      throw 'Could not launch ${widget.uploadFile}';
+                    }
+                  }
+                  if (widget!.resourcetype == 'video') {}
+                  if (widget!.resourcetype == 'yt_videos') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => YoutubePlayerWidget(
+                          videoId: YoutubePlayer.convertUrlToId(
+                                  widget!.uploadFile) ??
+                              '',
+                        ),
                       ),
-                    ),
-                    Icon(
-                      //todo this dead code pls check onces
-                      widget.resourcetype == "file"
-                          ? Icons.file_download_outlined
-                          : Icons.link,
-                      size: 25,
-                      color: ColorResources.buttoncolor,
-                    ),
-                  ],
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.resourcetype == 'link'
+                            ? 'LINK'
+                            : widget.resourcetype == 'pdf'
+                                ? 'PDF'
+                                : "VIDEO",
+                        style: GoogleFonts.notoSansDevanagari(
+                          fontSize: 15,
+                          color: ColorResources.buttoncolor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Icon(
+                        //todo this dead code pls check onces
+                        widget.resourcetype == "file"
+                            ? Icons.file_download_outlined
+                            : Icons.link,
+                        size: 25,
+                        color: ColorResources.buttoncolor,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
