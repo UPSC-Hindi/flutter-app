@@ -127,30 +127,28 @@ class _YouTubeContainerWidgetState extends State<YouTubeContainerWidget> {
           ),
         );
       },
-      child: Container(
-        child: Column(
-          children: [
-            Container(
-              height: widget.height,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: ColorResources.gray,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    YoutubePlayer.getThumbnail(videoId: videoId, webp: false),
-                  ),
-                  fit: BoxFit.fill,
+      child: Column(
+        children: [
+          Container(
+            height: widget.height,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: ColorResources.gray,
+              image: DecorationImage(
+                image: NetworkImage(
+                  YoutubePlayer.getThumbnail(videoId: videoId, webp: false),
                 ),
-              ),
-              child: Icon(
-                Icons.play_circle_fill_rounded,
-                color: ColorResources.textWhite,
-                size: 50,
+                fit: BoxFit.fill,
               ),
             ),
-          ],
-        ),
+            child: Icon(
+              Icons.play_circle_fill_rounded,
+              color: ColorResources.textWhite,
+              size: 50,
+            ),
+          ),
+        ],
       ),
     );
   }

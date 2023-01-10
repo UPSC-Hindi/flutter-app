@@ -105,25 +105,23 @@ class _TabCoursesWidgetState extends State<TabCoursesWidget> {
 
   SingleChildScrollView _bodyWidget(List<CoursesDataModel> courseData) {
     return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'Courses',
-                style: GoogleFonts.notoSansDevanagari(
-                    fontSize: 22, fontWeight: FontWeight.bold),
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              'Courses',
+              style: GoogleFonts.notoSansDevanagari(
+                  fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: courseData.length,
-                itemBuilder: (context, index) => _cardWidget(courseData[index]))
-          ],
-        ),
+          ),
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: courseData.length,
+              itemBuilder: (context, index) => _cardWidget(courseData[index]))
+        ],
       ),
     );
   }

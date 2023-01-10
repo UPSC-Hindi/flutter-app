@@ -118,17 +118,15 @@ class _DownloadScreenState extends State<DownloadScreen> {
                   ]),
             ),
             Expanded(
-              child: Container(
-                child: TabBarView(children: [
-                  //EmptyWidget(image: SvgImages.emptyCard, text: "There in no Videos"),
-                  // EmptyWidget(
-                  //     image: SvgImages.emptyCard,
-                  //     text: "There in no Test Series"),
-                  EmptyWidget(
-                      image: SvgImages.emptyCard, text: "There in no videos"),
-                  _videoCardWidget(context),
-                ]),
-              ),
+              child: TabBarView(children: [
+                //EmptyWidget(image: SvgImages.emptyCard, text: "There in no Videos"),
+                // EmptyWidget(
+                //     image: SvgImages.emptyCard,
+                //     text: "There in no Test Series"),
+                EmptyWidget(
+                    image: SvgImages.emptyCard, text: "There in no videos"),
+                _videoCardWidget(context),
+              ]),
             )
           ],
         ),

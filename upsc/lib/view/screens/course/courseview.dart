@@ -77,184 +77,182 @@ class _CourseViewScreenState extends State<CourseViewScreen> {
             ),
           ),
           Expanded(
-            child: Container(
-              child: TabBarView(children: [
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.batch.batchName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 24,
+            child: TabBarView(children: [
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.batch.batchName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 24,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              widget.batch.description,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 4,
+                              textAlign: TextAlign.justify,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFfD9D9D9),
+                                  borderRadius: BorderRadius.circular(90)),
+                              child: Text(
+                                'Duration',
+                                style: GoogleFonts.notoSansDevanagari(
+                                    fontSize: 16),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.access_time_rounded,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                widget.batch.description,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 4,
-                                textAlign: TextAlign.justify,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFfD9D9D9),
-                                    borderRadius: BorderRadius.circular(90)),
-                                child: Text(
-                                  'Duration',
-                                  style: GoogleFonts.notoSansDevanagari(
-                                      fontSize: 16),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
+                                Text(
+                                    '  ${widget.batch.endingDate.difference(widget.batch.startingDate).inDays} Days'),
+                                const Expanded(child: SizedBox()),
+                                Row(children: [
                                   const Icon(
-                                    Icons.access_time_rounded,
+                                    Icons.calendar_month_rounded,
                                   ),
                                   Text(
-                                      '  ${widget.batch.endingDate.difference(widget.batch.startingDate).inDays} Days'),
-                                  const Expanded(child: SizedBox()),
-                                  Row(children: [
-                                    const Icon(
-                                      Icons.calendar_month_rounded,
-                                    ),
-                                    Text(
-                                        'Starts : ${DateFormat("dd-MM-yyyy").format(widget.batch.startingDate)}')
-                                  ]),
-                                ],
-                              ),
-                              // Container(
-                              //   margin:
-                              //       const EdgeInsets.symmetric(vertical: 10),
-                              //   padding: const EdgeInsets.all(5),
-                              //   decoration: BoxDecoration(
-                              //       color: const Color(0xFfD9D9D9),
-                              //       borderRadius: BorderRadius.circular(90)),
-                              //   child: Text(
-                              //     'Faculty  ',
-                              //     style: GoogleFonts.notoSansDevanagari(
-                              //         fontSize: 16),
-                              //   ),
-                              // ),
-                              // Container(
-                              //   height: 100,
-                              //   child: ListView.builder(
-                              //     itemCount: widget.batch.teacher.length,
-                              //     scrollDirection: Axis.horizontal,
-                              //     itemBuilder: (context, index) => Padding(
-                              //       padding: const EdgeInsets.symmetric(
-                              //           horizontal: 5.0),
-                              //       child: Column(
-                              //         children: [
-                              //           CachedNetworkImage(
-                              //             imageUrl: widget.batch.teacher[index]
-                              //                 .profilePhoto,
-                              //             placeholder: (context, url) =>
-                              //                 const Center(
-                              //                     child:
-                              //                         CircularProgressIndicator()),
-                              //             errorWidget: (context, url, error) =>
-                              //                 const Icon(Icons.error),
-                              //             height: 70,
-                              //           ),
-                              //           SizedBox(
-                              //             width: 70,
-                              //             child: Text(
-                              //               widget
-                              //                   .batch.teacher[index].fullName,
-                              //               textAlign: TextAlign.center,
-                              //               style:
-                              //                   GoogleFonts.notoSansDevanagari(
-                              //                       fontSize: 16,
-                              //                       fontWeight:
-                              //                           FontWeight.bold),
-                              //               overflow: TextOverflow.ellipsis,
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ),
+                                      'Starts : ${DateFormat("dd-MM-yyyy").format(widget.batch.startingDate)}')
+                                ]),
+                              ],
+                            ),
+                            // Container(
+                            //   margin:
+                            //       const EdgeInsets.symmetric(vertical: 10),
+                            //   padding: const EdgeInsets.all(5),
+                            //   decoration: BoxDecoration(
+                            //       color: const Color(0xFfD9D9D9),
+                            //       borderRadius: BorderRadius.circular(90)),
+                            //   child: Text(
+                            //     'Faculty  ',
+                            //     style: GoogleFonts.notoSansDevanagari(
+                            //         fontSize: 16),
+                            //   ),
+                            // ),
+                            // Container(
+                            //   height: 100,
+                            //   child: ListView.builder(
+                            //     itemCount: widget.batch.teacher.length,
+                            //     scrollDirection: Axis.horizontal,
+                            //     itemBuilder: (context, index) => Padding(
+                            //       padding: const EdgeInsets.symmetric(
+                            //           horizontal: 5.0),
+                            //       child: Column(
+                            //         children: [
+                            //           CachedNetworkImage(
+                            //             imageUrl: widget.batch.teacher[index]
+                            //                 .profilePhoto,
+                            //             placeholder: (context, url) =>
+                            //                 const Center(
+                            //                     child:
+                            //                         CircularProgressIndicator()),
+                            //             errorWidget: (context, url, error) =>
+                            //                 const Icon(Icons.error),
+                            //             height: 70,
+                            //           ),
+                            //           SizedBox(
+                            //             width: 70,
+                            //             child: Text(
+                            //               widget
+                            //                   .batch.teacher[index].fullName,
+                            //               textAlign: TextAlign.center,
+                            //               style:
+                            //                   GoogleFonts.notoSansDevanagari(
+                            //                       fontSize: 16,
+                            //                       fontWeight:
+                            //                           FontWeight.bold),
+                            //               overflow: TextOverflow.ellipsis,
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 10,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Demo Video",
+                        style: GoogleFonts.notoSansDevanagari(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: ColorResources.textblack),
+                      ),
+                      Container(
+                        height: 120,
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                          color: ColorResources.textWhite,
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorResources.gray.withOpacity(0.5),
+                                blurRadius: 5,
+                                blurStyle: BlurStyle.normal)
+                          ],
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        Text(
-                          "Demo Video",
-                          style: GoogleFonts.notoSansDevanagari(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: ColorResources.textblack),
-                        ),
-                        Container(
-                          height: 120,
-                          width: double.infinity,
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            color: ColorResources.textWhite,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: ColorResources.gray.withOpacity(0.5),
-                                  blurRadius: 5,
-                                  blurStyle: BlurStyle.normal)
-                            ],
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: widget.batch.demoVideo.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Container(
-                              margin: const EdgeInsets.all(5),
-                              width: 130,
+                        padding: const EdgeInsets.all(10),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.batch.demoVideo.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => Container(
+                            margin: const EdgeInsets.all(5),
+                            width: 130,
+                            height: 90,
+                            child: YouTubeContainerWidget(
+                              videoUrl: widget.batch.demoVideo[index].fileLoc,
                               height: 90,
-                              child: YouTubeContainerWidget(
-                                videoUrl: widget.batch.demoVideo[index].fileLoc,
-                                height: 90,
-                              ),
                             ),
                           ),
                         ),
-                        ListView.builder(
-                          itemCount: widget.lecture.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) =>
-                              _infoCardWidget(context, widget.lecture[index]),
-                        )
-                      ],
-                    ),
+                      ),
+                      ListView.builder(
+                        itemCount: widget.lecture.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            _infoCardWidget(context, widget.lecture[index]),
+                      )
+                    ],
                   ),
                 ),
-                CoursesVideoWidget(
-                  batchId: widget.batch.id,
-                ),
-                BatchNotesWidget(batchId: widget.batch.id)
-              ]),
-            ),
+              ),
+              CoursesVideoWidget(
+                batchId: widget.batch.id,
+              ),
+              BatchNotesWidget(batchId: widget.batch.id)
+            ]),
           ),
         ]),
       ),
@@ -533,26 +531,24 @@ class _CoursesVideoWidgetState extends State<CoursesVideoWidget> {
   }
 
   Widget _recordedvideobody(RecordedVideoDataModel lectureName) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-            child: Text(
-              lectureName.lectureName!,
-              style: Theme.of(context).textTheme.headline1,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          child: Text(
+            lectureName.lectureName!,
+            style: Theme.of(context).textTheme.headline1,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: lectureName.listofvideos!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _recordedVideoWidget(lectureName.listofvideos![index]);
-            },
-          ),
-        ],
-      ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: lectureName.listofvideos!.length,
+          itemBuilder: (BuildContext context, int index) {
+            return _recordedVideoWidget(lectureName.listofvideos![index]);
+          },
+        ),
+      ],
     );
   }
 

@@ -57,20 +57,23 @@ class _YTClassScreenState extends State<YTClassScreen> {
             print(widget.lecture.link);
             return Column(
               children: [
-                // isfullscreen
-                //     ? Container()
-                //     : Row(
-                //         children: [
-                //           IconButton(
-                //               onPressed: () => Navigator.of(context).pop(),
-                //               icon: Icon(Icons.arrow_back)),
-                //           Text(
-                //             widget.lecture.lectureTitle,
-                //             style: GoogleFonts.notoSansDevanagari(
-                //                 color: ColorResources.textblack),
-                //           ),
-                //         ],
-                //       ),
+                isfullscreen
+                    ? Container()
+                    : Material(
+                        elevation: 1.0,
+                        child: Row(
+                          children: [
+                            IconButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                icon: Icon(Icons.arrow_back)),
+                            Text(
+                              widget.lecture.lectureTitle,
+                              style: GoogleFonts.notoSansDevanagari(
+                                  color: ColorResources.textblack),
+                            ),
+                          ],
+                        ),
+                      ),
                 player,
                 Container(
                   padding: const EdgeInsets.all(15),

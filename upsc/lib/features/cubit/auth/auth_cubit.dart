@@ -7,7 +7,6 @@ import 'package:upsc/features/data/remote/models/base_model.dart';
 import 'package:upsc/util/langauge.dart';
 import 'package:upsc/util/prefConstatnt.dart';
 import 'package:upsc/util/preference.dart';
-import 'package:upsc/view/screens/auth/reset_password_verify_otp.dart';
 
 part 'auth_state.dart';
 

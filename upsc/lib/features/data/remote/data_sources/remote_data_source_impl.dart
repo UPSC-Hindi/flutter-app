@@ -16,7 +16,6 @@ import 'package:upsc/features/presentation/widgets/tostmessage.dart';
 import 'package:upsc/models/Test_series/MyTests.dart';
 import 'package:upsc/models/Test_series/TestSeriesDetails.dart';
 import 'package:upsc/models/Test_series/testSerie.dart';
-import 'package:upsc/models/classschedule.dart';
 import 'package:upsc/features/data/remote/models/course_details_model.dart';
 
 class RemoteDataSourceImpl extends RemoteDataSource {

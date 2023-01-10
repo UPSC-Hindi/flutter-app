@@ -524,10 +524,8 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                       children: [
                                         Expanded(
                                           child: blockchat
-                                              ? Container(
-                                                  child: const Text(
-                                                      "user hase been block by the admin"),
-                                                )
+                                              ? const Text(
+                                                  "user hase been block by the admin")
                                               : TextField(
                                                   controller: _message,
                                                   decoration: InputDecoration(
@@ -625,20 +623,18 @@ class _JoinStreamingScreenState extends State<JoinStreamingScreen> {
                                         print("+" * 200);
                                         print(userdetails![index]
                                             .profilePicture!);
-                                        return Container(
-                                          child: Column(children: [
-                                            CircleAvatar(
-                                              radius: 40.0,
-                                              backgroundImage:
-                                                  CachedNetworkImageProvider(
-                                                      userdetails![index]
-                                                          .profilePicture!),
-                                              backgroundColor: Colors.grey,
-                                            ),
-                                            Text(userdetails![index]
-                                                .studentName!)
-                                          ]),
-                                        );
+                                        return Column(children: [
+                                          CircleAvatar(
+                                            radius: 40.0,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                                    userdetails![index]
+                                                        .profilePicture!),
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                          Text(userdetails![index]
+                                              .studentName!)
+                                        ]);
                                       },
                                     ),
                                   ],

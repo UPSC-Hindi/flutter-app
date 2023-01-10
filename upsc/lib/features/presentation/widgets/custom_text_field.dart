@@ -14,24 +14,22 @@ class CustomTextFilled extends StatelessWidget {
   final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextFormField(
-        controller: textController,
-        keyboardType: hintText == 'Email id '
-            ? TextInputType.emailAddress
-            : hintText == 'Mobile No.'
-                ? TextInputType.phone
-                : TextInputType.name,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelText: hintText,
-          hintText: hintText,
+    return TextFormField(
+      controller: textController,
+      keyboardType: hintText == 'Email id '
+          ? TextInputType.emailAddress
+          : hintText == 'Mobile No.'
+              ? TextInputType.phone
+              : TextInputType.name,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        validator: validator,
+        labelText: hintText,
+        hintText: hintText,
       ),
+      validator: validator,
     );
   }
 }
@@ -52,28 +50,26 @@ class _PasswordTextFilledState extends State<PasswordTextFilled> {
   bool _isVisible = true;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextFormField(
-        controller: widget.textEditingController,
-        obscureText: _isVisible,
-        validator: widget.validator,
-        onChanged: widget.onChanged,
-        decoration: InputDecoration(
-          hintText: 'Password',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelText: "Password",
-          suffixIcon: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isVisible = !_isVisible;
-                });
-              },
-              child: _isVisible
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility)),
+    return TextFormField(
+      controller: widget.textEditingController,
+      obscureText: _isVisible,
+      validator: widget.validator,
+      onChanged: widget.onChanged,
+      decoration: InputDecoration(
+        hintText: 'Password',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
+        labelText: "Password",
+        suffixIcon: GestureDetector(
+            onTap: () {
+              setState(() {
+                _isVisible = !_isVisible;
+              });
+            },
+            child: _isVisible
+                ? const Icon(Icons.visibility_off)
+                : const Icon(Icons.visibility)),
       ),
     );
   }

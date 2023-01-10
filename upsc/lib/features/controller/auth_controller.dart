@@ -40,7 +40,7 @@ class AuthController {
           await SharedPreferenceHelper.setBoolean(
               Preferences.is_logged_in, true);
         }
-        flutterToast(user.msg);
+        user.msg.isNotEmpty ? flutterToast(user.msg) : print('empty');
       } else {
         flutterToast(baseResponse.msg);
       }
@@ -63,7 +63,7 @@ class AuthController {
             Preferences.auth_token, user.data['token']);
         flutterToast(user.data['mobileNumberVerificationOTP'].toString());
       }
-      flutterToast(user.msg);
+      user.msg.isNotEmpty ? flutterToast(user.msg) : print('empty');
       return user;
     } catch (error) {
       flutterToast(error.toString());
@@ -82,7 +82,7 @@ class AuthController {
             Preferences.phoneNUmber, user.data[0]['mobileNumber'].toString());
         flutterToast(user.data[0]['mobileNumberVerificationOTP'].toString());
       }
-      flutterToast(user.msg);
+      user.msg.isNotEmpty ? flutterToast(user.msg) : print('empty');
       return user.status;
     } catch (error) {
       print(error.toString());
@@ -146,7 +146,7 @@ class AuthController {
         };
         dynamic response = await authServices.googleAuthService(data);
         GoogleAuthModel user = GoogleAuthModel.fromJson(response.data);
-        flutterToast(user.msg);
+        user.msg.isNotEmpty ? flutterToast(user.msg) : print('empty');
         if (user.status) {
           print(user.data.accessToken);
           SharedPreferenceHelper.setString(
@@ -290,7 +290,7 @@ class AuthController {
         'email_phoneNumber': email_phoneNumber,
       });
       BaseModel res = BaseModel.fromJson(response.data);
-      flutterToast(res.msg);
+      res.msg.isNotEmpty?flutterToast(res.msg):print(" empty ");
       flutterToast(res.data['otpToResetPassword'].toString());
       return res.status;
     } catch (error) {
@@ -308,7 +308,7 @@ class AuthController {
         'otp': otp,
       });
       BaseModel res = BaseModel.fromJson(response.data);
-      flutterToast(res.msg);
+      res.msg.isNotEmpty?flutterToast(res.msg):print(" empty ");
       return res.status;
     } catch (error) {
       print(error);
@@ -324,7 +324,7 @@ class AuthController {
       });
 
       BaseModel res = BaseModel.fromJson(response.data);
-      flutterToast(res.msg);
+      res.msg.isNotEmpty?flutterToast(res.msg):print(" empty ");
       flutterToast(res.data['otpToResetPassword'].toString());
       return res.status;
     } catch (error) {
@@ -338,7 +338,7 @@ class AuthController {
       dynamic response = await authServices.updatePasswordService(data);
       print(response);
       BaseModel res = BaseModel.fromJson(response.data);
-      flutterToast(res.msg);
+      res.msg.isNotEmpty?flutterToast(res.msg):print(" empty ");
 
       return res.status;
     } catch (error) {

@@ -111,7 +111,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                             const Icon(Icons.error),
                       )
                     : widget.resourcetype == 'video'
-                        ? Icon(
+                        ? const Icon(
                             Icons.video_collection_rounded,
                             size: 40,
                             color: Color.fromARGB(255, 143, 51, 51),
@@ -125,7 +125,7 @@ class _ResourcesContainerWidgetState extends State<ResourcesContainerWidget> {
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               )
-                            : Icon(
+                            : const Icon(
                                 Icons.wordpress_outlined,
                                 size: 40,
                                 color: Color.fromARGB(255, 143, 51, 51),

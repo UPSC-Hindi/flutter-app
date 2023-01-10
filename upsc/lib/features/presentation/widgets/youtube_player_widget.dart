@@ -33,11 +33,9 @@ class _YoutubePlayerWidgetState extends State<YoutubePlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: YoutubePlayer(
-        controller: _controller,
-        showVideoProgressIndicator: true,
-      ),
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
     );
   }
 }

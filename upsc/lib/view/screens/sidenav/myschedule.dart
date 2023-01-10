@@ -30,7 +30,7 @@ class _MyScheduleState extends State<MySchedule> {
     getClassScheduler = schedulerRemoteDataSourceImpl.getMyClassSchedule();
     getMyScheduleData = schedulerRemoteDataSourceImpl.getSchedule();
     super.initState();
-    datetoshow = DateFormat('dd-MMMM-yyyy').format(DateTime.now());
+    datetoshow = DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
   @override
@@ -51,7 +51,7 @@ class _MyScheduleState extends State<MySchedule> {
               height: 20,
             ),
             Text(
-              datetoshow == DateFormat('dd-MMMM-yyyy').format(DateTime.now())
+              datetoshow == DateFormat('dd-MM-yyyy').format(DateTime.now())
                   ? Languages.scheduleForToday
                   : "Schedule for",
               style: GoogleFonts.notoSansDevanagari(fontSize: 20),
@@ -83,7 +83,7 @@ class _MyScheduleState extends State<MySchedule> {
                   print(
                       pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                   String formattedDate =
-                      DateFormat('dd-MMMM-yyyy').format(pickedDate);
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
                   print(
                       formattedDate); //formatted date output using intl package =>  2021-03-16
                   setState(() {
@@ -96,7 +96,8 @@ class _MyScheduleState extends State<MySchedule> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '$datetoshow',
+                    DateFormat('dd-MMMM-yyyy')
+                        .format(DateFormat('dd-MM-yyyy').parse(datetoshow!)),
                     style: GoogleFonts.notoSansDevanagari(
                         color: ColorResources.textblack),
                   ),
@@ -143,6 +144,8 @@ class _MyScheduleState extends State<MySchedule> {
                           snapshot.data!.data!.sort((a, b) =>
                               (a.startingDate!.compareTo(b.startingDate!)));
                           snapshot.data!.data!.forEach((element) {
+                            print(datetoshow);
+
                             if (DateFormat("dd-MM-yyyy")
                                     .parse(element.startingDate!)
                                     .toString()

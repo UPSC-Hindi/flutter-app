@@ -158,7 +158,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   _buildChoiceList() {
     List<Widget> choices = [];
-    streamList.forEach((element) {
+    for (var element in streamList) {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
@@ -199,7 +199,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           },
         ),
       ));
-    });
+    }
     return choices;
   }
 
