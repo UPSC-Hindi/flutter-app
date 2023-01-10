@@ -6,7 +6,7 @@ import 'package:upsc_web/features/controller/course_controller.dart';
 import 'package:upsc_web/features/model/courses_model/MyCoursesModel.dart';
 import 'package:upsc_web/features/model/courses_model/RecordedVideoModel.dart';
 import 'package:upsc_web/features/model/courses_model/course_notes_model.dart';
-import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/file_view/file_view_cubit.dart';
 import 'package:upsc_web/features/view/widget/empty_widget.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/features/view/widget/video_player_widget.dart';
@@ -339,7 +339,7 @@ class BatchNotesWidget extends StatelessWidget {
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: BlocProvider(
-                          create: (context) => PdfViewerCubit(),
+                          create: (context) => FileViewCubit(),
                           child: ResourcesContainerWidget(
                             resourcetype:
                                 snapshot.data!.data![index].resourceType,

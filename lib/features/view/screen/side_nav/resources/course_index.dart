@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc_web/features/controller/resource_controller.dart';
 import 'package:upsc_web/features/model/resources_model/course_index_model.dart';
-import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/file_view/file_view_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/features/view/widget/search_bar_widget.dart';
@@ -120,7 +120,7 @@ class _CourseIndexBodyState extends State<CourseIndexBody> {
       ),
       itemBuilder: (context, index) {
         return BlocProvider(
-          create: (context) => PdfViewerCubit(),
+          create: (context) => FileViewCubit(),
           child: ResourcesContainerWidget(
             resourcetype: resources[index].resourceType!,
             title: resources[index].title!,

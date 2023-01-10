@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:upsc_web/features/model/resources_model/notes_model.dart';
-import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/file_view/file_view_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/features/view/widget/responsive_widget.dart';
 import 'package:upsc_web/features/view/widget/search_bar_widget.dart';
@@ -63,7 +63,7 @@ class _NotesWidgetState extends State<NotesWidget> {
       ),
       itemBuilder: (context, index) {
         return BlocProvider(
-          create: (context) => PdfViewerCubit(),
+          create: (context) => FileViewCubit(),
           child: ResourcesContainerWidget(
             resourcetype: resources[index].resourcetype,
             title: resources[index].title,

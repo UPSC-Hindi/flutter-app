@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:upsc_web/features/controller/resource_controller.dart';
 import 'package:upsc_web/features/model/resources_model/daily_news_model.dart';
-import 'package:upsc_web/features/view/cubit/pdf_viewer/pdf_viewer_cubit.dart';
+import 'package:upsc_web/features/view/cubit/file_view/file_view_cubit.dart';
 import 'package:upsc_web/features/view/widget/resource_container_widget.dart';
 import 'package:upsc_web/utils/color_resources.dart';
 
@@ -152,7 +152,7 @@ class _DailyNewsScreenState extends State<DailyNewsScreen> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return BlocProvider(
-                        create: (context) => PdfViewerCubit(),
+                        create: (context) => FileViewCubit(),
                         child: ResourcesContainerWidget(
                           resourcetype: resources[index].resource_type,
                           title: resources[index].title,
