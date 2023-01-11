@@ -63,7 +63,10 @@ class _MyScheduleState extends State<MySchedule> {
               indicatorColor: ColorResources.buttoncolor,
               labelColor: ColorResources.buttoncolor,
               unselectedLabelColor: Colors.black,
-              tabs: [Tab(text: "My Schedule"), Tab(text: "Class Schedule")],
+              tabs: [
+                Tab(text: Languages.mySchedule),
+                Tab(text: Languages.ClassSchedule)
+              ],
             ),
             const SizedBox(
               height: 10,

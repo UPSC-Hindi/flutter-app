@@ -203,7 +203,7 @@ class Languages {
     feelfree =
         isEnglish ? "We are Here to Solve" : "आपकी सहायता हेतु हम उपस्थित है";
     freeMessage =
-        isEnglish ? 'Feel free to message us at' : 'बेझिझक हमें पर मैसेज करें';
+        isEnglish ? 'Feel free to message us at' : 'बेझिझक हमें इन पर संपर्क करें';
     emailText = isEnglish ? 'Mail us at' : 'हमे ईमेल करें';
     whatsApp = isEnglish ? 'WhatsApp us' : 'व्हाट्सअप पर सम्पर्क करें';
     //empty
